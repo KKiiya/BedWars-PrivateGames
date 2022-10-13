@@ -21,12 +21,14 @@ public class PlayerArenaJoin implements Listener {
        rblock.getItemMeta().setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aPrivate Game Settings &7(Right Click)"));
        List<String> lore = new ArrayList<>();
        boolean enchanted = (main.getPlugin(main.class).getConfig().getBoolean("private-games-item.enchanted"));
+
        if (enchanted) {
          rblock.getItemMeta().addEnchant(null,1,true);
        }
        else {
          rblock.getItemMeta().removeEnchant(null);
        }
+
        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Right click me to open the"));
        lore.add(ChatColor.translateAlternateColorCodes('&', "&7private game settings menu"));
        rblock.getItemMeta().setLore(lore);
