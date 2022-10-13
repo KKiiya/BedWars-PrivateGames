@@ -1,0 +1,7 @@
+# BedWars1058 Private Games Addon by NotLew_x (NotLew_x#9207)
+# Make sure you join the discord server!: https://discord.gg/n5yNavRvrP
+private-games-item:
+    item: REDSTONE_BLOCK
+    slot: 0 # HotBar slot (from 0-8)
+    enchanted: false
+    command: none
