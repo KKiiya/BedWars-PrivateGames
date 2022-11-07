@@ -23,10 +23,6 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
             <id>andrei1058-repo</id>
             <url>https://repo.andrei1058.dev/releases/</url>
         </repository>
@@ -35,8 +31,17 @@
             <url>https://repo.alessiodp.com/releases/</url>
         </repository>
         <repository>
-          <id>code-repo</id>
-          <url>https://repo.codemc.org/repository/maven-public/</url>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -49,8 +54,27 @@
         </dependency>
         <dependency>
             <groupId>com.andrei1058.bedwars</groupId>
-            <artifactId>bedwars-api</artifactId>
+            <artifactId>bedwars-plugin</artifactId>
             <version>22.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.10.9</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.alessiodp.parties</groupId>
@@ -68,6 +92,12 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>5.0.1</version>
+        </dependency>
+		<dependency>
+            <groupId>com.github.hakan-krgn.hCore</groupId>
+            <artifactId>bukkit-primary</artifactId>
+            <version>0.6.6</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
