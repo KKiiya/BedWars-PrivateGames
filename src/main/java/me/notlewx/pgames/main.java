@@ -1,10 +1,14 @@
 package me.notlewx.pgames;
 
 import com.andrei1058.bedwars.api.BedWars;
+import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.api.language.Messages;
+import com.zaxxer.hikari.HikariDataSource;
 import me.notlewx.pgames.commands.pgames;
 import me.notlewx.pgames.config.MainConfig;
 import me.notlewx.pgames.config.MessagesData;
+import me.notlewx.pgames.db.MySQL;
+import me.notlewx.pgames.db.SQLite;
 import me.notlewx.pgames.listeners.PlayerArenaJoin;
 import me.notlewx.pgames.listeners.PlayerArenaLeave;
 import org.bukkit.Bukkit;
@@ -13,27 +17,46 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 
 public final class main extends JavaPlugin {
-    public FileConfiguration config = getConfig();
-    private static boolean bungee = false;
     private static BedWars bedWars;
+    public static ConfigManager bwconfig;
     private static MainConfig mainConfig;
+    public HikariDataSource db;
+    public static boolean bwproxy;
     private static main instance;
+    public static boolean usingdb;
     @Override
     public void onEnable() {
         instance = this;
 
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") == null) {
-            getLogger().severe("BedWars1058 or BedWarsProxy was not found. Disabling...");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
+            if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") == null) {
+                getLogger().severe("BedWars1058 or BedWarsProxy was not found. Disabling...");
+                Bukkit.getPluginManager().disablePlugin(this);
+                return;
+            }
         }
-        else {
-            System.out.println("[BedWars1058-PrivateGames] BedWars1058 found! Hooking...");
+        if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
+            bwproxy = true;
+            if (Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getBoolean("database.enable")) {
+                    this.db = (new MySQL()).connect();
+                    getLogger().severe("Connected to database!");
+            }
+            getLogger().info("BedWarsProxy found! Hooking...");
+        }
+        else if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
+            if (usingdb) {
+                this.db = (new MySQL()).connect();
+                getLogger().severe("Connected to database!");
+            }
+            getLogger().info("BedWars1058 found! Hooking...");
         }
         new pgames();
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
+        bwconfig = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider().getConfigs().getMainConfig();
+        usingdb = bwconfig.getBoolean("database.enable");
         mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath()+ File.separator+"PrivateGames");
         mainConfig.reload();
         new MessagesData();

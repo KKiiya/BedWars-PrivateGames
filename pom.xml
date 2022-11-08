@@ -31,12 +31,12 @@
             <url>https://repo.alessiodp.com/releases/</url>
         </repository>
         <repository>
-            <id>codemc-repo</id>
+            <id>code-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
             <layout>default</layout>
         </repository>
         <repository>
-            <id>placeholderapi</id>
+            <id>placeholder</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
@@ -54,7 +54,7 @@
         </dependency>
         <dependency>
             <groupId>com.andrei1058.bedwars</groupId>
-            <artifactId>bedwars-plugin</artifactId>
+            <artifactId>bedwars-api</artifactId>
             <version>22.7</version>
             <scope>provided</scope>
         </dependency>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
