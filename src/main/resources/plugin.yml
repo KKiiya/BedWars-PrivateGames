@@ -9,4 +9,4 @@ commands:
   pgame:
     description: Enables the private games if you are in a party
 permissions:
-  pgames:
+  pgames: "private.games.enable"
