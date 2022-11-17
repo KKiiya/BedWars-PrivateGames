@@ -23,6 +23,7 @@ public final class main extends JavaPlugin {
     private static BedWars bedWars;
     public static ConfigManager bwconfig;
     private static MainConfig mainConfig;
+    public HikariDataSource msql;
     public HikariDataSource db;
     public static boolean bwproxy;
     private static main instance;
@@ -44,14 +45,24 @@ public final class main extends JavaPlugin {
                     this.db = (new MySQL()).connect();
                     getLogger().severe("Connected to database!");
             }
+            else {
+                getLogger().severe("If you are using BedWarsProxy you need to enable the database");
+                Bukkit.getPluginManager().disablePlugin(this);
+                return;
+            }
             getLogger().info("BedWarsProxy found! Hooking...");
         }
         else if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
             if (usingdb) {
+                getLogger().severe("Connecting to MySQL");
                 this.db = (new MySQL()).connect();
+                (new MySQL()).createTables();
                 getLogger().severe("Connected to database!");
             }
             getLogger().info("BedWars1058 found! Hooking...");
+            else {
+                
+            }
         }
         new pgames();
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
@@ -72,6 +83,7 @@ public final class main extends JavaPlugin {
     public static Object getPlugins() {
         return getPlugin(main.class);
     }
+    public static main plugin() {main plugin = getPlugin(main.class); return plugin;}
 
     public static Plugin getInstance() {
         return instance;
