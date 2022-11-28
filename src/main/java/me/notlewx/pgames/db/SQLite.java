@@ -20,14 +20,14 @@ public class SQLite {
         this.connection = getConnection();
         try {
             Statement s = this.connection.createStatement();
-            s.executeUpdate("CREATE TABLE IF NOT EXISTS bw1058_private_games (`name` varchar(200) NOT NULL,`finalKills` int(11) NOT NULL,`wins` int(11) NOT NULL,`bedBreaks` int(11) NOT NULL,`kills` int(11) NOT NULL,`deaths` int(11) NOT NULL,`finalDeaths` int(11) NOT NULL,`winStreak` int(11) NOT NULL,`losses` int(11) NOT NULL,`gamesPlayed` int(11) NOT NULL,`lostBeds` int(11) NOT NULL,PRIMARY KEY (`name`));");
+            s.executeUpdate("CREATE TABLE IF NOT EXISTS bw1058_private_games (`name` varchar(200) NOT NULL,`oneHitOneKill` boolean(11) NOT NULL,`lowGravity` boolean(11) NOT NULL,`speed` boolean(11) NOT NULL,`bedInstaBreak` boolean(11) NOT NULL,`maxTeamUpgrades` boolean(11) NOT NULL,`allowBreakMap` boolean(11) NOT NULL,`noDiamonds` boolean(11) NOT NULL,`noEmeralds` boolean(11) NOT NULL,`respawnEventTime` int(11) NOT NULL,`healthBuffLevel` int(11), `eventsTime` int(11) NOT NULL, NOT NULL,PRIMARY KEY (`name`));");
             s.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         this.connection = getConnection();
         try {
-            PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM pgs_data WHERE name = ?");
+            PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM bw1058_private_games WHERE name = ?");
             ResultSet rs = ps.executeQuery();
             close(ps, rs);
         } catch (SQLException e) {
