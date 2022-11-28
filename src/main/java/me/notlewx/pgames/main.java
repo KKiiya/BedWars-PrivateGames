@@ -59,10 +59,10 @@ public final class main extends JavaPlugin {
                 (new MySQL()).createTables();
                 getLogger().severe("Connected to database!");
             }
-            getLogger().info("BedWars1058 found! Hooking...");
             else {
-                
+                (new SQLite()).getConnection();
             }
+            getLogger().info("BedWars1058 found! Hooking...");
         }
         new pgames();
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
