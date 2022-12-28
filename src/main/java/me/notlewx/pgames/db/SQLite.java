@@ -91,4 +91,36 @@ public class SQLite {
         }
         return null;
     }
+    public void createPlayerData(String path) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            connection = getConnection();
+            ps = connection.prepareStatement("INSERT INTO bw1058_private_games(name, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps.setString(1, path);
+            ps.setBoolean(2, false);
+            ps.setBoolean(3, false);
+            ps.setInt(4, 1);
+            ps.setBoolean(5, false);
+            ps.setBoolean(6, false);
+            ps.setBoolean(7, false);
+            ps.setBoolean(8, false);
+            ps.setBoolean(9, false);
+            ps.setInt(10, 1);
+            ps.setInt(11, 1);
+            ps.setInt(12, 1);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
