@@ -68,6 +68,32 @@ public class SQLite {
         }
     }
 
+    public void setData(String path, boolean torf, String type, int amount) {
+        try {
+            Connection c = (main.plugin()).db.getConnection();
+            try {
+                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "WHERE name = '" + path + "';");
+                ps.setInt(1, amount);
+                ps.setBoolean(2, torf);
+                ps.setString(3, path);
+                ps.executeUpdate();
+                ps.close();
+                if (c != null)
+                    c.close();
+            } catch (Throwable throwable) {
+                if (c != null)
+                    try {
+                        c.close();
+                    } catch (Throwable throwable1) {
+                        throwable.addSuppressed(throwable1);
+                    }
+                throw throwable;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public String getData(String path, String type) {
         Connection conn = null;
         PreparedStatement ps = null;

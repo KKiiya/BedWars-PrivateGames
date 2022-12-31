@@ -2,7 +2,6 @@ package me.notlewx.pgames;
 
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
-import com.andrei1058.bedwars.api.language.Messages;
 import com.zaxxer.hikari.HikariDataSource;
 import me.notlewx.pgames.commands.pgames;
 import me.notlewx.pgames.config.MainConfig;
@@ -12,12 +11,9 @@ import me.notlewx.pgames.db.SQLite;
 import me.notlewx.pgames.listeners.PlayerArenaJoin;
 import me.notlewx.pgames.listeners.PlayerArenaLeave;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
-import java.io.IOException;
 
 public final class main extends JavaPlugin {
     private static BedWars bedWars;
@@ -31,6 +27,8 @@ public final class main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        bwconfig = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider().getConfigs().getMainConfig();
+        usingdb = bwconfig.getBoolean("database.enable");
 
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") == null) {
             if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") == null) {
@@ -66,8 +64,6 @@ public final class main extends JavaPlugin {
         }
         new pgames();
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
-        bwconfig = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider().getConfigs().getMainConfig();
-        usingdb = bwconfig.getBoolean("database.enable");
         mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath()+ File.separator+"PrivateGames");
         mainConfig.reload();
         new MessagesData();
