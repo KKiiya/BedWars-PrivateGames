@@ -71,7 +71,7 @@ public class MySQL {
             try {
                 Connection c = (main.plugin()).db.getConnection();
                 try {
-                    String sql = "INSERT INTO bw1058_private_games(name, privateGameEnabled, playerInParty, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql = "INSERT INTO bw1058_private_games(name, privateGameEnabled, playerInParty, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement ps = c.prepareStatement(sql);
                     ps.setString(1, path);
                     ps.setBoolean(2, false);
@@ -105,14 +105,13 @@ public class MySQL {
             }
         });
     }
-    public void setData(String path, boolean torf, String type, int amount) {
+    public String setIntData(String path, String type, int amount) {
         try {
-            Connection c = (main.plugin()).db.getConnection();
+            Connection c = (main.plugin()).msql.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setInt(1, amount);
-                ps.setBoolean(2, torf);
-                ps.setString(3, path);
+                ps.setString(2, path);
                 ps.executeUpdate();
                 ps.close();
                 if (c != null)
@@ -129,17 +128,43 @@ public class MySQL {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
-    public String getData(String path, String type) {
+    public String setBooleanData(String path, String type, boolean value) {
         try {
-            Connection c = (main.plugin()).db.getConnection();
+            Connection c = (main.plugin()).msql.getConnection();
+            try {
+                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
+                ps.setBoolean(1, value);
+                ps.setString(2, path);
+                ps.executeUpdate();
+                ps.close();
+                if (c != null)
+                    c.close();
+            } catch (Throwable throwable) {
+                if (c != null)
+                    try {
+                        c.close();
+                    } catch (Throwable throwable1) {
+                        throwable.addSuppressed(throwable1);
+                    }
+                throw throwable;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+    public boolean getBooleanData(String path, String type) {
+        try {
+            Connection c = (main.plugin()).msql.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
                 ps.setString(1, path);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    String str = rs.getString(type);
+                    boolean str = rs.getBoolean(type);
                     if (c != null)
                         c.close();
                     return str;
@@ -160,6 +185,38 @@ public class MySQL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return false;
+    }
+
+    public int getIntData(String path, String type) {
+        try {
+            Connection c = (main.plugin()).msql.getConnection();
+            try {
+                PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
+                ps.setString(1, path);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    int str = rs.getInt(type);
+                    if (c != null)
+                        c.close();
+                    return str;
+                }
+                rs.close();
+                ps.close();
+                if (c != null)
+                    c.close();
+            } catch (Throwable throwable) {
+                if (c != null)
+                    try {
+                        c.close();
+                    } catch (Throwable throwable1) {
+                        throwable.addSuppressed(throwable1);
+                    }
+                throw throwable;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

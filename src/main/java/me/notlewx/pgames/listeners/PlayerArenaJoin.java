@@ -12,11 +12,12 @@ public class PlayerArenaJoin implements Listener {
     private static SQLite sqLite;
     @EventHandler
     public static void onPlayerJoin(PlayerJoinArenaEvent e) {
+        String path = e.getPlayer().getName();
         if (usingdb) {
-            mySQL.getData("", "privateGameEnabled");
+            mySQL.getBooleanData(path, "privateGameEnabled");
         }
         else {
-            sqLite.getData("", "privateGameEnabled");
+            sqLite.getBooleanData(path, "privateGameEnabled");
         }
     }
 }

@@ -22,19 +22,20 @@ public class pgames implements CommandExecutor {
             @Override
             public boolean onCommand(CommandSender sender, String [] arguments) {
                 Player player = (Player) sender;
-                if ((mySQL.getData("playerInParty", "boolean")).equals("true") && iGame.getMembers().size() > 2) {
+                String path = player.getName();
+                if ((mySQL.getData(path, "playerInParty")).equals("true") && iGame.getMembers().size() > 2) {
                     // BedWars1058 database
                     if (!bwproxy) {
                         if (usingdb) {
-                            mySQL.setData("privateGameEnabled", true, "boolean", 0);
+                            mySQL.setBooleanData(path, "privateGameEnabled", true);
                         }
                         else {
-                            sqLite.setData("privateGameEnabled", true, "boolean", 0);
+                            sqLite.setBooleanData(path, "privateGameEnabled", true);
                         }
                     }
                     // BedWarsProxy database
                     else {
-                        mySQL.setData("privateGameEnabled", true, "boolean", 0);
+                        mySQL.setBooleanData(path, "privateGameEnabled", true);
                     }
                     for (Player p : iGame.getMembers()) {
                         if (!p.getName().equals(sender)) {

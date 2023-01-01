@@ -68,14 +68,61 @@ public class SQLite {
         }
     }
 
-    public void setData(String path, boolean torf, String type, int amount) {
+    public boolean getBooleanData(String path, String type) {
+        Connection conn = null;
+        PreparedStatement ps = null;
         try {
-            Connection c = (main.plugin()).db.getConnection();
+            conn = getConnection();
+            ps = conn.prepareStatement("SELECT * FROM bw1058_private_games WHERE name = '" + path + "';");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getBoolean(type);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
             try {
-                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "WHERE name = '" + path + "';");
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
+    }
+
+    public int getIntData(String path, String type) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement("SELECT * FROM bw1058_private_games WHERE name = '" + path + "';");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getInt(type);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return 0;
+    }
+
+    public String setIntData(String path, String type, int amount) {
+        try {
+            Connection c = (main.plugin()).msql.getConnection();
+            try {
+                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setInt(1, amount);
-                ps.setBoolean(2, torf);
-                ps.setString(3, path);
+                ps.setString(2, path);
                 ps.executeUpdate();
                 ps.close();
                 if (c != null)
@@ -92,28 +139,31 @@ public class SQLite {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
-    public String getData(String path, String type) {
-        Connection conn = null;
-        PreparedStatement ps = null;
+    public String setBooleanData(String path, String type, boolean value) {
         try {
-            conn = getConnection();
-            ps = conn.prepareStatement("SELECT * FROM bw1058_private_games WHERE name = '" + path + "';");
-            ResultSet rs = ps.executeQuery();
-            if (rs.next())
-                return String.valueOf(rs.getInt(type));
+            Connection c = (main.plugin()).msql.getConnection();
+            try {
+                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
+                ps.setBoolean(1, value);
+                ps.setString(2, path);
+                ps.executeUpdate();
+                ps.close();
+                if (c != null)
+                    c.close();
+            } catch (Throwable throwable) {
+                if (c != null)
+                    try {
+                        c.close();
+                    } catch (Throwable throwable1) {
+                        throwable.addSuppressed(throwable1);
+                    }
+                throw throwable;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                if (ps != null)
-                    ps.close();
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
         return null;
     }
@@ -122,19 +172,21 @@ public class SQLite {
         PreparedStatement ps = null;
         try {
             connection = getConnection();
-            ps = connection.prepareStatement("INSERT INTO bw1058_private_games(name, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps = connection.prepareStatement("INSERT INTO bw1058_private_games(name, privateGameEnabled, playerInParty, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, path);
             ps.setBoolean(2, false);
             ps.setBoolean(3, false);
-            ps.setInt(4, 1);
+            ps.setBoolean(4, false);
             ps.setBoolean(5, false);
-            ps.setBoolean(6, false);
+            ps.setInt(6, 1);
             ps.setBoolean(7, false);
             ps.setBoolean(8, false);
             ps.setBoolean(9, false);
-            ps.setInt(10, 1);
-            ps.setInt(11, 1);
+            ps.setBoolean(10, false);
+            ps.setBoolean(11, false);
             ps.setInt(12, 1);
+            ps.setInt(13, 1);
+            ps.setInt(14, 1);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
