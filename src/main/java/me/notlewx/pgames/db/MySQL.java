@@ -162,6 +162,7 @@ public class MySQL {
             try {
                 PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
                 ps.setString(1, path);
+                ps.setString(2, type);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     boolean str = rs.getBoolean(type);
@@ -194,6 +195,7 @@ public class MySQL {
             try {
                 PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
                 ps.setString(1, path);
+                ps.setString(2, type);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     int str = rs.getInt(type);

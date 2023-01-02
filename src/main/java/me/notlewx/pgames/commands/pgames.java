@@ -1,29 +1,43 @@
 package me.notlewx.pgames.commands;
 
+import com.alessiodp.parties.api.interfaces.PartiesAPI;
 import com.andrei1058.bedwars.api.language.Language;
+import com.andrei1058.bedwars.api.party.Party;
 import me.notlewx.pgames.api.CommandHandler;
 import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.db.MySQL;
 import me.notlewx.pgames.db.SQLite;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
+
 import static me.notlewx.pgames.config.MessagesData.*;
-import static me.notlewx.pgames.main.bwproxy;
-import static me.notlewx.pgames.main.usingdb;
+import static me.notlewx.pgames.main.*;
 
 public class pgames implements CommandExecutor {
     private MySQL mySQL;
     private SQLite sqLite;
-    private IGame iGame;
+    private Party dparty;
+    private PartiesAPI partis;
+    private int psize;
     public pgames() {
         new CommandHandler("pg enable", true) {
             @Override
             public boolean onCommand(CommandSender sender, String [] arguments) {
                 Player player = (Player) sender;
+                UUID pe = player.getUniqueId();
                 String path = player.getName();
-                if ((mySQL.getData(path, "playerInParty")).equals("true") && iGame.getMembers().size() > 2) {
+                if (parties) {
+                    psize = partis.getPartyOfPlayer(pe).getMembers().size();
+                }
+                else {
+                    psize = dparty.getMembers(player).size();
+                }
+                if ((mySQL.getBooleanData(path, "playerInParty")) && psize >= 2) {
                     // BedWars1058 database
                     if (!bwproxy) {
                         if (usingdb) {
@@ -37,11 +51,24 @@ public class pgames implements CommandExecutor {
                     else {
                         mySQL.setBooleanData(path, "privateGameEnabled", true);
                     }
-                    for (Player p : iGame.getMembers()) {
-                        if (!p.getName().equals(sender)) {
-                            p.sendMessage(Language.getMsg(p, PRIVATE_GAME_ENABLED_OTHERS));
+                    // Party system of Parties plugin
+                    if (parties) {
+                        for (UUID per : partis.getPartyOfPlayer(pe).getMembers()) {
+                            Player pert = (Bukkit.getPlayer(per));
+                            if (!pert.getName().equals(player)) {
+                                pert.sendMessage(Language.getMsg(pert, PRIVATE_GAME_ENABLED_OTHERS));
+                            }
+                            player.sendMessage(Language.getMsg(player, PRIVATE_GAME_ENABLED));
                         }
-                        sender.sendMessage(Language.getMsg((Player) sender, PRIVATE_GAME_ENABLED));
+                    }
+                    // Default party system of BedWars1058
+                    else {
+                        for (Player p : dparty.getMembers(player)) {
+                            if (!p.getName().equals(player)) {
+                                p.sendMessage(Language.getMsg(p, PRIVATE_GAME_ENABLED_OTHERS));
+                            }
+                            player.sendMessage(Language.getMsg(player, PRIVATE_GAME_ENABLED));
+                        }
                     }
                 }
                 else {

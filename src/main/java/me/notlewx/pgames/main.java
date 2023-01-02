@@ -8,6 +8,8 @@ import me.notlewx.pgames.config.MainConfig;
 import me.notlewx.pgames.config.MessagesData;
 import me.notlewx.pgames.db.MySQL;
 import me.notlewx.pgames.db.SQLite;
+import me.notlewx.pgames.listeners.DefaultPartyJoinAndLeave;
+import me.notlewx.pgames.listeners.PartiesPartyJoinAndLeave;
 import me.notlewx.pgames.listeners.PlayerArenaJoin;
 import me.notlewx.pgames.listeners.PlayerArenaLeave;
 import org.bukkit.Bukkit;
@@ -22,6 +24,7 @@ public final class main extends JavaPlugin {
     public HikariDataSource msql;
     public HikariDataSource db;
     public static boolean bwproxy;
+    public static boolean parties;
     private static main instance;
     public static boolean usingdb;
     @Override
@@ -62,14 +65,29 @@ public final class main extends JavaPlugin {
             }
             getLogger().info("BedWars1058 found! Hooking...");
         }
-        new pgames();
+        if (getServer().getPluginManager().getPlugin("Parties") != null) {
+            if (getServer().getPluginManager().getPlugin("Parties").isEnabled()) {
+                parties = true;
+                getLogger().severe("Using parties system of Parties");
+            }
+            else {
+                parties = false;
+                getLogger().severe("Using default parties system of BedWars1058");
+            }
+        }
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
         mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath()+ File.separator+"PrivateGames");
         mainConfig.reload();
         new MessagesData();
-
+        if (parties) {
+            getServer().getPluginManager().registerEvents(new PartiesPartyJoinAndLeave(), this);
+        }
+        else {
+            getServer().getPluginManager().registerEvents(new DefaultPartyJoinAndLeave(), this);
+        }
         getServer().getPluginManager().registerEvents(new PlayerArenaJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerArenaLeave(), this);
+        new pgames();
     }
 
     @Override
