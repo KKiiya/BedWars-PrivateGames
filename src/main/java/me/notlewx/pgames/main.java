@@ -52,6 +52,7 @@ public final class main extends JavaPlugin {
                 return;
             }
             getLogger().info("BedWarsProxy found! Hooking...");
+            getLogger().info("This addon have been developed by NotLew_x#9207");
         }
         else if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
             if (usingdb) {
@@ -61,9 +62,12 @@ public final class main extends JavaPlugin {
                 getLogger().severe("Connected to database!");
             }
             else {
+                getLogger().severe("Connection to SQLite");
                 (new SQLite()).getConnection();
+                getLogger().severe("Connected to database!");
             }
             getLogger().info("BedWars1058 found! Hooking...");
+            getLogger().info("This addon have been developed by NotLew_x#9207");
         }
         if (getServer().getPluginManager().getPlugin("Parties") != null) {
             if (getServer().getPluginManager().getPlugin("Parties").isEnabled()) {
@@ -81,9 +85,6 @@ public final class main extends JavaPlugin {
         new MessagesData();
         if (parties) {
             getServer().getPluginManager().registerEvents(new PartiesPartyJoinAndLeave(), this);
-        }
-        else {
-            getServer().getPluginManager().registerEvents(new DefaultPartyJoinAndLeave(), this);
         }
         getServer().getPluginManager().registerEvents(new PlayerArenaJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerArenaLeave(), this);

@@ -25,7 +25,7 @@ public class pgames implements CommandExecutor {
     private PartiesAPI partis;
     private int psize;
     public pgames() {
-        new CommandHandler("pg enable", true) {
+        new CommandHandler("pg", true) {
             @Override
             public boolean onCommand(CommandSender sender, String [] arguments) {
                 Player player = (Player) sender;
@@ -78,7 +78,7 @@ public class pgames implements CommandExecutor {
             }
             @Override
             public String getUsage() {
-                return "/pg enable";
+                return "/pg";
             }
         };
     }

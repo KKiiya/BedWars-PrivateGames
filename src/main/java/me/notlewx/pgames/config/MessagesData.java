@@ -17,10 +17,10 @@ public class MessagesData {
                 default:
                     yml.addDefault(MAIN_MENU_NAME, "&7Private game settings");
                     yml.addDefault(NOT_IN_PARTY, "&cYou are not in a party!");
-                    yml.addDefault(PRIVATE_GAME_ENABLED, "");
+                    yml.addDefault(PRIVATE_GAME_ENABLED, "&aYou've enabled private games");
                     yml.addDefault(PRIVATE_GAME_ENABLED_OTHERS, "&a{player} has enabled private games");
-                    yml.addDefault(PRIVATE_GAME_DISABLED, "&c");
-                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c");
+                    yml.addDefault(PRIVATE_GAME_DISABLED, "&cYou've disabled private games disabled");
+                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c{player} has disabled private games");
                     break;
                 case "es":
                     yml.addDefault(MAIN_MENU_NAME, "&7Ajustes de partida privada");
@@ -36,10 +36,10 @@ public class MessagesData {
         }
     }
     public static final String
-            MAIN_MENU_NAME = "menu-name",
-            NOT_IN_PARTY = "not-in-party",
-            PRIVATE_GAME_ENABLED = "private.game.enabled",
-            PRIVATE_GAME_ENABLED_OTHERS = "private.game.enabled-others",
-            PRIVATE_GAME_DISABLED = "private.game.disabled",
-            PRIVATE_GAME_DISABLED_OTHERS = "private.game.disabled-others";
+            MAIN_MENU_NAME = PATH + "menu-name",
+            NOT_IN_PARTY = PATH + "not-in-party",
+            PRIVATE_GAME_ENABLED = PATH + "game.enabled",
+            PRIVATE_GAME_ENABLED_OTHERS = PATH + "game.enabled-others",
+            PRIVATE_GAME_DISABLED = PATH + "game.disabled",
+            PRIVATE_GAME_DISABLED_OTHERS = PATH + "game.disabled-others";
 }
