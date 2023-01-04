@@ -1,4 +1,4 @@
-package me.notlewx.pgames.listeners;
+package me.notlewx.pgames.listeners.party;
 
 import com.alessiodp.parties.api.events.bukkit.player.BukkitPartiesPlayerPostJoinEvent;
 import com.alessiodp.parties.api.events.bukkit.player.BukkitPartiesPlayerPostLeaveEvent;

@@ -8,10 +8,11 @@ import me.notlewx.pgames.config.MainConfig;
 import me.notlewx.pgames.config.MessagesData;
 import me.notlewx.pgames.db.MySQL;
 import me.notlewx.pgames.db.SQLite;
-import me.notlewx.pgames.listeners.DefaultPartyJoinAndLeave;
-import me.notlewx.pgames.listeners.PartiesPartyJoinAndLeave;
-import me.notlewx.pgames.listeners.PlayerArenaJoin;
-import me.notlewx.pgames.listeners.PlayerArenaLeave;
+import me.notlewx.pgames.listeners.party.DefaultPartyJoinAndLeave;
+import me.notlewx.pgames.listeners.party.PartiesPartyJoinAndLeave;
+import me.notlewx.pgames.listeners.player.PlayerArenaJoin;
+import me.notlewx.pgames.listeners.player.PlayerArenaLeave;
+import me.notlewx.pgames.listeners.player.PlayerJoin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,7 +44,9 @@ public final class main extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
             bwproxy = true;
             if (Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getBoolean("database.enable")) {
+                    getLogger().severe("Connecting to MySQL");
                     this.db = (new MySQL()).connect();
+                    (new MySQL()).createTables();
                     getLogger().severe("Connected to database!");
             }
             else {
@@ -62,7 +65,7 @@ public final class main extends JavaPlugin {
                 getLogger().severe("Connected to database!");
             }
             else {
-                getLogger().severe("Connection to SQLite");
+                getLogger().severe("Connecting to SQLite");
                 (new SQLite()).getConnection();
                 getLogger().severe("Connected to database!");
             }
@@ -86,6 +89,10 @@ public final class main extends JavaPlugin {
         if (parties) {
             getServer().getPluginManager().registerEvents(new PartiesPartyJoinAndLeave(), this);
         }
+        else {
+            getServer().getPluginManager().registerEvents(new DefaultPartyJoinAndLeave(), this);
+        }
+        getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerArenaJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerArenaLeave(), this);
         new pgames();

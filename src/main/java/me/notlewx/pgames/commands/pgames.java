@@ -4,7 +4,6 @@ import com.alessiodp.parties.api.interfaces.PartiesAPI;
 import com.andrei1058.bedwars.api.language.Language;
 import com.andrei1058.bedwars.api.party.Party;
 import me.notlewx.pgames.api.CommandHandler;
-import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.db.MySQL;
 import me.notlewx.pgames.db.SQLite;
 import org.bukkit.Bukkit;
@@ -12,9 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import java.util.UUID;
-
 import static me.notlewx.pgames.config.MessagesData.*;
 import static me.notlewx.pgames.main.*;
 
@@ -72,7 +69,7 @@ public class pgames implements CommandExecutor {
                     }
                 }
                 else {
-                   sender.sendMessage(Language.getMsg(player, NOT_IN_PARTY));
+                   player.sendMessage(Language.getMsg(player, NOT_IN_PARTY));
                 }
                 return true;
             }

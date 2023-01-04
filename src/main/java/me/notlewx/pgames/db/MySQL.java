@@ -105,6 +105,31 @@ public class MySQL {
             }
         });
     }
+    public String setStringData(String path, String type, String string) {
+        try {
+            Connection c = (main.plugin()).msql.getConnection();
+            try {
+                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
+                ps.setString(1, string);
+                ps.setString(2, path);
+                ps.executeUpdate();
+                ps.close();
+                if (c != null)
+                    c.close();
+            } catch (Throwable throwable) {
+                if (c != null)
+                    try {
+                        c.close();
+                    } catch (Throwable throwable1) {
+                        throwable.addSuppressed(throwable1);
+                    }
+                throw throwable;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
     public String setIntData(String path, String type, int amount) {
         try {
             Connection c = (main.plugin()).msql.getConnection();
@@ -187,6 +212,38 @@ public class MySQL {
             e.printStackTrace();
         }
         return false;
+    }
+    public String getStringData(String path, String type) {
+        try {
+            Connection c = (main.plugin()).msql.getConnection();
+            try {
+                PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
+                ps.setString(1, path);
+                ps.setString(2, type);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    String str = rs.getString(type);
+                    if (c != null)
+                        c.close();
+                    return str;
+                }
+                rs.close();
+                ps.close();
+                if (c != null)
+                    c.close();
+            } catch (Throwable throwable) {
+                if (c != null)
+                    try {
+                        c.close();
+                    } catch (Throwable throwable1) {
+                        throwable.addSuppressed(throwable1);
+                    }
+                throw throwable;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public int getIntData(String path, String type) {
