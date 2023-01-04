@@ -7,7 +7,6 @@ import me.notlewx.pgames.db.SQLite;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
 import static me.notlewx.pgames.main.bwproxy;
 import static me.notlewx.pgames.main.usingdb;
 
@@ -30,6 +29,19 @@ public class DefaultPartyJoinAndLeave implements Listener {
             }
             else {
                 mySQL.setBooleanData(name, "playerInParty",true);
+            }
+        }
+        else {
+            if (!bwproxy) {
+                if (usingdb) {
+                    mySQL.setBooleanData(name, "playerInParty",false);
+                }
+                else {
+                    sqLite.setBooleanData(name, "playerInParty",false);
+                }
+            }
+            else {
+                mySQL.setBooleanData(name, "playerInParty",false);
             }
         }
     }
