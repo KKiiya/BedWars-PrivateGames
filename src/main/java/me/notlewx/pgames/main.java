@@ -13,10 +13,8 @@ import me.notlewx.pgames.listeners.party.PartiesPartyJoinAndLeave;
 import me.notlewx.pgames.listeners.player.PlayerArenaJoin;
 import me.notlewx.pgames.listeners.player.PlayerArenaLeave;
 import me.notlewx.pgames.listeners.player.PlayerJoin;
-import me.notlewx.pgames.support.BedWars1058;
-import me.notlewx.pgames.support.BedWarsProxy;
-import me.notlewx.pgames.support.Parties;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
@@ -24,6 +22,7 @@ import java.io.File;
 public final class main extends JavaPlugin {
     private static BedWars bedWars;
     public static ConfigManager bwconfig;
+    public static FileConfiguration proxyconfig;
     private static MainConfig mainConfig;
     public HikariDataSource db;
     public static boolean bwproxy;
@@ -34,6 +33,7 @@ public final class main extends JavaPlugin {
     public void onEnable() {
         instance = this;
         bwconfig = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider().getConfigs().getMainConfig();
+        proxyconfig = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig();
         usingdb = bwconfig.getBoolean("database.enable");
 
         // BedWars1058 / BedWarsProxy Hook

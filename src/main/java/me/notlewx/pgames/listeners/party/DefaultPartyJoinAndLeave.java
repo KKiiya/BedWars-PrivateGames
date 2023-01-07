@@ -7,41 +7,49 @@ import me.notlewx.pgames.db.SQLite;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import java.util.List;
 import static me.notlewx.pgames.main.bwproxy;
 import static me.notlewx.pgames.main.usingdb;
 
 public class DefaultPartyJoinAndLeave implements Listener {
     private static MySQL mySQL;
     private static SQLite sqLite;
-    private static Party party;
+    public static Party defparty;
+    public static List<Player> membersdef;
     @EventHandler
     public static void onPartyJoin(PlayerJoinArenaEvent e) {
         Player player = e.getPlayer();
-        String name = player.getName();
-        if (party.partySize(player) >= 2) {
+        membersdef = defparty.getMembers(player);
+        if (defparty.partySize(player) >= 2) {
             if (!bwproxy) {
-                if (usingdb) {
-                    mySQL.setBooleanData(name, "playerInParty",true);
-                }
-                else {
-                    sqLite.setBooleanData(name, "playerInParty",true);
+                for (Player player1 : defparty.getMembers(player)) {
+                    if (usingdb) {
+                        mySQL.setBooleanData(player1.getName(), "playerInParty", true);
+                    } else {
+                        sqLite.setBooleanData(player1.getName(), "playerInParty", true);
+                    }
                 }
             }
             else {
-                mySQL.setBooleanData(name, "playerInParty",true);
+                for (Player player1 : defparty.getMembers(player)) {
+                    mySQL.setBooleanData(player1.getName(), "playerInParty", true);
+                }
             }
         }
         else {
             if (!bwproxy) {
-                if (usingdb) {
-                    mySQL.setBooleanData(name, "playerInParty",false);
-                }
-                else {
-                    sqLite.setBooleanData(name, "playerInParty",false);
+                for (Player player1 : defparty.getMembers(player)) {
+                    if (usingdb) {
+                        mySQL.setBooleanData(player1.getName(), "playerInParty", false);
+                    } else {
+                        sqLite.setBooleanData(player1.getName(), "playerInParty", false);
+                    }
                 }
             }
             else {
-                mySQL.setBooleanData(name, "playerInParty",false);
+                for (Player player1 : defparty.getMembers(player)) {
+                    mySQL.setBooleanData(player1.getName(), "playerInParty", false);
+                }
             }
         }
     }

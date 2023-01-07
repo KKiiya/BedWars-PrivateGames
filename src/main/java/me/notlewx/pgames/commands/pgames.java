@@ -52,7 +52,7 @@ public class pgames implements CommandExecutor {
                     if (parties) {
                         for (UUID per : partis.getPartyOfPlayer(pe).getMembers()) {
                             Player pert = (Bukkit.getPlayer(per));
-                            if (!pert.getName().equals(player)) {
+                            if (!pert.getName().equals(player.getName())) {
                                 pert.sendMessage(Language.getMsg(pert, PRIVATE_GAME_ENABLED_OTHERS));
                             }
                             player.sendMessage(Language.getMsg(player, PRIVATE_GAME_ENABLED));
@@ -61,7 +61,7 @@ public class pgames implements CommandExecutor {
                     // Default party system of BedWars1058
                     else {
                         for (Player p : dparty.getMembers(player)) {
-                            if (!p.getName().equals(player)) {
+                            if (!p.getName().equals(player.getName())) {
                                 p.sendMessage(Language.getMsg(p, PRIVATE_GAME_ENABLED_OTHERS));
                             }
                             player.sendMessage(Language.getMsg(player, PRIVATE_GAME_ENABLED));

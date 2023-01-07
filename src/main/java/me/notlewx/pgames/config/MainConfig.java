@@ -1,7 +1,6 @@
 package me.notlewx.pgames.config;
 
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
