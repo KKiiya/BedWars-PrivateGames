@@ -36,7 +36,7 @@ public class MessagesData {
         }
     }
     public static final String
-            MAIN_MENU_NAME = PATH + "menu-name",
+            MAIN_MENU_NAME = PATH + "menu.menu-name",
             NOT_IN_PARTY = PATH + "not-in-party",
             PRIVATE_GAME_ENABLED = PATH + "game.enabled",
             PRIVATE_GAME_ENABLED_OTHERS = PATH + "game.enabled-others",

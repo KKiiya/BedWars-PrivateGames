@@ -13,6 +13,9 @@ import me.notlewx.pgames.listeners.party.PartiesPartyJoinAndLeave;
 import me.notlewx.pgames.listeners.player.PlayerArenaJoin;
 import me.notlewx.pgames.listeners.player.PlayerArenaLeave;
 import me.notlewx.pgames.listeners.player.PlayerJoin;
+import me.notlewx.pgames.support.BedWars1058;
+import me.notlewx.pgames.support.BedWarsProxy;
+import me.notlewx.pgames.support.Parties;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,7 +25,6 @@ public final class main extends JavaPlugin {
     private static BedWars bedWars;
     public static ConfigManager bwconfig;
     private static MainConfig mainConfig;
-    public HikariDataSource msql;
     public HikariDataSource db;
     public static boolean bwproxy;
     public static boolean parties;
@@ -34,6 +36,7 @@ public final class main extends JavaPlugin {
         bwconfig = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider().getConfigs().getMainConfig();
         usingdb = bwconfig.getBoolean("database.enable");
 
+        // BedWars1058 / BedWarsProxy Hook
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") == null) {
             if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") == null) {
                 getLogger().severe("BedWars1058 or BedWarsProxy was not found. Disabling...");
@@ -41,13 +44,14 @@ public final class main extends JavaPlugin {
                 return;
             }
         }
+        // Database search for BedWarsProxy
         if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
             bwproxy = true;
             if (Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getBoolean("database.enable")) {
-                    getLogger().severe("Connecting to MySQL");
-                    this.db = (new MySQL()).connect();
-                    (new MySQL()).createTables();
-                    getLogger().severe("Connected to database!");
+                getLogger().severe("Connecting to MySQL");
+                this.db = (new MySQL()).connect();
+                (new MySQL()).createTables();
+                getLogger().severe("Connected to database!");
             }
             else {
                 getLogger().severe("If you are using BedWarsProxy you need to enable the database");
@@ -57,6 +61,7 @@ public final class main extends JavaPlugin {
             getLogger().info("BedWarsProxy found! Hooking...");
             getLogger().info("This addon have been developed by NotLew_x#9207");
         }
+        // Database search for BedWars1058
         else if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
             if (usingdb) {
                 getLogger().severe("Connecting to MySQL");
@@ -72,6 +77,7 @@ public final class main extends JavaPlugin {
             getLogger().info("BedWars1058 found! Hooking...");
             getLogger().info("This addon have been developed by NotLew_x#9207");
         }
+        // Parties hook
         if (getServer().getPluginManager().getPlugin("Parties") != null) {
             if (getServer().getPluginManager().getPlugin("Parties").isEnabled()) {
                 parties = true;
@@ -82,19 +88,21 @@ public final class main extends JavaPlugin {
                 getLogger().severe("Using default parties system of BedWars1058");
             }
         }
-        bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
-        mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath()+ File.separator+"PrivateGames");
-        mainConfig.reload();
+        if (!bwproxy) {
+            bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
+            mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath() + File.separator + "PrivateGames");
+            mainConfig.reload();
+        }
         new MessagesData();
+        // Listeners
+        enableListeners();
+        // Parties Hook
         if (parties) {
             getServer().getPluginManager().registerEvents(new PartiesPartyJoinAndLeave(), this);
         }
         else {
             getServer().getPluginManager().registerEvents(new DefaultPartyJoinAndLeave(), this);
         }
-        getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
-        getServer().getPluginManager().registerEvents(new PlayerArenaJoin(), this);
-        getServer().getPluginManager().registerEvents(new PlayerArenaLeave(), this);
         new pgames();
     }
 
@@ -109,6 +117,11 @@ public final class main extends JavaPlugin {
 
     public static Plugin getInstance() {
         return instance;
+    }
+    public void enableListeners() {
+        getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new PlayerArenaJoin(), this);
+        getServer().getPluginManager().registerEvents(new PlayerArenaLeave(), this);
     }
 
 }

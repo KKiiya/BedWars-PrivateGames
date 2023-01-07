@@ -15,6 +15,8 @@ import me.notlewx.pgames.main;
 
 public class SQLite {
     Connection connection;
+    PreparedStatement ps;
+    ResultSet rs;
 
     public void load() {
         this.connection = getConnection();
@@ -27,8 +29,8 @@ public class SQLite {
         }
         this.connection = getConnection();
         try {
-            PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM bw1058_private_games WHERE name = ?");
-            ResultSet rs = ps.executeQuery();
+            ps = this.connection.prepareStatement("SELECT * FROM bw1058_private_games WHERE name = ?");
+            rs = ps.executeQuery();
             close(ps, rs);
         } catch (SQLException e) {
             main.plugin().getLogger().log(Level.SEVERE, "Couldn't connect! Try restarting the server or connect to the developer (NotLew_x#9207.");
@@ -118,7 +120,7 @@ public class SQLite {
 
     public String setIntData(String path, String type, int amount) {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setInt(1, amount);
@@ -144,7 +146,7 @@ public class SQLite {
 
     public String setBooleanData(String path, String type, boolean value) {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setBoolean(1, value);

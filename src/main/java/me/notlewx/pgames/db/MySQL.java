@@ -16,6 +16,7 @@ public class MySQL {
     String user;
     String pass;
     int port;
+    HikariDataSource db;
 
     public HikariDataSource connect() {
         if (!bwproxy) {
@@ -32,7 +33,7 @@ public class MySQL {
             this.pass = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.pass");
             this.port = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getInt("database.port");;
         }
-        HikariDataSource db = new HikariDataSource();
+        db = new HikariDataSource();
         db.setPoolName("PrivateGames-Pool");
         db.setConnectionTimeout(480000000L);
         db.setMaximumPoolSize(10);
@@ -46,7 +47,7 @@ public class MySQL {
     }
     public void createTables() {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS bw1058_private_games(name varchar(200), privateGameEnabled boolean, playerInParty boolean, oneHitOneKill boolean, lowGravity boolean, speed int, bedInstaBreak boolean, maxTeamUpgrades boolean, allowBreakMap boolean, noDiamonds boolean, noEmeralds boolean, respawnEventTime int, healthBuffLevel int, eventsTime int)");
                 ps.executeUpdate();
@@ -107,7 +108,7 @@ public class MySQL {
     }
     public String setStringData(String path, String type, String string) {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setString(1, string);
@@ -132,7 +133,7 @@ public class MySQL {
     }
     public String setIntData(String path, String type, int amount) {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setInt(1, amount);
@@ -158,7 +159,7 @@ public class MySQL {
 
     public String setBooleanData(String path, String type, boolean value) {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setBoolean(1, value);
@@ -183,7 +184,7 @@ public class MySQL {
     }
     public boolean getBooleanData(String path, String type) {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
                 ps.setString(1, path);
@@ -215,7 +216,7 @@ public class MySQL {
     }
     public String getStringData(String path, String type) {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
                 ps.setString(1, path);
@@ -248,7 +249,7 @@ public class MySQL {
 
     public int getIntData(String path, String type) {
         try {
-            Connection c = (main.plugin()).msql.getConnection();
+            Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
                 ps.setString(1, path);

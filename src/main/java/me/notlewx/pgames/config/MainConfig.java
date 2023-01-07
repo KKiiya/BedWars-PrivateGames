@@ -11,12 +11,7 @@ public class MainConfig extends ConfigManager {
         super(plugin, name, dir);
         YamlConfiguration yml = getYml();
         yml.options().header("BedWars1058 PrivateGames Addon by NotLew_x#9207");
-        if (Material.getMaterial(yml.getString(MATERIAL)) == null) {
-            yml.addDefault(MATERIAL, "REDSTONE_BLOCK");
-        }
-        else {
-            yml.addDefault(MATERIAL, Material.getMaterial(yml.getString(MATERIAL)));
-        }
+        yml.addDefault(MATERIAL, "REDSTONE_BLOCK");
         yml.addDefault(POSITION, 0);
         yml.addDefault(ENCHANTED, true);
     }
