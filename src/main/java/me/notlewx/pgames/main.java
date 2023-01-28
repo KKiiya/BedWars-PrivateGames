@@ -28,13 +28,15 @@ public final class main extends JavaPlugin {
     public static boolean bwproxy;
     public static boolean parties;
     private static main instance;
-    public static boolean usingdb;
+    public static boolean bw1058db;
+    public static boolean bwproxydb;
     @Override
     public void onEnable() {
         instance = this;
         bwconfig = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider().getConfigs().getMainConfig();
         proxyconfig = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig();
-        usingdb = bwconfig.getBoolean("database.enable");
+        bw1058db = bwconfig.getBoolean("database.enable");
+        bwproxydb = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getBoolean("database.enable");
 
         // BedWars1058 / BedWarsProxy Hook
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") == null) {
@@ -47,7 +49,7 @@ public final class main extends JavaPlugin {
         // Database search for BedWarsProxy
         if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
             bwproxy = true;
-            if (Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getBoolean("database.enable")) {
+            if (bwproxydb) {
                 getLogger().severe("Connecting to MySQL");
                 this.db = (new MySQL()).connect();
                 (new MySQL()).createTables();
@@ -63,7 +65,7 @@ public final class main extends JavaPlugin {
         }
         // Database search for BedWars1058
         else if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
-            if (usingdb) {
+            if (bw1058db) {
                 getLogger().severe("Connecting to MySQL");
                 this.db = (new MySQL()).connect();
                 (new MySQL()).createTables();

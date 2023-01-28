@@ -106,37 +106,12 @@ public class MySQL {
             }
         });
     }
-    public String setStringData(String path, String type, String string) {
+    public String setData(String path, String type, String value) {
         try {
             Connection c = (main.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
-                ps.setString(1, string);
-                ps.setString(2, path);
-                ps.executeUpdate();
-                ps.close();
-                if (c != null)
-                    c.close();
-            } catch (Throwable throwable) {
-                if (c != null)
-                    try {
-                        c.close();
-                    } catch (Throwable throwable1) {
-                        throwable.addSuppressed(throwable1);
-                    }
-                throw throwable;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-    public String setIntData(String path, String type, int amount) {
-        try {
-            Connection c = (main.plugin()).db.getConnection();
-            try {
-                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
-                ps.setInt(1, amount);
+                ps.setString(1, value);
                 ps.setString(2, path);
                 ps.executeUpdate();
                 ps.close();
@@ -157,64 +132,7 @@ public class MySQL {
         return null;
     }
 
-    public String setBooleanData(String path, String type, boolean value) {
-        try {
-            Connection c = (main.plugin()).db.getConnection();
-            try {
-                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
-                ps.setBoolean(1, value);
-                ps.setString(2, path);
-                ps.executeUpdate();
-                ps.close();
-                if (c != null)
-                    c.close();
-            } catch (Throwable throwable) {
-                if (c != null)
-                    try {
-                        c.close();
-                    } catch (Throwable throwable1) {
-                        throwable.addSuppressed(throwable1);
-                    }
-                throw throwable;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-    public boolean getBooleanData(String path, String type) {
-        try {
-            Connection c = (main.plugin()).db.getConnection();
-            try {
-                PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
-                ps.setString(1, path);
-                ps.setString(2, type);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    boolean str = rs.getBoolean(type);
-                    if (c != null)
-                        c.close();
-                    return str;
-                }
-                rs.close();
-                ps.close();
-                if (c != null)
-                    c.close();
-            } catch (Throwable throwable) {
-                if (c != null)
-                    try {
-                        c.close();
-                    } catch (Throwable throwable1) {
-                        throwable.addSuppressed(throwable1);
-                    }
-                throw throwable;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    public String getStringData(String path, String type) {
+    public String getData(String path, String type) {
         try {
             Connection c = (main.plugin()).db.getConnection();
             try {
@@ -245,38 +163,5 @@ public class MySQL {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public int getIntData(String path, String type) {
-        try {
-            Connection c = (main.plugin()).db.getConnection();
-            try {
-                PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
-                ps.setString(1, path);
-                ps.setString(2, type);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    int str = rs.getInt(type);
-                    if (c != null)
-                        c.close();
-                    return str;
-                }
-                rs.close();
-                ps.close();
-                if (c != null)
-                    c.close();
-            } catch (Throwable throwable) {
-                if (c != null)
-                    try {
-                        c.close();
-                    } catch (Throwable throwable1) {
-                        throwable.addSuppressed(throwable1);
-                    }
-                throw throwable;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 }

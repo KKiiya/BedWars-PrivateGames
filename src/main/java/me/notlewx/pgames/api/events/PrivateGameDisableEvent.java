@@ -15,4 +15,5 @@ public abstract class PrivateGameDisableEvent extends Event {
     public Player getPlayer() {
         return player;
     }
+    public void setCancelled(boolean value){}
 }

@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 public class PlayerArenaLeave implements Listener {
     @EventHandler
     public static void onPlayerLeave(PlayerLeaveArenaEvent e) {
+        String path = e.getPlayer().getName();
 
     }
 }
