@@ -1,6 +1,6 @@
 package me.notlewx.pgames.api;
 
-import me.notlewx.pgames.main;
+import me.notlewx.pgames.PrivateGames;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -69,7 +69,7 @@ public abstract class CommandHandler extends BukkitCommand implements CommandExe
         return this;
     }
 
-    public void removePlay(Player player) {
+    public void removePlayer(Player player) {
         this.delayedPlayers.remove(player.getName());
     }
 
@@ -101,7 +101,7 @@ public abstract class CommandHandler extends BukkitCommand implements CommandExe
             return true;
           }
           delayedPlayers.add(player.getName());
-          Bukkit.getScheduler().scheduleSyncDelayedTask(main.getInstance(), () -> {
+          Bukkit.getScheduler().scheduleSyncDelayedTask(PrivateGames.getInstance(), () -> {
               delayedPlayers.remove(player.getName());
           }, 20L * delay);
         }

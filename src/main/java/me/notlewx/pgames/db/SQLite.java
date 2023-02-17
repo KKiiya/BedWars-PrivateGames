@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
-import me.notlewx.pgames.main;
+import me.notlewx.pgames.PrivateGames;
 
 public class SQLite {
     Connection connection;
@@ -33,7 +33,7 @@ public class SQLite {
             rs = ps.executeQuery();
             close(ps, rs);
         } catch (SQLException e) {
-            main.plugin().getLogger().log(Level.SEVERE, "Couldn't connect! Try restarting the server or connect to the developer (NotLew_x#9207.");
+            PrivateGames.plugin().getLogger().log(Level.SEVERE, "Couldn't connect! Try restarting the server or connect to the developer (NotLew_x#9207.");
             throw new RuntimeException(e);
         }
     }
@@ -96,7 +96,7 @@ public class SQLite {
 
     public String setData(String path, String type, String value) {
         try {
-            Connection c = (main.plugin()).db.getConnection();
+            Connection c = (PrivateGames.plugin()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setString(1, value);

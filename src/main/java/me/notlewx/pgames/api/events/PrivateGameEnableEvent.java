@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 public abstract class PrivateGameEnableEvent extends Event {
     public static final HandlerList HANDLERS = new HandlerList();
     private boolean cancelled;
-    private Player player;
+    private final Player player;
     public PrivateGameEnableEvent(Player p) {
         this.player = p;
         priv = true;

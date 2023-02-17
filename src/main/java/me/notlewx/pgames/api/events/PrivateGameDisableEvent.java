@@ -6,7 +6,7 @@ import org.bukkit.event.HandlerList;
 
 public abstract class PrivateGameDisableEvent extends Event {
     public static final HandlerList HANDLERS = new HandlerList();
-    private Player player;
+    private final Player player;
     public static boolean priv = false;
     public PrivateGameDisableEvent(Player p) {
         this.player = p;

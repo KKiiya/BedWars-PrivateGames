@@ -43,6 +43,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>motorisation Repo</id>
+            <url>https://simonsator.de/repo</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -99,6 +103,12 @@
             <artifactId>bukkit-primary</artifactId>
             <version>0.6.6</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.simonsator</groupId>
+            <artifactId>BungeecordPartyAndFriends</artifactId>
+            <version>1.0.89</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

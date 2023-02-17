@@ -5,7 +5,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 public class MainConfig extends ConfigManager {
-    private static YamlConfiguration yml;
     public MainConfig(Plugin plugin, String name, String dir) {
         super(plugin, name, dir);
         YamlConfiguration yml = getYml();
