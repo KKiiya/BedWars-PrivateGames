@@ -15,7 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class PrivateGames extends JavaPlugin {
     public static ConfigManager bwconfig;
     public static FileConfiguration proxyconfig;
-    public HikariDataSource db;
     public static boolean bwproxy;
     private static PrivateGames instance;
     public static boolean bw1058db;

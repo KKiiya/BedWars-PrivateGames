@@ -31,7 +31,8 @@ public class BedWars1058 extends JavaPlugin {
             getLogger().severe("Connected to database!");
         }
         getLogger().info("BedWars1058 found! Hooking...");
-        getLogger().info("This addon have been developed by NotLew_x#9207");
+        getLogger().info("This addon has been developed by NotLew_x#9207");
+
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
         mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath() + File.separator + "PrivateGames");
         mainConfig.reload();
