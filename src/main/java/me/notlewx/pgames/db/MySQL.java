@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import static me.notlewx.pgames.PrivateGames.bwconfig;
+import static me.notlewx.pgames.support.BedWars1058.bwconfig;
 import static me.notlewx.pgames.PrivateGames.bwproxy;
 
 public class MySQL {
