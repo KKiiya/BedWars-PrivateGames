@@ -10,6 +10,7 @@ public class HealthMenu {
     }
     public void openSpeedMenu(Player player) {
         Inventory inventory = Bukkit.createInventory(null, 36);
+        player.openInventory(inventory);
     }
     public void closeSpeedMenu(Player player) {
         player.closeInventory();

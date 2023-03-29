@@ -3,10 +3,13 @@ package me.notlewx.pgames;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.zaxxer.hikari.HikariDataSource;
+import me.notlewx.pgames.commands.MainCommand;
 import me.notlewx.pgames.config.MainConfig;
 import me.notlewx.pgames.config.MessagesData;
-import me.notlewx.pgames.db.MySQL;
-import me.notlewx.pgames.db.SQLite;
+import me.notlewx.pgames.data.PlayerData;
+import me.notlewx.pgames.data.database.MySQL;
+import me.notlewx.pgames.data.database.SQLite;
+import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,6 +22,7 @@ public final class PrivateGames extends JavaPlugin {
     public static ConfigManager bwconfig;
     public static FileConfiguration proxyconfig;
     public static boolean bwproxy = false;
+    public static PlayerData pd;
     private static PrivateGames instance;
     public HikariDataSource db;
     private static boolean isDatabaseEnabled;
@@ -26,6 +30,7 @@ public final class PrivateGames extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        pd = new PlayerData();
         instance = this;
         // BedWars1058 / BedWarsProxy search
         if ((Bukkit.getPluginManager().getPlugin("BedWars1058")) == null && (Bukkit.getPluginManager().getPlugin("BedWarsProxy") == null)) {
@@ -40,10 +45,20 @@ public final class PrivateGames extends JavaPlugin {
             isProxyDatabaseEnabled = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getBoolean("database.enable");
 
             if (isProxyDatabaseEnabled) {
-                getLogger().severe("Connecting to MySQL");
-                this.db = (new MySQL()).connect();
-                (new MySQL()).createTables();
-                getLogger().severe("Connected to database!");
+                getLogger().info(Utility.colorizedString("&aUsing MySQL"));
+                getLogger().info(Utility.colorizedString("&eConnecting..."));
+                try {
+                    this.db = (new MySQL()).connect();
+                    getLogger().info(Utility.colorizedString("&eCreating tables..."));
+                    try {
+                        (new MySQL()).createTables();
+                    } catch (Throwable throwable) {
+                        getLogger().severe(Utility.colorizedString("&cCouldn't create tables! Restart the server or check your connection"));
+                        throwable.printStackTrace();
+                    }
+                } catch (Throwable throwable) {
+                    getLogger().severe(Utility.colorizedString("&cMySQL connection failed! Check your config or try restarting the server"));
+                }
             }
             else {
                 getLogger().severe("If you are using BedWarsProxy you need to enable the database");
@@ -51,6 +66,7 @@ public final class PrivateGames extends JavaPlugin {
                 return;
             }
             getLogger().info("BedWarsProxy found! Hooking...");
+            getCommand("pg").setExecutor(new MainCommand());
             getLogger().info("Enabling listeners...");
             getLogger().info("Creating config files...");
         }
@@ -62,16 +78,31 @@ public final class PrivateGames extends JavaPlugin {
             isDatabaseEnabled = bwconfig.getBoolean("database.enable");
 
             if (isDatabaseEnabled) {
-                getLogger().severe("Connecting to MySQL");
-                this.db = (new MySQL()).connect();
-                (new MySQL()).createTables();
-                getLogger().severe("Connected to database!");
+                getLogger().info(Utility.colorizedString("&aUsing MySQL"));
+                getLogger().info(Utility.colorizedString("&eConnecting..."));
+                try {
+                    this.db = (new MySQL()).connect();
+                    getLogger().info(Utility.colorizedString("&eCreating tables..."));
+                    try {
+                        (new MySQL()).createTables();
+                    } catch (Throwable throwable) {
+                        getLogger().severe(Utility.colorizedString("&cCouldn't create tables! Restart the server or check your connection"));
+                        throwable.printStackTrace();
+                    }
+                } catch (Throwable throwable) {
+                    getLogger().severe(Utility.colorizedString("&cMySQL connection failed! Check your config or try restarting the server"));
+                }
             }
             else {
-                getLogger().severe("Connecting to SQLite");
-                (new SQLite()).load();
-                (new SQLite()).getConnection();
-                getLogger().severe("Connected to database!");
+                getLogger().info(Utility.colorizedString("&aUsing SQLite"));
+                getLogger().info(Utility.colorizedString("&eConnecting..."));
+                try {
+                    (new SQLite()).getConnection();
+                    getLogger().info(Utility.colorizedString("&aConnected successfully!"));
+                    (new SQLite()).load();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
             }
             getLogger().info("BedWars1058 found! Hooking...");
             getLogger().info("Enabling listeners...");
@@ -82,6 +113,7 @@ public final class PrivateGames extends JavaPlugin {
             mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath() + File.separator + "PrivateGames");
             mainConfig.reload();
             new MessagesData();
+
         }
 
 

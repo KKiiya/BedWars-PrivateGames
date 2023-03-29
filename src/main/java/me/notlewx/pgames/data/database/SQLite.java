@@ -1,4 +1,4 @@
-package me.notlewx.pgames.db;
+package me.notlewx.pgames.data.database;
 
 import com.andrei1058.bedwars.api.BedWars;
 import java.io.File;

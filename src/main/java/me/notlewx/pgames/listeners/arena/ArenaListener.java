@@ -1,6 +1,6 @@
 package me.notlewx.pgames.listeners.arena;
 
-import me.notlewx.pgames.db.PlayerData;
+import me.notlewx.pgames.data.PlayerData;
 import org.bukkit.event.Listener;
 
 public class ArenaListener implements Listener {

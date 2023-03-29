@@ -1,8 +1,8 @@
 package me.notlewx.pgames.listeners.player;
 
 import me.notlewx.pgames.PrivateGames;
-import me.notlewx.pgames.db.MySQL;
-import me.notlewx.pgames.db.SQLite;
+import me.notlewx.pgames.data.database.MySQL;
+import me.notlewx.pgames.data.database.SQLite;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

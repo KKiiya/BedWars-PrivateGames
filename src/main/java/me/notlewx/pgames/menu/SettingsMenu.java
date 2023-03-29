@@ -51,7 +51,7 @@ public class SettingsMenu {
             dswordMeta.setLore();
 
             gappleMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            gappleMeta.setLore();
+            gappleMeta.setLore(com.andrei1058.bedwars.proxy.language.Language.getList());
 
             quartzMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
             quartzMeta.setLore();

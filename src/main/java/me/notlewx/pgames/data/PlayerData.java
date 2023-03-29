@@ -1,14 +1,16 @@
-package me.notlewx.pgames.db;
+package me.notlewx.pgames.data;
 
 import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.events.PrivateGameDisableEvent;
 import me.notlewx.pgames.api.events.PrivateGameEnableEvent;
+import me.notlewx.pgames.data.database.MySQL;
+import me.notlewx.pgames.data.database.SQLite;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class PlayerData {
-    MySQL mySQL = new MySQL();
-    SQLite sqLite = new SQLite();
+    final MySQL mySQL = new MySQL();
+    final SQLite sqLite = new SQLite();
     public boolean isPlayerInParty(Player player) {
         String path = player.getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
@@ -98,5 +100,4 @@ public class PlayerData {
         }
         return false;
     }
-
 }

@@ -1,4 +1,4 @@
-package me.notlewx.pgames.db;
+package me.notlewx.pgames.data.database;
 
 import com.zaxxer.hikari.HikariDataSource;
 import me.notlewx.pgames.PrivateGames;

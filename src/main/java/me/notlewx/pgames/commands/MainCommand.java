@@ -1,6 +1,8 @@
 package me.notlewx.pgames.commands;
 
-import me.notlewx.pgames.db.PlayerData;
+import me.notlewx.pgames.PrivateGames;
+import me.notlewx.pgames.data.PlayerData;
+import me.notlewx.pgames.menu.SettingsMenu;
 import me.notlewx.pgames.util.Utility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,14 +20,29 @@ public class MainCommand implements CommandExecutor {
                 sender.sendMessage(Utility.colorizedString("&cNot enough args"));
             }
             else {
-                switch (args[0].toLowerCase()) {
-                    case "enable":
-                        playerData.setPrivateGameEnabled((Player) sender);
-                    break;
-                    case "disable":
-                        playerData.setPrivateGameDisabled((Player) sender);
-                    break;
-                    case "help":
+                if (args.length > 1) {
+                    switch (args[0].toLowerCase()) {
+                        case "enable":
+                            if (playerData.isPlayerInParty((Player) sender)) {
+                                playerData.setPrivateGameEnabled((Player) sender);
+                            }
+                            break;
+                        case "disable":
+                            if (playerData.isPlayerInParty((Player) sender)) {
+                                playerData.setPrivateGameDisabled((Player) sender);
+                            } else {
+
+                            }
+                            break;
+                        case "help":
+                    }
+                    if (PrivateGames.isBwproxy()) {
+                        if (args[0].equalsIgnoreCase("gui")) {
+                            new SettingsMenu((Player) sender);
+                        }
+                    }
+                } else {
+                    sender.sendMessage(Utility.colorizedString("&cNot enough args!"));
                 }
             }
         } else {
