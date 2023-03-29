@@ -33,7 +33,7 @@ public class SQLite {
             rs = ps.executeQuery();
             close(ps, rs);
         } catch (SQLException e) {
-            PrivateGames.plugin().getLogger().log(Level.SEVERE, "Couldn't connect! Try restarting the server or connect to the developer (NotLew_x#9207.");
+            PrivateGames.getPlugins().getLogger().log(Level.SEVERE, "Couldn't connect! Try restarting the server or connect to the developer (NotLew_x#9207.");
             throw new RuntimeException(e);
         }
     }
@@ -96,7 +96,7 @@ public class SQLite {
 
     public String setData(String path, String type, String value) {
         try {
-            Connection c = (PrivateGames.plugin()).db.getConnection();
+            Connection c = (PrivateGames.getPlugins()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setString(1, value);

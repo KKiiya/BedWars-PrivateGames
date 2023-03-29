@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import static me.notlewx.pgames.support.BedWars1058.bwconfig;
 import static me.notlewx.pgames.PrivateGames.bwproxy;
 
 public class MySQL {
@@ -20,11 +19,11 @@ public class MySQL {
 
     public HikariDataSource connect() {
         if (!bwproxy) {
-            this.host = bwconfig.getString("database.host");
-            this.database = bwconfig.getString("database.database");
-            this.user = bwconfig.getString("database.user");
-            this.pass = bwconfig.getString("database.pass");
-            this.port = bwconfig.getInt("database.port");;
+            this.host = PrivateGames.bwconfig.getString("database.host");
+            this.database = PrivateGames.bwconfig.getString("database.database");
+            this.user = PrivateGames.bwconfig.getString("database.user");
+            this.pass = PrivateGames.bwconfig.getString("database.pass");
+            this.port = PrivateGames.bwconfig.getInt("database.port");;
         }
         else {
             this.host = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.host");
@@ -47,7 +46,7 @@ public class MySQL {
     }
     public void createTables() {
         try {
-            Connection c = (PrivateGames.plugin()).db.getConnection();
+            Connection c = (PrivateGames.getPlugins()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS bw1058_private_games(name varchar(200), privateGameEnabled boolean, playerInParty boolean, oneHitOneKill boolean, lowGravity boolean, speed int, bedInstaBreak boolean, maxTeamUpgrades boolean, allowBreakMap boolean, noDiamonds boolean, noEmeralds boolean, respawnEventTime int, healthBuffLevel int, eventsTime int)");
                 ps.executeUpdate();
@@ -68,9 +67,9 @@ public class MySQL {
         }
     }
     public void createPlayerData(String path) {
-        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.plugin(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), () -> {
             try {
-                Connection c = (PrivateGames.plugin()).db.getConnection();
+                Connection c = (PrivateGames.getPlugins()).db.getConnection();
                 try {
                     String sql = "INSERT INTO bw1058_private_games(name, privateGameEnabled, playerInParty, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement ps = c.prepareStatement(sql);
@@ -108,7 +107,7 @@ public class MySQL {
     }
     public String setData(String path, String type, String value) {
         try {
-            Connection c = (PrivateGames.plugin()).db.getConnection();
+            Connection c = (PrivateGames.getPlugins()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
                 ps.setString(1, value);
@@ -134,11 +133,10 @@ public class MySQL {
 
     public String getData(String path, String type) {
         try {
-            Connection c = (PrivateGames.plugin()).db.getConnection();
+            Connection c = (PrivateGames.getPlugins()).db.getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
                 ps.setString(1, path);
-                ps.setString(2, type);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     String str = rs.getString(type);
