@@ -14,7 +14,7 @@ public class SettingsMenu {
     public SettingsMenu(Player player) {
         openMenu(player);
     }
-    public static void openMenu(Player player) {
+    public void openMenu(Player player) {
         inventory = Bukkit.createInventory(null, 54);
 
         ItemStack dsword = new ItemStack(Material.DIAMOND_SWORD);
@@ -84,7 +84,7 @@ public class SettingsMenu {
             clockMeta.setLore();
 
             sswordMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            sswordMeta.setLore(com.andrei1058.bedwars.proxy.language.Language.getList());
+            sswordMeta.setLore();
 
             arrowMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
             arrowMeta.setLore();

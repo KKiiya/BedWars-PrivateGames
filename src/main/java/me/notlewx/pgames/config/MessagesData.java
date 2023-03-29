@@ -62,5 +62,7 @@ public class MessagesData {
             EVENTS_TIME_NORMAL_MEANING = PATH + "meanings.events-time.normal",
             EVENTS_TIME_FAST_MEANING = PATH + "meanings.events-time.fast",
             EVENTS_TIME_FASTER_MEANING = PATH + "meanings.events-time.faster",
-            BACK_MEANING = PATH + "meanings.back";
+            BACK_MEANING = PATH + "meanings.back",
+            ITEM_PRIVATE_GAME_NAME = PATH + "menu.item.name",
+            ITEM_PRIVATE_GAME_LORE = PATH + "menu.item.lore";
 }
