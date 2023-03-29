@@ -27,10 +27,6 @@
             <url>https://repo.andrei1058.dev/releases/</url>
         </repository>
         <repository>
-            <id>passionless-repo</id>
-            <url>https://repo.alessiodp.com/releases/</url>
-        </repository>
-        <repository>
             <id>code-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
             <layout>default</layout>
@@ -42,10 +38,6 @@
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
-        </repository>
-        <repository>
-            <id>motorisation Repo</id>
-            <url>https://simonsator.de/repo</url>
         </repository>
     </repositories>
 
@@ -81,12 +73,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.alessiodp.parties</groupId>
-            <artifactId>parties-api</artifactId>
-            <version>3.2.7</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>2.10.0</version>
@@ -97,18 +83,6 @@
             <artifactId>HikariCP</artifactId>
             <version>5.0.1</version>
             <scope>compile</scope>
-        </dependency>
-		<dependency>
-            <groupId>com.github.hakan-krgn.hCore</groupId>
-            <artifactId>bukkit-primary</artifactId>
-            <version>0.6.6</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.simonsator</groupId>
-            <artifactId>BungeecordPartyAndFriends</artifactId>
-            <version>1.0.89</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

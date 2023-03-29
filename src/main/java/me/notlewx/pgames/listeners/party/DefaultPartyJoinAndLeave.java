@@ -1,6 +1,7 @@
 package me.notlewx.pgames.listeners.party;
 
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
+import com.andrei1058.bedwars.api.party.Party;
 import me.notlewx.pgames.db.MySQL;
 import me.notlewx.pgames.db.SQLite;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,5 @@ public class DefaultPartyJoinAndLeave implements Listener {
     @EventHandler
     public static void onPartyJoin(PlayerJoinArenaEvent e) {
         String path = e.getPlayer().getName();
-
     }
 }

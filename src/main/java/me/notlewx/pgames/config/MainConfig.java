@@ -1,6 +1,7 @@
 package me.notlewx.pgames.config;
 
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -8,8 +9,8 @@ public class MainConfig extends ConfigManager {
     public MainConfig(Plugin plugin, String name, String dir) {
         super(plugin, name, dir);
         YamlConfiguration yml = getYml();
-        yml.options().header("BedWars1058 PrivateGames Addon by NotLew_x#9207");
-        yml.addDefault(MATERIAL, "REDSTONE_BLOCK");
+        yml.options().header("BedWars1058 PrivateGames Addon by Kiiya#9207");
+        yml.addDefault(MATERIAL, Material.REDSTONE_BLOCK);
         yml.addDefault(POSITION, 0);
         yml.addDefault(ENCHANTED, true);
     }
