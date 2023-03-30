@@ -13,7 +13,6 @@ import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
 
 public final class PrivateGames extends JavaPlugin {
@@ -21,17 +20,15 @@ public final class PrivateGames extends JavaPlugin {
     private static BedWars bedWars;
     public static ConfigManager bwconfig;
     public static FileConfiguration proxyconfig;
-    public static boolean bwproxy = false;
     public static PlayerData pd;
-    private static PrivateGames instance;
     public HikariDataSource db;
+    public static boolean bwproxy = false;
     private static boolean isDatabaseEnabled;
     private static boolean isProxyDatabaseEnabled;
 
     @Override
     public void onEnable() {
         pd = new PlayerData();
-        instance = this;
         // BedWars1058 / BedWarsProxy search
         if ((Bukkit.getPluginManager().getPlugin("BedWars1058")) == null && (Bukkit.getPluginManager().getPlugin("BedWarsProxy") == null)) {
             getLogger().severe("BedWars1058 or BedWarsProxy was not found. Disabling...");
