@@ -8,3 +8,5 @@ description: Adds the private games from a well known server!
 commands:
   pg:
     description: Enables the private games if you are in a party
+    aliases:
+      - privategame

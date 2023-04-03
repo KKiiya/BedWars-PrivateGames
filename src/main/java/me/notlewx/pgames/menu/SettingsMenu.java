@@ -1,7 +1,6 @@
 package me.notlewx.pgames.menu;
 
-import com.andrei1058.bedwars.api.language.Language;
-import me.notlewx.pgames.PrivateGames;
+import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,7 +14,7 @@ public class SettingsMenu {
         openMenu(player);
     }
     public void openMenu(Player player) {
-        inventory = Bukkit.createInventory(null, 54);
+        inventory = Bukkit.createInventory(null, 54, Utility.getMSGLang(player, ));
 
         ItemStack dsword = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta dswordMeta = dsword.getItemMeta();
@@ -46,92 +45,48 @@ public class SettingsMenu {
         ItemStack arrow = new ItemStack(Material.ARROW);
         ItemMeta arrowMeta = arrow.getItemMeta();
 
-        if (PrivateGames.isBwproxy()) {
-            dswordMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            dswordMeta.setLore();
+            dswordMeta.setDisplayName(Utility.getMSGLang(player, ));
+            dswordMeta.setLore(Utility.getListLang(player, ));
 
-            gappleMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            gappleMeta.setLore(com.andrei1058.bedwars.proxy.language.Language.getList());
+            gappleMeta.setDisplayName(Utility.getMSGLang(player, ));
+            gappleMeta.setLore(Utility.getListLang(player, ));
 
-            quartzMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            quartzMeta.setLore();
+            quartzMeta.setDisplayName(Utility.getMSGLang(player, ));
+            quartzMeta.setLore(Utility.getListLang(player, ));
 
-            rfootMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            rfootMeta.setLore();
+            rfootMeta.setDisplayName(Utility.getMSGLang(player, ));
+            rfootMeta.setLore(Utility.getListLang(player, ));
 
-            ichestplateMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            ichestplateMeta.setLore();
+            ichestplateMeta.setDisplayName(Utility.getMSGLang(player, ));
+            ichestplateMeta.setLore(Utility.getListLang(player, ));
 
-            bowMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            bowMeta.setLore();
+            bowMeta.setDisplayName(Utility.getMSGLang(player, ));
+            bowMeta.setLore(Utility.getListLang(player, ));
 
-            iswordMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            iswordMeta.setLore();
+            iswordMeta.setDisplayName(Utility.getMSGLang(player, ));
+            iswordMeta.setLore(Utility.getListLang(player, ));
 
-            deggMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            deggMeta.setLore();
+            deggMeta.setDisplayName(Utility.getMSGLang(player, ));
+            deggMeta.setLore(Utility.getListLang(player, ));
 
-            sballMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            sballMeta.setLore();
+            sballMeta.setDisplayName(Utility.getMSGLang(player, ));
+            sballMeta.setLore(Utility.getListLang(player, ));
 
-            eblockMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            eblockMeta.setLore();
+            eblockMeta.setDisplayName(Utility.getMSGLang(player, ));
+            eblockMeta.setLore(Utility.getListLang(player, ));
 
-            epearlMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            epearlMeta.setLore();
+            epearlMeta.setDisplayName(Utility.getMSGLang(player, ));
+            epearlMeta.setLore(Utility.getListLang(player, ));
 
-            clockMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            clockMeta.setLore();
+            clockMeta.setDisplayName(Utility.getMSGLang(player, ));
+            clockMeta.setLore(Utility.getListLang(player, ));
 
-            sswordMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            sswordMeta.setLore();
+            sswordMeta.setDisplayName(Utility.getMSGLang(player, ));
+            sswordMeta.setLore(Utility.getListLang(player, ));
 
-            arrowMeta.setDisplayName(com.andrei1058.bedwars.proxy.language.Language.getMsg(player, ));
-            arrowMeta.setLore();
-        }
-        else {
-            dswordMeta.setDisplayName(Language.getMsg(player, ));
-            dswordMeta.setLore(Language.getList(player, ));
+            arrowMeta.setDisplayName(Utility.getMSGLang(player, ));
+            arrowMeta.setLore(Utility.getListLang(player, ));
 
-            gappleMeta.setDisplayName(Language.getMsg(player, ));
-            gappleMeta.setLore(Language.getList(player, ));
-
-            quartzMeta.setDisplayName(Language.getMsg(player, ));
-            quartzMeta.setLore(Language.getList(player, ));
-
-            rfootMeta.setDisplayName(Language.getMsg(player, ));
-            rfootMeta.setLore(Language.getList(player, ));
-
-            ichestplateMeta.setDisplayName(Language.getMsg(player, ));
-            ichestplateMeta.setLore(Language.getList(player, ));
-
-            bowMeta.setDisplayName(Language.getMsg(player, ));
-            bowMeta.setLore(Language.getList(player, ));
-
-            iswordMeta.setDisplayName(Language.getMsg(player, ));
-            iswordMeta.setLore(Language.getList(player, ));
-
-            deggMeta.setDisplayName(Language.getMsg(player, ));
-            deggMeta.setLore(Language.getList(player, ));
-
-            sballMeta.setDisplayName(Language.getMsg(player, ));
-            sballMeta.setLore(Language.getList(player, ));
-
-            eblockMeta.setDisplayName(Language.getMsg(player, ));
-            eblockMeta.setLore(Language.getList(player, ));
-
-            epearlMeta.setDisplayName(Language.getMsg(player, ));
-            epearlMeta.setLore(Language.getList(player, ));
-
-            clockMeta.setDisplayName(Language.getMsg(player, ));
-            clockMeta.setLore(Language.getList(player, ));
-
-            sswordMeta.setDisplayName(Language.getMsg(player, ));
-            sswordMeta.setLore(Language.getList(player, ));
-
-            arrowMeta.setDisplayName(Language.getMsg(player, ));
-            arrowMeta.setLore(Language.getList(player, ));
-        }
         dsword.setItemMeta(dswordMeta);
         gapple.setItemMeta(gappleMeta);
         quartz.setItemMeta(quartzMeta);

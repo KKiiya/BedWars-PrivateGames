@@ -63,7 +63,6 @@ public final class PrivateGames extends JavaPlugin {
                 return;
             }
             getLogger().info("BedWarsProxy found! Hooking...");
-            getCommand("pg").setExecutor(new MainCommand());
             getLogger().info("Enabling listeners...");
             getLogger().info("Creating config files...");
         }
@@ -106,13 +105,12 @@ public final class PrivateGames extends JavaPlugin {
 
             getLogger().info("Creating config files...");
 
+            getCommand("pg").setExecutor(new MainCommand());
             bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
             mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath() + File.separator + "PrivateGames");
             mainConfig.reload();
             new MessagesData();
-
         }
-
 
         getLogger().info("This addon has been developed by Kiiya#9207");
     }
@@ -131,5 +129,8 @@ public final class PrivateGames extends JavaPlugin {
     }
     public static boolean isBwproxy() {
         return bwproxy;
+    }
+    public static PlayerData getPlayerData() {
+        return pd;
     }
 }

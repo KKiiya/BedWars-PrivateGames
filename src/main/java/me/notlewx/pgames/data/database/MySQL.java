@@ -48,7 +48,7 @@ public class MySQL {
         try {
             Connection c = (PrivateGames.getPlugins()).db.getConnection();
             try {
-                PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS bw1058_private_games(name varchar(200), privateGameEnabled boolean, playerInParty boolean, oneHitOneKill boolean, lowGravity boolean, speed int, bedInstaBreak boolean, maxTeamUpgrades boolean, allowBreakMap boolean, noDiamonds boolean, noEmeralds boolean, respawnEventTime int, healthBuffLevel int, eventsTime int)");
+                PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS bw1058_private_games(player varchar(200), privateGameEnabled boolean, oneHitOneKill boolean, lowGravity boolean, speed int, bedInstaBreak boolean, maxTeamUpgrades boolean, allowMapBreak boolean, noDiamonds boolean, noEmeralds boolean, respawnEventTime int, healthBuffLevel int, eventsTime int)");
                 ps.executeUpdate();
                 ps.close();
                 if (c != null)
@@ -71,22 +71,21 @@ public class MySQL {
             try {
                 Connection c = (PrivateGames.getPlugins()).db.getConnection();
                 try {
-                    String sql = "INSERT INTO bw1058_private_games(name, privateGameEnabled, playerInParty, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql = "INSERT INTO bw1058_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement ps = c.prepareStatement(sql);
                     ps.setString(1, path);
                     ps.setBoolean(2, false);
                     ps.setBoolean(3, false);
                     ps.setBoolean(4, false);
-                    ps.setBoolean(5, false);
-                    ps.setInt(6, 1);
+                    ps.setInt(5, 1);
+                    ps.setBoolean(6, false);
                     ps.setBoolean(7, false);
                     ps.setBoolean(8, false);
                     ps.setBoolean(9, false);
                     ps.setBoolean(10, false);
-                    ps.setBoolean(11, false);
+                    ps.setInt(11, 1);
                     ps.setInt(12, 1);
                     ps.setInt(13, 1);
-                    ps.setInt(14, 1);
                     ps.executeUpdate();
                     ps.close();
                     if (c != null)
@@ -109,7 +108,7 @@ public class MySQL {
         try {
             Connection c = (PrivateGames.getPlugins()).db.getConnection();
             try {
-                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE name=?");
+                PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE player=?");
                 ps.setString(1, value);
                 ps.setString(2, path);
                 ps.executeUpdate();
@@ -135,7 +134,7 @@ public class MySQL {
         try {
             Connection c = (PrivateGames.getPlugins()).db.getConnection();
             try {
-                PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE name=?");
+                PreparedStatement ps = c.prepareStatement("SELECT " + type + " FROM bw1058_private_games WHERE player=?");
                 ps.setString(1, path);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
