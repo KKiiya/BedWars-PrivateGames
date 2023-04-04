@@ -14,10 +14,10 @@ public interface IPlayerData {
     boolean NEisEnabled(Player player);
     boolean setPrivateGameEnabled(Player player);
     boolean setPrivateGameDisabled(Player player);
-    int getRETLevel();
-    int getHBLevel();
-    int getETLevel();
-    int getSpeedLevel();
+    int getRETLevel(Player player);
+    int getHBLevel(Player player);
+    int getETLevel(Player player);
+    int getSpeedLevel(Player player);
     void setOHOKEnabled(Player player, boolean value);
     void setLGEnabled(Player player, boolean value);
     void setBIBEnabled(Player player, boolean value);
