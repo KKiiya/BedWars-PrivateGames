@@ -1,4 +1,4 @@
-package me.notlewx.pgames.listeners.player;
+package me.notlewx.pgames.listeners.player.bedwars;
 
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import org.bukkit.event.EventHandler;

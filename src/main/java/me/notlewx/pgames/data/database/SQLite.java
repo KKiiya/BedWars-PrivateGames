@@ -22,19 +22,10 @@ public class SQLite {
         this.connection = getConnection();
         try {
             Statement s = this.connection.createStatement();
-            s.executeUpdate("CREATE TABLE IF NOT EXISTS bw1058_private_games (`player` varchar(200) NOT NULL, `privateGameEnabled` boolean(11) NOT NULL,`oneHitOneKill` boolean(11) NOT NULL,`lowGravity` boolean(11) NOT NULL,`speed` boolean(11) NOT NULL,`bedInstaBreak` boolean(11) NOT NULL,`maxTeamUpgrades` boolean(11) NOT NULL,`allowBreakMap` boolean(11) NOT NULL,`noDiamonds` boolean(11) NOT NULL,`noEmeralds` boolean(11) NOT NULL,`respawnEventTime` int(11) NOT NULL,`healthBuffLevel` int(11), `eventsTime` int(11) NOT NULL, NOT NULL,PRIMARY KEY (`player`));");
+            s.executeUpdate("CREATE TABLE IF NOT EXISTS bw1058_private_games (`player` varchar(200) NOT NULL, `privateGameEnabled` boolean(11) NOT NULL,`oneHitOneKill` boolean(11) NOT NULL,`lowGravity` boolean(11) NOT NULL,`speed` boolean(11) NOT NULL,`bedInstaBreak` boolean(11) NOT NULL,`maxTeamUpgrades` boolean(11) NOT NULL,`allowMapBreak` boolean(11) NOT NULL,`noDiamonds` boolean(11) NOT NULL,`noEmeralds` boolean(11) NOT NULL,`respawnEventTime` int(11) NOT NULL,`healthBuffLevel` int(11) NOT NULL, `eventsTime` int(11) NOT NULL, PRIMARY KEY (`player`));");
             s.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        this.connection = getConnection();
-        try {
-            ps = this.connection.prepareStatement("SELECT * FROM bw1058_private_games WHERE player = ?");
-            rs = ps.executeQuery();
-            close(ps, rs);
-        } catch (SQLException e) {
-            PrivateGames.getPlugins().getLogger().log(Level.SEVERE, "Couldn't connect! Try restarting the server or connect to the developer (Kiiya#9207.");
-            throw new RuntimeException(e);
         }
     }
 
@@ -63,9 +54,7 @@ public class SQLite {
             Class.forName("org.sqlite.JDBC");
             this.connection = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
             return this.connection;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -96,7 +85,7 @@ public class SQLite {
 
     public String setData(String path, String type, String value) {
         try {
-            Connection c = (PrivateGames.getPlugins()).db.getConnection();
+            Connection c = getConnection();
             try {
                 PreparedStatement ps = c.prepareStatement("UPDATE bw1058_private_games SET " + type + "=? WHERE player=?");
                 ps.setString(1, value);
@@ -124,17 +113,17 @@ public class SQLite {
         PreparedStatement ps = null;
         try {
             connection = getConnection();
-            ps = connection.prepareStatement("INSERT INTO bw1058_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps = connection.prepareStatement("INSERT INTO bw1058_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, path);
-            ps.setBoolean(2, false);
-            ps.setBoolean(3, false);
-            ps.setBoolean(4, false);
+            ps.setString(2, "false");
+            ps.setString(3, "false");
+            ps.setString(4, "false");
             ps.setInt(5, 1);
-            ps.setBoolean(6, false);
-            ps.setBoolean(7, false);
-            ps.setBoolean(8, false);
-            ps.setBoolean(9, false);
-            ps.setBoolean(10, false);
+            ps.setString(6, "false");
+            ps.setString(7, "false");
+            ps.setString(8, "false");
+            ps.setString(9, "false");
+            ps.setString(10, "false");
             ps.setInt(11, 1);
             ps.setInt(12, 1);
             ps.setInt(13, 1);

@@ -1,9 +1,11 @@
 package me.notlewx.pgames.data;
 
 import me.notlewx.pgames.PrivateGames;
+import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.events.PrivateGameDisableEvent;
 import me.notlewx.pgames.api.events.PrivateGameEnableEvent;
 import me.notlewx.pgames.api.interfaces.IPlayerData;
+import me.notlewx.pgames.api.interfaces.Party;
 import me.notlewx.pgames.data.database.MySQL;
 import me.notlewx.pgames.data.database.SQLite;
 import org.bukkit.Bukkit;
@@ -31,11 +33,11 @@ public class PlayerData implements IPlayerData {
         return false;
     }
     public boolean isPlayerInParty(Player player) {
-        Party party = new Party();
+        Party party = PGamesAPI.getPartyUtil();
         return party.hasParty(player);
     }
     @Override
-    public boolean OHOKisEnabled(Player player) {
+    public boolean isOHOKEnabled(Player player) {
         String path = player.getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
@@ -51,7 +53,7 @@ public class PlayerData implements IPlayerData {
         return false;
     }
     @Override
-    public boolean LGisEnabled(Player player) {
+    public boolean isLGEnabled(Player player) {
         String path = player.getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
@@ -67,7 +69,7 @@ public class PlayerData implements IPlayerData {
         return false;
     }
     @Override
-    public boolean BIBisEnabled(Player player) {
+    public boolean isBIBEnabled(Player player) {
         String path = player.getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
@@ -83,7 +85,7 @@ public class PlayerData implements IPlayerData {
         return false;
     }
     @Override
-    public boolean MTUisEnabled(Player player) {
+    public boolean isMTUEnabled(Player player) {
         String path = player.getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
@@ -99,7 +101,7 @@ public class PlayerData implements IPlayerData {
         return false;
     }
     @Override
-    public boolean AMBisEnabled(Player player) {
+    public boolean isAMBEnabled(Player player) {
         String path = player.getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
@@ -115,7 +117,7 @@ public class PlayerData implements IPlayerData {
         return false;
     }
     @Override
-    public boolean NDisEnabled(Player player) {
+    public boolean isNDEnabled(Player player) {
         String path = player.getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
@@ -131,7 +133,7 @@ public class PlayerData implements IPlayerData {
         return false;
     }
     @Override
-    public boolean NEisEnabled(Player player) {
+    public boolean isNEEnabled(Player player) {
         String path = player.getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
@@ -154,15 +156,15 @@ public class PlayerData implements IPlayerData {
         if (event.isCancelled()) return false;
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
-                mySQL.setData(path, "privateGameEnabled", String.valueOf(true));
+                mySQL.setData(path, "privateGameEnabled", "true");
                 return true;
             }
         }
         else {
             if (PrivateGames.isDatabaseEnabled()) {
-               mySQL.setData(path, "playerInParty", String.valueOf(true));
+               mySQL.setData(path, "privateGameEnabled", "true");
             } else {
-                sqLite.setData(path, "playerInParty", String.valueOf(true));
+                sqLite.setData(path, "privateGameEnabled", "true");
             }
             return true;
         }
@@ -176,15 +178,15 @@ public class PlayerData implements IPlayerData {
         if (event.isCancelled()) return false;
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
-                mySQL.setData(path, "privateGameEnabled", String.valueOf(true));
+                mySQL.setData(path, "privateGameEnabled", "false");
                 return true;
             }
         }
         else {
             if (PrivateGames.isDatabaseEnabled()) {
-                mySQL.setData(path, "playerInParty", String.valueOf(true));
+                mySQL.setData(path, "privateGameEnabled", "false");
             } else {
-                sqLite.setData(path, "playerInParty", String.valueOf(true));
+                sqLite.setData(path, "privateGameEnabled", "false");
             }
             return true;
         }

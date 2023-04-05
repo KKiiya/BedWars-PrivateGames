@@ -1,6 +1,6 @@
 name: BedWars1058-PrivateGames
 version: '${project.version}'
-main: me.notlewx.pgames.main
+main: me.notlewx.pgames.PrivateGames
 prefix: BedWars1058-PrivateGames
 softdepend: [ BedWars1058, PlaceholderAPI, Vault, Parties ]
 authors: [ NotLew_x ]

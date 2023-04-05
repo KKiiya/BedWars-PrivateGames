@@ -5,8 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import static me.notlewx.pgames.config.MessagesData.*;
 
 public class SettingsMenu {
     private static Inventory inventory;
@@ -14,7 +16,7 @@ public class SettingsMenu {
         openMenu(player);
     }
     public void openMenu(Player player) {
-        inventory = Bukkit.createInventory(null, 54, Utility.getMSGLang(player, ));
+        inventory = Bukkit.createInventory(null, 54, Utility.getMSGLang(player, MAIN_MENU_NAME));
 
         ItemStack dsword = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta dswordMeta = dsword.getItemMeta();
@@ -24,98 +26,100 @@ public class SettingsMenu {
         ItemMeta quartzMeta = quartz.getItemMeta();
         ItemStack rfoot = new ItemStack(Material.RABBIT_FOOT);
         ItemMeta rfootMeta = rfoot.getItemMeta();
-        ItemStack ichestplate = new ItemStack(Material.IRON_CHESTPLATE);
-        ItemMeta ichestplateMeta = ichestplate.getItemMeta();
-        ItemStack bow = new ItemStack(Material.BOW);
-        ItemMeta bowMeta = bow.getItemMeta();
-        ItemStack isword = new ItemStack(Material.IRON_SWORD);
-        ItemMeta iswordMeta = bow.getItemMeta();
-        ItemStack degg = new ItemStack(Material.DRAGON_EGG);
-        ItemMeta deggMeta = degg.getItemMeta();
-        ItemStack sball = new ItemStack(Material.SLIME_BALL);
-        ItemMeta sballMeta = sball.getItemMeta();
-        ItemStack eblock = new ItemStack(Material.EMERALD_BLOCK);
-        ItemMeta eblockMeta = eblock.getItemMeta();
-        ItemStack epearl = new ItemStack(Material.ENDER_PEARL);
-        ItemMeta epearlMeta = epearl.getItemMeta();
-        ItemStack clock = new ItemStack(Material.WATCH);
-        ItemMeta clockMeta = clock.getItemMeta();
-        ItemStack ssword = new ItemStack(Material.STONE_SWORD);
-        ItemMeta sswordMeta = ssword.getItemMeta();
+
+        ItemStack ipaper = new ItemStack(Material.PAPER);
+        ItemMeta ipaperMeta = ipaper.getItemMeta();
+        ItemStack book = new ItemStack(Material.BOOK);
+        ItemMeta bookMeta = book.getItemMeta();
+        ItemStack emerald = new ItemStack(Material.EMERALD);
+        ItemMeta emeraldMeta = emerald.getItemMeta();
+
+        ItemStack diamond = new ItemStack(Material.DIAMOND);
+        ItemMeta diamondMeta = diamond.getItemMeta();
+        ItemStack gblock = new ItemStack(Material.GRASS);
+        ItemMeta gblockMeta = gblock.getItemMeta();
+        ItemStack bed = new ItemStack(Material.BED);
+        ItemMeta bedMeta = bed.getItemMeta();
+        ItemStack dblock = new ItemStack(Material.DIAMOND_BLOCK);
+        ItemMeta dblockMeta = dblock.getItemMeta();
+
         ItemStack arrow = new ItemStack(Material.ARROW);
         ItemMeta arrowMeta = arrow.getItemMeta();
 
-            dswordMeta.setDisplayName(Utility.getMSGLang(player, ));
-            dswordMeta.setLore(Utility.getListLang(player, ));
+            dswordMeta.setDisplayName(Utility.getMSGLang(player, ITEM_ONE_HIT_ONE_KILL_NAME));
+            dswordMeta.setLore(Utility.getListLang(player, ITEM_ONE_HIT_ONE_KILL_LORE));
+            dswordMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-            gappleMeta.setDisplayName(Utility.getMSGLang(player, ));
-            gappleMeta.setLore(Utility.getListLang(player, ));
+            gappleMeta.setDisplayName(Utility.getMSGLang(player, ITEM_HEALTH_BUFF_LEVEL_NAME));
+            gappleMeta.setLore(Utility.getListLang(player, ITEM_HEALTH_BUFF_LEVEL_LORE));
 
-            quartzMeta.setDisplayName(Utility.getMSGLang(player, ));
-            quartzMeta.setLore(Utility.getListLang(player, ));
+            quartzMeta.setDisplayName(Utility.getMSGLang(player, ITEM_LOW_GRAVITY_NAME));
+            quartzMeta.setLore(Utility.getListLang(player, ITEM_LOW_GRAVITY_LORE));
+            quartzMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-            rfootMeta.setDisplayName(Utility.getMSGLang(player, ));
-            rfootMeta.setLore(Utility.getListLang(player, ));
+            rfootMeta.setDisplayName(Utility.getMSGLang(player, ITEM_SPEED_NAME));
+            rfootMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE));
 
-            ichestplateMeta.setDisplayName(Utility.getMSGLang(player, ));
-            ichestplateMeta.setLore(Utility.getListLang(player, ));
+            ipaperMeta.setDisplayName(Utility.getMSGLang(player, ITEM_RESPAWN_EVENT_TIME_NAME));
+            ipaperMeta.setLore(Utility.getListLang(player, ITEM_RESPAWN_EVENT_TIME_LORE));
 
-            bowMeta.setDisplayName(Utility.getMSGLang(player, ));
-            bowMeta.setLore(Utility.getListLang(player, ));
+            bookMeta.setDisplayName(Utility.getMSGLang(player, ITEM_EVENTS_TIME_LEVEL_NAME));
+            bookMeta.setLore(Utility.getListLang(player, ITEM_EVENTS_TIME_LEVEL_LORE));
 
-            iswordMeta.setDisplayName(Utility.getMSGLang(player, ));
-            iswordMeta.setLore(Utility.getListLang(player, ));
+            gblockMeta.setDisplayName(Utility.getMSGLang(player, ITEM_ALLOW_MAP_BREAK_NAME));
+            gblockMeta.setLore(Utility.getListLang(player, ITEM_ALLOW_MAP_BREAK_LORE));
+            gblockMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-            deggMeta.setDisplayName(Utility.getMSGLang(player, ));
-            deggMeta.setLore(Utility.getListLang(player, ));
+            emeraldMeta.setDisplayName(Utility.getMSGLang(player, ITEM_NO_EMERALDS_NAME));
+            emeraldMeta.setLore(Utility.getListLang(player, ITEM_NO_EMERALDS_LORE));
+            emeraldMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-            sballMeta.setDisplayName(Utility.getMSGLang(player, ));
-            sballMeta.setLore(Utility.getListLang(player, ));
+            bedMeta.setDisplayName(Utility.getMSGLang(player, ITEM_BED_INSTA_BREAK_NAME));
+            bedMeta.setLore(Utility.getListLang(player, ITEM_BED_INSTA_BREAK_LORE));
+            bedMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-            eblockMeta.setDisplayName(Utility.getMSGLang(player, ));
-            eblockMeta.setLore(Utility.getListLang(player, ));
+            diamondMeta.setDisplayName(Utility.getMSGLang(player, ITEM_NO_DIAMONDS_NAME));
+            diamondMeta.setLore(Utility.getListLang(player, ITEM_NO_DIAMONDS_LORE));
+            diamondMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-            epearlMeta.setDisplayName(Utility.getMSGLang(player, ));
-            epearlMeta.setLore(Utility.getListLang(player, ));
+            dblockMeta.setDisplayName(Utility.getMSGLang(player, ITEM_MAX_TEAM_UPGRADES_NAME));
+            dblockMeta.setLore(Utility.getListLang(player, ITEM_MAX_TEAM_UPGRADES_LORE));
 
-            clockMeta.setDisplayName(Utility.getMSGLang(player, ));
-            clockMeta.setLore(Utility.getListLang(player, ));
+            arrowMeta.setDisplayName(Utility.getMSGLang(player, MENU_BACK_ITEM_NAME));
+            arrowMeta.setLore(Utility.getListLang(player, MENU_BACK_ITEM_LORE));
 
-            sswordMeta.setDisplayName(Utility.getMSGLang(player, ));
-            sswordMeta.setLore(Utility.getListLang(player, ));
-
-            arrowMeta.setDisplayName(Utility.getMSGLang(player, ));
-            arrowMeta.setLore(Utility.getListLang(player, ));
 
         dsword.setItemMeta(dswordMeta);
         gapple.setItemMeta(gappleMeta);
         quartz.setItemMeta(quartzMeta);
         rfoot.setItemMeta(rfootMeta);
-        ichestplate.setItemMeta(ichestplateMeta);
-        bow.setItemMeta(bowMeta);
-        isword.setItemMeta(iswordMeta);
-        degg.setItemMeta(deggMeta);
-        sball.setItemMeta(sballMeta);
-        eblock.setItemMeta(eblockMeta);
-        epearl.setItemMeta(epearlMeta);
-        clock.setItemMeta(clockMeta);
-        ssword.setItemMeta(sswordMeta);
+
+        ipaper.setItemMeta(ipaperMeta);
+        book.setItemMeta(bookMeta);
+        emerald.setItemMeta(emeraldMeta);
+
+        diamond.setItemMeta(diamondMeta);
+        gblock.setItemMeta(gblockMeta);
+        bed.setItemMeta(bedMeta);
+        dblock.setItemMeta(dblockMeta);
+
         arrow.setItemMeta(arrowMeta);
 
-        inventory.setItem(11, dsword);
-        inventory.setItem(13, gapple);
-        inventory.setItem(15, quartz);
-        inventory.setItem(17, rfoot);
-        inventory.setItem(19, ichestplate);
-        inventory.setItem(21, bow);
-        inventory.setItem(23, isword);
-        inventory.setItem(25, degg);
-        inventory.setItem(27, sball);
-        inventory.setItem(29, eblock);
-        inventory.setItem(31, epearl);
-        inventory.setItem(33, clock);
-        inventory.setItem(35, ssword);
-        inventory.setItem(50, arrow);
+        inventory.setItem(10, dsword);
+        inventory.setItem(12, gapple);
+        inventory.setItem(14, quartz);
+        inventory.setItem(16, rfoot);
+
+        inventory.setItem(20, ipaper);
+        inventory.setItem(22, book);
+        inventory.setItem(24, emerald);
+
+        inventory.setItem(28, diamond);
+        inventory.setItem(30, gblock);
+        inventory.setItem(32, bed);
+        inventory.setItem(34, dblock);
+
+        inventory.setItem(49, arrow);
         player.openInventory(inventory);
     }
     public static void closeMenu(Player player) {

@@ -10,9 +10,11 @@ public class MainConfig extends ConfigManager {
         super(plugin, name, dir);
         YamlConfiguration yml = getYml();
         yml.options().header("BedWars1058 PrivateGames Addon by Kiiya#9207");
-        yml.addDefault(MATERIAL, Material.REDSTONE_BLOCK);
+        yml.addDefault(MATERIAL, "REDSTONE_BLOCK");
         yml.addDefault(POSITION, 0);
-        yml.addDefault(ENCHANTED, true);
+        yml.addDefault(ENCHANTED, false);
+        yml.options().copyDefaults(true);
+        save();
     }
     public static final String
             MATERIAL = "private-games-item.material",
