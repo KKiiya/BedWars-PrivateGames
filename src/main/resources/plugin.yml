@@ -2,7 +2,7 @@ name: BedWars1058-PrivateGames
 version: '${project.version}'
 main: me.notlewx.pgames.PrivateGames
 prefix: BedWars1058-PrivateGames
-softdepend: [ BedWars1058, PlaceholderAPI, Vault, Parties ]
+softdepend: [ BedWars1058, Vault, Parties ]
 authors: [ NotLew_x ]
 description: Adds the private games from a well known server!
 commands:
@@ -10,3 +10,5 @@ commands:
     description: Enables the private games if you are in a party
     aliases:
       - privategame
+      - private
+      - pgame

@@ -1,6 +1,7 @@
 package me.notlewx.pgames.listeners.player.bedwars;
 
 import com.andrei1058.bedwars.api.arena.GameState;
+import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
 import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
@@ -15,6 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+
 import static me.notlewx.pgames.PrivateGames.mainConfig;
 import static me.notlewx.pgames.config.MainConfig.MATERIAL;
 import static me.notlewx.pgames.config.MainConfig.POSITION;
@@ -24,30 +27,38 @@ import static me.notlewx.pgames.config.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
 public class PlayerArenaJoin implements Listener {
     private static final PlayerData playerData = new PlayerData();
     private static final Party party = PGamesAPI.getPartyUtil();
+    public static HashMap<IArena, Boolean> privateArena = new HashMap<>();
+    public static HashMap<IArena, Player> privateGameOwner = new HashMap<>();
     @EventHandler
     public static void onPlayerJoin(PlayerJoinArenaEvent e) {
         Player player = e.getPlayer();
         if (e.getArena().isSpectator(player)) return;
-        if (playerData.isPrivateGameEnabled(player)) {
-            ItemStack settings = new ItemStack(Material.valueOf(mainConfig.getString(MATERIAL)));
-            ItemMeta settingsMeta = settings.getItemMeta();
-            settingsMeta.setDisplayName(Utility.getMSGLang(player, PRIVATE_GAME_MENU_ITEM_NAME));
-            settingsMeta.setLore(Utility.getListLang(player, PRIVATE_GAME_MENU_ITEM_LORE));
-            settings.setItemMeta(settingsMeta);
+        if (party.hasParty(player)) {
+            if (playerData.isPrivateGameEnabled(player)) {
+                ItemStack settings = new ItemStack(Material.valueOf(mainConfig.getString(MATERIAL)));
+                ItemMeta settingsMeta = settings.getItemMeta();
+                settingsMeta.setDisplayName(Utility.getMSGLang(player, PRIVATE_GAME_MENU_ITEM_NAME));
+                settingsMeta.setLore(Utility.getListLang(player, PRIVATE_GAME_MENU_ITEM_LORE));
+                settings.setItemMeta(settingsMeta);
 
-            if (party.isPartyOwner(player)) {
-                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                    player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                }, 35L);
-                for (Player members : party.getPartyMembers(player)) {
+                if (party.isPartyOwner(player) || player.isOp()) {
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                        PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(player).addPlayer(members, true);
+                        privateArena.put(e.getArena(), true);
+                        privateGameOwner.put(e.getArena(), player);
+                        player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
                     }, 35L);
+                    for (Player members : party.getPartyMembers(player)) {
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                            PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(player).addPlayer(members, true);
+                        }, 35L);
+                    }
                 }
+                if (!party.getPartyMembers(player).contains(player)) {
+                    e.setCancelled(true);
+                }
+                e.getArena().changeStatus(GameState.starting);
+                e.getArena().getStartingTask().setCountdown(60);
             }
-            if (!party.getPartyMembers(player).contains(player)) {e.setCancelled(true);}
-            e.getArena().changeStatus(GameState.starting);
-            e.getArena().getStartingTask().setCountdown(60);
         }
     }
 }

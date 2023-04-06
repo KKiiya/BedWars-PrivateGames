@@ -362,62 +362,74 @@ public class PlayerData implements IPlayerData {
         }
     }
     @Override
-    public void setRETLevel(Player player, int value) {
+    public void setRETLevel(Player player, int value) throws IllegalArgumentException {
         String path = player.getUniqueId().toString();
-        if (PrivateGames.isBwproxy()) {
-            if (PrivateGames.isProxyDatabaseEnabled()) {
-                mySQL.setData(path, "respawnEventTime", String.valueOf(value));
-            }
-        } else {
-            if (PrivateGames.isDatabaseEnabled()) {
-                mySQL.setData(path, "respawnEventTime", String.valueOf(value));
+        if (value < 0 || value > 3) throw new IllegalArgumentException("Value out of bounds! The health buff value cannot be higher than 3 or lower than 0");
+        else {
+            if (PrivateGames.isBwproxy()) {
+                if (PrivateGames.isProxyDatabaseEnabled()) {
+                    mySQL.setData(path, "respawnEventTime", String.valueOf(value));
+                }
             } else {
-                sqLite.setData(path, "respawnEventTime", String.valueOf(value));
+                if (PrivateGames.isDatabaseEnabled()) {
+                    mySQL.setData(path, "respawnEventTime", String.valueOf(value));
+                } else {
+                    sqLite.setData(path, "respawnEventTime", String.valueOf(value));
+                }
             }
         }
     }
     @Override
-    public void setHBLevel(Player player, int value) {
+    public void setHBLevel(Player player, int value) throws IllegalArgumentException {
         String path = player.getUniqueId().toString();
-        if (PrivateGames.isBwproxy()) {
-            if (PrivateGames.isProxyDatabaseEnabled()) {
-                mySQL.setData(path, "healthBuffLevel", String.valueOf(value));
-            }
-        } else {
-            if (PrivateGames.isDatabaseEnabled()) {
-                mySQL.setData(path, "healthBuffLevel", String.valueOf(value));
+        if (value < 0 || value > 3) throw new IllegalArgumentException("Value out of bounds! The health buff value cannot be higher than 3 or lower than 0");
+        else {
+            if (PrivateGames.isBwproxy()) {
+                if (PrivateGames.isProxyDatabaseEnabled()) {
+                    mySQL.setData(path, "healthBuffLevel", String.valueOf(value));
+                }
             } else {
-                sqLite.setData(path, "healthBuffLevel", String.valueOf(value));
+                if (PrivateGames.isDatabaseEnabled()) {
+                    mySQL.setData(path, "healthBuffLevel", String.valueOf(value));
+                } else {
+                    sqLite.setData(path, "healthBuffLevel", String.valueOf(value));
+                }
             }
         }
     }
     @Override
-    public void setETLevel(Player player, int value) {
+    public void setETLevel(Player player, int value) throws IllegalArgumentException {
         String path = player.getUniqueId().toString();
-        if (PrivateGames.isBwproxy()) {
-            if (PrivateGames.isProxyDatabaseEnabled()) {
-                mySQL.setData(path, "eventsTime", String.valueOf(value));
-            }
-        } else {
-            if (PrivateGames.isDatabaseEnabled()) {
-                mySQL.setData(path, "eventsTime", String.valueOf(value));
+        if (value < 0 || value > 4) throw new IllegalArgumentException("Value out of bounds! The events time value cannot be higher than 4 or lower than 0");
+        else {
+            if (PrivateGames.isBwproxy()) {
+                if (PrivateGames.isProxyDatabaseEnabled()) {
+                    mySQL.setData(path, "eventsTime", String.valueOf(value));
+                }
             } else {
-                sqLite.setData(path, "eventsTime", String.valueOf(value));
+                if (PrivateGames.isDatabaseEnabled()) {
+                    mySQL.setData(path, "eventsTime", String.valueOf(value));
+                } else {
+                    sqLite.setData(path, "eventsTime", String.valueOf(value));
+                }
             }
         }
     }
     @Override
-    public void setSpeedLevel(Player player, int value) {
+    public void setSpeedLevel(Player player, int value) throws IllegalArgumentException {
         String path = player.getUniqueId().toString();
-        if (PrivateGames.isBwproxy()) {
-            if (PrivateGames.isProxyDatabaseEnabled()) {
-                mySQL.setData(path, "speed", String.valueOf(value));
-            }
-        } else {
-            if (PrivateGames.isDatabaseEnabled()) {
-                mySQL.setData(path, "speed", String.valueOf(value));
+        if (value < 0 || value > 4) throw new IllegalArgumentException("Value out of bounds! The speed value cannot be higher than 4 or lower than 0");
+        else {
+            if (PrivateGames.isBwproxy()) {
+                if (PrivateGames.isProxyDatabaseEnabled()) {
+                    mySQL.setData(path, "speed", String.valueOf(value));
+                }
             } else {
-                sqLite.setData(path, "speed", String.valueOf(value));
+                if (PrivateGames.isDatabaseEnabled()) {
+                    mySQL.setData(path, "speed", String.valueOf(value));
+                } else {
+                    sqLite.setData(path, "speed", String.valueOf(value));
+                }
             }
         }
     }

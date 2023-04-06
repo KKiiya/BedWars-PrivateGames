@@ -9,9 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
 import org.bukkit.Bukkit;
-import me.notlewx.pgames.PrivateGames;
 
 public class SQLite {
     Connection connection;
@@ -118,15 +116,15 @@ public class SQLite {
             ps.setString(2, "false");
             ps.setString(3, "false");
             ps.setString(4, "false");
-            ps.setInt(5, 1);
+            ps.setInt(5, 0);
             ps.setString(6, "false");
             ps.setString(7, "false");
             ps.setString(8, "false");
             ps.setString(9, "false");
             ps.setString(10, "false");
-            ps.setInt(11, 1);
-            ps.setInt(12, 1);
-            ps.setInt(13, 1);
+            ps.setInt(11, 0);
+            ps.setInt(12, 0);
+            ps.setInt(13, 0);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

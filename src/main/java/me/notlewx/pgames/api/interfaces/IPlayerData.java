@@ -25,8 +25,8 @@ public interface IPlayerData {
     void setAMBEnabled(Player player, boolean value);
     void setNDEnabled(Player player, boolean value);
     void setNEEnabled(Player player, boolean value);
-    void setRETLevel(Player player, int value);
-    void setHBLevel(Player player, int value);
-    void setETLevel(Player player, int value);
-    void setSpeedLevel(Player player, int value);
+    void setRETLevel(Player player, int value) throws IllegalArgumentException;
+    void setHBLevel(Player player, int value) throws IllegalArgumentException;
+    void setETLevel(Player player, int value) throws IllegalArgumentException;
+    void setSpeedLevel(Player player, int value) throws IllegalArgumentException;
 }

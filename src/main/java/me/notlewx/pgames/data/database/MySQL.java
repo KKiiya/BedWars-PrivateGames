@@ -71,21 +71,21 @@ public class MySQL {
             try {
                 Connection c = (PrivateGames.getPlugins()).db.getConnection();
                 try {
-                    String sql = "INSERT INTO bw1058_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowBreakMap, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql = "INSERT INTO bw1058_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement ps = c.prepareStatement(sql);
                     ps.setString(1, path);
-                    ps.setBoolean(2, false);
-                    ps.setBoolean(3, false);
-                    ps.setBoolean(4, false);
-                    ps.setInt(5, 1);
-                    ps.setBoolean(6, false);
-                    ps.setBoolean(7, false);
-                    ps.setBoolean(8, false);
-                    ps.setBoolean(9, false);
-                    ps.setBoolean(10, false);
-                    ps.setInt(11, 1);
-                    ps.setInt(12, 1);
-                    ps.setInt(13, 1);
+                    ps.setString(2, "false");
+                    ps.setString(3, "false");
+                    ps.setString(4, "false");
+                    ps.setInt(5, 0);
+                    ps.setString(6, "false");
+                    ps.setString(7, "false");
+                    ps.setString(8, "false");
+                    ps.setString(9, "false");
+                    ps.setString(10, "false");
+                    ps.setInt(11, 0);
+                    ps.setInt(12, 0);
+                    ps.setInt(13, 0);
                     ps.executeUpdate();
                     ps.close();
                     if (c != null)

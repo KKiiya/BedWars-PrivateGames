@@ -1,17 +1,22 @@
 package me.notlewx.pgames.menu;
 
+import me.notlewx.pgames.api.PGamesAPI;
+import me.notlewx.pgames.api.interfaces.IPlayerData;
 import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import java.util.stream.Collectors;
 import static me.notlewx.pgames.config.MessagesData.*;
 
 public class SettingsMenu {
     private static Inventory inventory;
+    private static final IPlayerData playerData = PGamesAPI.getPlayerData();
     public SettingsMenu(Player player) {
         openMenu(player);
     }
@@ -47,14 +52,22 @@ public class SettingsMenu {
         ItemMeta arrowMeta = arrow.getItemMeta();
 
             dswordMeta.setDisplayName(Utility.getMSGLang(player, ITEM_ONE_HIT_ONE_KILL_NAME));
-            dswordMeta.setLore(Utility.getListLang(player, ITEM_ONE_HIT_ONE_KILL_LORE));
-            dswordMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            if (playerData.isOHOKEnabled(player)) {
+                dswordMeta.setLore(Utility.getListLang(player, ITEM_ONE_HIT_ONE_KILL_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+            } else {
+                dswordMeta.setLore(Utility.getListLang(player, ITEM_ONE_HIT_ONE_KILL_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+            }
+            dswordMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
             gappleMeta.setDisplayName(Utility.getMSGLang(player, ITEM_HEALTH_BUFF_LEVEL_NAME));
             gappleMeta.setLore(Utility.getListLang(player, ITEM_HEALTH_BUFF_LEVEL_LORE));
 
             quartzMeta.setDisplayName(Utility.getMSGLang(player, ITEM_LOW_GRAVITY_NAME));
-            quartzMeta.setLore(Utility.getListLang(player, ITEM_LOW_GRAVITY_LORE));
+            if (playerData.isLGEnabled(player)) {
+                quartzMeta.setLore(Utility.getListLang(player, ITEM_LOW_GRAVITY_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+            } else if (!playerData.isLGEnabled(player)) {
+                quartzMeta.setLore(Utility.getListLang(player, ITEM_LOW_GRAVITY_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+            }
             quartzMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
             rfootMeta.setDisplayName(Utility.getMSGLang(player, ITEM_SPEED_NAME));
@@ -67,28 +80,103 @@ public class SettingsMenu {
             bookMeta.setLore(Utility.getListLang(player, ITEM_EVENTS_TIME_LEVEL_LORE));
 
             gblockMeta.setDisplayName(Utility.getMSGLang(player, ITEM_ALLOW_MAP_BREAK_NAME));
-            gblockMeta.setLore(Utility.getListLang(player, ITEM_ALLOW_MAP_BREAK_LORE));
+            if (playerData.isAMBEnabled(player)) {
+                gblockMeta.setLore(Utility.getListLang(player, ITEM_ALLOW_MAP_BREAK_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+            } else if (!playerData.isAMBEnabled(player)) {
+                gblockMeta.setLore(Utility.getListLang(player, ITEM_ALLOW_MAP_BREAK_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+            }
             gblockMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
             emeraldMeta.setDisplayName(Utility.getMSGLang(player, ITEM_NO_EMERALDS_NAME));
-            emeraldMeta.setLore(Utility.getListLang(player, ITEM_NO_EMERALDS_LORE));
+            if (playerData.isNEEnabled(player)) {
+                emeraldMeta.setLore(Utility.getListLang(player, ITEM_NO_EMERALDS_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+            } else if (!playerData.isNEEnabled(player)) {
+                emeraldMeta.setLore(Utility.getListLang(player, ITEM_NO_EMERALDS_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+            }
             emeraldMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
             bedMeta.setDisplayName(Utility.getMSGLang(player, ITEM_BED_INSTA_BREAK_NAME));
-            bedMeta.setLore(Utility.getListLang(player, ITEM_BED_INSTA_BREAK_LORE));
+            if (playerData.isBIBEnabled(player)) {
+                bedMeta.setLore(Utility.getListLang(player, ITEM_BED_INSTA_BREAK_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+            } else if (!playerData.isBIBEnabled(player)) {
+                bedMeta.setLore(Utility.getListLang(player, ITEM_BED_INSTA_BREAK_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+            }
             bedMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
             diamondMeta.setDisplayName(Utility.getMSGLang(player, ITEM_NO_DIAMONDS_NAME));
-            diamondMeta.setLore(Utility.getListLang(player, ITEM_NO_DIAMONDS_LORE));
+            if (playerData.isNDEnabled(player)) {
+                diamondMeta.setLore(Utility.getListLang(player, ITEM_NO_DIAMONDS_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+            } else if (!playerData.isNDEnabled(player)) {
+                diamondMeta.setLore(Utility.getListLang(player, ITEM_NO_DIAMONDS_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+            }
             diamondMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
             dblockMeta.setDisplayName(Utility.getMSGLang(player, ITEM_MAX_TEAM_UPGRADES_NAME));
-            dblockMeta.setLore(Utility.getListLang(player, ITEM_MAX_TEAM_UPGRADES_LORE));
+            if (playerData.isMTUEnabled(player)) {
+                dblockMeta.setLore(Utility.getListLang(player, ITEM_MAX_TEAM_UPGRADES_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+            } else if (!playerData.isMTUEnabled(player)) {
+                dblockMeta.setLore(Utility.getListLang(player, ITEM_MAX_TEAM_UPGRADES_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+            }
+            dblockMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
             arrowMeta.setDisplayName(Utility.getMSGLang(player, MENU_BACK_ITEM_NAME));
             arrowMeta.setLore(Utility.getListLang(player, MENU_BACK_ITEM_LORE));
 
 
+        switch (playerData.getRETLevel(player)) {
+            case 0 :
+            case 2:
+                ipaperMeta.setLore(Utility.getListLang(player, ITEM_RESPAWN_EVENT_TIME_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, RESPAWN_EVENT_TIME_II_MEANING))).collect(Collectors.toList()));
+            break;
+            case 1:
+                ipaperMeta.setLore(Utility.getListLang(player, ITEM_RESPAWN_EVENT_TIME_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, RESPAWN_EVENT_TIME_I_MEANING))).collect(Collectors.toList()));
+            break;
+            case 3:
+                ipaperMeta.setLore(Utility.getListLang(player, ITEM_RESPAWN_EVENT_TIME_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, RESPAWN_EVENT_TIME_III_MEANING))).collect(Collectors.toList()));
+            break;
+        }
+        switch (playerData.getHBLevel(player)) {
+            case 0:
+            case 1:
+                gappleMeta.setLore(Utility.getListLang(player, ITEM_HEALTH_BUFF_LEVEL_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, NORMAL_HEALTH_MEANING))).collect(Collectors.toList()));
+            break;
+            case 2:
+                gappleMeta.setLore(Utility.getListLang(player, ITEM_HEALTH_BUFF_LEVEL_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, DOUBLE_HEALTH_MEANING))).collect(Collectors.toList()));
+            break;
+            case 3:
+                gappleMeta.setLore(Utility.getListLang(player, ITEM_HEALTH_BUFF_LEVEL_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, TRIPLE_HEALTH_MEANING))).collect(Collectors.toList()));
+            break;
+        }
+        switch (playerData.getSpeedLevel(player)) {
+            case 0:
+            case 1:
+                rfootMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, NO_SPEED_MEANING))).collect(Collectors.toList()));
+                break;
+            case 2:
+                rfootMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, SPEED_I_MEANING))).collect(Collectors.toList()));
+                break;
+            case 3:
+                rfootMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, SPEED_II_MEANING))).collect(Collectors.toList()));
+                break;
+            case 4:
+                rfootMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, SPEED_III_MEANING))).collect(Collectors.toList()));
+                break;
+        }
+        switch (playerData.getETLevel(player)) {
+            case 0:
+            case 2:
+                bookMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, EVENTS_TIME_NORMAL_MEANING))).collect(Collectors.toList()));
+            break;
+            case 1:
+                bookMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, EVENTS_TIME_SLOWER_MEANING))).collect(Collectors.toList()));
+                break;
+            case 3:
+                bookMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, EVENTS_TIME_FAST_MEANING))).collect(Collectors.toList()));
+                break;
+            case 4:
+                bookMeta.setLore(Utility.getListLang(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, EVENTS_TIME_FASTER_MEANING))).collect(Collectors.toList()));
+                break;
+        }
         dsword.setItemMeta(dswordMeta);
         gapple.setItemMeta(gappleMeta);
         quartz.setItemMeta(quartzMeta);
@@ -105,6 +193,20 @@ public class SettingsMenu {
 
         arrow.setItemMeta(arrowMeta);
 
+        if (playerData.isAMBEnabled(player)) gblock.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        else if (!playerData.isAMBEnabled(player)) gblock.removeEnchantment(Enchantment.DURABILITY);
+        if (playerData.isNEEnabled(player)) emerald.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        else if (!playerData.isNEEnabled(player)) emerald.removeEnchantment(Enchantment.DURABILITY);
+        if (playerData.isNDEnabled(player)) diamond.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        else if (!playerData.isNDEnabled(player)) diamond.removeEnchantment(Enchantment.DURABILITY);
+        if (playerData.isBIBEnabled(player)) bed.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        else if (!playerData.isBIBEnabled(player)) bed.removeEnchantment(Enchantment.DURABILITY);
+        if (playerData.isOHOKEnabled(player)) dsword.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        else if (!playerData.isOHOKEnabled(player)) dsword.removeEnchantment(Enchantment.DURABILITY);
+        if (playerData.isLGEnabled(player)) quartz.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        else if (!playerData.isLGEnabled(player)) quartz.removeEnchantment(Enchantment.DURABILITY);
+        if (playerData.isMTUEnabled(player)) dblock.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        else if (!playerData.isMTUEnabled(player)) dblock.removeEnchantment(Enchantment.DURABILITY);
         inventory.setItem(10, dsword);
         inventory.setItem(12, gapple);
         inventory.setItem(14, quartz);
@@ -120,6 +222,7 @@ public class SettingsMenu {
         inventory.setItem(34, dblock);
 
         inventory.setItem(49, arrow);
+
         player.openInventory(inventory);
     }
     public static void closeMenu(Player player) {

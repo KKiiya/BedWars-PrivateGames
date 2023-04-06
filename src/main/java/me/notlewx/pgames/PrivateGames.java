@@ -11,6 +11,7 @@ import me.notlewx.pgames.data.PlayerData;
 import me.notlewx.pgames.data.ProxyParty;
 import me.notlewx.pgames.data.database.MySQL;
 import me.notlewx.pgames.data.database.SQLite;
+import me.notlewx.pgames.listeners.arena.ArenaListener;
 import me.notlewx.pgames.listeners.player.InteractionEvent;
 import me.notlewx.pgames.listeners.player.PlayerJoin;
 import me.notlewx.pgames.listeners.player.bedwars.PlayerArenaJoin;
@@ -20,6 +21,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
+import java.util.Arrays;
 
 public final class PrivateGames extends JavaPlugin {
     public static MainConfig mainConfig;
@@ -112,11 +114,13 @@ public final class PrivateGames extends JavaPlugin {
             getLogger().info("Creating config files...");
 
             getCommand("pg").setExecutor(new MainCommand());
+            getCommand("pg").setAliases(Arrays.asList("privategame", "private", "pgame"));
             bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
             mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath() + File.separator + "PrivateGames");
             mainConfig.reload();
             getServer().getPluginManager().registerEvents(new PlayerArenaJoin(), this);
             getServer().getPluginManager().registerEvents(new PlayerArenaLeave(), this);
+            getServer().getPluginManager().registerEvents(new ArenaListener(), this);
             new MessagesData();
         }
 
