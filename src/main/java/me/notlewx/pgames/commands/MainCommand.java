@@ -27,7 +27,7 @@ public class MainCommand implements CommandExecutor {
             else {
                 switch (args[0].toLowerCase()) {
                     case "enable":
-                        if (args.length == 2 && sender.hasPermission("pg.admin") || sender.isOp()) {
+                        if (args.length <= 2 && sender.hasPermission("pg.admin") || sender.isOp()) {
                             switch (args[1].toLowerCase()) {
                                 case "admin":
                                     if (party.hasParty((Player) sender)) {
@@ -78,7 +78,7 @@ public class MainCommand implements CommandExecutor {
                     break;
 
                     case "disable":
-                        if (args.length == 2) {
+                        if (args.length <= 2 && sender.hasPermission("pg.admin") || sender.isOp()) {
                             switch (args[1].toLowerCase()) {
                                 case "admin":
                                     if (party.hasParty((Player) sender)) {
