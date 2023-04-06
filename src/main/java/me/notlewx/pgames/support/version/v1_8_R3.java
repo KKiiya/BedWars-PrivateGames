@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 public class v1_8_R3 implements IVersion {
     @Override
     public void cancelMessageTo(@NotNull Player player) {
+        PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(""));
+((CraftPlayer) player)).getHandle().playerConnection.sendPacket(packet);
 
     }
 }
