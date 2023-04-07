@@ -193,6 +193,7 @@ public class ArenaListener implements Listener {
                     }
                 }
                 e.setCancelled(false);
+                PrivateGames.getVersionUtil().cancelMessageTo(e.getPlayer());
             }
         }
     }

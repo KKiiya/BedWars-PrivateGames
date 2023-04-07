@@ -166,18 +166,23 @@ public class InteractionEvent implements Listener {
                     playerData.setSpeedLevel(player, 1);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                     List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
                     for (ItemStack material : books) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
-                            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            ItemMeta materialMeta = material.getItemMeta();
+                            if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_IV_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_IV_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
                             material.removeEnchantment(Enchantment.DURABILITY);
                         }
@@ -187,20 +192,24 @@ public class InteractionEvent implements Listener {
                     playerData.setSpeedLevel(player, 2);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                     List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
                     for (ItemStack material : books) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
-                            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            ItemMeta materialMeta = material.getItemMeta();
+                            if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_IV_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_IV_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            material.removeEnchantment(Enchantment.DURABILITY);
                         }
                     }
                 }
@@ -208,18 +217,23 @@ public class InteractionEvent implements Listener {
                     playerData.setSpeedLevel(player, 3);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                     List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
                     for (ItemStack material : books) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
-                            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            ItemMeta materialMeta = material.getItemMeta();
+                            if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_IV_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_IV_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
                             material.removeEnchantment(Enchantment.DURABILITY);
                         }
@@ -233,14 +247,18 @@ public class InteractionEvent implements Listener {
                     List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
                     for (ItemStack material : books) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
-                            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            ItemMeta materialMeta = material.getItemMeta();
+                            if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_LORE))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_LORE))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
                             material.removeEnchantment(Enchantment.DURABILITY);
                         }
@@ -257,15 +275,19 @@ public class InteractionEvent implements Listener {
                     playerData.setHBLevel(player, 1);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                     List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.GOLDEN_APPLE).collect(Collectors.toList());
                     for (ItemStack material : books) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_NAME))) {
-                            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            ItemMeta materialMeta = material.getItemMeta();
+                            if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
                             material.removeEnchantment(Enchantment.DURABILITY);
                         }
@@ -275,15 +297,19 @@ public class InteractionEvent implements Listener {
                     playerData.setHBLevel(player, 2);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                     List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
                     for (ItemStack material : books) {
-                        if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
-                            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                        if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_NAME))) {
+                            ItemMeta materialMeta = material.getItemMeta();
+                            if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
                             material.removeEnchantment(Enchantment.DURABILITY);
                         }
@@ -294,15 +320,19 @@ public class InteractionEvent implements Listener {
                     playerData.setHBLevel(player, 3);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
+                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                     List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
                     for (ItemStack material : books) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
-                            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            ItemMeta materialMeta = material.getItemMeta();
+                            if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
-                            else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_NAME))) {
-                                material.getItemMeta().setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                            else if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_NAME))) {
+                                materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
+                                material.setItemMeta(materialMeta);
                             }
                             material.removeEnchantment(Enchantment.DURABILITY);
                         }
@@ -314,14 +344,14 @@ public class InteractionEvent implements Listener {
                 if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, SUBMENU_EVENTS_TIME_BACK_ITEM_NAME))) {
                     SpeedMenu.closeSpeedMenu(player);
                 }
-                if (e.getInventory().getTitle().equals(Utility.getMSGLang(player, SUBMENU_EVENTS_TIME_NAME))) e.setCancelled(true);
+                e.setCancelled(true);
             }
 
             else if (e.getInventory().getTitle().equals(Utility.getMSGLang(player, SUBMENU_RESPAWN_TIME_NAME))) {
                 if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME))) {
                     SpeedMenu.closeSpeedMenu(player);
                 }
-                if (e.getInventory().getTitle().equals(Utility.getMSGLang(player, SUBMENU_RESPAWN_TIME_NAME))) e.setCancelled(true);
+                e.setCancelled(true);
             }
         } catch (Throwable ex) {
 
