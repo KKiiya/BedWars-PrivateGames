@@ -7,13 +7,12 @@ import me.notlewx.pgames.api.interfaces.Party;
 import me.notlewx.pgames.data.PlayerData;
 import me.notlewx.pgames.menu.SettingsMenu;
 import me.notlewx.pgames.util.Utility;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import java.util.Arrays;
-import static me.notlewx.pgames.config.MessagesData.*;
+import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 import static me.notlewx.pgames.listeners.player.bedwars.PlayerArenaJoin.privateGameOwner;
 
 public class MainCommand implements CommandExecutor {

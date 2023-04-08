@@ -20,7 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import static me.notlewx.pgames.config.MessagesData.*;
+import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 
 public class InteractionEvent implements Listener {
     private static final IPlayerData playerData = PGamesAPI.getPlayerData();

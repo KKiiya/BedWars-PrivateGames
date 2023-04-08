@@ -1,7 +1,6 @@
 package me.notlewx.pgames.listeners.player.bedwars;
 
 import com.andrei1058.bedwars.api.arena.GameState;
-import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
 import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
@@ -17,13 +16,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-
 import static me.notlewx.pgames.PrivateGames.mainConfig;
-import static me.notlewx.pgames.config.MainConfig.MATERIAL;
-import static me.notlewx.pgames.config.MainConfig.POSITION;
-import static me.notlewx.pgames.config.MessagesData.PRIVATE_GAME_MENU_ITEM_LORE;
-import static me.notlewx.pgames.config.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
+import static me.notlewx.pgames.config.bedwars.MainConfig.MATERIAL;
+import static me.notlewx.pgames.config.bedwars.MainConfig.POSITION;
+import static me.notlewx.pgames.config.bedwars.MessagesData.PRIVATE_GAME_MENU_ITEM_LORE;
+import static me.notlewx.pgames.config.bedwars.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
 
 public class PlayerArenaJoin implements Listener {
     private static final PlayerData playerData = new PlayerData();

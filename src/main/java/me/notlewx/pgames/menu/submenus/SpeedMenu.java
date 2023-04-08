@@ -15,8 +15,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.stream.Collectors;
 
-import static me.notlewx.pgames.config.MessagesData.*;
-import static me.notlewx.pgames.config.MessagesData.ITEM_SUBMENU_SPEED_I_LORE;
+import static me.notlewx.pgames.config.bedwars.MessagesData.*;
+import static me.notlewx.pgames.config.bedwars.MessagesData.ITEM_SUBMENU_SPEED_I_LORE;
 
 public class SpeedMenu {
     private static final IPlayerData playerData = PGamesAPI.getPlayerData();

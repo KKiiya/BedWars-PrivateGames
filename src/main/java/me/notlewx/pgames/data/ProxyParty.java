@@ -31,6 +31,6 @@ public class ProxyParty implements Party {
     }
     @Override
     public int partySize(Player player) {
-        return 0;
+        return internal.partySize(player.getUniqueId());
     }
 }

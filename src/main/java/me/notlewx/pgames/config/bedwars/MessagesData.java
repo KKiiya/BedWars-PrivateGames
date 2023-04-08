@@ -1,4 +1,4 @@
-package me.notlewx.pgames.config;
+package me.notlewx.pgames.config.bedwars;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import com.andrei1058.bedwars.api.language.Language;

@@ -1,4 +1,4 @@
-package me.notlewx.pgames.config;
+package me.notlewx.pgames.config.bedwars;
 
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import org.bukkit.Material;
