@@ -31,6 +31,8 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cYou don't have permission to use this command!");
                     yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cThe private game is already enabled!");
                     yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cThe private game is already disabled!");
+                    yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cCouldnt join to the private game of this player!");
+                    yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cYou cant do this in game!");
                     yml.addDefault(MENU_BACK_ITEM_NAME, "&aGo Back");
                     yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Go back to your bedwars gameplay"));
                     yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aOne hit, one kill");
@@ -125,6 +127,8 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cNo tienes permisos para usar este comando");
                     yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cLa partida privada ya esta habilitada!");
                     yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cLa partida privada ya esta deshabilitada!");
+                    yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cNo se pudo unir a la partida privada de este jugador!");
+                    yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cEsto no se puede hacer en una partida!");
                     yml.addDefault(MENU_BACK_ITEM_NAME, "&aAtrás");
                     yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Vuelve a jugar bedwars"));
                     yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aUn golpe, una muerte");
@@ -226,6 +230,8 @@ public class MessagesData {
             PRIVATE_GAME_NO_PERMISSION = PATH + "game.no-permission",
             PRIVATE_GAME_ALREADY_ENABLED = PATH + "game.already-enabled",
             PRIVATE_GAME_ALREADY_DISABLED = PATH + "game.already-disabled",
+            PRIVATE_GAME_COULDNT_JOIN = PATH + "game.couldnt-join",
+            PRIVATE_GAME_CANT_IN_GAME = PATH + "game.cant-in-game",
             ONE_HIT_ONE_KILL_MEANING = PATH + "meanings.one-hit-one-kill",
             LEVEL_I_MEANING = PATH + "meanings.level1",
             LEVEL_II_MEANING = PATH + "meanings.level2",

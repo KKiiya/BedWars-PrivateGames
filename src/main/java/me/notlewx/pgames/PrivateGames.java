@@ -3,10 +3,12 @@ package me.notlewx.pgames;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.zaxxer.hikari.HikariDataSource;
+import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.api.interfaces.Party;
 import me.notlewx.pgames.commands.MainCommand;
 import me.notlewx.pgames.config.MainConfig;
 import me.notlewx.pgames.config.MessagesData;
+import me.notlewx.pgames.data.Game;
 import me.notlewx.pgames.data.PlayerData;
 import me.notlewx.pgames.data.ProxyParty;
 import me.notlewx.pgames.data.database.MySQL;
@@ -33,6 +35,7 @@ public final class PrivateGames extends JavaPlugin {
     private static Party party;
     public static FileConfiguration proxyconfig;
     public static PlayerData pd;
+    private static IGame game;
     public HikariDataSource db;
     public static boolean bwproxy = false;
     private static boolean isDatabaseEnabled;
@@ -109,6 +112,7 @@ public final class PrivateGames extends JavaPlugin {
         else if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
             bwconfig = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider().getConfigs().getMainConfig();
             isDatabaseEnabled = bwconfig.getBoolean("database.enable");
+            game = new Game();
 
             if (isDatabaseEnabled) {
                 getLogger().info(Utility.colorizedString("&aUsing MySQL"));
@@ -186,5 +190,8 @@ public final class PrivateGames extends JavaPlugin {
     }
     public static IVersion getVersionUtil() {
         return version;
+    }
+    public static IGame getGameUtil() {
+        return game;
     }
 }

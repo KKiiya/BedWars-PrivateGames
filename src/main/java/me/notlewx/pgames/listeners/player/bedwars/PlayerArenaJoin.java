@@ -5,6 +5,7 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
 import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
+import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.api.interfaces.Party;
 import me.notlewx.pgames.data.PlayerData;
 import me.notlewx.pgames.util.Utility;
@@ -27,8 +28,7 @@ import static me.notlewx.pgames.config.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
 public class PlayerArenaJoin implements Listener {
     private static final PlayerData playerData = new PlayerData();
     private static final Party party = PGamesAPI.getPartyUtil();
-    public static HashMap<IArena, Boolean> privateArena = new HashMap<>();
-    public static HashMap<IArena, Player> privateGameOwner = new HashMap<>();
+    private static final IGame game = PrivateGames.getGameUtil();
     @EventHandler
     public static void onPlayerJoin(PlayerJoinArenaEvent e) {
         Player player = e.getPlayer();
@@ -42,10 +42,8 @@ public class PlayerArenaJoin implements Listener {
             if (playerData.isPrivateGameEnabled(player)) {
                 if (party.isPartyOwner(player) || player.isOp()) {
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                        PGamesAPI.getBwApi().getArenaUtil().getArenas().remove(e.getArena());
-                        PGamesAPI.getBwApi().getArenaUtil().getEnableQueue().remove(e.getArena());
-                        privateArena.put(e.getArena(), true);
-                        privateGameOwner.put(e.getArena(), player);
+                        game.setArenaPrivate(e.getArena(), true);
+                        game.setPrivateArenaOwner(e.getArena(), player);
                         player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
                     }, 35L);
                     for (Player members : party.getPartyMembers(player)) {
@@ -63,10 +61,8 @@ public class PlayerArenaJoin implements Listener {
         }
         else if (!party.hasParty(player) && playerData.isPrivateGameEnabled(player) && player.isOp() || player.hasPermission("pg.admin")) {
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                PGamesAPI.getBwApi().getArenaUtil().getArenas().remove(e.getArena());
-                PGamesAPI.getBwApi().getArenaUtil().getEnableQueue().remove(e.getArena());
-                privateArena.put(e.getArena(), true);
-                privateGameOwner.put(e.getArena(), player);
+                game.setArenaPrivate(e.getArena(), true);
+                game.setPrivateArenaOwner(e.getArena(), player);
                 player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
             }, 35L);
             e.getArena().changeStatus(GameState.starting);
