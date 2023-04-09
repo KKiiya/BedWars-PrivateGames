@@ -48,7 +48,7 @@ public class MySQL {
         try {
             Connection c = (PrivateGames.getPlugins()).db.getConnection();
             try {
-                PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS bw1058_private_games(player varchar(200), privateGameEnabled boolean, oneHitOneKill boolean, lowGravity boolean, speed int, bedInstaBreak boolean, maxTeamUpgrades boolean, allowMapBreak boolean, noDiamonds boolean, noEmeralds boolean, respawnEventTime int, healthBuffLevel int, eventsTime int)");
+                PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS bw1058_private_games(player varchar(200), privateGameEnabled varchar(200), oneHitOneKill varchar(200), lowGravity varchar(200), speed int, bedInstaBreak varchar(200), maxTeamUpgrades varchar(200), allowMapBreak varchar(200), noDiamonds varchar(200), noEmeralds varchar(200), respawnEventTime int, healthBuffLevel int, eventsTime int)");
                 ps.executeUpdate();
                 ps.close();
                 if (c != null)

@@ -1,26 +1,21 @@
 package me.notlewx.pgames.config.proxy;
 
-import com.andrei1058.bedwars.proxy.api.Language;
-import me.notlewx.pgames.api.PGamesAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 
 public class ProxyMessagesData {
     YamlConfiguration yml;
     File file;
-    private static final List<Language> languages = PGamesAPI.getBwProxyApi().getLanguageUtil().getLanguages();
     public ProxyMessagesData() {
         setupMessages();
     }
     public void setupMessages() {
-        file = new File(Bukkit.getPluginManager().getPlugin("BedWarsProxy").getDataFolder().getPath() + "/Language/", "messages_en.yml");
+        file = new File(Bukkit.getPluginManager().getPlugin("BedWarsProxy").getDataFolder().getPath() + "/Languages/", "messages_en.yml");
         yml = YamlConfiguration.loadConfiguration(file);
         yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
         yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate game settings");

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import me.notlewx.pgames.api.PGamesAPI;
 import org.bukkit.Bukkit;
 
 public class SQLite {
@@ -39,7 +40,7 @@ public class SQLite {
     }
 
     public Connection getConnection() {
-        File dataFolder = new File("" + Bukkit.getServicesManager().getRegistration(BedWars.class).getPlugin().getDataFolder() + "/Cache/", "bw1058_private_games.db");
+        File dataFolder = new File("" + Bukkit.getServicesManager().getRegistration(BedWars.class).getPlugin().getDataFolder() + "/Cache/", "bw1058_private_games.db");;
         if (!dataFolder.exists())
             try {
                 dataFolder.createNewFile();

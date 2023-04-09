@@ -7,7 +7,7 @@ import org.bukkit.plugin.Plugin;
 
 public class ProxyConfig extends ConfigManager {
     public ProxyConfig(Plugin plugin, String name) {
-        super(plugin, name, Bukkit.getWorldContainer().getPath() + "/plugins/BedWarsProxy/Addons/PrivateGames");
+        super(plugin, name, Bukkit.getWorldContainer().getPath() + "/plugins/BedWarsProxy/Addons/PrivateGames/");
         YamlConfiguration yml = getYml();
         yml.options().header("BedWars1058 PrivateGames Addon by Kiiya#9207");
         yml.options().copyDefaults(true);

@@ -21,7 +21,7 @@ public class ConfigManager {
                 return;
             }
         }
-        file = new File(name + ".yml", dir);
+        file = new File(dir, name + ".yml");
         if (!file.exists()) {
             plugin.getLogger().info(Utility.colorizedString("&eLoading config files..."));
             plugin.getLogger().info("Creating " + file.getPath());

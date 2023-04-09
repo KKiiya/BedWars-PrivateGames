@@ -144,12 +144,8 @@ public class MainCommand implements CommandExecutor {
                                 } else {
                                     new SettingsMenu((Player) sender);
                                 }
-                            } else if (!PrivateGames.isBwproxy()) {
-                                if (PGamesAPI.getBwApi().getArenaUtil().getArenas().stream().anyMatch(a -> a.getPlayers().contains((Player) sender))) {
-                                    sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_CANT_IN_GAME));
-                                }
                             }
-                            else if (!PrivateGames.isBwproxy() || PrivateGames.isBwproxy()) {
+                            else {
                                 new SettingsMenu((Player) sender);
                             }
                         } else {

@@ -1,6 +1,7 @@
 package me.notlewx.pgames.api;
 
 import com.andrei1058.bedwars.api.BedWars;
+import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.api.interfaces.Party;
@@ -18,7 +19,7 @@ public class PGamesAPI {
         return Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
     }
     public static com.andrei1058.bedwars.proxy.api.BedWars getBwProxyApi() {
-        return Bukkit.getServicesManager().getRegistration(com.andrei1058.bedwars.proxy.api.BedWars.class).getProvider();
+        return BedWarsProxy.getAPI();
     }
     public static Party getPartyUtil() {
         return PrivateGames.getPartyUtil();

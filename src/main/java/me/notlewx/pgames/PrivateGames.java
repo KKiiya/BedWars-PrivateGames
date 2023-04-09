@@ -111,7 +111,7 @@ public final class PrivateGames extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new PlayerJoinArena(), this);
             getLogger().info("Creating config files...");
             new ProxyMessagesData();
-            proxyConfig = new ProxyConfig(this, "config.yml");
+            proxyConfig = new ProxyConfig(this, "config");
         }
 
 
@@ -158,10 +158,10 @@ public final class PrivateGames extends JavaPlugin {
             mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath() + File.separator + "PrivateGames");
             mainConfig.reload();
             new MessagesData();
-            getCommand("pg").setExecutor(new MainCommand());
-            getCommand("pg").setAliases(Arrays.asList("privategame", "private", "pgame"));
         }
 
+        getCommand("pg").setExecutor(new MainCommand());
+        getCommand("pg").setAliases(Arrays.asList("privategame", "private", "pgame"));
         getServer().getPluginManager().registerEvents(new InteractionEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getLogger().info("Running on: " + ver);
