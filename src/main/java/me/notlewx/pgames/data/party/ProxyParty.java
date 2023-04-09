@@ -1,4 +1,4 @@
-package me.notlewx.pgames.data;
+package me.notlewx.pgames.data.party;
 
 import com.andrei1058.bedwars.proxy.party.Internal;
 import me.notlewx.pgames.api.interfaces.Party;

@@ -178,6 +178,9 @@ public class MainCommand implements CommandExecutor {
                             }
                         }
                      */
+                    default:
+                        sender.sendMessage(Utility.colorizedString("&cUnknown command"));
+                        break;
                 }
             }
         } else {

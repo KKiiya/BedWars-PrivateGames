@@ -8,9 +8,11 @@ import me.notlewx.pgames.api.interfaces.Party;
 import me.notlewx.pgames.commands.MainCommand;
 import me.notlewx.pgames.config.bedwars.MainConfig;
 import me.notlewx.pgames.config.bedwars.MessagesData;
+import me.notlewx.pgames.config.proxy.ProxyConfig;
+import me.notlewx.pgames.config.proxy.ProxyMessagesData;
 import me.notlewx.pgames.data.Game;
 import me.notlewx.pgames.data.PlayerData;
-import me.notlewx.pgames.data.ProxyParty;
+import me.notlewx.pgames.data.party.ProxyParty;
 import me.notlewx.pgames.data.database.MySQL;
 import me.notlewx.pgames.data.database.SQLite;
 import me.notlewx.pgames.listeners.arena.ArenaListener;
@@ -18,6 +20,7 @@ import me.notlewx.pgames.listeners.player.InteractionEvent;
 import me.notlewx.pgames.listeners.player.PlayerJoin;
 import me.notlewx.pgames.listeners.player.bedwars.PlayerArenaJoin;
 import me.notlewx.pgames.listeners.player.bedwars.PlayerArenaLeave;
+import me.notlewx.pgames.listeners.player.proxy.PlayerJoinArena;
 import me.notlewx.pgames.support.IVersion;
 import me.notlewx.pgames.support.version.*;
 import me.notlewx.pgames.util.Utility;
@@ -30,6 +33,7 @@ import java.util.Arrays;
 public final class PrivateGames extends JavaPlugin {
     private static IVersion version;
     public static MainConfig mainConfig;
+    public static ProxyConfig proxyConfig;
     private static BedWars bedWars;
     public static ConfigManager bwconfig;
     private static Party party;
@@ -104,7 +108,10 @@ public final class PrivateGames extends JavaPlugin {
             }
             getLogger().info("BedWarsProxy found! Hooking...");
             getLogger().info("Enabling listeners...");
+            getServer().getPluginManager().registerEvents(new PlayerJoinArena(), this);
             getLogger().info("Creating config files...");
+            new ProxyMessagesData();
+            proxyConfig = new ProxyConfig(this, "config.yml");
         }
 
 
@@ -143,17 +150,16 @@ public final class PrivateGames extends JavaPlugin {
             }
             getLogger().info("BedWars1058 found! Hooking...");
             getLogger().info("Enabling listeners...");
-            getLogger().info("Creating config files...");
-
-            getCommand("pg").setExecutor(new MainCommand());
-            getCommand("pg").setAliases(Arrays.asList("privategame", "private", "pgame"));
-            bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
-            mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath() + File.separator + "PrivateGames");
-            mainConfig.reload();
             getServer().getPluginManager().registerEvents(new PlayerArenaJoin(), this);
             getServer().getPluginManager().registerEvents(new PlayerArenaLeave(), this);
             getServer().getPluginManager().registerEvents(new ArenaListener(), this);
+            getLogger().info("Creating config files...");
+            bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
+            mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath() + File.separator + "PrivateGames");
+            mainConfig.reload();
             new MessagesData();
+            getCommand("pg").setExecutor(new MainCommand());
+            getCommand("pg").setAliases(Arrays.asList("privategame", "private", "pgame"));
         }
 
         getServer().getPluginManager().registerEvents(new InteractionEvent(), this);
@@ -184,7 +190,7 @@ public final class PrivateGames extends JavaPlugin {
         if (isBwproxy()) {
             party = new ProxyParty();
         } else {
-            party = new me.notlewx.pgames.data.Party();
+            party = new me.notlewx.pgames.data.party.Party();
         }
         return party;
     }

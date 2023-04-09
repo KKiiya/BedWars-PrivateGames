@@ -21,12 +21,20 @@ public class Game implements IGame {
     @Override
     public void setArenaPrivate(IArena arena, boolean value) {
         privArena.put(arena, value);
-        if (value) {
-            PGamesAPI.getBwApi().getArenaUtil().getArenas().remove(arena);
-            arenasInPrivMode.add(arena);
+        if (!PGamesAPI.isProxy()) {
+            if (value) {
+                PGamesAPI.getBwApi().getArenaUtil().getArenas().remove(arena);
+                arenasInPrivMode.add(arena);
+            } else {
+                PGamesAPI.getBwApi().getArenaUtil().getArenas().add(arena);
+                arenasInPrivMode.remove(arena);
+            }
         } else {
-            PGamesAPI.getBwApi().getArenaUtil().getArenas().add(arena);
-            arenasInPrivMode.remove(arena);
+            if (value) {
+
+            } else {
+
+            }
         }
     }
 

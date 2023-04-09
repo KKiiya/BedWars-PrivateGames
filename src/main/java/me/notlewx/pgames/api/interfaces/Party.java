@@ -1,7 +1,6 @@
 package me.notlewx.pgames.api.interfaces;
 
 import org.bukkit.entity.Player;
-
 import java.util.List;
 
 public interface Party {
@@ -9,8 +8,7 @@ public interface Party {
     boolean hasParty(Player player);
     boolean isPartyOwner(Player partyPlayer);
     boolean isPartyMember(Player partyPlayer, Player checking);
-    void addPlayer(Player partyPlayer, Player added);
+    void addPlayer(Player partyLeader, Player added);
     int partySize(Player player);
-
 
 }

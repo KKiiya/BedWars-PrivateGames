@@ -194,7 +194,6 @@ public class ArenaListener implements Listener {
     public static void onPlayerDeath(PlayerKillEvent e) {
         boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getVictim()));
         if (isArenaPrivate) {
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                 switch (playerData.getRETLevel(game.getOwnerOfPrivateArena(e.getArena()))) {
                     case 0:
                     case 2:
@@ -206,7 +205,6 @@ public class ArenaListener implements Listener {
                         e.getArena().startReSpawnSession(e.getVictim(), 10);
                         break;
                 }
-            }, 1L);
         }
     }
 }
