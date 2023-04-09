@@ -5,11 +5,14 @@ import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.interfaces.IGame;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Game implements IGame {
     private final HashMap<IArena, Boolean> privArena = new HashMap<>();
     private final HashMap<IArena, Player> arenaOwner = new HashMap<>();
+    private final List<IArena> arenasInPrivMode = new ArrayList<>();
     @Override
     public boolean isArenaPrivate(IArena arena) {
         return privArena.get(arena);
@@ -20,8 +23,10 @@ public class Game implements IGame {
         privArena.put(arena, value);
         if (value) {
             PGamesAPI.getBwApi().getArenaUtil().getArenas().remove(arena);
+            arenasInPrivMode.add(arena);
         } else {
             PGamesAPI.getBwApi().getArenaUtil().getArenas().add(arena);
+            arenasInPrivMode.remove(arena);
         }
     }
 
@@ -38,5 +43,10 @@ public class Game implements IGame {
     @Override
     public boolean isOwnerOfArena(Player player, IArena arena) {
         return arenaOwner.get(arena) == player;
+    }
+
+    @Override
+    public List<IArena> getPrivateGames() {
+        return arenasInPrivMode;
     }
 }

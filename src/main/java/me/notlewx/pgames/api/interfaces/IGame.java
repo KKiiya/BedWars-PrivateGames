@@ -3,6 +3,8 @@ package me.notlewx.pgames.api.interfaces;
 import com.andrei1058.bedwars.api.arena.IArena;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public interface IGame {
     /**
      *  Checks if the arena is a private arena
@@ -36,4 +38,10 @@ public interface IGame {
      * @return boolean
      */
     boolean isOwnerOfArena(Player player, IArena arena);
+    /**
+     * Get the actual arenas that are in
+     * a private state
+     * @return list of arenas
+     */
+    List<IArena> getPrivateGames();
 }

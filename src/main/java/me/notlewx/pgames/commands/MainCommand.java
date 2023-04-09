@@ -13,7 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import java.util.Arrays;
 import static me.notlewx.pgames.config.bedwars.MessagesData.*;
-import static me.notlewx.pgames.listeners.player.bedwars.PlayerArenaJoin.privateGameOwner;
 
 public class MainCommand implements CommandExecutor {
     private final IPlayerData playerData = new PlayerData();
