@@ -29,11 +29,11 @@ public class ArenaListener implements Listener {
     @EventHandler
     public static void onPlayerHit(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
-            boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()));
+            boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).getArenaName());
             if (isArenaPrivate) {
-                if (playerData.isOHOKEnabled(game.getOwnerOfPrivateArena(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager())))) {
+                if (playerData.isOHOKEnabled(game.getOwnerOfPrivateArena(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).getArenaName()))) {
                     if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()) == null) return;
-                    if (!PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).getPlayers().contains(game.getOwnerOfPrivateArena(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager())))) return;
+                    if (!PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).getPlayers().contains(game.getOwnerOfPrivateArena(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).getArenaName()))) return;
                     if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).isSpectator((Player) e.getDamager())) return;
                     if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).getStatus() == GameState.waiting) return;
                     if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).getStatus() == GameState.starting) return;
@@ -47,35 +47,35 @@ public class ArenaListener implements Listener {
 
     @EventHandler
     public static void onPlayerSpawn(TeamAssignEvent e) {
-        if (game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()))) {
+        if (game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getArenaName())) {
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                if (playerData.isNDEnabled(game.getOwnerOfPrivateArena((e.getArena())))) {
+                if (playerData.isNDEnabled(game.getOwnerOfPrivateArena((e.getArena().getArenaName())))) {
                     for (IGenerator generator : e.getArena().getOreGenerators()) {
                         if (generator.getType() == GeneratorType.DIAMOND) {
                             generator.disable();
                         }
                     }
                 }
-                if (playerData.isNEEnabled(game.getOwnerOfPrivateArena(e.getArena()))) {
+                if (playerData.isNEEnabled(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     for (IGenerator generator : e.getArena().getOreGenerators()) {
                         if (generator.getType() == GeneratorType.EMERALD) {
                             generator.disable();
                         }
                     }
                 }
-                if (playerData.isLGEnabled(game.getOwnerOfPrivateArena(e.getArena()))) {
+                if (playerData.isLGEnabled(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     for (Player player : e.getArena().getPlayers()) {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2, false, true), true);
                     }
                 }
-                if (playerData.isMTUEnabled(game.getOwnerOfPrivateArena(e.getArena()))) {
+                if (playerData.isMTUEnabled(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     for (ITeam team : e.getArena().getTeams()) {
                         team.getTeamUpgradeTiers().put("upgrade-forge", 3);
                         team.getTeamUpgradeTiers().put("upgrade-miner", 2);
                         team.getTeamUpgradeTiers().put("upgrade-heal-pool", 1);
                     }
                 }
-                switch (playerData.getHBLevel(game.getOwnerOfPrivateArena(e.getArena()))) {
+                switch (playerData.getHBLevel(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     case 0:
                     case 1:
                         break;
@@ -90,7 +90,7 @@ public class ArenaListener implements Listener {
                         }
                         break;
                 }
-                switch (playerData.getSpeedLevel(game.getOwnerOfPrivateArena(e.getArena()))) {
+                switch (playerData.getSpeedLevel(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     case 0:
                         break;
                     case 1:
@@ -115,15 +115,15 @@ public class ArenaListener implements Listener {
 
     @EventHandler
     public static void onReSpawn(PlayerReSpawnEvent e) {
-        boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()));
+        boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getArenaName());
         if (isArenaPrivate) {
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                if (playerData.isLGEnabled(game.getOwnerOfPrivateArena(e.getArena()))) {
+                if (playerData.isLGEnabled(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     for (Player player : e.getArena().getPlayers()) {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2, false, true), true);
                     }
                 }
-                switch (playerData.getHBLevel(game.getOwnerOfPrivateArena(e.getArena()))) {
+                switch (playerData.getHBLevel(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     case 0:
                     case 1:
                         break;
@@ -138,7 +138,7 @@ public class ArenaListener implements Listener {
                         }
                         break;
                 }
-                switch (playerData.getSpeedLevel(game.getOwnerOfPrivateArena(e.getArena()))) {
+                switch (playerData.getSpeedLevel(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     case 0:
                         break;
                     case 1:
@@ -163,9 +163,9 @@ public class ArenaListener implements Listener {
     @EventHandler
     public static void onBlockBreak(BlockBreakEvent e) {
         IArena arena = PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer());
-        boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()));
+        boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getArenaName());
         if (isArenaPrivate) {
-            if (playerData.isAMBEnabled(game.getOwnerOfPrivateArena(arena))) {
+            if (playerData.isAMBEnabled(game.getOwnerOfPrivateArena(arena.getArenaName()))) {
                 if (arena.getStatus() == GameState.waiting) return;
                 if (arena.getStatus() == GameState.starting) return;
                 if (arena.getStatus() == GameState.restarting) return;
@@ -192,9 +192,9 @@ public class ArenaListener implements Listener {
     }
     @EventHandler
     public static void onPlayerDeath(PlayerKillEvent e) {
-        boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getVictim()));
+        boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getVictim()).getArenaName());
         if (isArenaPrivate) {
-                switch (playerData.getRETLevel(game.getOwnerOfPrivateArena(e.getArena()))) {
+                switch (playerData.getRETLevel(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
                     case 0:
                     case 2:
                         break;

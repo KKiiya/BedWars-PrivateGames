@@ -39,8 +39,8 @@ public class PlayerArenaJoin implements Listener {
             if (playerData.isPrivateGameEnabled(player)) {
                 if (party.isPartyOwner(player) || player.isOp()) {
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                        game.setArenaPrivate(e.getArena(), true);
-                        game.setPrivateArenaOwner(e.getArena(), player);
+                        game.setArenaPrivate(e.getArena().getArenaName(), true);
+                        game.setPrivateArenaOwner(e.getArena().getArenaName(), player);
                         player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
                     }, 35L);
                     for (Player members : party.getPartyMembers(player)) {
@@ -58,8 +58,8 @@ public class PlayerArenaJoin implements Listener {
         }
         else if (!party.hasParty(player) && playerData.isPrivateGameEnabled(player) && player.isOp() || player.hasPermission("pg.admin")) {
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                game.setArenaPrivate(e.getArena(), true);
-                game.setPrivateArenaOwner(e.getArena(), player);
+                game.setArenaPrivate(e.getArena().getArenaName(), true);
+                game.setPrivateArenaOwner(e.getArena().getArenaName(), player);
                 player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
             }, 35L);
             e.getArena().changeStatus(GameState.starting);

@@ -1,9 +1,7 @@
 package me.notlewx.pgames.listeners.player.proxy;
 
-import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.proxy.api.event.PlayerArenaJoinEvent;
 import me.notlewx.pgames.PrivateGames;
-import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.api.interfaces.IPlayerData;
 import me.notlewx.pgames.api.interfaces.Party;
 import org.bukkit.entity.Player;
@@ -13,7 +11,6 @@ import org.bukkit.event.Listener;
 public class PlayerJoinArena implements Listener {
     private static final Party party = PrivateGames.getPartyUtil();
     private static final IPlayerData playerData = PrivateGames.getPlayerData();
-    private static final IGame game = PrivateGames.getGameUtil();
     @EventHandler
     public static void onArenaJoin(PlayerArenaJoinEvent e) {
         if (playerData.isPrivateGameEnabled(e.getPlayer())) {
@@ -25,8 +22,6 @@ public class PlayerJoinArena implements Listener {
             } else {
                 e.getArena().addPlayer(e.getPlayer(), e.getArena().getArenaName());
             }
-            game.setArenaPrivate((IArena) e.getArena(), true);
-            game.setPrivateArenaOwner((IArena) e.getArena(), e.getPlayer());
         }
     }
 }

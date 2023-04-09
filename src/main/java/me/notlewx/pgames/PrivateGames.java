@@ -10,7 +10,7 @@ import me.notlewx.pgames.config.bedwars.MainConfig;
 import me.notlewx.pgames.config.bedwars.MessagesData;
 import me.notlewx.pgames.config.proxy.ProxyConfig;
 import me.notlewx.pgames.config.proxy.ProxyMessagesData;
-import me.notlewx.pgames.data.Game;
+import me.notlewx.pgames.data.game.Game;
 import me.notlewx.pgames.data.PlayerData;
 import me.notlewx.pgames.data.party.ProxyParty;
 import me.notlewx.pgames.data.database.MySQL;
