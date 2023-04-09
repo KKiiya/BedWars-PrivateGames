@@ -1,5 +1,6 @@
 package me.notlewx.pgames.data.party;
 
+import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import com.andrei1058.bedwars.proxy.party.Internal;
 import me.notlewx.pgames.api.interfaces.Party;
 import org.bukkit.Bukkit;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProxyParty implements Party {
-    private final Internal internal = new Internal();
+    private final com.andrei1058.bedwars.proxy.party.Party internal = BedWarsProxy.getParty();
     @Override
     public List<Player> getPartyMembers(Player player) {
         return internal.getMembers(player.getUniqueId()).stream().map(Bukkit::getPlayer).collect(Collectors.toList());
