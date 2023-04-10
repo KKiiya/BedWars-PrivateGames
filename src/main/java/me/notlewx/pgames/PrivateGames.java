@@ -16,13 +16,11 @@ import me.notlewx.pgames.data.party.ProxyParty;
 import me.notlewx.pgames.data.database.MySQL;
 import me.notlewx.pgames.data.database.SQLite;
 import me.notlewx.pgames.listeners.arena.ArenaListener;
-import me.notlewx.pgames.listeners.player.InteractionEvent;
+import me.notlewx.pgames.listeners.InteractionEvent;
 import me.notlewx.pgames.listeners.player.PlayerJoin;
 import me.notlewx.pgames.listeners.player.bedwars.PlayerArenaJoin;
 import me.notlewx.pgames.listeners.player.bedwars.PlayerArenaLeave;
 import me.notlewx.pgames.listeners.player.proxy.PlayerJoinArena;
-import me.notlewx.pgames.support.IVersion;
-import me.notlewx.pgames.support.version.*;
 import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -31,7 +29,6 @@ import java.io.File;
 import java.util.Arrays;
 
 public final class PrivateGames extends JavaPlugin {
-    private static IVersion version;
     public static MainConfig mainConfig;
     public static ProxyConfig proxyConfig;
     private static BedWars bedWars;
@@ -47,31 +44,12 @@ public final class PrivateGames extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        String ver = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-        switch (ver) {
-            case "v1_8_R3" :
-                version = new v1_8_R3();
-                break;
-            case "v1_12_R1":
-                version = new v1_12_R1();
-                break;
-            case "v1_16_R3":
-                version = new v1_16_R3();
-                break;
-            case "v1_17_R1":
-                version = new v1_17_R1();
-                break;
-            case "v1_18_R2" :
-                version = new v1_18_R2();
-                break;
-            case "v1_19_R2":
-                version = new v1_19_R2();
-                break;
-            default:
-                getPlugins().getLogger().severe("I can't run on your server version (" + ver + "). DISABLING!");
-                Bukkit.getPluginManager().disablePlugin(this);
-                break;
+        if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
+            getLogger().severe("I can't run without ProtocolLib. Disabling...");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
         }
+        String ver = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         pd = new PlayerData();
         // BedWars1058 / BedWarsProxy search
         if ((Bukkit.getPluginManager().getPlugin("BedWars1058")) == null && (Bukkit.getPluginManager().getPlugin("BedWarsProxy") == null)) {
@@ -193,9 +171,6 @@ public final class PrivateGames extends JavaPlugin {
             party = new me.notlewx.pgames.data.party.Party();
         }
         return party;
-    }
-    public static IVersion getVersionUtil() {
-        return version;
     }
     public static IGame getGameUtil() {
         return game;

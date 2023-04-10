@@ -67,12 +67,12 @@ public class HealthMenu {
                 break;
             case 2 :
                 gapple2Meta.setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
-                gapple2.setItemMeta(gapple1Meta);
+                gapple2.setItemMeta(gapple2Meta);
                 gapple2.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                 break;
             case 3 :
                 gapple3Meta.setLore(Utility.getListLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
-                gapple3.setItemMeta(gapple1Meta);
+                gapple3.setItemMeta(gapple3Meta);
                 gapple3.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                 break;
         }

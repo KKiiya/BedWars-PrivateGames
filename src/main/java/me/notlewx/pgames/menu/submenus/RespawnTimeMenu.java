@@ -67,12 +67,12 @@ public class RespawnTimeMenu {
                 break;
             case 2 :
                 paper2Meta.setLore(Utility.getListLang(player, ITEM_SUBMENU_RESPAWN_TIME_II_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
-                paper2.setItemMeta(paper1Meta);
+                paper2.setItemMeta(paper2Meta);
                 paper2.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                 break;
             case 3 :
                 paper3Meta.setLore(Utility.getListLang(player, ITEM_SUBMENU_RESPAWN_TIME_III_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
-                paper3.setItemMeta(paper1Meta);
+                paper3.setItemMeta(paper3Meta);
                 paper3.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                 break;
         }

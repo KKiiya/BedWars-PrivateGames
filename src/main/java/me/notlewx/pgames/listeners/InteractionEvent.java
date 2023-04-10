@@ -1,4 +1,4 @@
-package me.notlewx.pgames.listeners.player;
+package me.notlewx.pgames.listeners;
 
 import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.interfaces.IPlayerData;
@@ -159,14 +159,12 @@ public class InteractionEvent implements Listener {
                 if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, SUBMENU_SPEED_BACK_ITEM_NAME))) {
                     SpeedMenu.closeSpeedMenu(player);
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
-                    playerData.setSpeedLevel(player, 0);
+                    playerData.setSpeedLevel(player, 1);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
                     e.getCurrentItem().setItemMeta(meta);
-                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-                    List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
-                    for (ItemStack material : books) {
+                    for (ItemStack material : e.getInventory().getContents()) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
                             ItemMeta materialMeta;
                             if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
@@ -186,14 +184,12 @@ public class InteractionEvent implements Listener {
                         }
                     }
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
-                    playerData.setSpeedLevel(player, 1);
+                    playerData.setSpeedLevel(player, 2);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
                     e.getCurrentItem().setItemMeta(meta);
-                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-                    List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
-                    for (ItemStack material : books) {
+                    for (ItemStack material : e.getInventory().getContents()) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_II_NAME))) {
                             ItemMeta materialMeta;
                             if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
@@ -209,17 +205,16 @@ public class InteractionEvent implements Listener {
                                 materialMeta.setLore(Utility.getListLang(player, ITEM_SUBMENU_SPEED_IV_LORE).stream().map(s -> s.replace("{state}", Utility.getMSGLang(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
                                 material.setItemMeta(materialMeta);
                             }
+                            material.removeEnchantment(Enchantment.DURABILITY);
                         }
                     }
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
-                    playerData.setSpeedLevel(player, 2);
+                    playerData.setSpeedLevel(player, 3);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
                     e.getCurrentItem().setItemMeta(meta);
-                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-                    List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
-                    for (ItemStack material : books) {
+                    for (ItemStack material : e.getInventory().getContents()) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_III_NAME))) {
                             ItemMeta materialMeta;
                             if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
@@ -239,14 +234,12 @@ public class InteractionEvent implements Listener {
                         }
                     }
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
-                    playerData.setSpeedLevel(player, 3);
+                    playerData.setSpeedLevel(player, 4);
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
                     e.getCurrentItem().setItemMeta(meta);
-                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-                    List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
-                    for (ItemStack material : books) {
+                    for (ItemStack material : e.getInventory().getContents()) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_IV_NAME))) {
                             ItemMeta materialMeta;
                             if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_SPEED_I_NAME))) {
@@ -275,10 +268,8 @@ public class InteractionEvent implements Listener {
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
                     e.getCurrentItem().setItemMeta(meta);
-                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-                    List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.GOLDEN_APPLE).collect(Collectors.toList());
-                    for (ItemStack material : books) {
+                    for (ItemStack material : e.getInventory().getContents()) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_NAME))) {
                             ItemMeta materialMeta;
                             if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_NAME))) {
@@ -298,10 +289,8 @@ public class InteractionEvent implements Listener {
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
                     e.getCurrentItem().setItemMeta(meta);
-                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-                    List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
-                    for (ItemStack material : books) {
+                    for (ItemStack material : e.getInventory().getContents()) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_II_NAME))) {
                             ItemMeta materialMeta;
                             if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_NAME))) {
@@ -322,10 +311,8 @@ public class InteractionEvent implements Listener {
                     ItemMeta meta = e.getCurrentItem().getItemMeta();
                     meta.setLore(e.getCurrentItem().getItemMeta().getLore().stream().map(s -> s.replace("{selected}", Utility.getMSGLang(player, MENU_SELECTED_MEANING))).collect(Collectors.toList()));
                     e.getCurrentItem().setItemMeta(meta);
-                    Arrays.stream(e.getInventory().getContents()).forEach(i -> i.removeEnchantment(Enchantment.DURABILITY));
                     e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-                    List<ItemStack> books = Arrays.stream(e.getInventory().getContents()).filter(i -> i.getType() == Material.RABBIT_FOOT).collect(Collectors.toList());
-                    for (ItemStack material : books) {
+                    for (ItemStack material : e.getInventory().getContents()) {
                         if (!material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_III_NAME))) {
                             ItemMeta materialMeta;
                             if (material.getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_HEALTH_BUFF_I_NAME))) {

@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -49,6 +50,17 @@ public class ArenaListener implements Listener {
     public static void onPlayerSpawn(TeamAssignEvent e) {
         if (game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getArenaName())) {
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                switch (playerData.getETLevel(e.getPlayer())) {
+                    case 0:
+                    case 2:
+                        break;
+                    case 1:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                }
                 if (playerData.isNDEnabled(game.getOwnerOfPrivateArena((e.getArena().getArenaName())))) {
                     for (IGenerator generator : e.getArena().getOreGenerators()) {
                         if (generator.getType() == GeneratorType.DIAMOND) {
@@ -160,19 +172,20 @@ public class ArenaListener implements Listener {
             }, 35L);
         }
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onBlockBreak(BlockBreakEvent e) {
         IArena arena = PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer());
         boolean isArenaPrivate = game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getArenaName());
         if (isArenaPrivate) {
             if (playerData.isAMBEnabled(game.getOwnerOfPrivateArena(arena.getArenaName()))) {
-                if (arena.getStatus() == GameState.waiting) return;
-                if (arena.getStatus() == GameState.starting) return;
-                if (arena.getStatus() == GameState.restarting) return;
-                if (e.getBlock().getType() == Material.ENDER_CHEST) return;
-                if (e.getBlock().getType() == Material.CHEST) return;
-                if (arena.isReSpawning(e.getPlayer())) return;
-                if (arena.isSpectator(e.getPlayer())) return;
+                if (arena.getStatus() == GameState.waiting) e.setCancelled(true);
+                if (arena.getStatus() == GameState.starting) e.setCancelled(true);
+                if (arena.getStatus() == GameState.restarting) e.setCancelled(true);
+                if (e.getBlock().getType() == Material.ENDER_CHEST) e.setCancelled(true);
+                if (e.getBlock().getType() == Material.CHEST) e.setCancelled(true);
+                if (e.getBlock().getType() == Material.BED) e.setCancelled(true);
+                if (arena.isReSpawning(e.getPlayer())) e.setCancelled(true);
+                if (arena.isSpectator(e.getPlayer())) e.setCancelled(true);
                 for (IGenerator generator : arena.getOreGenerators()) {
                     if (generator.getLocation() == e.getBlock().getLocation()) {
                         e.setCancelled(true);
@@ -186,7 +199,6 @@ public class ArenaListener implements Listener {
                     }
                 }
                 e.setCancelled(false);
-                PrivateGames.getVersionUtil().cancelMessageTo(e.getPlayer());
             }
         }
     }
@@ -199,7 +211,7 @@ public class ArenaListener implements Listener {
                     case 2:
                         break;
                     case 1:
-                        e.getArena().startReSpawnSession(e.getVictim(), 1);
+                        e.getArena().startReSpawnSession(e.getVictim(), (int) 1.5);
                         break;
                     case 3:
                         e.getArena().startReSpawnSession(e.getVictim(), 10);
