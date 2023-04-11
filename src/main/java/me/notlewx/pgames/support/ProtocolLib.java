@@ -6,6 +6,7 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.injector.netty.WirePacket;
 import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.util.Utility;
 import net.md_5.bungee.chat.ComponentSerializer;
@@ -21,7 +22,7 @@ public class ProtocolLib {
             @Override
             public void onPacketSending(PacketEvent event) {
                 String json = event.getPacket().getChatComponents().read(0).getJson();
-
+                System.out.println(json);
             }
         });
     }

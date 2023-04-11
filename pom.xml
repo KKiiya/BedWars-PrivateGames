@@ -93,6 +93,13 @@
             <systemPath>${project.basedir}/lib/proxy-plugin-1.2.4.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>com.andrei1058.bedwars</groupId>
+            <artifactId>BedWars1058</artifactId>
+            <version>22.7</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/bedwars-plugin-22.7.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.8.0</version>

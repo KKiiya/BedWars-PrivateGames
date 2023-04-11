@@ -16,7 +16,7 @@ public class PlayerJoinArena implements Listener {
         if (playerData.isPrivateGameEnabled(e.getPlayer())) {
             if (party.hasParty(e.getPlayer())) {
                 for (Player members : party.getPartyMembers(e.getPlayer())) {
-                    e.getArena().addPlayer(members, e.getPlayer().getName());
+                    e.getArena().addPlayer(members, e.getArena().getArenaName());
                 }
                 if (!(party.getPartyMembers(e.getPlayer()).contains(e.getPlayer()))) e.setCancelled(true);
             } else {

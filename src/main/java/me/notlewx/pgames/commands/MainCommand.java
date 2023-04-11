@@ -7,6 +7,8 @@ import me.notlewx.pgames.api.interfaces.Party;
 import me.notlewx.pgames.data.PlayerData;
 import me.notlewx.pgames.menu.SettingsMenu;
 import me.notlewx.pgames.util.Utility;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,32 +30,7 @@ public class MainCommand implements CommandExecutor {
             else {
                 switch (args[0].toLowerCase()) {
                     case "enable":
-                        if (args.length <= 2) {
-                            switch (args[1].toLowerCase()) {
-                                case "admin":
-                                    if (sender.hasPermission("pg.admin") || sender.isOp()) {
-                                        if (party.hasParty((Player) sender)) {
-                                            if (party.isPartyOwner((Player) sender)) {
-                                                playerData.setPrivateGameEnabled((Player) sender);
-                                                for (Player player : party.getPartyMembers((Player) sender)) {
-                                                    if (party.isPartyOwner(player)) {
-                                                        player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_ENABLED));
-                                                    }
-                                                    if (player != sender) {
-                                                        player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
-                                                    }
-                                                }
-                                            } else {
-                                                sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_OWNER));
-                                            }
-                                        } else {
-                                            playerData.setPrivateGameDisabled((Player) sender);
-                                            sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_ENABLED));
-                                        }
-                                    }
-                            }
-                        }
-                        else if (args.length == 1) {
+                        if (args.length == 1) {
                             if (sender.hasPermission("pg.enable") || sender.isOp()) {
                                 if (!playerData.isPrivateGameEnabled(((Player) sender))) {
                                     if (playerData.isPlayerInParty((Player) sender)) {
@@ -79,32 +56,35 @@ public class MainCommand implements CommandExecutor {
                                 sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                             }
                         }
-                    break;
-
-                    case "disable":
-                        if (args.length <= 2 && sender.hasPermission("pg.admin") || sender.isOp()) {
+                        else if (args.length == 2) {
                             switch (args[1].toLowerCase()) {
                                 case "admin":
-                                    if (party.hasParty((Player) sender)) {
-                                        if (party.isPartyOwner((Player) sender)) {
-                                            playerData.setPrivateGameDisabled((Player) sender);
-                                            for (Player player : party.getPartyMembers((Player) sender)) {
-                                                if (party.isPartyOwner(player))
-                                                    player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_DISABLED));
-                                                if (player != sender) {
-                                                    player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                    if (sender.hasPermission("pg.admin") || sender.isOp()) {
+                                        if (party.hasParty((Player) sender)) {
+                                            if (party.isPartyOwner((Player) sender)) {
+                                                playerData.setPrivateGameEnabled((Player) sender);
+                                                for (Player player : party.getPartyMembers((Player) sender)) {
+                                                    if (party.isPartyOwner(player)) {
+                                                        player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_ENABLED));
+                                                    }
+                                                    if (player != sender) {
+                                                        player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                    }
                                                 }
+                                            } else {
+                                                sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_OWNER));
                                             }
                                         } else {
-                                            sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_OWNER));
+                                            playerData.setPrivateGameDisabled((Player) sender);
+                                            sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_ENABLED));
                                         }
-                                    } else {
-                                        playerData.setPrivateGameDisabled((Player) sender);
-                                        sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_DISABLED));
                                     }
                             }
                         }
-                        else if (args.length == 1) {
+                    break;
+
+                    case "disable":
+                        if (args.length == 1) {
                             if (sender.hasPermission("pg.disable") || sender.isOp()) {
                                 if (party.hasParty((Player) sender)) {
                                     if (playerData.isPrivateGameEnabled(((Player) sender))) {
@@ -134,6 +114,28 @@ public class MainCommand implements CommandExecutor {
                                 sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_IN_PARTY));
                             }
                         }
+                        if (args.length == 2 && sender.hasPermission("pg.admin") || sender.isOp()) {
+                            switch (args[1].toLowerCase()) {
+                                case "admin":
+                                    if (party.hasParty((Player) sender)) {
+                                        if (party.isPartyOwner((Player) sender)) {
+                                            playerData.setPrivateGameDisabled((Player) sender);
+                                            for (Player player : party.getPartyMembers((Player) sender)) {
+                                                if (party.isPartyOwner(player))
+                                                    player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_DISABLED));
+                                                if (player != sender) {
+                                                    player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                }
+                                            }
+                                        } else {
+                                            sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_OWNER));
+                                        }
+                                    } else {
+                                        playerData.setPrivateGameDisabled((Player) sender);
+                                        sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_DISABLED));
+                                    }
+                            }
+                        }
                     break;
 
                     case "gui" :
@@ -155,7 +157,6 @@ public class MainCommand implements CommandExecutor {
 
                     case "help":
                     break;
-                    /*
                     case "join" :
                         if (sender.hasPermission("pg.join") || sender.isOp()) {
                             if (args.length < 1) {
@@ -166,14 +167,15 @@ public class MainCommand implements CommandExecutor {
                                         sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
                                     }
                                     else {
-                                        PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(Bukkit.getPlayer(args[1])).addPlayer((Player) sender, false);
+                                        Location specLocation =  PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(Bukkit.getPlayer(args[1])).getSpectatorLocation();
+                                        PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(Bukkit.getPlayer(args[1])).addSpectator((Player) sender, true, specLocation);
+                                        PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(Bukkit.getPlayer(args[1])).startReSpawnSession((Player) sender, 5);
                                     }
                                 } else {
                                     sender.sendMessage(Utility.colorizedString("&cCouldn't find this player"));
                                 }
                             }
                         }
-                     */
                     default:
                         sender.sendMessage(Utility.colorizedString("&cUnknown command"));
                         break;
