@@ -30,7 +30,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import java.time.Instant;
-import java.util.Iterator;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -128,7 +127,6 @@ public class ArenaListener implements Listener {
                         for (Location loc : e.getArena().getConfig().getArenaLocations("Team." +  team.getName() + ".Emerald")) {
                             OreGenerator gen = new OreGenerator(loc, e.getArena(), GeneratorType.CUSTOM, team);
                             gen.setOre(new ItemStack(Material.EMERALD));
-                            gen.setType(GeneratorType.EMERALD);
                             gen.setAmount(1);
                             gen.setDelay(5);
                             gen.setSpawnLimit(12);
@@ -203,7 +201,8 @@ public class ArenaListener implements Listener {
                         else killerStats.setFinalKills(killerStats.getFinalKills() - 1);
                     }
                 } else {
-                    victimStats.setDeaths(victimStats.getDeaths() - 1);
+                    if (victimStats.getDeaths() == 0) victimStats.setDeaths(victimStats.getDeaths());
+                    else victimStats.setDeaths(victimStats.getDeaths() - 1);
                     if (e.getKiller() != null) {
                         PlayerStats killerStats = BedWars.getStatsManager().get(e.getKiller().getUniqueId());
                         if (killerStats.getFinalKills() == 0) killerStats.setKills(killerStats.getKills());
@@ -225,10 +224,7 @@ public class ArenaListener implements Listener {
     public void onGameEnd(GameEndEvent event) {
         boolean isArenaPrivate = game.isArenaPrivate(event.getArena().getArenaName());
         if (isArenaPrivate) {
-            Iterator var2 = event.getWinners().iterator();
-
-            while (var2.hasNext()) {
-                UUID uuid = (UUID) var2.next();
+            for (UUID uuid : event.getWinners()) {
                 Player player = Bukkit.getPlayer(uuid);
                 if (player != null && player.isOnline()) {
                     PlayerStats stats = BedWars.getStatsManager().get(uuid);
@@ -245,6 +241,7 @@ public class ArenaListener implements Listener {
                 event.getArena().getConfig().save();
             }
             game.setArenaPrivate(event.getArena().getArenaName(), false);
+            game.setPrivateArenaOwner(event.getArena().getArenaName(), null);
         }
     }
     @EventHandler(priority = EventPriority.MONITOR)
@@ -271,7 +268,7 @@ public class ArenaListener implements Listener {
                                 if (event.getArena().isPlayer(player)) {
                                     if (playerStats.getFinalDeaths() == 0) playerStats.setFinalDeaths(playerStats.getFinalDeaths());
                                     else playerStats.setFinalDeaths(playerStats.getFinalDeaths() - 1);
-                                    if (playerStats.getLosses() == 0) playerStats.setLosses(playerStats.getLosses() - 1);
+                                    if (playerStats.getLosses() == 0) playerStats.setLosses(playerStats.getLosses());
                                     else playerStats.setLosses(playerStats.getLosses() - 1);
                                 }
 
@@ -279,18 +276,21 @@ public class ArenaListener implements Listener {
                                 killerTeam = event.getArena().getTeam(damager);
                                 if (damager != null && event.getArena().isPlayer(damager) && killerTeam != null) {
                                     damagerStats = BedWars.getStatsManager().get(damager.getUniqueId());
-                                    damagerStats.setFinalKills(damagerStats.getFinalKills() - 1);
+                                    if (damagerStats.getFinalKills() == 0) damagerStats.setFinalKills(damagerStats.getFinalKills());
+                                    else damagerStats.setFinalKills(damagerStats.getFinalKills() - 1);
                                     event.getArena().addPlayerKill(damager, true, player);
                                 }
                             } else {
                                 damager = event.getLastDamager();
                                 killerTeam = event.getArena().getTeam(damager);
                                 if (event.getLastDamager() != null && event.getArena().isPlayer(damager) && killerTeam != null) {
-                                    playerStats.setDeaths(playerStats.getDeaths() - 1);
+                                    if (playerStats.getDeaths() == 0) playerStats.setDeaths(playerStats.getDeaths());
+                                    else playerStats.setDeaths(playerStats.getDeaths() - 1);
                                     event.getArena().addPlayerDeath(player);
                                     event.getArena().addPlayerKill(damager, false, player);
                                     damagerStats = BedWars.getStatsManager().get(damager.getUniqueId());
-                                    damagerStats.setKills(damagerStats.getKills() - 1);
+                                    if (damagerStats.getKills() == 0) damagerStats.setKills(damagerStats.getKills());
+                                    else damagerStats.setKills(damagerStats.getKills() - 1);
                                 }
                             }
                         }
