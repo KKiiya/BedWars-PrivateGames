@@ -16,6 +16,7 @@ public class Game implements IGame {
     private final List<String> arenasInPrivMode = new ArrayList<>();
     @Override
     public boolean isArenaPrivate(String arena) {
+        if (privArena.get(arena) == null) return false;
         return privArena.get(arena);
     }
 

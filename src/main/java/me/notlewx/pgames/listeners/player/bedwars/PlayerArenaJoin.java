@@ -30,13 +30,14 @@ public class PlayerArenaJoin implements Listener {
     public static void onPlayerJoin(PlayerJoinArenaEvent e) {
         Player player = e.getPlayer();
         if (e.getArena().isSpectator(player)) return;
+        if (!playerData.isPrivateGameEnabled(player)) return;
         ItemStack settings = new ItemStack(Material.valueOf(mainConfig.getString(MATERIAL)));
         ItemMeta settingsMeta = settings.getItemMeta();
         settingsMeta.setDisplayName(Utility.getMSGLang(player, PRIVATE_GAME_MENU_ITEM_NAME));
         settingsMeta.setLore(Utility.getListLang(player, PRIVATE_GAME_MENU_ITEM_LORE));
         settings.setItemMeta(settingsMeta);
-        if (party.hasParty(player)) {
-            if (playerData.isPrivateGameEnabled(player)) {
+        if (playerData.isPrivateGameEnabled(player)) {
+            if (party.hasParty(player)) {
                 if (party.isPartyOwner(player) || player.isOp()) {
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                         game.setArenaPrivate(e.getArena().getArenaName(), true);
@@ -56,14 +57,16 @@ public class PlayerArenaJoin implements Listener {
                 e.getArena().getStartingTask().setCountdown(60);
             }
         }
-        else if (!party.hasParty(player) && playerData.isPrivateGameEnabled(player) && player.isOp() || player.hasPermission("pg.admin")) {
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                game.setArenaPrivate(e.getArena().getArenaName(), true);
-                game.setPrivateArenaOwner(e.getArena().getArenaName(), player);
-                player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
-            }, 35L);
-            e.getArena().changeStatus(GameState.starting);
-            e.getArena().getStartingTask().setCountdown(60);
+        else if (!party.hasParty(player)) {
+            if (playerData.isPrivateGameEnabled(player) && (player.isOp() || player.hasPermission("pg.admin"))) {
+                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                    game.setArenaPrivate(e.getArena().getArenaName(), true);
+                    game.setPrivateArenaOwner(e.getArena().getArenaName(), player);
+                    player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                }, 35L);
+                e.getArena().changeStatus(GameState.starting);
+                e.getArena().getStartingTask().setCountdown(60);
+            }
         }
     }
 }

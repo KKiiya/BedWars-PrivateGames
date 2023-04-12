@@ -18,7 +18,7 @@ public class MessagesData {
             switch (l.getIso()) {
                 default:
                     yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
-                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate game settings");
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate Game Settings");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "with up to 11 different options!"));
                     yml.addDefault(MENU_SELECTED_MEANING, "&aSelected!");
                     yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eClick to Select!");
@@ -114,7 +114,7 @@ public class MessagesData {
                     break;
                 case "es":
                     yml.addDefault(MAIN_MENU_NAME, "&8Ajustes de partida privada");
-                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aAjustes de partida privada");
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aAjustes de Partida Privada");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Aquí puedes configurar tu partida privada", "&7con más de 11 ajustes diferentes!"));
                     yml.addDefault(MENU_SELECTED_MEANING, "&aSeleccionado!");
                     yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eClick para seleccionar!");

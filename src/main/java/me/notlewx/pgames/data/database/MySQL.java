@@ -70,37 +70,49 @@ public class MySQL {
         Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), () -> {
             try {
                 Connection c = (PrivateGames.getPlugins()).db.getConnection();
-                try {
-                    String sql = "INSERT INTO bw1058_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-                    PreparedStatement ps = c.prepareStatement(sql);
-                    ps.setString(1, path);
-                    ps.setString(2, "false");
-                    ps.setString(3, "false");
-                    ps.setString(4, "false");
-                    ps.setInt(5, 0);
-                    ps.setString(6, "false");
-                    ps.setString(7, "false");
-                    ps.setString(8, "false");
-                    ps.setString(9, "false");
-                    ps.setString(10, "false");
-                    ps.setInt(11, 0);
-                    ps.setInt(12, 0);
-                    ps.setInt(13, 0);
-                    ps.executeUpdate();
-                    ps.close();
+
+                PreparedStatement check = c.prepareStatement("SELECT player FROM bw1058_private_games WHERE player=?");
+                check.setString(1, path);
+                ResultSet rs = check.executeQuery();
+                if (rs.next()) {
+                    String str = rs.getString("player");
+                    if (str != null) return;
                     if (c != null)
                         c.close();
-                } catch (Throwable throwable) {
-                    if (c != null)
-                        try {
-                            c.close();
-                        } catch (Throwable throwable1) {
-                            throwable.addSuppressed(throwable1);
-                        }
-                    throw throwable;
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                else {
+                    try {
+                        String sql = "INSERT INTO bw1058_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        PreparedStatement ps = c.prepareStatement(sql);
+                        ps.setString(1, path);
+                        ps.setString(2, "false");
+                        ps.setString(3, "false");
+                        ps.setString(4, "false");
+                        ps.setInt(5, 0);
+                        ps.setString(6, "false");
+                        ps.setString(7, "false");
+                        ps.setString(8, "false");
+                        ps.setString(9, "false");
+                        ps.setString(10, "false");
+                        ps.setInt(11, 0);
+                        ps.setInt(12, 0);
+                        ps.setInt(13, 0);
+                        ps.executeUpdate();
+                        ps.close();
+                        if (c != null)
+                            c.close();
+                    } catch (Throwable throwable) {
+                        if (c != null)
+                            try {
+                                c.close();
+                            } catch (Throwable throwable1) {
+                                throwable.addSuppressed(throwable1);
+                            }
+                        throw throwable;
+                    }
+                }
+            } catch(SQLException e){
+                 throw new RuntimeException(e);
             }
         });
     }

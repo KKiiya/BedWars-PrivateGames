@@ -161,6 +161,9 @@ public final class PrivateGames extends JavaPlugin {
     public static boolean isBwproxy() {
         return bwproxy;
     }
+    public static ConfigManager getBwConfig() {
+        return bwconfig;
+    }
     public static PlayerData getPlayerData() {
         return pd;
     }
