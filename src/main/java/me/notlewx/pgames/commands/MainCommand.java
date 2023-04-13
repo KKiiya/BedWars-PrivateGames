@@ -1,9 +1,9 @@
 package me.notlewx.pgames.commands;
 
 import me.notlewx.pgames.api.PGamesAPI;
-import me.notlewx.pgames.api.interfaces.IPlayerData;
+import me.notlewx.pgames.api.interfaces.IPrivateSettings;
 import me.notlewx.pgames.api.interfaces.Party;
-import me.notlewx.pgames.data.PlayerData;
+import me.notlewx.pgames.data.PrivateSettings;
 import me.notlewx.pgames.menu.SettingsMenu;
 import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
@@ -16,7 +16,7 @@ import java.util.Arrays;
 import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 
 public class MainCommand implements CommandExecutor {
-    private final IPlayerData playerData = new PlayerData();
+    private final IPrivateSettings playerData = new PrivateSettings();
     private final Party party = PGamesAPI.getPartyUtil();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
@@ -95,7 +95,7 @@ public class MainCommand implements CommandExecutor {
                                     if (playerData.isPrivateGameEnabled(((Player) sender))) {
                                         if (playerData.isPlayerInParty((Player) sender)) {
                                             if (party.isPartyOwner((Player) sender)) {
-                                                playerData.setPrivateGameDisabled((Player) sender);
+                                                playerData.setPrivateGameDisabled((Player) sender, false);
                                                 for (Player player : party.getPartyMembers((Player) sender)) {
                                                     if (party.isPartyOwner(player))
                                                         player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_DISABLED));
@@ -126,7 +126,7 @@ public class MainCommand implements CommandExecutor {
                                         if (playerData.isPrivateGameEnabled(((Player) sender))) {
                                             if (party.hasParty((Player) sender)) {
                                                 if (party.isPartyOwner((Player) sender)) {
-                                                    playerData.setPrivateGameDisabled((Player) sender);
+                                                    playerData.setPrivateGameDisabled((Player) sender, false);
                                                     for (Player player : party.getPartyMembers((Player) sender)) {
                                                         if (party.isPartyOwner(player))
                                                             player.sendMessage(Utility.getMSGLang(player, PRIVATE_GAME_DISABLED));
@@ -138,7 +138,7 @@ public class MainCommand implements CommandExecutor {
                                                     sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_OWNER));
                                                 }
                                             } else {
-                                                playerData.setPrivateGameDisabled((Player) sender);
+                                                playerData.setPrivateGameDisabled((Player) sender, false);
                                                 sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_DISABLED));
                                             }
                                         } else {

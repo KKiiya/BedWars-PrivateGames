@@ -1,14 +1,13 @@
 package me.notlewx.pgames.listeners;
 
 import me.notlewx.pgames.api.PGamesAPI;
-import me.notlewx.pgames.api.interfaces.IPlayerData;
+import me.notlewx.pgames.api.interfaces.IPrivateSettings;
 import me.notlewx.pgames.menu.SettingsMenu;
 import me.notlewx.pgames.menu.submenus.EventTimesMenu;
 import me.notlewx.pgames.menu.submenus.HealthMenu;
 import me.notlewx.pgames.menu.submenus.RespawnTimeMenu;
 import me.notlewx.pgames.menu.submenus.SpeedMenu;
 import me.notlewx.pgames.util.Utility;
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,13 +16,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import java.util.Arrays;
-import java.util.List;
+
 import java.util.stream.Collectors;
 import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 
 public class InteractionEvent implements Listener {
-    private static final IPlayerData playerData = PGamesAPI.getPlayerData();
+    private static final IPrivateSettings playerData = PGamesAPI.getPlayerData();
     @EventHandler
     public static void onRightClick(PlayerInteractEvent e) {
         Player player = e.getPlayer();

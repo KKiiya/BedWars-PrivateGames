@@ -1,7 +1,7 @@
 package me.notlewx.pgames.menu.submenus;
 
 import me.notlewx.pgames.api.PGamesAPI;
-import me.notlewx.pgames.api.interfaces.IPlayerData;
+import me.notlewx.pgames.api.interfaces.IPrivateSettings;
 import me.notlewx.pgames.menu.SettingsMenu;
 import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 
 public class EventTimesMenu {
-    private static final IPlayerData playerData = PGamesAPI.getPlayerData();
+    private static final IPrivateSettings playerData = PGamesAPI.getPlayerData();
     public EventTimesMenu(Player player) {
         openEventsTimeMenu(player);
     }

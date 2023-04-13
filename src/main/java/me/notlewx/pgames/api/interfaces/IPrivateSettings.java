@@ -2,7 +2,7 @@ package me.notlewx.pgames.api.interfaces;
 
 import org.bukkit.entity.Player;
 
-public interface IPlayerData {
+public interface IPrivateSettings {
     boolean isPrivateGameEnabled(Player player);
     boolean isPlayerInParty(Player player);
     boolean isOHOKEnabled(Player player);
@@ -13,7 +13,7 @@ public interface IPlayerData {
     boolean isNDEnabled(Player player);
     boolean isNEEnabled(Player player);
     boolean setPrivateGameEnabled(Player player);
-    boolean setPrivateGameDisabled(Player player);
+    boolean setPrivateGameDisabled(Player player, boolean leaving);
     int getRETLevel(Player player);
     int getHBLevel(Player player);
     int getETLevel(Player player);

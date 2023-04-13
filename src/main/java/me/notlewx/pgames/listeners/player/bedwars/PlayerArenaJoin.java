@@ -6,7 +6,7 @@ import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.api.interfaces.Party;
-import me.notlewx.pgames.data.PlayerData;
+import me.notlewx.pgames.data.PrivateSettings;
 import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,7 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import static me.notlewx.pgames.PrivateGames.mainConfig;
 import static me.notlewx.pgames.config.bedwars.MainConfig.MATERIAL;
 import static me.notlewx.pgames.config.bedwars.MainConfig.POSITION;
@@ -23,9 +22,9 @@ import static me.notlewx.pgames.config.bedwars.MessagesData.PRIVATE_GAME_MENU_IT
 import static me.notlewx.pgames.config.bedwars.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
 
 public class PlayerArenaJoin implements Listener {
-    private static final PlayerData playerData = new PlayerData();
+    private static final PrivateSettings playerData = new PrivateSettings();
     private static final Party party = PGamesAPI.getPartyUtil();
-    private static final IGame game = PrivateGames.getGameUtil();
+    private static final IGame game = PGamesAPI.getGameUtil();
     @EventHandler
     public static void onPlayerJoin(PlayerJoinArenaEvent e) {
         Player player = e.getPlayer();
@@ -52,8 +51,9 @@ public class PlayerArenaJoin implements Listener {
                 if (!party.getPartyMembers(player).contains(player)) {
                     e.setCancelled(true);
                 }
+                if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
                 e.getArena().changeStatus(GameState.starting);
-                e.getArena().getStartingTask().setCountdown(60);
+                e.getArena().getStartingTask().setCountdown(PrivateGames.getBwConfig().getInt("countdowns.game-start-regular"));
             }
             else {
                 if (player.isOp() || player.hasPermission("pg.admin")) {
@@ -62,8 +62,9 @@ public class PlayerArenaJoin implements Listener {
                         game.setPrivateArenaOwner(e.getArena().getArenaName(), player);
                         player.getInventory().setItem(mainConfig.getInt(POSITION), settings);
                     }, 35L);
+                    if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
                     e.getArena().changeStatus(GameState.starting);
-                    e.getArena().getStartingTask().setCountdown(60);
+                    e.getArena().getStartingTask().setCountdown(PrivateGames.getBwConfig().getInt("countdowns.game-start-regular"));
                 }
             }
         }

@@ -17,7 +17,7 @@ import com.andrei1058.bedwars.stats.PlayerStats;
 import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.interfaces.IGame;
-import me.notlewx.pgames.api.interfaces.IPlayerData;
+import me.notlewx.pgames.api.interfaces.IPrivateSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,7 +34,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ArenaListener implements Listener {
-    private static final IPlayerData playerData = PGamesAPI.getPlayerData();
+    private static final IPrivateSettings playerData = PGamesAPI.getPlayerData();
     private static final IGame game = PrivateGames.getGameUtil();
 
     @EventHandler

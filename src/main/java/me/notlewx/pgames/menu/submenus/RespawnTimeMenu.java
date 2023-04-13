@@ -1,7 +1,7 @@
 package me.notlewx.pgames.menu.submenus;
 
 import me.notlewx.pgames.api.PGamesAPI;
-import me.notlewx.pgames.api.interfaces.IPlayerData;
+import me.notlewx.pgames.api.interfaces.IPrivateSettings;
 import me.notlewx.pgames.menu.SettingsMenu;
 import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
@@ -19,7 +19,7 @@ import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 import static me.notlewx.pgames.config.bedwars.MessagesData.ITEM_SUBMENU_RESPAWN_TIME_I_LORE;
 
 public class RespawnTimeMenu {
-    private static final IPlayerData playerData = PGamesAPI.getPlayerData();
+    private static final IPrivateSettings playerData = PGamesAPI.getPlayerData();
     public RespawnTimeMenu(Player player) {
         openRespawnTimeMenu(player);
     }

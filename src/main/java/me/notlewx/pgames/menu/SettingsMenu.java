@@ -1,7 +1,7 @@
 package me.notlewx.pgames.menu;
 
 import me.notlewx.pgames.api.PGamesAPI;
-import me.notlewx.pgames.api.interfaces.IPlayerData;
+import me.notlewx.pgames.api.interfaces.IPrivateSettings;
 import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 
 public class SettingsMenu {
     private static Inventory inventory;
-    private static final IPlayerData playerData = PGamesAPI.getPlayerData();
+    private static final IPrivateSettings playerData = PGamesAPI.getPlayerData();
     public SettingsMenu(Player player) {
         openMenu(player);
     }

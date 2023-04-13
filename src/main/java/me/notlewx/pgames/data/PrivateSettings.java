@@ -4,14 +4,14 @@ import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.events.PrivateGameDisableEvent;
 import me.notlewx.pgames.api.events.PrivateGameEnableEvent;
-import me.notlewx.pgames.api.interfaces.IPlayerData;
+import me.notlewx.pgames.api.interfaces.IPrivateSettings;
 import me.notlewx.pgames.api.interfaces.Party;
 import me.notlewx.pgames.data.database.MySQL;
 import me.notlewx.pgames.data.database.SQLite;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class PlayerData implements IPlayerData {
+public class PrivateSettings implements IPrivateSettings {
     private final MySQL mySQL = new MySQL();
     private final SQLite sqLite = new SQLite();
 
@@ -171,9 +171,9 @@ public class PlayerData implements IPlayerData {
         return false;
     }
     @Override
-    public boolean setPrivateGameDisabled(Player player) {
+    public boolean setPrivateGameDisabled(Player player, boolean leaving) {
         String path = player.getUniqueId().toString();
-        PrivateGameDisableEvent event = new PrivateGameDisableEvent(player);
+        PrivateGameDisableEvent event = new PrivateGameDisableEvent(player, leaving);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
         if (PrivateGames.isBwproxy()) {

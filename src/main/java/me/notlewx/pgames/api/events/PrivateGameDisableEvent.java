@@ -9,9 +9,11 @@ public class PrivateGameDisableEvent extends Event implements Cancellable {
     public static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
     private boolean cancelled;
+    private boolean isLeaving;
 
-    public PrivateGameDisableEvent(Player p) {
+    public PrivateGameDisableEvent(Player p, boolean isLeaving) {
         this.player = p;
+        this.isLeaving = isLeaving;
     }
 
     public Player getPlayer() {
@@ -22,6 +24,9 @@ public class PrivateGameDisableEvent extends Event implements Cancellable {
     }
     public boolean isCancelled() {
         return cancelled;
+    }
+    public boolean isLeaving() {
+        return isLeaving;
     }
     public HandlerList getHandlers() {
         return HANDLERS;

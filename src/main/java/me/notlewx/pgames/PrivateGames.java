@@ -11,13 +11,14 @@ import me.notlewx.pgames.config.bedwars.MessagesData;
 import me.notlewx.pgames.config.proxy.ProxyConfig;
 import me.notlewx.pgames.config.proxy.ProxyMessagesData;
 import me.notlewx.pgames.data.game.Game;
-import me.notlewx.pgames.data.PlayerData;
+import me.notlewx.pgames.data.PrivateSettings;
 import me.notlewx.pgames.data.party.ProxyParty;
 import me.notlewx.pgames.data.database.MySQL;
 import me.notlewx.pgames.data.database.SQLite;
 import me.notlewx.pgames.listeners.arena.ArenaListener;
 import me.notlewx.pgames.listeners.InteractionEvent;
 import me.notlewx.pgames.listeners.player.PlayerJoin;
+import me.notlewx.pgames.listeners.player.PlayerLeave;
 import me.notlewx.pgames.listeners.player.bedwars.PlayerArenaJoin;
 import me.notlewx.pgames.listeners.player.bedwars.PlayerArenaLeave;
 import me.notlewx.pgames.listeners.player.proxy.PlayerJoinArena;
@@ -35,7 +36,7 @@ public final class PrivateGames extends JavaPlugin {
     public static ConfigManager bwconfig;
     private static Party party;
     public static FileConfiguration proxyconfig;
-    public static PlayerData pd;
+    public static PrivateSettings pd;
     private static IGame game;
     public HikariDataSource db;
     public static boolean bwproxy = false;
@@ -50,7 +51,7 @@ public final class PrivateGames extends JavaPlugin {
             return;
         }
         String ver = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-        pd = new PlayerData();
+        pd = new PrivateSettings();
         // BedWars1058 / BedWarsProxy search
         if ((Bukkit.getPluginManager().getPlugin("BedWars1058")) == null && (Bukkit.getPluginManager().getPlugin("BedWarsProxy") == null)) {
             getLogger().severe("BedWars1058 or BedWarsProxy was not found. Disabling...");
@@ -142,6 +143,7 @@ public final class PrivateGames extends JavaPlugin {
         getCommand("pg").setAliases(Arrays.asList("privategame", "private", "pgame"));
         getServer().getPluginManager().registerEvents(new InteractionEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
         getLogger().info("Running on: " + ver);
         getLogger().info("This addon has been developed by Kiiya#9207");
     }
@@ -164,7 +166,7 @@ public final class PrivateGames extends JavaPlugin {
     public static ConfigManager getBwConfig() {
         return bwconfig;
     }
-    public static PlayerData getPlayerData() {
+    public static PrivateSettings getPlayerData() {
         return pd;
     }
     public static Party getPartyUtil() {
