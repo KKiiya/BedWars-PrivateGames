@@ -1,6 +1,5 @@
 package me.notlewx.pgames.commands;
 
-import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.interfaces.IPlayerData;
 import me.notlewx.pgames.api.interfaces.Party;
@@ -56,7 +55,7 @@ public class MainCommand implements CommandExecutor {
                                 sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                             }
                         }
-                        else if (args.length == 2) {
+                        if (args.length == 2) {
                             switch (args[1].toLowerCase()) {
                                 case "admin":
                                     if (sender.hasPermission("pg.admin") || sender.isOp()) {
@@ -76,12 +75,14 @@ public class MainCommand implements CommandExecutor {
                                                     sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_OWNER));
                                                 }
                                             } else {
-                                                playerData.setPrivateGameDisabled((Player) sender);
+                                                playerData.setPrivateGameEnabled((Player) sender);
                                                 sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_ENABLED));
                                             }
                                         } else {
-                                            sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
+                                            sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_ALREADY_ENABLED));
                                         }
+                                    } else {
+                                        sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                                     }
                             }
                         }
@@ -112,10 +113,10 @@ public class MainCommand implements CommandExecutor {
                                         sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
                                     }
                                 } else {
-                                    sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_NO_PERMISSION));
+                                    sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_IN_PARTY));
                                 }
                             } else {
-                                sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_NOT_IN_PARTY));
+                                sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                             }
                         }
                         if (args.length == 2) {
@@ -144,6 +145,8 @@ public class MainCommand implements CommandExecutor {
                                             sender.sendMessage(Utility.getMSGLang(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
                                         }
                                 }
+                            } else {
+                                sender.sendMessage(Utility.getMSGLang((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                             }
                         }
                     break;
@@ -169,7 +172,7 @@ public class MainCommand implements CommandExecutor {
                     break;
                     case "join" :
                         if (sender.hasPermission("pg.join") || sender.isOp()) {
-                            if (args.length < 1) {
+                            if (args.length < 2) {
                                 sender.sendMessage(Utility.colorizedString("&cNot enough args"));
                             } else {
                                 if (!(Bukkit.getPlayer(args[1]) == null)) {
@@ -186,9 +189,6 @@ public class MainCommand implements CommandExecutor {
                                 }
                             }
                         }
-                    default:
-                        sender.sendMessage(Utility.colorizedString("&cUnknown command"));
-                        break;
                 }
             }
         } else {
