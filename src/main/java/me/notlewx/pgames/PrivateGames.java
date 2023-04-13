@@ -45,11 +45,6 @@ public final class PrivateGames extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
-            getLogger().severe("I can't run without ProtocolLib. Disabling...");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
         String ver = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         pd = new PrivateSettings();
         // BedWars1058 / BedWarsProxy search

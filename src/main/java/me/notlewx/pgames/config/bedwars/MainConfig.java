@@ -17,6 +17,11 @@ public class MainConfig extends ConfigManager {
         save();
     }
     public static final String
+            SETTINGS_ROWS = "menus.private-games.rows",
+            ONE_HIT_ONE_HILL_MATERIAL = "",
+            ONE_HIT_ONE_HILL_POSITION = "",
+            SPEED_MATERIAL = "menus.private-games.contents.speed.material",
+            SPEED_POSITION = "menus.private-games.contents.speed.position",
             MATERIAL = "private-games-item.material",
             POSITION = "private-games-item.position",
             ENCHANTED = "private-games-item.enchanted";
