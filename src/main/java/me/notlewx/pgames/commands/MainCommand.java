@@ -1,6 +1,8 @@
 package me.notlewx.pgames.commands;
 
+import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
+import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.api.interfaces.IPrivateSettings;
 import me.notlewx.pgames.api.interfaces.Party;
 import me.notlewx.pgames.data.PrivateSettings;
@@ -18,6 +20,7 @@ import static me.notlewx.pgames.config.bedwars.MessagesData.*;
 public class MainCommand implements CommandExecutor {
     private final IPrivateSettings playerData = new PrivateSettings();
     private final Party party = PGamesAPI.getPartyUtil();
+    private final IGame game = PrivateGames.getGameUtil();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         command.setAliases(Arrays.asList("privategame", "pgame", "private"));
@@ -189,6 +192,8 @@ public class MainCommand implements CommandExecutor {
                                 }
                             }
                         }
+                    case "games" :
+                        sender.sendMessage(game.getPrivateGames().toString());
                 }
             }
         } else {

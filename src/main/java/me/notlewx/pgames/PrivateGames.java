@@ -17,6 +17,7 @@ import me.notlewx.pgames.data.database.MySQL;
 import me.notlewx.pgames.data.database.SQLite;
 import me.notlewx.pgames.listeners.arena.ArenaListener;
 import me.notlewx.pgames.listeners.InteractionEvent;
+import me.notlewx.pgames.listeners.player.CommandListener;
 import me.notlewx.pgames.listeners.player.PlayerJoin;
 import me.notlewx.pgames.listeners.player.PlayerLeave;
 import me.notlewx.pgames.listeners.player.bedwars.PlayerArenaJoin;
@@ -139,6 +140,7 @@ public final class PrivateGames extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InteractionEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
+        getServer().getPluginManager().registerEvents(new CommandListener(), this);
         getLogger().info("Running on: " + ver);
         getLogger().info("This addon has been developed by Kiiya#9207");
     }

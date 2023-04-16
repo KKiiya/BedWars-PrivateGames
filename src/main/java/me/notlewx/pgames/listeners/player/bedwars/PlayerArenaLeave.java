@@ -11,8 +11,6 @@ public class PlayerArenaLeave implements Listener {
     private static final IGame game = PrivateGames.getGameUtil();
     @EventHandler
     public static void onPlayerLeave(PlayerLeaveArenaEvent e) {
-        if (e.getPlayer() == game.getOwnerOfPrivateArena(e.getArena().getArenaName())) {
-            PGamesAPI.getBwApi().getArenaUtil().getArenas().add(e.getArena());
-        }
+
     }
 }

@@ -1,11 +1,8 @@
 package me.notlewx.pgames.data.game;
 
-import com.andrei1058.bedwars.api.arena.IArena;
-import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.interfaces.IGame;
 import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,20 +20,12 @@ public class Game implements IGame {
     @Override
     public void setArenaPrivate(String arena, boolean value) {
         privArena.put(arena, value);
-        if (!PGamesAPI.isProxy()) {
-            if (value) {
-                PGamesAPI.getBwApi().getArenaUtil().getArenas().remove(PGamesAPI.getBwApi().getArenaUtil().getArenaByName(arena));
-                arenasInPrivMode.add(arena);
-            } else {
-                PGamesAPI.getBwApi().getArenaUtil().getArenas().add(PGamesAPI.getBwApi().getArenaUtil().getArenaByName(arena));
-                arenasInPrivMode.remove(arena);
-            }
+        if (value) {
+            PGamesAPI.getBwApi().getArenaUtil().getArenas().remove(PGamesAPI.getBwApi().getArenaUtil().getArenaByName(arena));
+            arenasInPrivMode.add(arena);
         } else {
-            if (value) {
-
-            } else {
-
-            }
+            PGamesAPI.getBwApi().getArenaUtil().getArenas().add(PGamesAPI.getBwApi().getArenaUtil().getArenaByName(arena));
+            arenasInPrivMode.remove(arena);
         }
     }
 

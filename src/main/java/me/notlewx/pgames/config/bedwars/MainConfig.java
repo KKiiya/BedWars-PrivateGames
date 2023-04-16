@@ -18,8 +18,8 @@ public class MainConfig extends ConfigManager {
     }
     public static final String
             SETTINGS_ROWS = "menus.private-games.rows",
-            ONE_HIT_ONE_HILL_MATERIAL = "",
-            ONE_HIT_ONE_HILL_POSITION = "",
+            ONE_HIT_ONE_HILL_MATERIAL = "menus.private-games.contents.one-hit-one-kill.material",
+            ONE_HIT_ONE_HILL_POSITION = "menus.private-games.contents.one-hit-one-kill.position",
             SPEED_MATERIAL = "menus.private-games.contents.speed.material",
             SPEED_POSITION = "menus.private-games.contents.speed.position",
             MATERIAL = "private-games-item.material",

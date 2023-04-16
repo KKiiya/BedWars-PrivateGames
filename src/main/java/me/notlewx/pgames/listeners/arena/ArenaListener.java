@@ -309,6 +309,8 @@ public class ArenaListener implements Listener {
                         e.getArena().getConfig().save();
                     }
                 }
+                game.setArenaPrivate(e.getArena().getArenaName(), false);
+                game.setPrivateArenaOwner(e.getArena().getArenaName(), null);
             }
         }
     }

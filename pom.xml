@@ -58,7 +58,7 @@
         <dependency>
             <groupId>com.andrei1058.bedwars</groupId>
             <artifactId>bedwars-api</artifactId>
-            <version>22.7</version>
+            <version>23.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -89,9 +89,9 @@
         <dependency>
             <groupId>com.andrei1058.bedwars</groupId>
             <artifactId>BedWars1058</artifactId>
-            <version>22.7</version>
+            <version>23.3</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/bedwars-plugin-22.7.jar</systemPath>
+            <systemPath>${project.basedir}/lib/bedwars-plugin-23.3.jar</systemPath>
         </dependency>
     </dependencies>
 
