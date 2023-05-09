@@ -7,37 +7,44 @@ import com.andrei1058.bedwars.api.arena.generator.GeneratorType;
 import com.andrei1058.bedwars.api.arena.generator.IGenerator;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.events.gameplay.GameEndEvent;
+import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
+import com.andrei1058.bedwars.api.events.gameplay.NextEventChangeEvent;
 import com.andrei1058.bedwars.api.events.gameplay.TeamAssignEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerBedBreakEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
+import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
 import com.andrei1058.bedwars.arena.Arena;
-import com.andrei1058.bedwars.arena.OreGenerator;
 import com.andrei1058.bedwars.stats.PlayerStats;
 import me.notlewx.pgames.PrivateGames;
 import me.notlewx.pgames.api.PGamesAPI;
 import me.notlewx.pgames.api.interfaces.IGame;
 import me.notlewx.pgames.api.interfaces.IPrivateSettings;
+import me.notlewx.pgames.util.Modifiers;
+import me.notlewx.pgames.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class ArenaListener implements Listener {
     private static final IPrivateSettings playerData = PGamesAPI.getPlayerData();
     private static final IGame game = PrivateGames.getGameUtil();
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onPlayerHit(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
             if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()) == null) return;
@@ -52,126 +59,67 @@ public class ArenaListener implements Listener {
                     if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).isReSpawning((Player) e.getEntity())) return;
                     if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).isReSpawning((Player) e.getDamager())) return;
                     if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer((Player) e.getDamager()).getTeam((Player) e.getDamager()).getMembers().contains((Player) e.getEntity())) return;
-                    ((Player) e.getEntity()).setHealth(0.5);
+                    ((Player) e.getEntity()).setLastDamage(600.0);
                 }
             }
         }
     }
 
     @EventHandler
-    public static void onPlayerSpawn(TeamAssignEvent e) {
-        if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()) == null) return;
-        if (game.isArenaPrivate(PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getArenaName())) {
-            if (playerData.isNEEnabled(e.getPlayer())) {
-                for (IGenerator gen : e.getArena().getOreGenerators().stream().filter(g -> g.getType() == GeneratorType.EMERALD).collect(Collectors.toList())) {
-                    gen.disable();
-                }
+    public void onPlayerRespawn(PlayerReSpawnEvent e) {
+        if (!game.isArenaPrivate(e.getArena().getArenaName())) return;
+        Player p = game.getOwnerOfPrivateArena(e.getArena().getArenaName());
+        Player player = e.getPlayer();
+        if (playerData.isLGEnabled(p)) {
+            Utility.giveLongJump(player);
+        }
+        Utility.giveHealthBuff(player);
+        Utility.giveSpeedLevel(player);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public static void onPlayerSpawn(GameStateChangeEvent e) {
+        Player p = game.getOwnerOfPrivateArena(e.getArena().getArenaName());
+        if (e.getNewState() != GameState.playing) return;
+        if (!game.isArenaPrivate(e.getArena().getArenaName())) return;
+
+        if (playerData.isLGEnabled(p)) {
+            e.getArena().getPlayers().forEach(Utility::giveLongJump);
+        }
+        e.getArena().getPlayers().forEach(Utility::giveHealthBuff);
+        e.getArena().getPlayers().forEach(Utility::giveSpeedLevel);
+        if (playerData.isNEEnabled(p)) {
+            for (IGenerator gen : e.getArena().getOreGenerators()) {
+                if (gen.getType() != GeneratorType.EMERALD) continue;
+                gen.destroyData();
             }
-            if (playerData.isNDEnabled(e.getPlayer())) {
-                for (IGenerator gen : e.getArena().getOreGenerators().stream().filter(g -> g.getType() == GeneratorType.DIAMOND).collect(Collectors.toList())) {
-                    gen.disable();
-                }
+            e.getArena().getOreGenerators().removeIf(g -> g.getType() == GeneratorType.EMERALD);
+            e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_II");
+            e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_II");
+        }
+        if (playerData.isNDEnabled(p)) {
+            for (IGenerator gen : e.getArena().getOreGenerators()) {
+                if (gen.getType() != GeneratorType.DIAMOND) continue;
+                gen.destroyData();
             }
-            if (playerData.isAMBEnabled(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
-                if (!PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getConfig().getBoolean("allow-map-break")) {
-                    PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getConfig().set("allow-map-break", true);
-                    PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getConfig().save();
-                }
+            e.getArena().getOreGenerators().removeIf(g -> g.getType() == GeneratorType.DIAMOND);
+            e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_II");
+            e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_II");
+        }
+        if (playerData.isMTUEnabled(p)) {
+            (new Modifiers()).printConfigurationSection();
+        }
+        if (playerData.isAMBEnabled(p)) {
+            if (e.getArena().getConfig().getBoolean("allow-map-break")) {
+                e.getArena().getConfig().set("allow-map-break", true);
             }
-            else {
-                if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getConfig().getBoolean("allow-map-break")) {
-                    PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getConfig().set("allow-map-break", false);
-                    PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getPlayer()).getConfig().save();
-                }
+        } else {
+            if (e.getArena().getConfig().getBoolean("allow-map-break")) {
+                e.getArena().getConfig().set("allow-map-break", false);
             }
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                switch (playerData.getETLevel(e.getPlayer())) {
-                    case 0:
-                    case 2:
-                        break;
-                    case 1:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                }
-                if (playerData.isLGEnabled(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
-                    for (ITeam team : e.getArena().getTeams()) {
-                        team.addTeamEffect(PotionEffectType.JUMP, 2, Integer.MAX_VALUE);
-                    }
-                }
-                if (playerData.isMTUEnabled(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
-                    for (ITeam team : e.getArena().getTeams()) {
-                        team.getTeamUpgradeTiers().put("upgrade-forge", 3);
-                        team.getTeamUpgradeTiers().put("upgrade-miner", 1);
-                        team.getTeamUpgradeTiers().put("upgrade-armor", 3);
-                        team.getTeamUpgradeTiers().put("upgrade-swords", 0);
-                        team.getTeamUpgradeTiers().put("upgrade-heal-pool", 0);
-                        team.getTeamUpgradeTiers().put("upgrade-dragon", 0);
-                        team.setDragons(2);
-                        team.addTeamEffect(PotionEffectType.FAST_DIGGING, 1, Integer.MAX_VALUE);
-                        team.addArmorEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
-                        team.addSwordEnchantment(Enchantment.DAMAGE_ALL, 1);
-                        team.addBaseEffect(PotionEffectType.REGENERATION, 0, Integer.MAX_VALUE);
-                        for (IGenerator gen : team.getGenerators().stream().filter(g -> g.getType() == GeneratorType.IRON).collect(Collectors.toList())) {
-                            gen.setDelay(1);
-                            gen.setAmount(3);
-                            gen.setSpawnLimit(64);
-                        }
-                        for (IGenerator gen : team.getGenerators().stream().filter(g -> g.getType() == GeneratorType.GOLD).collect(Collectors.toList())) {
-                            gen.setDelay(2);
-                            gen.setAmount(1);
-                            gen.setSpawnLimit(32);
-                        }
-                        for (Location loc : e.getArena().getConfig().getArenaLocations("Team." +  team.getName() + ".Emerald")) {
-                            OreGenerator gen = new OreGenerator(loc, e.getArena(), GeneratorType.CUSTOM, team);
-                            gen.setOre(new ItemStack(Material.EMERALD));
-                            gen.setAmount(1);
-                            gen.setDelay(5);
-                            gen.setSpawnLimit(12);
-                        }
-                    }
-                }
-                switch (playerData.getHBLevel(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
-                    case 0:
-                    case 1:
-                        break;
-                    case 2:
-                        for (ITeam team : e.getArena().getTeams()) {
-                            team.addTeamEffect(PotionEffectType.ABSORPTION, 4, Integer.MAX_VALUE);
-                        }
-                        break;
-                    case 3:
-                        for (ITeam team : e.getArena().getTeams()) {
-                            team.addTeamEffect(PotionEffectType.ABSORPTION, 9, Integer.MAX_VALUE);
-                        }
-                        break;
-                }
-                switch (playerData.getSpeedLevel(game.getOwnerOfPrivateArena(e.getArena().getArenaName()))) {
-                    case 0:
-                    case 1:
-                        break;
-                    case 2:
-                        for (ITeam team : e.getArena().getTeams()) {
-                            team.addTeamEffect(PotionEffectType.SPEED, 0, Integer.MAX_VALUE);
-                        }
-                        break;
-                    case 3:
-                        for (ITeam team : e.getArena().getTeams()) {
-                            team.addTeamEffect(PotionEffectType.SPEED, 1, Integer.MAX_VALUE);
-                        }
-                        break;
-                    case 4 :
-                        for (ITeam team : e.getArena().getTeams()) {
-                            team.addTeamEffect(PotionEffectType.SPEED, 2, Integer.MAX_VALUE);
-                        }
-                        break;
-                }
-            }, 20L);
         }
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onPlayerDeath(PlayerKillEvent e) {
             PlayerStats victimStats = BedWars.getStatsManager().get(e.getVictim().getUniqueId());
             if (PGamesAPI.getBwApi().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
@@ -182,10 +130,10 @@ public class ArenaListener implements Listener {
                     case 2:
                         break;
                     case 1:
-                        e.getArena().startReSpawnSession(e.getVictim(), 2);
+                        e.getArena().getRespawnSessions().put(e.getVictim(), 1);
                         break;
                     case 3:
-                        e.getArena().startReSpawnSession(e.getVictim(), 10);
+                        e.getArena().getRespawnSessions().put(e.getVictim(), 10);
                         break;
                 }
                 if (e.getCause().isFinalKill()) {
@@ -211,7 +159,7 @@ public class ArenaListener implements Listener {
                 }
             }
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBedBreak(PlayerBedBreakEvent event) {
         boolean isArenaPrivate = game.isArenaPrivate(event.getArena().getArenaName());
         if (isArenaPrivate) {
@@ -220,7 +168,7 @@ public class ArenaListener implements Listener {
             else stats.setBedsDestroyed(stats.getBedsDestroyed() - 1);
         }
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onGameEnd(GameEndEvent event) {
         boolean isArenaPrivate = game.isArenaPrivate(event.getArena().getArenaName());
         if (isArenaPrivate) {
@@ -236,9 +184,13 @@ public class ArenaListener implements Listener {
                     }
                 }
             }
+            if (playerData.getHBLevel(game.getOwnerOfPrivateArena(event.getArena().getArenaName())) > 1) {
+                event.getArena().getPlayers().forEach(p -> p.setMaxHealth(20.0));
+                event.getArena().getPlayers().forEach(p -> p.setHealth(20.0));
+                event.getArena().getPlayers().forEach(p -> p.setHealthScale(20.0));
+            }
             if (event.getArena().getConfig().getBoolean("allow-map-break")) {
                 event.getArena().getConfig().set("allow-map-break", false);
-                event.getArena().getConfig().save();
             }
             game.setArenaPrivate(event.getArena().getArenaName(), false);
             game.setPrivateArenaOwner(event.getArena().getArenaName(), null);
@@ -250,6 +202,11 @@ public class ArenaListener implements Listener {
         ITeam team = event.getArena().getExTeam(player.getUniqueId());
         boolean isArenaPrivate = game.isArenaPrivate(event.getArena().getArenaName());
         if (isArenaPrivate) {
+            if (playerData.getHBLevel(game.getOwnerOfPrivateArena(event.getArena().getArenaName())) > 1) {
+                event.getArena().getPlayers().forEach(p -> p.setMaxHealth(20.0));
+                event.getArena().getPlayers().forEach(p -> p.setHealth(20.0));
+                event.getArena().getPlayers().forEach(p -> p.setHealthScale(20.0));
+            }
             if (team != null) {
                 if (event.getArena().getStatus() != GameState.starting && event.getArena().getStatus() != GameState.waiting) {
                     PlayerStats playerStats = BedWars.getStatsManager().get(player.getUniqueId());
@@ -299,7 +256,7 @@ public class ArenaListener implements Listener {
             }
         }
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onPlayerLeave(PlayerLeaveArenaEvent e) {
         if (game.isArenaPrivate(e.getArena().getArenaName())) {
             if (e.getArena().getPlayers().size() <= 1) {
@@ -313,5 +270,72 @@ public class ArenaListener implements Listener {
                 game.setPrivateArenaOwner(e.getArena().getArenaName(), null);
             }
         }
+    }
+
+    @EventHandler
+    public void onNextEvent(NextEventChangeEvent e) {
+        if (e.getArena() == null) return;
+        if (!game.isArenaPrivate(e.getArena().getArenaName())) return;
+        this.modifyEventTime((Arena) e.getArena());
+    }
+
+    @EventHandler
+    public void onGameStart(GameStateChangeEvent e) {
+        if (e.getArena() == null) return;
+        if (!game.isArenaPrivate(e.getArena().getArenaName())) return;
+        if (e.getNewState() != GameState.playing) return;
+        this.modifyEventTime((Arena) e.getArena());
+    }
+    private void modifyEventTime(Arena arena) {
+        Player player = game.getOwnerOfPrivateArena(arena.getArenaName());
+        switch (playerData.getETLevel(player)) {
+            case 0:
+            case 2:
+                break;
+            case 1:
+                arena.upgradeDiamondsCount = (int) (arena.upgradeDiamondsCount * 2.0);
+                arena.upgradeEmeraldsCount = (int) (arena.upgradeEmeraldsCount * 2.0);
+                break;
+            case 3:
+                arena.upgradeDiamondsCount = (int) (arena.upgradeDiamondsCount * 0.5);
+                arena.upgradeEmeraldsCount = (int) (arena.upgradeEmeraldsCount * 0.5);
+                break;
+            case 4:
+                arena.upgradeDiamondsCount = (int) (arena.upgradeDiamondsCount * 0.25);
+                arena.upgradeEmeraldsCount = (int) (arena.upgradeEmeraldsCount * 0.25);
+                break;
+        }
+    }
+
+    @EventHandler
+    public void onBedPunch(PlayerInteractEvent e) {
+        if (e.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        Player player = e.getPlayer();
+        if (!PGamesAPI.getBwApi().getArenaUtil().isPlaying(player)) return;
+        IArena a = Arena.getArenaByPlayer(player);
+        if (!game.isArenaPrivate(a.getArenaName())) return;
+        if (playerData.isAMBEnabled(game.getOwnerOfPrivateArena(a.getArenaName())) && !e.getClickedBlock().getType().toString().contains("BED")) {
+            a.addPlacedBlock(e.getClickedBlock());
+        }
+        if (playerData.isBIBEnabled(game.getOwnerOfPrivateArena(a.getArenaName())) && e.getClickedBlock().getType().toString().contains("BED") && this.getBedLocations(e.getClickedBlock().getLocation()).stream().noneMatch(l -> l.getBlock().getLocation().equals((Object)a.getTeam(player).getBed().getBlock().getLocation()))) {
+            Bukkit.getPluginManager().callEvent(new BlockBreakEvent(e.getClickedBlock(), player));
+            e.getClickedBlock().setType(Material.AIR);
+        }
+    }
+
+    public List<Location> getBedLocations(Location loc) {
+        List<Location> locationList = new ArrayList<>();
+        if (!loc.getBlock().getType().toString().contains("BED")) return locationList;
+        locationList.add(loc);
+        if (loc.clone().add(0.0, 0.0, 1.0).getBlock().getType().toString().contains("BED")) {
+            locationList.add(loc.clone().add(0.0, 0.0, 1.0));
+        } else if (loc.clone().subtract(0.0, 0.0, 1.0).getBlock().getType().toString().contains("BED")) {
+            locationList.add(loc.clone().subtract(0.0, 0.0, 1.0));
+        } else if (loc.clone().add(1.0, 0.0, 0.0).getBlock().getType().toString().contains("BED")) {
+            locationList.add(loc.clone().add(1.0, 0.0, 0.0));
+        } else if (loc.clone().subtract(1.0, 0.0, 0.0).getBlock().getType().toString().contains("BED")) {
+            locationList.add(loc.clone().subtract(1.0, 0.0, 0.0));
+        }
+        return locationList;
     }
 }

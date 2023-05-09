@@ -331,6 +331,31 @@ public class InteractionEvent implements Listener {
                 if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, SUBMENU_EVENTS_TIME_BACK_ITEM_NAME))) {
                     SpeedMenu.closeSpeedMenu(player);
                 }
+                else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_EVENTS_TIME_I_NAME))) {
+                    playerData.setETLevel(player, 1);
+                    for (ItemStack item : e.getInventory().getContents()) {
+                        item.removeEnchantment(Enchantment.DURABILITY);
+                    }
+                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_EVENTS_TIME_II_NAME))) {
+                    playerData.setETLevel(player, 2);
+                    for (ItemStack item : e.getInventory().getContents()) {
+                        item.removeEnchantment(Enchantment.DURABILITY);
+                    }
+                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_EVENTS_TIME_III_NAME))) {
+                    playerData.setETLevel(player, 3);
+                    for (ItemStack item : e.getInventory().getContents()) {
+                        item.removeEnchantment(Enchantment.DURABILITY);
+                    }
+                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(Utility.getMSGLang(player, ITEM_SUBMENU_EVENTS_TIME_IV_NAME))) {
+                    playerData.setETLevel(player, 4);
+                    for (ItemStack item : e.getInventory().getContents()) {
+                        item.removeEnchantment(Enchantment.DURABILITY);
+                    }
+                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                }
 
             } else if (e.getInventory().getTitle().equals(Utility.getMSGLang(player, SUBMENU_RESPAWN_TIME_NAME))) {
                 e.setCancelled(true);
