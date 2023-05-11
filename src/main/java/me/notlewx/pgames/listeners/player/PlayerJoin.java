@@ -13,6 +13,7 @@ public class PlayerJoin implements Listener {
     private static final SQLite sqLite = new SQLite();
     @EventHandler
     public static void onPlayerJoinServer(PlayerJoinEvent e) {
+        if (!e.getPlayer().hasPermission("pg")) return;
         String path = e.getPlayer().getUniqueId().toString();
         if (PrivateGames.isBwproxy()) {
             if (PrivateGames.isProxyDatabaseEnabled()) {
