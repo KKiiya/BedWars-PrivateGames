@@ -98,7 +98,7 @@ public class MainConfig extends ConfigManager {
            ALLOW_MAP_BREAK = "enable-modifiers.allow-map-break",
            NO_DIAMONDS = "enable-modifiers.no-diamonds",
            NO_EMERALDS = "enable-modifiers.no-emeralds",
-           GAMEMODE_CHANGER = "enable-modifiers.",
+           GAMEMODE_CHANGER = "enable-modifiers.gamemode-changer",
 
            SETTINGS_ROWS = "menus.settings.rows",
 
