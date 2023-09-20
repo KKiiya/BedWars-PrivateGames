@@ -1,0 +1,32 @@
+package me.notlewx.privategames.api.events;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+
+public class PrivateGameDisableEvent extends Event {
+    public static final HandlerList HANDLERS = new HandlerList();
+    private boolean cancelled;
+    private final Player player;
+    private final boolean isLeaving;
+
+    public PrivateGameDisableEvent(Player player, boolean isLeaving) {
+        this.player = player;
+        this.isLeaving = isLeaving;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+    public boolean isLeaving() {
+        return isLeaving;
+    }
+    public boolean isCancelled() {return cancelled;}
+    public void setCancelled(boolean cancelled) {this.cancelled = cancelled;}
+    public HandlerList getHandlers() {
+        return HANDLERS;
+    }
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+}

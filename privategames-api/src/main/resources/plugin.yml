@@ -1,0 +1,10 @@
+name: privategames-api
+version: '${project.version}'
+main: me.notlewx.privategames.PrivateGames
+commands:
+  pg:
+    description: Enables the private games if you are in a party
+    aliases:
+      - privategame
+      - private
+      - pgame
