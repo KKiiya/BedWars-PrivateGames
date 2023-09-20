@@ -12,9 +12,9 @@ import java.util.List;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class PrivateArena implements IPrivateArena {
-    private final IPrivatePlayer host;
-    private final List<Player> players;
-    private final String arenaName;
+    private IPrivatePlayer host;
+    private List<Player> players;
+    private String arenaName;
     public static HashMap<String, IPrivateArena> privateArenaByArenaName = new HashMap<>();
     public static HashMap<Player, IPrivateArena> privateArenaByPlayer = new HashMap<>();
     public static LinkedList<IPrivateArena> privateArenas = new LinkedList<>() {
@@ -22,10 +22,11 @@ public class PrivateArena implements IPrivateArena {
     public PrivateArena(IPrivatePlayer host, List<Player> players, String arenaName) {
         this.host = host;
         this.players = players;
+        this.arenaName = arenaName;
+
         for (Player p : players) {
             privateArenaByPlayer.put(p, this);
         }
-        this.arenaName = arenaName;
         privateArenaByArenaName.put(arenaName, this);
         privateArenas.add(this);
         switch (support) {
@@ -76,5 +77,19 @@ public class PrivateArena implements IPrivateArena {
             return arena.getPlayers().size() == arena.getMaxPlayers();
         }
         return false;
+    }
+
+    @Override
+    public void destroyData() {
+        arenaName = null;
+        host = null;
+        privateArenaByArenaName.remove(arenaName);
+        arenaName = null;
+        for (Player p : players) {
+            privateArenaByPlayer.remove(p);
+        }
+        players = null;
+        privateArenas.remove(this);
+
     }
 }

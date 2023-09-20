@@ -2,15 +2,16 @@ package me.notlewx.privategames.utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.support.Support;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
-
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import java.util.List;
 import java.util.stream.Collectors;
+import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class Utility {
@@ -43,9 +44,62 @@ public class Utility {
         else return null;
     }
 
-    public static void setItemId(ItemStack item, String customId) {
-        ItemMeta meta = item.getItemMeta();
-        meta.setLocalizedName(customId);
-        item.setItemMeta(meta);
+    public static void giveSpeedLevel(Player player) {
+        if (api.getPrivateArenaUtil().getPrivateArenaByPlayer(player) == null) return;
+        IPrivatePlayer owner = api.getPrivatePlayer(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
+        switch (owner.getPlayerSettings().getSpeedLevel()) {
+            case 0:
+            case 1:
+                break;
+            case 2:
+                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 0, Integer.MAX_VALUE, true, false));
+                },20L);
+                break;
+            case 3:
+                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1, Integer.MAX_VALUE, true, false));
+                }, 20L);
+                break;
+            case 4:
+                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2, Integer.MAX_VALUE, true, false));
+                }, 20L);
+                break;
+        }
     }
+
+    public static void giveHealthBuff(Player player) {
+        if (api.getPrivateArenaUtil().getPrivateArenaByPlayer(player) == null) return;
+        IPrivatePlayer owner = api.getPrivatePlayer(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
+        switch (owner.getPlayerSettings().getHealthBuffLevel()) {
+            case 0:
+            case 1:
+                player.setMaxHealth(20.0);
+                player.setHealth(20.0);
+                player.setHealthScale(20.0);
+                break;
+            case 2:
+                player.setMaxHealth(40.0);
+                player.setHealth(40.0);
+                player.setHealthScale(40.0);
+                break;
+            case 3:
+                player.setMaxHealth(60.0);
+                player.setHealth(60.0);
+                player.setHealthScale(60.0);
+                break;
+        }
+    }
+
+    public static void giveLongJump(Player player) {
+        if (api.getPrivateArenaUtil().getPrivateArenaByPlayer(player) == null) return;
+        IPrivatePlayer owner = api.getPrivatePlayer(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
+        if (owner.getPlayerSettings().isLowGravityEnabled())
+            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 2, Integer.MAX_VALUE));
+            }, 20L);
+    }
+
+
 }

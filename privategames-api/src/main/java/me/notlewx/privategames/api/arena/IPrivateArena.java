@@ -11,4 +11,5 @@ public interface IPrivateArena {
     String getArenaName();
     void stopGame();
     boolean isFull();
+    void destroyData();
 }
