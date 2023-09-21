@@ -32,6 +32,10 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cThe private game is already disabled!");
                     yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cCouldnt join to the private game of this player!");
                     yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cYou cant do this in game!");
+                    yml.addDefault(PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER, "&7[P]");
+                    yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lhas enabled private game modifiers!", "{modifiers}", "&6-----------------------------------------------------"));
+                    yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
+                    yml.addDefault(PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT, "&6- {modifier}: &e{selected}");
                     yml.addDefault(MENU_BACK_ITEM_NAME, "&aGo Back");
                     yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Go back to your bedwars gameplay"));
                     yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aOne hit, one kill");
@@ -118,199 +122,9 @@ public class MessagesData {
                     yml.addDefault(NO_DIAMONDS_MEANING, "&7No Diamonds");
                     yml.addDefault(NO_EMERALDS_MEANING, "&7No Emeralds");
                     yml.addDefault(HEALTH_BUFF_MEANING, "&7Health Buff");
-                    break;
-                case "es":
-                    yml.addDefault(MAIN_MENU_NAME, "&8Ajustes de partida privada");
-                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aAjustes de Partida Privada");
-                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Aquí puedes configurar tu partida privada", "&7con más de 11 ajustes diferentes!"));
-                    yml.addDefault(MENU_SELECTED_MEANING, "&aSeleccionado!");
-                    yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eClick para seleccionar!");
-                    yml.addDefault(PRIVATE_GAME_NOT_IN_PARTY, "&cNo estas en una party!");
-                    yml.addDefault(PRIVATE_GAME_ENABLED, "&aPartida privada habilitada");
-                    yml.addDefault(PRIVATE_GAME_ENABLED_OTHERS, "&a{player} ha habilitado la partida privada habilitada");
-                    yml.addDefault(PRIVATE_GAME_DISABLED, "&cPartida privada deshabilitada");
-                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c{player} ha deshabilitado la partida privada");
-                    yml.addDefault(PRIVATE_GAME_NOT_OWNER, "&cNo eres el owner de esta party!");
-                    yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cNo tienes permisos para usar este comando");
-                    yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cLa partida privada ya esta habilitada!");
-                    yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cLa partida privada ya esta deshabilitada!");
-                    yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cNo se pudo unir a la partida privada de este jugador!");
-                    yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cEsto no se puede hacer en una partida!");
-                    yml.addDefault(MENU_BACK_ITEM_NAME, "&aAtrás");
-                    yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Vuelve a jugar bedwars"));
-                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aUn golpe, una muerte");
-                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_LORE, Arrays.asList("&7Elige que items matan de", "&7un solo golpe", "", "{state}"));
-                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_NAME, "&aPotenciador de vida");
-                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_LORE, Arrays.asList("&7Potencia la vida de todos", "&7los jugadores", "", "&aSeleccionado: &7{selected}"));
-                    yml.addDefault(ITEM_LOW_GRAVITY_NAME, "&aGravedad baja");
-                    yml.addDefault(ITEM_LOW_GRAVITY_LORE, Arrays.asList("&7Experiencia la gravedad baja... o también", "&7conocido como salto elevado", "", "{state}"));
-                    yml.addDefault(ITEM_SPEED_NAME, "&aVelocidad");
-                    yml.addDefault(ITEM_SPEED_LORE, Arrays.asList("&7Toca ir rápido", "", "&aSeleccionado: &7{selected}"));
-                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_NAME, "&aTiempo de reaparición");
-                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_LORE, Arrays.asList("&8Específico para el juego", "", "&7Modifica el tiempo de reaparición", "", "&aSeleccionado: &7{selected}"));
-                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_NAME, "&aTiempo de Eventos");
-                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_LORE, Arrays.asList("&8Juego específico", "", "&7Modifica el tiempo de los eventos.", "", "&aSeleccionado: &7{selected}"));
-                    yml.addDefault(ITEM_NO_EMERALDS_NAME, "&aSin esmeraldas");
-                    yml.addDefault(ITEM_NO_EMERALDS_LORE, Arrays.asList("&8Específico para el juego", "", "&7Deshazte de esas esmeraldas", "", "{state}"));
-                    yml.addDefault(ITEM_NO_DIAMONDS_NAME, "&aSin diamantes");
-                    yml.addDefault(ITEM_NO_DIAMONDS_LORE, Arrays.asList("&8Juego específico", "", "&7Al infierno con esas cosas brillantes", "", "{state}"));
-                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_NAME, "&aDeshabilitar protección de bloques");
-                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_LORE, Arrays.asList("&8Juego específico", "", "&7Permite a los jugadores romper cualquier", "&7bloque, excluyendo bloques alrededor de", "&7los generadores y spawns", "", "{state}"));
-                    yml.addDefault(ITEM_BED_INSTA_BREAK_NAME, "&aRotura instantánea");
-                    yml.addDefault(ITEM_BED_INSTA_BREAK_LORE, Arrays.asList("&8Juego específico", "", "&7Las camas se romperán con un solo golpe", "", "{state}"));
-                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_NAME, "&aMejoras al máximo");
-                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8Juego específico", "", "&7Todos los equipos empezarán", "&7con sus mejoras al máximo", "", "{state}"));
-                    yml.addDefault(SUBMENU_SPEED_NAME, "&8Velocidad");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aSin Velocidad");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_SPEED_II_NAME, "&aVelocidad I");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_II_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_SPEED_III_NAME, "&aVelocidad II");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_III_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_NAME, "&aVelocidad III");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_NAME, "&aVolver");
-                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_LORE, Arrays.asList("&7Vuelve al menú de ajustes"));
-                    yml.addDefault(SUBMENU_HEALTH_BUFF_NAME, "&8Potenciador de vida");
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_NAME, "&aVida Normal");
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_NAME, "&aVida Doble");
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_NAME, "&aVida Triple");
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_NAME, "&aVolver");
-                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_LORE, Arrays.asList("&7Vuelve al menú de ajustes"));
-                    yml.addDefault(SUBMENU_EVENTS_TIME_NAME, "&8Tiempo de los Eventos");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_NAME, "&ax0.5 - Más Lento");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_NAME, "&ax1 - Normal");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_NAME, "&ax2 - Rápido");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_NAME, "&ax4 - SuperRápido");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_NAME, "&aVolver");
-                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_LORE, Arrays.asList("&7Vuelve al menú de ajustes"));
-                    yml.addDefault(SUBMENU_RESPAWN_TIME_NAME, "&8Tiempo de reaparición");
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_NAME, "&a1 Segundo");
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_NAME, "&a5 Segundos");
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_NAME, "&a10 Segundos");
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME, "&aVolver");
-                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_LORE, Arrays.asList("&7Vuelve al menú de ajustes"));
-                    yml.addDefault(NO_SPEED_MEANING, "&7Sin velocidad");
-                    yml.addDefault(SPEED_I_MEANING, "&7Velocidad I");
-                    yml.addDefault(SPEED_II_MEANING, "&7Velocidad II");
-                    yml.addDefault(SPEED_III_MEANING, "&7Velocidad III");
-                    yml.addDefault(NORMAL_HEALTH_MEANING, "&7Vida Normal");
-                    yml.addDefault(DOUBLE_HEALTH_MEANING, "&7Vida Doble");
-                    yml.addDefault(TRIPLE_HEALTH_MEANING, "&7Vida Triple");
-                    yml.addDefault(RESPAWN_EVENT_TIME_I_MEANING, "&71 Segundo");
-                    yml.addDefault(RESPAWN_EVENT_TIME_II_MEANING, "&75 Segundos");
-                    yml.addDefault(RESPAWN_EVENT_TIME_III_MEANING, "&710 Segundos");
-                    yml.addDefault(EVENTS_TIME_SLOWER_MEANING, "x0.5 - Lento");
-                    yml.addDefault(EVENTS_TIME_NORMAL_MEANING, "x1 - Normal");
-                    yml.addDefault(EVENTS_TIME_FAST_MEANING, "x2 - Rápido");
-                    yml.addDefault(EVENTS_TIME_FASTER_MEANING, "x4 - SuperRápido");
-                    break;
-                // TRANSLATED BY matveev_#9050
-                case "ru":
-                    yml.addDefault(MAIN_MENU_NAME, "&8Настройки приватных игр");
-                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aНастройки приватных игр");
-                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Откройте это меню чтобы настроить настройки вашей приватной игры", "с 11 различным опциями!"));
-                    yml.addDefault(MENU_SELECTED_MEANING, "&aВыбрано!");
-                    yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eНажмите чтобы выбрать!");
-                    yml.addDefault(PRIVATE_GAME_NOT_IN_PARTY, "&cВы не находитесь в группе!");
-                    yml.addDefault(PRIVATE_GAME_ENABLED, "&aПриватные игры включены");
-                    yml.addDefault(PRIVATE_GAME_ENABLED_OTHERS, "&a{player} включил приватные игры");
-                    yml.addDefault(PRIVATE_GAME_DISABLED, "&cПриватные игры выключены");
-                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c{player} выключил приватные игры");
-                    yml.addDefault(PRIVATE_GAME_NOT_OWNER, "&cВы не владелец группы!");
-                    yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cУ вас нету прав на использование данной комманды!");
-                    yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cПриватная игра уже включена!");
-                    yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cПриватная игра уже выключена!");
-                    yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cНе можем перенести вас в приватную игру!");
-                    yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cВы не можете делать этого в игре!");
-                    yml.addDefault(MENU_BACK_ITEM_NAME, "&aВернуться назад");
-                    yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Вернуться назад в BedWars игре"));
-                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aОдин удар, одно убийство");
-                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_LORE, Arrays.asList("&7Выберите команды которые", "&7будут убивать врагов одним ударом", "", "{state}"));
-                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_NAME, "&aУлучшение здоровья");
-                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_LORE, Arrays.asList("&7Увеличивает здоровья всех игроков", "", "&aВыбранно: &7{selected}"));
-                    yml.addDefault(ITEM_LOW_GRAVITY_NAME, "&aНизкая гравитация");
-                    yml.addDefault(ITEM_LOW_GRAVITY_LORE, Arrays.asList("&7Попробуйте низкую гравитацию... также", "&7известна как джамп-буст", "", "{state}"));
-                    yml.addDefault(ITEM_SPEED_NAME, "&aСкорость");
-                    yml.addDefault(ITEM_SPEED_LORE, Arrays.asList("&7Нам нужно двигаться быстрее!", "", "&aВыбранно: &7{selected}"));
-                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_NAME, "&aВремя возрождения");
-                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_LORE, Arrays.asList("&8Настройка игры", "", "&7Изменяет количество времени при возраждении", "", "&aВыбранно: &7{selected}"));
-                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_NAME, "&aВремя событий");
-                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_LORE, Arrays.asList("&8Настройка игры", "", "&7Изменяет количество времени для событий.", "", "&aВыбрано: &7{selected}"));
-                    yml.addDefault(ITEM_NO_EMERALDS_NAME, "&aБез изумрудов");
-                    yml.addDefault(ITEM_NO_EMERALDS_LORE, Arrays.asList("&8Настройка игры", "", "&7Отключает все генераторы изумрудов  ", "", "{state}"));
-                    yml.addDefault(ITEM_NO_DIAMONDS_NAME, "&aБез алмазов");
-                    yml.addDefault(ITEM_NO_DIAMONDS_LORE, Arrays.asList("&8Настройка игры", "", "&7Отключает все генераторы алмазов", "", "{state}"));
-                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_NAME, "&aОтключить защиту блоков");
-                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_LORE, Arrays.asList("&8Настройка игры", "", "&7Вы можете ломать любые типы блоков", "&7по всей карте, исключая", "&7генераторы и места спавнов.", "", "{state}"));
-                    yml.addDefault(ITEM_BED_INSTA_BREAK_NAME, "&aМногновеное сломание кровати");
-                    yml.addDefault(ITEM_BED_INSTA_BREAK_LORE, Arrays.asList("&8Настройка игры", "", "&7Ломает кровать с одного удара", "", "{state}"));
-                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_NAME, "&aMax Team Upgrades");
-                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8Настройка игры", "", "&7Все команды получат максимальные", "&7уровни улучшений", "", "{state}"));
-                    yml.addDefault(SUBMENU_SPEED_NAME, "&8Скорость");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aСтандартная скорость");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_SPEED_II_NAME, "&aСкорость I");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_II_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_SPEED_III_NAME, "&aСкорость II");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_III_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_NAME, "&aСкорость III");
-                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_NAME, "&aВернуться назад");
-                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_LORE, Arrays.asList("&7Вернуться назад в меню настроек"));
-                    yml.addDefault(SUBMENU_HEALTH_BUFF_NAME, "&8Улучшение здоровья");
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_NAME, "&aСтандартное здоровье");
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_NAME, "&aЗдоровье x2");
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_NAME, "&aЗдоровье x3");
-                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_NAME, "&aВернуться назад");
-                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_LORE, Arrays.asList("&7Вернуться назад в меню настроек"));
-                    yml.addDefault(SUBMENU_EVENTS_TIME_NAME, "&8Время событий");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_NAME, "&ax0.5 - Медленное");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_NAME, "&ax1 - Стандартное");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_NAME, "&ax2 - Быстрое");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_NAME, "&ax4 - Очень быстрое");
-                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_NAME, "&aВернуться назад");
-                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_LORE, Arrays.asList("&7Вернуться назад в меню настроек"));
-                    yml.addDefault(SUBMENU_RESPAWN_TIME_NAME, "&8Время возрождения");
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_NAME, "&a1 Секунда");
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_NAME, "&a5 Секунд");
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_NAME, "&a10 Секунд");
-                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_LORE, Arrays.asList("{state}"));
-                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME, "&aВернуться назад");
-                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_LORE, Arrays.asList("&7Вернуться назад в меню настроек"));
-                    yml.addDefault(NO_SPEED_MEANING, "&7Без скорости");
-                    yml.addDefault(SPEED_I_MEANING, "&7Скорость I");
-                    yml.addDefault(SPEED_II_MEANING, "&7Скорость II");
-                    yml.addDefault(SPEED_III_MEANING, "&7Скорость III");
-                    yml.addDefault(NORMAL_HEALTH_MEANING, "&7Стандартное здоровье");
-                    yml.addDefault(DOUBLE_HEALTH_MEANING, "&7Здоровье x2");
-                    yml.addDefault(TRIPLE_HEALTH_MEANING, "&7Здоровье x3");
-                    yml.addDefault(RESPAWN_EVENT_TIME_I_MEANING, "&71 Секунда");
-                    yml.addDefault(RESPAWN_EVENT_TIME_II_MEANING, "&75 Секунд");
-                    yml.addDefault(RESPAWN_EVENT_TIME_III_MEANING, "&710 Секунд");
-                    yml.addDefault(EVENTS_TIME_SLOWER_MEANING, "x0.5 - Медленно");
-                    yml.addDefault(EVENTS_TIME_NORMAL_MEANING, "x1 - Стандартно");
-                    yml.addDefault(EVENTS_TIME_FAST_MEANING, "x2 - Быстро");
-                    yml.addDefault(EVENTS_TIME_FASTER_MEANING, "x4 - Очень быстро");
+                    yml.addDefault(SPEED_MEANING, "&7Speed");
+                    yml.addDefault(EVENTS_TIME_MEANING, "&7Events Time");
+                    yml.addDefault(RESPAWN_EVENT_TIME_MEANING, "&7Respawn Time");
                     break;
             }
             l.getYml().options().copyDefaults(true);
@@ -320,6 +134,7 @@ public class MessagesData {
     public static final String
             MAIN_MENU_NAME = PATH + "menu.menu-name",
             MENU_SELECTED_MEANING = PATH + "menu.selected-meaning",
+            PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER = PATH + "scoreboard-placeholder",
             MENU_CLICK_TO_SELECT_MEANING = PATH + "menu.click-to-select-meaning",
             MENU_BACK_ITEM_NAME = PATH + "menu.back-item.name",
             MENU_BACK_ITEM_LORE = PATH + "menu.back-item.lore",
@@ -330,6 +145,9 @@ public class MessagesData {
             PRIVATE_GAME_NOT_OWNER = PATH + "game.not-owner",
             PRIVATE_GAME_ENABLED_OTHERS = PATH + "game.enabled-others",
             PRIVATE_GAME_DISABLED = PATH + "game.disabled",
+            PRIVATE_GAME_ENABLED_MODIFIERS = PATH + "game.modifiers.message",
+            PRIVATE_GAME_MODIFIERS_FORMAT = PATH + "game.modifiers.modifier-format",
+            PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT = PATH + "game.modifiers.modifier-with-option-format",
             PRIVATE_GAME_DISABLED_OTHERS = PATH + "game.disabled-others",
             PRIVATE_GAME_NO_PERMISSION = PATH + "game.no-permission",
             PRIVATE_GAME_ALREADY_ENABLED = PATH + "game.already-enabled",
@@ -338,6 +156,7 @@ public class MessagesData {
             PRIVATE_GAME_CANT_IN_GAME = PATH + "game.cant-in-game",
             HELP_MESSAGE = PATH + "help-message",
             NO_SPEED_MEANING = PATH + "meanings.speed.no-speed",
+            SPEED_MEANING = PATH + "meanings.speed.normal",
             SPEED_I_MEANING = PATH + "meanings.speed.speed1",
             SPEED_II_MEANING = PATH + "meanings.speed.speed2",
             SPEED_III_MEANING = PATH + "meanings.speed.speed3",
@@ -349,12 +168,14 @@ public class MessagesData {
             NO_DIAMONDS_MEANING = PATH + "meanings.no-diamonds",
             NO_EMERALDS_MEANING = PATH + "meanings.no-emeralds",
             HEALTH_BUFF_MEANING = PATH + "meanings.health-buff",
+            RESPAWN_EVENT_TIME_MEANING = PATH + "meanings.respawn-event-time.meaning",
             RESPAWN_EVENT_TIME_I_MEANING = PATH + "meanings.respawn-event-time.1",
             RESPAWN_EVENT_TIME_II_MEANING = PATH + "meanings.respawn-event-time.2",
             RESPAWN_EVENT_TIME_III_MEANING = PATH + "meanings.respawn-event-time.3",
             NORMAL_HEALTH_MEANING = PATH + "meanings.health.normal",
             DOUBLE_HEALTH_MEANING = PATH + "meanings.health.double",
             TRIPLE_HEALTH_MEANING = PATH + "meanings.health.triple",
+            EVENTS_TIME_MEANING = PATH + "meanings.events-time.meaning",
             EVENTS_TIME_SLOWER_MEANING = PATH + "meanings.events-time.slower",
             EVENTS_TIME_NORMAL_MEANING = PATH + "meanings.events-time.normal",
             EVENTS_TIME_FAST_MEANING = PATH + "meanings.events-time.fast",

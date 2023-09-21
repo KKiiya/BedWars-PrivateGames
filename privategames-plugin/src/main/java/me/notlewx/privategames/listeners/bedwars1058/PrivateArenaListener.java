@@ -1,6 +1,5 @@
 package me.notlewx.privategames.listeners.bedwars1058;
 
-import com.andrei1058.bedwars.BedWars;
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.generator.GeneratorType;
@@ -12,7 +11,6 @@ import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
 import com.andrei1058.bedwars.arena.Arena;
-import com.andrei1058.bedwars.stats.PlayerStats;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
@@ -27,14 +25,135 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static me.notlewx.privategames.PrivateGames.api;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class PrivateArenaListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+
+    @EventHandler
+    public static void onGameStart(GameStateChangeEvent e) {
+        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
+        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()).getPrivateArenaHost();
+
+
+        for (Player p : e.getArena().getPlayers()) {
+            List<String> modifiers = new ArrayList<>();
+            List<String> message = Utility.getList(p, PRIVATE_GAME_ENABLED_MODIFIERS);
+            modifiers.add(message.get(0));
+            modifiers.add(message.get(1).replace("{player}", pp.getPlayer().getDisplayName()));
+            if (pp.getPlayerSettings().isOneHitOneKillEnabled()) {
+                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ONE_HIT_ONE_KILL_MEANING)));
+            }
+            switch (pp.getPlayerSettings().getHealthBuffLevel()) {
+                case 0:
+                case 1:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, NORMAL_HEALTH_MEANING)));
+                    break;
+                case 2:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, DOUBLE_HEALTH_MEANING)));
+                    break;
+                case 3:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, TRIPLE_HEALTH_MEANING)));
+                    break;
+            }
+            if (pp.getPlayerSettings().isLowGravityEnabled()) {
+                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ONE_HIT_ONE_KILL_MEANING)));
+            }
+            switch (pp.getPlayerSettings().getSpeedLevel()) {
+                case 0:
+                case 2:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, NO_SPEED_MEANING)));
+                    break;
+                case 1:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, SPEED_I_MEANING)));
+                    break;
+                case 3:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, SPEED_II_MEANING)));
+                    break;
+                case 4:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, SPEED_III_MEANING)));
+                    break;
+            }
+            switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
+                case 0:
+                case 2:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_II_MEANING)));
+                    break;
+                case 1:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_I_MEANING)));
+                    break;
+                case 3:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_III_MEANING)));
+                    break;
+            }
+            switch (pp.getPlayerSettings().getEventsTimeLevel()) {
+                case 0:
+                case 2:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_NORMAL_MEANING)));
+                    break;
+                case 1:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_SLOWER_MEANING)));
+                    break;
+                case 3:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_FAST_MEANING)));
+                    break;
+                case 4:
+                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                            .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
+                            .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_FASTER_MEANING)));
+                    break;
+            }
+            if (pp.getPlayerSettings().isNoEmeraldsEnabled()) {
+                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, NO_EMERALDS_MEANING)));
+            }
+            if (pp.getPlayerSettings().isNoDiamondsEnabled()) {
+                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, NO_DIAMONDS_MEANING)));
+            }
+            if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {
+                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ALLOW_MAP_BREAK_MEANING)));
+            }
+            if (pp.getPlayerSettings().isBedInstaBreakEnabled()) {
+                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, BED_INSTA_BREAK_MEANING)));
+            }
+            if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) {
+                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, MAX_TEAM_UPGRADES_MEANING)));
+            }
+            modifiers.add(message.get(3));
+            for (String m : modifiers) {
+                p.sendMessage(m);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
     public static void onPlayerHit(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
             IPrivatePlayer pp = api.getPrivatePlayer((Player) e.getDamager());
@@ -64,13 +183,13 @@ public class PrivateArenaListener implements Listener {
         Utility.giveSpeedLevel(pp.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public static void onPlayerSpawn(GameStateChangeEvent e) {
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getDisplayName()).getPrivateArenaHost();
-        IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName());
-
         if (e.getNewState() != GameState.playing) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
+
+        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getDisplayName()).getPrivateArenaHost();
+        IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName());
 
         privateArena.getPlayers().forEach(Utility::giveLongJump);
         privateArena.getPlayers().forEach(Utility::giveHealthBuff);
@@ -111,7 +230,7 @@ public class PrivateArenaListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onGameEnd(GameEndEvent e) {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
         IArena a = e.getArena();

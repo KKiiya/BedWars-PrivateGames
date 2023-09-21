@@ -15,11 +15,14 @@ public class PrivateArena implements IPrivateArena {
     private IPrivatePlayer host;
     private List<Player> players;
     private String arenaName;
-    public static HashMap<String, IPrivateArena> privateArenaByArenaName = new HashMap<>();
+    public static HashMap<String, IPrivateArena> privateArenaByArenaName;
     public static HashMap<Player, IPrivateArena> privateArenaByPlayer = new HashMap<>();
-    public static LinkedList<IPrivateArena> privateArenas = new LinkedList<>() {
-    };
+    public static LinkedList<IPrivateArena> privateArenas = new LinkedList<>();
     public PrivateArena(IPrivatePlayer host, List<Player> players, String arenaName) {
+        if (privateArenaByArenaName == null) privateArenaByArenaName = new HashMap<>();
+        if (privateArenaByPlayer == null) privateArenaByPlayer = new HashMap<>();
+        if (privateArenas == null) privateArenas = new LinkedList<>();
+
         this.host = host;
         this.players = players;
         this.arenaName = arenaName;
@@ -29,6 +32,7 @@ public class PrivateArena implements IPrivateArena {
         }
         privateArenaByArenaName.put(arenaName, this);
         privateArenas.add(this);
+
         switch (support) {
             case BEDWARS1058:
                 PrivateGames.getBw1058Api().getArenaUtil().getArenas().remove(PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(arenaName));
@@ -81,7 +85,6 @@ public class PrivateArena implements IPrivateArena {
 
     @Override
     public void destroyData() {
-        arenaName = null;
         host = null;
         privateArenaByArenaName.remove(arenaName);
         arenaName = null;

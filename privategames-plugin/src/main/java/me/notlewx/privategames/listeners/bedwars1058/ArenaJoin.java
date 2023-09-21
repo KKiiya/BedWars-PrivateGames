@@ -44,11 +44,15 @@ public class ArenaJoin implements Listener {
         if (party.hasParty() && party.isOwner()) {
             if (pp.hasPermission()) {
                 if (p.isPrivateGameEnabled()) {
+                    List<Player> players = new ArrayList<>(pp.getPlayerParty().getPartyMembers());
+                    players.add(pp.getPlayer());
+                    new PrivateArena(pp, party.getPartyMembers(), e.getArena().getArenaName());
+
+                    for (Player member : players) {
+                        e.getArena().addPlayer(member, false);
+                    }
+
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                        new PrivateArena(pp, party.getPartyMembers(), e.getArena().getArenaName());
-                        for (Player member : party.getPartyMembers()) {
-                            if (member != pp.getPlayer()) e.getArena().addPlayer(member, false);
-                        }
                         pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
                     }, 35L);
                     e.getArena().setStatus(GameState.starting);
@@ -56,15 +60,36 @@ public class ArenaJoin implements Listener {
                 }
             }
         } else if (pp.getPlayer().isOp() || pp.getPlayer().hasPermission("pg.admin")) {
-                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                    List<Player> players = new ArrayList<>();
-                    players.add(pp.getPlayer());
-                    new PrivateArena(pp, players, e.getArena().getArenaName());
-                    pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                }, 35L);
-                if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
-                e.getArena().changeStatus(GameState.starting);
-                e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+            if (p.isPrivateGameEnabled()) {
+
+                    if (pp.getPlayerParty().hasParty()) {
+                        if (pp.getPlayerParty().isOwner()) {
+                            List<Player> players = new ArrayList<>(pp.getPlayerParty().getPartyMembers());
+                            players.add(pp.getPlayer());
+
+                            new PrivateArena(pp, players, e.getArena().getArenaName());
+
+                            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                                pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                            }, 35L);
+                        }
+                    } else {
+                        List<Player> players = new ArrayList<>();
+                        players.add(pp.getPlayer());
+
+                        new PrivateArena(pp, players, e.getArena().getArenaName());
+
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                            pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                        }, 35L);
+                    }
+
+                    if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting)
+                        return;
+                    e.getArena().changeStatus(GameState.starting);
+                    e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+
+            }
         }
     }
 }

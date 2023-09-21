@@ -45,6 +45,5 @@ me\notlewx\privategames\party\Party.class
 me\notlewx\privategames\listeners\InventoryListener.class
 me\notlewx\privategames\config\proxy\MessagesData.class
 me\notlewx\privategames\support\Support.class
-me\notlewx\privategames\arena\PrivateArena$2.class
 me\notlewx\privategames\party\handlers\BedWars2023PARTY.class
 me\notlewx\privategames\listeners\bedwars2023\ArenaLeave.class

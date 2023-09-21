@@ -17,7 +17,7 @@ public class MessagesData {
         file = new File(Bukkit.getPluginManager().getPlugin("BedWarsProxy").getDataFolder().getPath() + "/Languages/", "messages_en.yml");
         yml = YamlConfiguration.loadConfiguration(file);
         yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
-        yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate game settings");
+        yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate Game Settings");
         yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "with up to 11 different options!"));
         yml.addDefault(MENU_SELECTED_MEANING, "&aSelected!");
         yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eClick to Select!");
@@ -32,6 +32,10 @@ public class MessagesData {
         yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cThe private game is already disabled!");
         yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cCouldnt join to the private game of this player!");
         yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cYou cant do this in game!");
+        yml.addDefault(PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER, "&7[P]");
+        yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lhas enabled private game modifiers!", "{modifiers}", "&6-----------------------------------------------------"));
+        yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
+        yml.addDefault(PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT, "&6- {modifier}: &e{selected}");
         yml.addDefault(MENU_BACK_ITEM_NAME, "&aGo Back");
         yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Go back to your bedwars gameplay"));
         yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aOne hit, one kill");
@@ -106,10 +110,18 @@ public class MessagesData {
         yml.addDefault(RESPAWN_EVENT_TIME_I_MEANING, "&71 Second");
         yml.addDefault(RESPAWN_EVENT_TIME_II_MEANING, "&75 Seconds");
         yml.addDefault(RESPAWN_EVENT_TIME_III_MEANING, "&710 Seconds");
-        yml.addDefault(EVENTS_TIME_SLOWER_MEANING, "x0.5 - Slow");
-        yml.addDefault(EVENTS_TIME_NORMAL_MEANING, "x1 - Normal");
-        yml.addDefault(EVENTS_TIME_FAST_MEANING, "x2 - Faster");
-        yml.addDefault(EVENTS_TIME_FASTER_MEANING, "x4 - Faster");
+        yml.addDefault(EVENTS_TIME_SLOWER_MEANING, "&7x0.5 - Slow");
+        yml.addDefault(EVENTS_TIME_NORMAL_MEANING, "&7x1 - Normal");
+        yml.addDefault(EVENTS_TIME_FAST_MEANING, "&7x2 - Faster");
+        yml.addDefault(EVENTS_TIME_FASTER_MEANING, "&7x4 - Faster");
+        yml.addDefault(ONE_HIT_ONE_KILL_MEANING, "&7One Hit One Kill");
+        yml.addDefault(BED_INSTA_BREAK_MEANING, "&7Bed InstaBreak");
+        yml.addDefault(LOW_GRAVITY_MEANING, "&7Low Gravity");
+        yml.addDefault(MAX_TEAM_UPGRADES_MEANING, "&7Max Team Upgrades");
+        yml.addDefault(ALLOW_MAP_BREAK_MEANING, "&7Allow Map Break");
+        yml.addDefault(NO_DIAMONDS_MEANING, "&7No Diamonds");
+        yml.addDefault(NO_EMERALDS_MEANING, "&7No Emeralds");
+        yml.addDefault(HEALTH_BUFF_MEANING, "&7Health Buff");
         yml.options().copyDefaults(true);
         save();
     }

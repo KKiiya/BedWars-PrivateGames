@@ -101,7 +101,7 @@ public interface IPlayerSettings {
     /**
      * Get the respawn time level
      *
-     * @return - 0-Disabled, 1-Disabled, 2-Speed1, 3-Speed2, 4-Speed3
+     * @return - 0-Disabled, 1-Normal, 2-Speed1, 3-Speed2, 4-Speed3
      */
     int getSpeedLevel();
 
