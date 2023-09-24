@@ -1,6 +1,6 @@
 package me.notlewx.privategames.api.events;
 
-import me.notlewx.privategames.api.player.SettingType;
+import me.notlewx.privategames.api.modifiers.ModifierType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -11,11 +11,11 @@ public class PrivateSettingUpdateEvent extends Event {
     public static final HandlerList HANDLERS = new HandlerList();
     private boolean cancelled;
     private final Player player;
-    private final SettingType settingType;
+    private final ModifierType settingType;
     private final Integer level;
     private final boolean isEnabled;
 
-    public PrivateSettingUpdateEvent(@Nonnull Player player, @Nonnull SettingType settingType, @Nullable Integer level, boolean isEnabled) {
+    public PrivateSettingUpdateEvent(@Nonnull Player player, @Nonnull ModifierType settingType, @Nullable Integer level, boolean isEnabled) {
         this.player = player;
         this.settingType = settingType;
         this.level = level;
@@ -25,7 +25,7 @@ public class PrivateSettingUpdateEvent extends Event {
     public Player getPlayer() {
         return player;
     }
-    public SettingType getUpdatedSetting() {
+    public ModifierType getUpdatedSetting() {
         return settingType;
     }
     public Integer getNewSettingLevel() {

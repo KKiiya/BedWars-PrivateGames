@@ -11,12 +11,16 @@ import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
 import com.andrei1058.bedwars.arena.Arena;
+import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.andrei1058.bedwars.arena.OreGenerator;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,15 +29,21 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class PrivateArenaListener implements Listener {
 
     @EventHandler
-    public static void onGameStart(GameStateChangeEvent e) {
+    public void onGameStart(GameStateChangeEvent e) {
+        if (e.getNewState() != GameState.playing) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
         IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()).getPrivateArenaHost();
 
@@ -153,22 +163,24 @@ public class PrivateArenaListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public static void onPlayerHit(EntityDamageByEntityEvent e) {
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerHit(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
-            IPrivatePlayer pp = api.getPrivatePlayer((Player) e.getDamager());
+            IArena arena = api.getBedWars1058API().getArenaUtil().getArenaByPlayer((Player) e.getDamager());
+            if (arena == null) {
+                return;
+            }
+            IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByPlayer((Player) e.getDamager());
 
-            if (api.getPrivateArenaUtil().getPrivateArenaByPlayer(pp.getPlayer()) == null) return;
-
-            IArena arena = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(pp.getPlayer());
-
-            if (pp.getPlayerSettings().isOneHitOneKillEnabled()) {
-                if (arena.isSpectator((Player) e.getDamager())) return;
-                if (arena.getStatus() != GameState.playing) return;
-                if (arena.isReSpawning((Player) e.getEntity())) return;
-                if (arena.isReSpawning((Player) e.getDamager())) return;
-                if (arena.getTeam((Player) e.getDamager()).getMembers().contains((Player) e.getEntity())) return;
-                ((Player) e.getEntity()).setLastDamage(600.0);
+            if (api.getPrivateArenaUtil().isArenaPrivate(arena.getArenaName())) {
+                if (privateArena.getPrivateArenaHost().getPlayerSettings().isOneHitOneKillEnabled()) {
+                    if (arena.getStatus() != GameState.playing) return;
+                    if (arena.isSpectator((Player) e.getDamager())) return;
+                    if (arena.isReSpawning((Player) e.getEntity())) return;
+                    if (arena.isReSpawning((Player) e.getDamager())) return;
+                    if (arena.getTeam((Player) e.getDamager()).getMembers().contains((Player) e.getEntity())) return;
+                    e.setDamage(600.0D);
+                }
             }
         }
     }
@@ -184,11 +196,11 @@ public class PrivateArenaListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public static void onPlayerSpawn(GameStateChangeEvent e) {
+    public void onPlayerSpawn(GameStateChangeEvent e) {
         if (e.getNewState() != GameState.playing) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
 
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getDisplayName()).getPrivateArenaHost();
+        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()).getPrivateArenaHost();
         IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName());
 
         privateArena.getPlayers().forEach(Utility::giveLongJump);
@@ -216,7 +228,7 @@ public class PrivateArenaListener implements Listener {
         }
 
         if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) {
-
+            upgradeTeams(e.getArena());
         }
 
         if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {
@@ -299,7 +311,9 @@ public class PrivateArenaListener implements Listener {
         if (!api.getBedWars1058API().getArenaUtil().isPlaying(player)) return;
         IArena a = Arena.getArenaByPlayer(player);
         IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()).getPrivateArenaHost();
+        if (api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()) == null) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(a.getArenaName())) return;
+
         if (pp.getPlayerSettings().isAllowMapBreakEnabled() && !e.getClickedBlock().getType().toString().contains("BED")) {
             a.addPlacedBlock(e.getClickedBlock());
         }
@@ -344,5 +358,41 @@ public class PrivateArenaListener implements Listener {
             locationList.add(loc.clone().subtract(1.0, 0.0, 0.0));
         }
         return locationList;
+    }
+
+    public void upgradeTeams(IArena a) {
+        for (ITeam team : a.getTeams()) {
+            ConfigurationSection conf = api.getBedWars1058API().getConfigs().getUpgradesConfig().getYml().getConfigurationSection("");
+            System.out.println(conf.getCurrentPath());
+            team.getTeamUpgradeTiers().put("upgrade-armor", 3);
+            team.getTeamUpgradeTiers().put("upgrade-swords", 0);
+            team.getTeamUpgradeTiers().put("upgrade-miner", 1);
+            team.getTeamUpgradeTiers().put("upgrade-forge", 3);
+            team.getTeamUpgradeTiers().put("upgrade-heal-pool", 0);
+            team.getTeamUpgradeTiers().put("upgrade-dragon", 0);
+
+            team.addBaseEffect(PotionEffectType.REGENERATION, 0, Integer.MAX_VALUE);
+            team.addArmorEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+            team.addSwordEnchantment(Enchantment.DAMAGE_ALL, 1);
+            Location genLoc = null;
+            for (IGenerator g : team.getGenerators()) {
+                if (g.getType() == GeneratorType.IRON) {
+                    g.setDelay(1);
+                    g.setAmount(4);
+                    g.setSpawnLimit(120);
+                } else if (g.getType() == GeneratorType.GOLD) {
+                    g.setDelay(2);
+                    g.setAmount(4);
+                    g.setSpawnLimit(80);
+                }
+                genLoc = g.getLocation();
+            }
+            IGenerator g = new OreGenerator(genLoc, a, GeneratorType.CUSTOM, team);
+            g.setOre(new ItemStack(Material.EMERALD));
+            g.setDelay(10);
+            g.setAmount(2);
+            g.setSpawnLimit(20);
+            team.getGenerators().add(g);
+        }
     }
 }

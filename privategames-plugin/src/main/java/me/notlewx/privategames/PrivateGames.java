@@ -4,7 +4,9 @@ import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import me.notlewx.privategames.api.database.Database;
+import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.listeners.InventoryListener;
+import me.notlewx.privategames.listeners.PlayerInteraction;
 import me.notlewx.privategames.listeners.PlayerJoin;
 import me.notlewx.privategames.listeners.PlayerLeave;
 import me.notlewx.privategames.support.BedWars1058;
@@ -50,6 +52,7 @@ public final class PrivateGames extends JavaPlugin {
         return BedWarsProxy.getAPI();
     }
     private void loadSupport() {
+        new PrivateArena();
         new BedWars1058(this);
         new BedWars2023(this);
         new me.notlewx.privategames.support.BedWarsProxy(this);
@@ -58,5 +61,6 @@ public final class PrivateGames extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteraction(), this);
     }
 }

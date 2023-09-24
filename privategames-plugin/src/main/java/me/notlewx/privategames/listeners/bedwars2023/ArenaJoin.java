@@ -1,7 +1,7 @@
 package me.notlewx.privategames.listeners.bedwars2023;
 
-import com.andrei1058.bedwars.api.arena.GameState;
-import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
+import com.tomkeuper.bedwars.api.arena.GameState;
+import com.tomkeuper.bedwars.api.events.player.PlayerJoinArenaEvent;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
@@ -12,7 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,7 +24,7 @@ import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GA
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
 
 public class ArenaJoin implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onArenaJoin(PlayerJoinArenaEvent e) {
         IPrivatePlayer pp = PrivateGames.api.getPrivatePlayer(e.getPlayer());
         IPlayerSettings p = pp.getPlayerSettings();
@@ -38,38 +37,51 @@ public class ArenaJoin implements Listener {
         settings.setItemMeta(settingsMeta);
 
         if (e.getArena().isSpectator(pp.getPlayer())) return;
-        if (!e.getArena().getPlayers().isEmpty()) return;
-        if (PrivateGames.api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName()) && !party.hasMember(e.getPlayer())) e.setCancelled(true);
 
-        if (party.hasParty() && party.isOwner()) {
-            if (pp.hasPermission()) {
-                if (p.isPrivateGameEnabled()) {
-                    Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                        new PrivateArena(pp, party.getPartyMembers(), e.getArena().getArenaName());
-                        for (Player member : party.getPartyMembers()) {
-                            e.getArena().addPlayer(member, false);
-                        }
-                        pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                    }, 35L);
-                    e.getArena().setStatus(com.andrei1058.bedwars.api.arena.GameState.starting);
-                    e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+        if (p.isPrivateGameEnabled()) {
+            if (party.hasParty()) {
+                if (party.isOwner()) {
+                    if (pp.hasPermission()) {
+                        List<Player> players = new ArrayList<>(party.getPartyMembers());
+                        players.add(pp.getPlayer());
+                        new PrivateArena(pp, players, e.getArena().getArenaName());
+
+
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                            pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                        }, 35L);
+                        e.getArena().changeStatus(GameState.starting);
+                        e.getArena().getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
+                    }
                 }
-            }
-        } else if (pp.getPlayer().isOp() || pp.getPlayer().hasPermission("pg.admin")) {
-            if (p.isPrivateGameEnabled()) {
-                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                    if (pp.getPlayerParty().hasParty() && pp.getPlayerParty().isOwner()) {
-                        List<Player> players = new ArrayList<>(pp.getPlayerParty().getPartyMembers());
+            } else if (pp.getPlayer().isOp() || pp.getPlayer().hasPermission("pg.admin")) {
+                if (party.hasParty()) {
+                    if (party.isOwner()) {
+                        List<Player> players = new ArrayList<>(party.getPartyMembers());
+                        players.add(pp.getPlayer());
 
                         new PrivateArena(pp, players, e.getArena().getArenaName());
-                        pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                    }
 
-                    if (e.getArena().getStatus() == com.andrei1058.bedwars.api.arena.GameState.playing || e.getArena().getStatus() == com.andrei1058.bedwars.api.arena.GameState.restarting)
-                        return;
-                    e.getArena().changeStatus(GameState.starting);
-                    e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
-                }, 35L);
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                            pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                        }, 35L);
+                    }
+                } else {
+                    List<Player> players = new ArrayList<>();
+                    players.add(pp.getPlayer());
+
+                    new PrivateArena(pp, players, e.getArena().getArenaName());
+
+                    Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                        pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                    }, 35L);
+                }
+
+                if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting)
+                    return;
+                e.getArena().changeStatus(GameState.starting);
+                e.getArena().getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
+
             }
         }
     }

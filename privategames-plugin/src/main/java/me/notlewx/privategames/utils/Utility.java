@@ -53,17 +53,17 @@ public class Utility {
                 break;
             case 2:
                 Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 0, Integer.MAX_VALUE, true, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, true, false));
                 },20L);
                 break;
             case 3:
                 Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1, Integer.MAX_VALUE, true, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true, false));
                 }, 20L);
                 break;
             case 4:
                 Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2, Integer.MAX_VALUE, true, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true, false));
                 }, 20L);
                 break;
         }
@@ -97,9 +97,7 @@ public class Utility {
         IPrivatePlayer owner = api.getPrivatePlayer(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
         if (owner.getPlayerSettings().isLowGravityEnabled())
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 2, Integer.MAX_VALUE));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2));
             }, 20L);
     }
-
-
 }

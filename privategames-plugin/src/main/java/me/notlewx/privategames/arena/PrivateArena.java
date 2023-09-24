@@ -19,10 +19,6 @@ public class PrivateArena implements IPrivateArena {
     public static HashMap<Player, IPrivateArena> privateArenaByPlayer = new HashMap<>();
     public static LinkedList<IPrivateArena> privateArenas = new LinkedList<>();
     public PrivateArena(IPrivatePlayer host, List<Player> players, String arenaName) {
-        if (privateArenaByArenaName == null) privateArenaByArenaName = new HashMap<>();
-        if (privateArenaByPlayer == null) privateArenaByPlayer = new HashMap<>();
-        if (privateArenas == null) privateArenas = new LinkedList<>();
-
         this.host = host;
         this.players = players;
         this.arenaName = arenaName;
@@ -42,6 +38,12 @@ public class PrivateArena implements IPrivateArena {
                 break;
         }
 
+    }
+
+    public PrivateArena() {
+        if (privateArenaByArenaName == null) privateArenaByArenaName = new HashMap<>();
+        if (privateArenaByPlayer == null) privateArenaByPlayer = new HashMap<>();
+        if (privateArenas == null) privateArenas = new LinkedList<>();
     }
     @Override
     public IPrivatePlayer getPrivateArenaHost() {

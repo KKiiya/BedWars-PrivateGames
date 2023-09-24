@@ -50,7 +50,7 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(GAMEMODE_CHANGER_POSITION, 53);
         yml.addDefault(BACK_MATERIAL, "ARROW");
         yml.addDefault(BACK_POSITION, 49);
-        yml.addDefault(SPEED_SUBMENU_ROWS, 3);
+        yml.addDefault(SPEED_MENU_ROWS, 3);
         yml.addDefault(SPEED_LEVEL_I_MATERIAL, "RABBIT_FOOT");
         yml.addDefault(SPEED_LEVEL_I_POSITION, 10);
         yml.addDefault(SPEED_LEVEL_II_MATERIAL, "RABBIT_FOOT");

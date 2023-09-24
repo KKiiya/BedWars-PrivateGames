@@ -1,6 +1,7 @@
 package me.notlewx.privategames.support;
 
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.commands.bedwars2023.MainCommand;
 import me.notlewx.privategames.config.bedwars2023.MainConfig;
 import me.notlewx.privategames.config.bedwars2023.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
@@ -52,7 +53,7 @@ public class BedWars2023 {
 
     private static void registerCommands() {
         Utility.info("&eRegistering commands...");
-
+        PrivateGames.getPlugins().getCommand("pg").setExecutor(new MainCommand());
         Utility.info("&aCommands registered successfully!");
     }
 

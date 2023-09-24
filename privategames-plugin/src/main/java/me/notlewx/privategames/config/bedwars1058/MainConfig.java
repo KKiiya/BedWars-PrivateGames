@@ -48,7 +48,9 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(GAMEMODE_CHANGER_POSITION, 53);
         yml.addDefault(BACK_MATERIAL, "ARROW");
         yml.addDefault(BACK_POSITION, 49);
-        yml.addDefault(SPEED_SUBMENU_ROWS, 3);
+        yml.addDefault(SPEED_MENU_ROWS, 4);
+        yml.addDefault(SPEED_BACK_MATERIAL, "ARROW");
+        yml.addDefault(SPEED_BACK_POSITION, 31);
         yml.addDefault(SPEED_LEVEL_I_MATERIAL, "RABBIT_FOOT");
         yml.addDefault(SPEED_LEVEL_I_POSITION, 10);
         yml.addDefault(SPEED_LEVEL_II_MATERIAL, "RABBIT_FOOT");
@@ -57,14 +59,18 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(SPEED_LEVEL_III_POSITION, 14);
         yml.addDefault(SPEED_LEVEL_IV_MATERIAL, "RABBIT_FOOT");
         yml.addDefault(SPEED_LEVEL_IV_POSITION, 16);
-        yml.addDefault(RESPAWN_TIME_MENU_ROWS, 3);
+        yml.addDefault(RESPAWN_TIME_MENU_ROWS, 4);
+        yml.addDefault(RESPAWN_TIME_BACK_MATERIAL, "ARROW");
+        yml.addDefault(RESPAWN_TIME_BACK_POSITION, 31);
         yml.addDefault(RESPAWN_TIME_LEVEL_I_MATERIAL, "PAPER");
         yml.addDefault(RESPAWN_TIME_LEVEL_I_POSITION, 11);
         yml.addDefault(RESPAWN_TIME_LEVEL_II_MATERIAL, "PAPER");
         yml.addDefault(RESPAWN_TIME_LEVEL_II_POSITION, 13);
         yml.addDefault(RESPAWN_TIME_LEVEL_III_MATERIAL, "PAPER");
         yml.addDefault(RESPAWN_TIME_LEVEL_III_POSITION, 15);
-        yml.addDefault(EVENTS_TIME_MENU_ROWS, 3);
+        yml.addDefault(EVENTS_TIME_MENU_ROWS, 4);
+        yml.addDefault(EVENTS_TIME_BACK_MATERIAL, "ARROW");
+        yml.addDefault(EVENTS_TIME_BACK_POSITION, 31);
         yml.addDefault(EVENTS_TIME_LEVEL_I_MATERIAL, "BOOK");
         yml.addDefault(EVENTS_TIME_LEVEL_I_POSITION, 10);
         yml.addDefault(EVENTS_TIME_LEVEL_II_MATERIAL, "BOOK");
@@ -73,7 +79,9 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(EVENTS_TIME_LEVEL_III_POSITION, 14);
         yml.addDefault(EVENTS_TIME_LEVEL_IV_MATERIAL, "BOOK");
         yml.addDefault(EVENTS_TIME_LEVEL_IV_POSITION, 16);
-        yml.addDefault(HEALTH_BUFF_MENU_ROWS, 3);
+        yml.addDefault(HEALTH_BUFF_MENU_ROWS, 4);
+        yml.addDefault(HEALTH_BUFF_BACK_MATERIAL, "ARROW");
+        yml.addDefault(HEALTH_BUFF_BACK_POSITION, 31);
         yml.addDefault(HEALTH_BUFF_LEVEL_I_MATERIAL, "GOLDEN_APPLE");
         yml.addDefault(HEALTH_BUFF_LEVEL_I_POSITION, 11);
         yml.addDefault(HEALTH_BUFF_LEVEL_II_MATERIAL, "GOLDEN_APPLE");
@@ -107,7 +115,9 @@ public class MainConfig extends ConfigManager {
 
            SPEED_MATERIAL = "menus.settings.contents.speed.material",
            SPEED_POSITION = "menus.settings.contents.speed.position",
-           SPEED_SUBMENU_ROWS = "menus.submenus.speed.rows",
+           SPEED_MENU_ROWS = "menus.submenus.speed.rows",
+           SPEED_BACK_MATERIAL = "menus.submenus.speed.back-item.material",
+           SPEED_BACK_POSITION = "menus.submenus.speed.back-item.position",
            SPEED_LEVEL_I_MATERIAL = "menus.submenus.speed.level-1.material",
            SPEED_LEVEL_I_POSITION = "menus.submenus.speed.level-1.position",
            SPEED_LEVEL_II_MATERIAL = "menus.submenus.speed.level-1.material",
@@ -126,6 +136,8 @@ public class MainConfig extends ConfigManager {
            RESPAWN_TIME_MATERIAL = "menus.settings.contents.respawn-time.material",
            RESPAWN_TIME_POSITION = "menus.settings.contents.respawn-time.position",
            RESPAWN_TIME_MENU_ROWS = "menus.submenus.respawn-time.rows",
+           RESPAWN_TIME_BACK_MATERIAL = "menus.submenus.respawn-time.back-item.material",
+           RESPAWN_TIME_BACK_POSITION = "menus.submenus.respawn-time.back-item.position",
            RESPAWN_TIME_LEVEL_I_MATERIAL = "menus.submenus.respawn-time.level-1.material",
            RESPAWN_TIME_LEVEL_I_POSITION = "menus.submenus.respawn-time.level-1.position",
            RESPAWN_TIME_LEVEL_II_MATERIAL = "menus.submenus.respawn-time.level-2.material",
@@ -136,6 +148,8 @@ public class MainConfig extends ConfigManager {
            EVENTS_TIME_MATERIAL = "menus.settings.contents.events-time.material",
            EVENTS_TIME_POSITION = "menus.settings.contents.events-time.position",
            EVENTS_TIME_MENU_ROWS = "menus.submenus.events-time.rows",
+           EVENTS_TIME_BACK_MATERIAL = "menus.submenus.events-time.back-item.material",
+           EVENTS_TIME_BACK_POSITION = "menus.submenus.events-time.back-item.position",
            EVENTS_TIME_LEVEL_I_MATERIAL = "menus.submenus.events-time.level-1.material",
            EVENTS_TIME_LEVEL_I_POSITION = "menus.submenus.events-time.level-1.position",
            EVENTS_TIME_LEVEL_II_MATERIAL = "menus.submenus.events-time.level-2.material",
@@ -151,6 +165,8 @@ public class MainConfig extends ConfigManager {
            HEALTH_BUFF_MATERIAL = "menus.settings.contents.health-buff.material",
            HEALTH_BUFF_POSITION = "menus.settings.contents.health-buff.position",
            HEALTH_BUFF_MENU_ROWS = "menus.submenus.health-buff.rows",
+           HEALTH_BUFF_BACK_MATERIAL = "menus.submenus.health-buff.back-item.material",
+           HEALTH_BUFF_BACK_POSITION = "menus.submenus.health-buff.back-item.position",
            HEALTH_BUFF_LEVEL_I_MATERIAL = "menus.submenus.health-buff.level-1.material",
            HEALTH_BUFF_LEVEL_I_POSITION = "menus.submenus.health-buff.level-1.position",
            HEALTH_BUFF_LEVEL_II_MATERIAL = "menus.submenus.health-buff.level-2.material",
@@ -170,10 +186,10 @@ public class MainConfig extends ConfigManager {
            GAMEMODE_CHANGER_MATERIAL = "menus.settings.contents.gamemode-changer.material",
            GAMEMODE_CHANGER_POSITION = "menus.settings.contents.gamemode-changer.position",
 
-            BACK_MATERIAL = "menus.settings.contents.back-item.material",
-            BACK_POSITION = "menus.settings.contents.back-item.position",
+           BACK_MATERIAL = "menus.settings.contents.back-item.material",
+           BACK_POSITION = "menus.settings.contents.back-item.position",
 
-            MATERIAL = "private-games-item.material",
+           MATERIAL = "private-games-item.material",
            POSITION = "private-games-item.position",
            ENCHANTED = "private-games-item.enchanted";
 }

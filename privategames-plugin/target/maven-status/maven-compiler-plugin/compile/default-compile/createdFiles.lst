@@ -14,6 +14,7 @@ me\notlewx\privategames\arena\PrivateArena$1.class
 me\notlewx\privategames\party\handlers\BedWars1058PARTY.class
 me\notlewx\privategames\commands\bedwars1058\MainCommand.class
 me\notlewx\privategames\utils\Utility.class
+me\notlewx\privategames\listeners\PlayerInteraction.class
 me\notlewx\privategames\support\BedWarsProxy.class
 me\notlewx\privategames\party\handlers\BedWarsProxyPARTY.class
 me\notlewx\privategames\API$PrivateArenaUtil.class

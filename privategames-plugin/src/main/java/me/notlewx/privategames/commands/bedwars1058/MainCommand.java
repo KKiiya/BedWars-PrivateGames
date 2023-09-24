@@ -40,9 +40,8 @@ public class MainCommand implements CommandExecutor {
                                     if (party.hasParty()) {
                                         if (party.isOwner()) {
                                             playerData.setPrivateGameEnabled();
+                                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_ENABLED));
                                             for (Player player : party.getPartyMembers()) {
-                                                if (party.isOwner())
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED));
                                                 if (player != sender) {
                                                     player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                 }
@@ -68,10 +67,8 @@ public class MainCommand implements CommandExecutor {
                                             if (party.hasParty()) {
                                                 if (party.isOwner()) {
                                                     playerData.setPrivateGameEnabled();
+                                                    sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_ENABLED));
                                                     for (Player player : party.getPartyMembers()) {
-                                                        if (party.isOwner()) {
-                                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED));
-                                                        }
                                                         if (player != sender) {
                                                             player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                         }
@@ -101,9 +98,8 @@ public class MainCommand implements CommandExecutor {
                                         if (party.hasParty()) {
                                             if (party.isOwner()) {
                                                 playerData.setPrivateGameDisabled(false);
+                                                sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
                                                 for (Player player : party.getPartyMembers()) {
-                                                    if (party.isOwner())
-                                                        player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED));
                                                     if (player != sender) {
                                                         player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                     }
@@ -132,9 +128,8 @@ public class MainCommand implements CommandExecutor {
                                             if (party.hasParty()) {
                                                 if (party.isOwner()) {
                                                     playerData.setPrivateGameDisabled(false);
+                                                    sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
                                                     for (Player player : party.getPartyMembers()) {
-                                                        if (party.isOwner())
-                                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED));
                                                         if (player != sender) {
                                                             player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                         }

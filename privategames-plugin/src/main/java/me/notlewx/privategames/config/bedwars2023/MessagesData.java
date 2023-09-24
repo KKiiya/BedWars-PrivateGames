@@ -147,7 +147,7 @@ public class MessagesData {
             PRIVATE_GAME_DISABLED = PATH + "game.disabled",
             PRIVATE_GAME_ENABLED_MODIFIERS = PATH + "game.modifiers.message",
             PRIVATE_GAME_MODIFIERS_FORMAT = PATH + "game.modifiers.modifier-format",
-            PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT = PATH + "game.modifiers.modifier-format",
+            PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT = PATH + "game.modifiers.modifier-with-option-format",
             PRIVATE_GAME_DISABLED_OTHERS = PATH + "game.disabled-others",
             PRIVATE_GAME_NO_PERMISSION = PATH + "game.no-permission",
             PRIVATE_GAME_ALREADY_ENABLED = PATH + "game.already-enabled",
