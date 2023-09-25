@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="BedWars1058-PrivateGames" target="11" />
+      <module name="privategames-api" target="11" />
+      <module name="privategames-plugin" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
