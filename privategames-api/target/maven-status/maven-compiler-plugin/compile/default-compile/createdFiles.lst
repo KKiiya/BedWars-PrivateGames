@@ -1,0 +1,13 @@
+me\notlewx\privategames\api\modifiers\ModifierType.class
+me\notlewx\privategames\api\events\PrivateGameEnableEvent.class
+me\notlewx\privategames\api\player\IPrivatePlayer.class
+me\notlewx\privategames\api\PrivateGames$IPrivateArenaUtil.class
+me\notlewx\privategames\api\PrivateGames.class
+me\notlewx\privategames\api\database\Database.class
+me\notlewx\privategames\api\PrivateGames$IMenuUtil.class
+me\notlewx\privategames\api\arena\IPrivateArena.class
+me\notlewx\privategames\api\events\PrivateSettingUpdateEvent.class
+me\notlewx\privategames\api\events\PrivateGameJoinEvent.class
+me\notlewx\privategames\api\party\IParty.class
+me\notlewx\privategames\api\player\IPlayerSettings.class
+me\notlewx\privategames\api\events\PrivateGameDisableEvent.class
