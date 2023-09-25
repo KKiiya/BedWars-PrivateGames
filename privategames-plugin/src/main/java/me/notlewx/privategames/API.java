@@ -6,6 +6,10 @@ import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
+import me.notlewx.privategames.menus.SettingsMenu;
+import me.notlewx.privategames.menus.submenus.EventsTimeMenu;
+import me.notlewx.privategames.menus.submenus.HealthMenu;
+import me.notlewx.privategames.menus.submenus.RespawnTimeMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
 import org.bukkit.entity.Player;
 
@@ -26,6 +30,34 @@ public class API implements PrivateGames {
     @Override
     public IPrivateArenaUtil getPrivateArenaUtil() {
         return new PrivateArenaUtil();
+    }
+
+    @Override
+    public IMenuUtil getMenuUtil() {
+        return new MenuUtil();
+    }
+
+    private static class MenuUtil implements IMenuUtil {
+
+        @Override
+        public void openSettingsMenu(Player p) {
+            new SettingsMenu(p);
+        }
+
+        @Override
+        public void openHealthBuffMenu(Player p) {
+            new HealthMenu(p);
+        }
+
+        @Override
+        public void openEventsTimeMenu(Player p) {
+            new EventsTimeMenu(p);
+        }
+
+        @Override
+        public void openRespawnTimeMenu(Player p) {
+            new RespawnTimeMenu(p);
+        }
     }
 
     private static class PrivateArenaUtil implements IPrivateArenaUtil {

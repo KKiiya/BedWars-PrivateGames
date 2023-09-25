@@ -24,10 +24,38 @@ public interface PrivateGames {
     IPrivatePlayer getPrivatePlayer(Player player);
 
     /**
-     * Get te private arena util
+     * Get the private arena util
      * @return - Private arena util
      */
     IPrivateArenaUtil getPrivateArenaUtil();
+
+    /**
+     * Get the menu util
+     * @return - Menu Util
+     */
+    IMenuUtil getMenuUtil();
+
+    interface IMenuUtil {
+        /**
+         * Open the settings menu
+         */
+        void openSettingsMenu(Player p);
+
+        /**
+         * Open the health buff menu
+         */
+        void openHealthBuffMenu(Player p);
+
+        /**
+         * Open the events time menu
+         */
+        void openEventsTimeMenu(Player p);
+
+        /**
+         * Open the respawn time menu
+         */
+        void openRespawnTimeMenu(Player p);
+    }
 
 
     interface IPrivateArenaUtil {

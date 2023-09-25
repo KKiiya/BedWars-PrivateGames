@@ -2,6 +2,9 @@ package me.notlewx.privategames.listeners.bedwars1058;
 
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
+import com.andrei1058.bedwars.api.sidebar.ISidebar;
+import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
+import com.andrei1058.bedwars.sidebar.SidebarService;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
@@ -17,11 +20,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
+
+import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.bedwars1058.MainConfig.MATERIAL;
 import static me.notlewx.privategames.config.bedwars1058.MainConfig.POSITION;
-import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_LORE;
-import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class ArenaJoin implements Listener {
 
@@ -78,12 +82,19 @@ public class ArenaJoin implements Listener {
                     }, 35L);
                 }
 
-                if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting)
-                    return;
                 e.getArena().changeStatus(GameState.starting);
                 e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
-
             }
+
+            PlaceholderProvider place  = new PlaceholderProvider("{private}", () -> api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName()) ? Utility.getMsg(e.getPlayer(), PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER) : "");
+            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                SidebarService.init();
+                ISidebar bws = SidebarService.getInstance().getSidebar(e.getPlayer());
+                if (bws != null) {
+                    bws.getHandle().addPlaceholder(place);
+                    bws.getHandle().refreshPlaceholders();
+                }
+            }, 1L);
         }
     }
 }
