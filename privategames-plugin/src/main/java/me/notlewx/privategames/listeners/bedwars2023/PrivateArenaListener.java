@@ -257,7 +257,7 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerKillEvent e) {
-        if (api.getBedWars1058API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
+        if (api.getBedWars2023API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
         IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()).getPrivateArenaHost();
         switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
             case 0:
@@ -356,7 +356,7 @@ public class PrivateArenaListener implements Listener {
 
     public void upgradeTeams(IArena a) {
         for (ITeam team : a.getTeams()) {
-            ConfigurationSection conf = api.getBedWars1058API().getConfigs().getUpgradesConfig().getYml().getConfigurationSection("");
+            ConfigurationSection conf = api.getBedWars2023API().getConfigs().getUpgradesConfig().getYml().getConfigurationSection("");
             System.out.println(conf.getCurrentPath());
             team.getTeamUpgradeTiers().put("upgrade-armor", 3);
             team.getTeamUpgradeTiers().put("upgrade-swords", 0);

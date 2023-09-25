@@ -1,6 +1,8 @@
-name: privategames-api
+name: PrivateGames
 version: '${project.version}'
 main: me.notlewx.privategames.PrivateGames
+description: Private Games for bedwars like a well known server!
+soft-dependencies: [ BedWars1058, PlaceholderAPI, BedWars2023, BedWarsProxy]
 commands:
   pg:
     description: Enables the private games if you are in a party
