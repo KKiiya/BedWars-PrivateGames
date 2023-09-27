@@ -53,9 +53,15 @@ public final class PrivateGames extends JavaPlugin {
     }
     private void loadSupport() {
         new PrivateArena();
-        new BedWars1058(this);
-        new BedWars2023(this);
-        new me.notlewx.privategames.support.BedWarsProxy(this);
+        if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
+            new BedWars1058(this);
+        }
+        else if (Bukkit.getPluginManager().getPlugin("BedWars2023") != null) {
+            new BedWars2023(this);
+        }
+        else if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
+            new me.notlewx.privategames.support.BedWarsProxy(this);
+        }
     }
     private void loadMainListeners() {
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
