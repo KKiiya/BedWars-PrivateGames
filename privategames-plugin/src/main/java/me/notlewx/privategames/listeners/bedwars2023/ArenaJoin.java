@@ -18,8 +18,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.MATERIAL;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.POSITION;
+import static me.notlewx.privategames.config.MainConfig.MATERIAL;
+import static me.notlewx.privategames.config.MainConfig.POSITION;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_LORE;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
 

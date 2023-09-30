@@ -3,7 +3,7 @@ package me.notlewx.privategames.support;
 import com.andrei1058.bedwars.api.BedWars;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.commands.bedwars1058.MainCommand;
-import me.notlewx.privategames.config.bedwars1058.MainConfig;
+import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.bedwars1058.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
 import me.notlewx.privategames.database.providers.SQLite;

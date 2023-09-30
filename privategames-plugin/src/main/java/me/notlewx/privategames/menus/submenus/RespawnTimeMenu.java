@@ -1,7 +1,6 @@
 package me.notlewx.privategames.menus.submenus;
 
 import me.notlewx.privategames.api.player.IPlayerSettings;
-import me.notlewx.privategames.config.bedwars1058.MessagesData;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
@@ -19,8 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.mainConfig;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.*;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.HEALTH_BUFF_BACK_POSITION;
+import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.MENU_SELECTED_MEANING;
 

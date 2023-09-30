@@ -5,14 +5,12 @@ import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.arena.PrivateArena;
-import me.notlewx.privategames.listeners.InventoryListener;
-import me.notlewx.privategames.listeners.PlayerInteraction;
-import me.notlewx.privategames.listeners.PlayerJoin;
-import me.notlewx.privategames.listeners.PlayerLeave;
+import me.notlewx.privategames.listeners.*;
 import me.notlewx.privategames.support.BedWars1058;
 import me.notlewx.privategames.support.BedWars2023;
 import me.notlewx.privategames.support.Support;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,6 +18,7 @@ public final class PrivateGames extends JavaPlugin {
     public static ConfigManager bw1058config;
     public static com.tomkeuper.bedwars.api.configuration.ConfigManager bw2023config;
     public static me.notlewx.privategames.config.ConfigManager mainConfig;
+    public static FileConfiguration bwProxyConfig;
     public static Support support;
     public static BedWars bedWars1058API;
     public static com.tomkeuper.bedwars.api.BedWars bedWars2023API;
@@ -68,5 +67,6 @@ public final class PrivateGames extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteraction(), this);
+        getServer().getPluginManager().registerEvents(new CommandListener(), this);
     }
 }

@@ -16,8 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.stream.Collectors;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.*;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.SPEED_LEVEL_III_MATERIAL;
+import static me.notlewx.privategames.config.MainConfig.*;
+import static me.notlewx.privategames.config.MainConfig.SPEED_LEVEL_III_MATERIAL;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class SpeedMenu implements GUIHolder {

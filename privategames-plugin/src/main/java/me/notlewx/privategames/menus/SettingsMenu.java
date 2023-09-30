@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.stream.Collectors;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.*;
+import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class SettingsMenu implements GUIHolder {
@@ -273,11 +273,6 @@ public class SettingsMenu implements GUIHolder {
         if (e.getView().getTitle().equals(Utility.getMsg(player, MAIN_MENU_NAME))) {
             if (e.getSlot() == mainConfig.getInt(ONE_HIT_ONE_HILL_POSITION)) {
                 playerData.setOneHitOneKillEnabled(!playerData.isOneHitOneKillEnabled());
-                if (playerData.isOneHitOneKillEnabled()) {
-                    e.getCurrentItem().removeEnchantment(Enchantment.DURABILITY);
-                } else {
-                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-                }
                 new SettingsMenu(player);
             }
             else if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_POSITION)) {
@@ -285,11 +280,6 @@ public class SettingsMenu implements GUIHolder {
             }
             else if (e.getSlot() == mainConfig.getInt(LONG_JUMP_POSITION)) {
                 playerData.setLowGravityEnabled(!playerData.isLowGravityEnabled());
-                if (playerData.isLowGravityEnabled()) {
-                    e.getCurrentItem().removeEnchantment(Enchantment.DURABILITY);
-                } else {
-                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-                }
                 new SettingsMenu(player);
             }
             else if (e.getSlot() == mainConfig.getInt(SPEED_POSITION)) {
@@ -303,87 +293,23 @@ public class SettingsMenu implements GUIHolder {
             }
             else if (e.getSlot() == mainConfig.getInt(NO_EMERALDS_POSITION)) {
                 playerData.setNoEmeraldsEnabled(!playerData.isNoEmeraldsEnabled());
-                if (playerData.isNoEmeraldsEnabled()) {
-                    e.getCurrentItem().removeEnchantment(Enchantment.DURABILITY);
-                } else {
-                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-                }
                 new SettingsMenu(player);
             }
             else if (e.getSlot() == mainConfig.getInt(NO_DIAMONDS_POSITION)) {
                 playerData.setNoDiamondsEnabled(!playerData.isNoDiamondsEnabled());
-                if (playerData.isNoDiamondsEnabled()) {
-                    e.getCurrentItem().removeEnchantment(Enchantment.DURABILITY);
-                } else {
-                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-                }
                 new SettingsMenu(player);
             }
             else if (e.getSlot() == mainConfig.getInt(ALLOW_MAP_BREAK_POSITION)) {
                 playerData.setAllowMapBreakEnabled(!playerData.isAllowMapBreakEnabled());
-                if (playerData.isAllowMapBreakEnabled()) {
-                    e.getCurrentItem().removeEnchantment(Enchantment.DURABILITY);
-                } else {
-                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-                }
                 new SettingsMenu(player);
             }
             else if (e.getSlot() == mainConfig.getInt(BED_INSTA_BREAK_POSITION)) {
                 playerData.setBedInstaBreakEnabled(!playerData.isBedInstaBreakEnabled());
-                if (playerData.isBedInstaBreakEnabled()) {
-                    e.getCurrentItem().removeEnchantment(Enchantment.DURABILITY);
-                } else {
-                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-                }
                 new SettingsMenu(player);
             }
             else if (e.getSlot() == mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION)) {
                 playerData.setMaxTeamUpgradesEnabled(!playerData.isMaxTeamUpgradesEnabled());
-                if (playerData.isMaxTeamUpgradesEnabled()) {
-                    e.getCurrentItem().removeEnchantment(Enchantment.DURABILITY);
-                } else {
-                    e.getCurrentItem().addUnsafeEnchantment(Enchantment.DURABILITY, 3);
-                }
                 new SettingsMenu(player);
-            }
-        }
-
-        else if (e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_SPEED_NAME))) {
-            if (e.getSlot() == mainConfig.getInt(SPEED_LEVEL_I_POSITION)) {
-                playerData.setSpeedLevel(1);
-            } else if (e.getSlot() == mainConfig.getInt(SPEED_LEVEL_II_POSITION)) {
-                playerData.setSpeedLevel(2);
-            } else if (e.getSlot() == mainConfig.getInt(SPEED_LEVEL_III_POSITION)) {
-                playerData.setSpeedLevel(3);
-            } else if (e.getSlot() == mainConfig.getInt(SPEED_LEVEL_IV_POSITION)) {
-                playerData.setSpeedLevel(4);
-            }
-        } else if (e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_EVENTS_TIME_NAME))) {
-            if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_LEVEL_I_POSITION)) {
-                playerData.setEventsTimeLevel(1);
-            } else if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_LEVEL_II_POSITION)) {
-                playerData.setEventsTimeLevel(2);
-            } else if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_LEVEL_III_POSITION)) {
-                playerData.setEventsTimeLevel(3);
-            } else if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_LEVEL_IV_POSITION)) {
-                playerData.setEventsTimeLevel(4);
-            }
-
-        } else if (e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_HEALTH_BUFF_NAME))) {
-            if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_LEVEL_I_POSITION)) {
-                playerData.setHealthBuffLevel(1);
-            } else if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_LEVEL_II_POSITION)) {
-                playerData.setHealthBuffLevel(2);
-            } else if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_LEVEL_III_POSITION)) {
-                playerData.setHealthBuffLevel(3);
-            }
-        } else if (e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_RESPAWN_TIME_NAME))) {
-            if (e.getSlot() == mainConfig.getInt(RESPAWN_TIME_LEVEL_I_POSITION)) {
-                playerData.setRespawnTimeLevel(1);
-            } else if (e.getSlot() == mainConfig.getInt(RESPAWN_TIME_LEVEL_II_POSITION)) {
-                playerData.setRespawnTimeLevel(2);
-            } else if (e.getSlot() == mainConfig.getInt(RESPAWN_TIME_LEVEL_III_POSITION)) {
-                playerData.setRespawnTimeLevel(3);
             }
         }
     }

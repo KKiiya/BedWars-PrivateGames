@@ -3,7 +3,7 @@ package me.notlewx.privategames.support;
 import com.tomkeuper.bedwars.api.addon.Addon;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.commands.bedwars2023.MainCommand;
-import me.notlewx.privategames.config.bedwars2023.MainConfig;
+import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.bedwars2023.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
 import me.notlewx.privategames.database.providers.SQLite;
@@ -76,7 +76,7 @@ public class BW2023Addon extends Addon {
 
     private static void loadDatabase() {
         Utility.info("&eConnecting to database...");
-        if (bw2023config.getBoolean("database.enable")) {
+        if (bw2023config.getString("database.type").equalsIgnoreCase("mysql")) {
             Utility.info("&eUsing &cMySQL &eas database provider...");
             database = new MySQL();
         } else {

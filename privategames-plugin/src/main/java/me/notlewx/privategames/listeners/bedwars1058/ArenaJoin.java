@@ -23,8 +23,8 @@ import java.util.List;
 
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.MATERIAL;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.POSITION;
+import static me.notlewx.privategames.config.MainConfig.MATERIAL;
+import static me.notlewx.privategames.config.MainConfig.POSITION;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class ArenaJoin implements Listener {

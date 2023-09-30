@@ -1,4 +1,4 @@
-package me.notlewx.privategames.config.bedwars1058;
+package me.notlewx.privategames.config;
 
 import me.notlewx.privategames.config.ConfigManager;
 import org.bukkit.configuration.file.YamlConfiguration;

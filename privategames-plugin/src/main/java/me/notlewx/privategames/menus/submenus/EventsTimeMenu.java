@@ -19,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.mainConfig;
-import static me.notlewx.privategames.config.bedwars1058.MainConfig.*;
+import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class EventsTimeMenu implements GUIHolder {

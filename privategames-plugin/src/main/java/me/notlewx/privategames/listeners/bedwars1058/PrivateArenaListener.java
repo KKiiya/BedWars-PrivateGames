@@ -36,6 +36,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -323,20 +324,24 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler
     public void onBedPunch(PlayerInteractEvent e) {
-        if (e.getAction() != Action.LEFT_CLICK_BLOCK) return;
-        Player player = e.getPlayer();
-        if (!api.getBedWars1058API().getArenaUtil().isPlaying(player)) return;
-        IArena a = Arena.getArenaByPlayer(player);
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()).getPrivateArenaHost();
-        if (api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()) == null) return;
-        if (!api.getPrivateArenaUtil().isArenaPrivate(a.getArenaName())) return;
+        try {
+            if (e.getAction() != Action.LEFT_CLICK_BLOCK) return;
+            Player player = e.getPlayer();
+            if (!api.getBedWars1058API().getArenaUtil().isPlaying(player)) return;
+            IArena a = Arena.getArenaByPlayer(player);
+            IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()).getPrivateArenaHost();
+            if (api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()) == null) return;
+            if (!api.getPrivateArenaUtil().isArenaPrivate(a.getArenaName())) return;
 
-        if (pp.getPlayerSettings().isAllowMapBreakEnabled() && !e.getClickedBlock().getType().toString().contains("BED")) {
-            a.addPlacedBlock(e.getClickedBlock());
-        }
-        if (pp.getPlayerSettings().isBedInstaBreakEnabled() && e.getClickedBlock().getType().toString().contains("BED") && this.getBedLocations(e.getClickedBlock().getLocation()).stream().noneMatch(l -> l.getBlock().getLocation().equals((Object)a.getTeam(player).getBed().getBlock().getLocation()))) {
-            Bukkit.getPluginManager().callEvent(new BlockBreakEvent(e.getClickedBlock(), player));
-            e.getClickedBlock().setType(Material.AIR);
+            if (pp.getPlayerSettings().isAllowMapBreakEnabled() && !e.getClickedBlock().getType().toString().contains("BED")) {
+                a.addPlacedBlock(e.getClickedBlock());
+            }
+            if (pp.getPlayerSettings().isBedInstaBreakEnabled() && e.getClickedBlock().getType().toString().contains("BED") && this.getBedLocations(e.getClickedBlock().getLocation()).stream().noneMatch(l -> l.getBlock().getLocation().equals(a.getTeam(player).getBed().getBlock().getLocation()))) {
+                Bukkit.getPluginManager().callEvent(new BlockBreakEvent(e.getClickedBlock(), player));
+                e.getClickedBlock().setType(Material.AIR);
+            }
+        } catch (Exception ex) {
+            // PREVENT A USELESs ERROR
         }
     }
 
