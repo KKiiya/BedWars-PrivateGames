@@ -23,6 +23,7 @@ public class PrivateArena implements IPrivateArena {
         this.players = players;
         this.arenaName = arenaName;
 
+        privateArenaByPlayer.put(host.getPlayer(), this);
         for (Player p : players) {
             privateArenaByPlayer.put(p, this);
         }

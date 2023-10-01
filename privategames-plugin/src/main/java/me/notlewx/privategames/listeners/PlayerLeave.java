@@ -12,6 +12,5 @@ public class PlayerLeave implements Listener {
         IPrivatePlayer pp = api.getPrivatePlayer(e.getPlayer());
         if (!pp.hasPermission()) return;
         if (!pp.getPlayerSettings().isPrivateGameEnabled()) return;
-        pp.getPlayerSettings().setPrivateGameDisabled(true);
     }
 }

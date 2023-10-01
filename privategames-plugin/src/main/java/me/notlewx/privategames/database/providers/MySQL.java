@@ -33,7 +33,7 @@ public class MySQL implements Database {
 
     public void connect() {
         if (support == Support.BEDWARS1058) {
-            s = "bw1058";
+            s = "bedwars";
             this.host = PrivateGames.bw1058config.getString("database.host");
             this.database = PrivateGames.bw1058config.getString("database.database");
             this.user = PrivateGames.bw1058config.getString("database.user");
@@ -41,14 +41,14 @@ public class MySQL implements Database {
             this.port = PrivateGames.bw1058config.getInt("database.port");
         }
         else if (support == Support.BEDWARSPROXY) {
-            s = "bw1058";
+            s = "bedwars";
             this.host = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.host");
             this.database = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.database");
             this.user = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.user");
             this.pass = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.pass");
             this.port = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getInt("database.port");
         } else if (support == Support.BEDWARS2023) {
-            s = "bw2023";
+            s = "bedwars";
             this.host = PrivateGames.bw2023config.getString("database.host");
             this.database = PrivateGames.bw2023config.getString("database.database");
             this.user = PrivateGames.bw2023config.getString("database.user");

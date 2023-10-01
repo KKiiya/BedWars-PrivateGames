@@ -10,5 +10,8 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         database.createPlayerData(e.getPlayer());
+        e.getPlayer().setHealth(20.0);
+        e.getPlayer().setMaxHealth(20.0);
+        e.getPlayer().setHealthScale(20.0);
     }
 }
