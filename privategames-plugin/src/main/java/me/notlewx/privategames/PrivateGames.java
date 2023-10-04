@@ -9,6 +9,7 @@ import me.notlewx.privategames.listeners.*;
 import me.notlewx.privategames.support.BedWars1058;
 import me.notlewx.privategames.support.BedWars2023;
 import me.notlewx.privategames.support.Support;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.ServicePriority;
@@ -27,6 +28,8 @@ public final class PrivateGames extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        int pluginId = 19967;
+        Metrics metrics = new Metrics(this, pluginId);
         api = new API();
         Bukkit.getServicesManager().register(me.notlewx.privategames.api.PrivateGames.class, api, this, ServicePriority.Highest);
         loadMainListeners();
