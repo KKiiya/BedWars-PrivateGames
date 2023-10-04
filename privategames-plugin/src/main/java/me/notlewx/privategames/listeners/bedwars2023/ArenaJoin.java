@@ -2,6 +2,8 @@ package me.notlewx.privategames.listeners.bedwars2023;
 
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.events.player.PlayerJoinArenaEvent;
+import com.tomkeuper.bedwars.sidebar.BoardListener;
+import com.tomkeuper.bedwars.sidebar.BoardManager;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
@@ -17,6 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
+
+import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.MainConfig.MATERIAL;
 import static me.notlewx.privategames.config.MainConfig.POSITION;
@@ -81,7 +85,6 @@ public class ArenaJoin implements Listener {
                     return;
                 e.getArena().changeStatus(GameState.starting);
                 e.getArena().getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
-
             }
         }
     }

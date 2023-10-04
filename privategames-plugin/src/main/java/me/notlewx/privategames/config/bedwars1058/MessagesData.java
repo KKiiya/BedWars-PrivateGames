@@ -573,6 +573,118 @@ public class MessagesData {
                     yml.addDefault(EVENTS_TIME_MEANING, "&7Czas eventów");
                     yml.addDefault(RESPAWN_EVENT_TIME_MEANING, "&7Czas odrodzenia");
                     break;
+                // BENGALI ADDED THANKS TO ㉺ᴏᴘ★░ADIL░シ (opadilop)
+                case "bd":
+                    yml.addDefault(MAIN_MENU_NAME, "&8গোপন খেলার সেটিংস");
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aগোপন খেলার সেটিংস");
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7আপনার গোপন খেলা কনফিগার করতে এই মেনু খুলুন", "১১টি বিভিন্ন অপশন সহ!"));
+                    yml.addDefault(MENU_SELECTED_MEANING, "&aনির্বাচন করা হয়েছে!");
+                    yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eনির্বাচন করতে ক্লিক করুন!");
+                    yml.addDefault(PRIVATE_GAME_NOT_IN_PARTY, "&cআপনি দলের মধ্যে নেই!");
+                    yml.addDefault(PRIVATE_GAME_ENABLED, "&aআপনি গোপন খেলাগুলি সক্রিয় করেছেন");
+                    yml.addDefault(PRIVATE_GAME_ENABLED_OTHERS, "&a{player} গোপন খেলাটি সক্রিয় করেছে");
+                    yml.addDefault(PRIVATE_GAME_DISABLED, "&cআপনি গোপন খেলাগুলি অক্ষম করেছেন");
+                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c{player} গোপন খেলাটি অক্ষম করেছে");
+                    yml.addDefault(PRIVATE_GAME_NOT_OWNER, "&cআপনি এই দলের মালিক নন!");
+                    yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cআপনার এই ক্ষমতাটি ব্যবহার করার অনুমতি নেই!");
+                    yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cগোপন খেলা ইতিমধ্যে সক্রিয় করা হয়েছে!");
+                    yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cগোপন খেলা ইতিমধ্যে অক্ষম করা হয়েছে!");
+                    yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cগোপন খেলায় এই খেলোয়াড়কে যোগদান করা যায়নি!");
+                    yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cআপনি খেলায় এটি করতে পারবেন না!");
+                    yml.addDefault(PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER, "&7[P]");
+                    yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lগোপন খেলার সংশোধক সক্রিয় করেছে!", "{modifiers}", "&6-----------------------------------------------------"));
+                    yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
+                    yml.addDefault(PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT, "&6- {modifier}: &e{selected}");
+                    yml.addDefault(MENU_BACK_ITEM_NAME, "&aফিরে যান");
+                    yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7আপনার বিছানা যুদ্ধের খেলাটিতে ফিরে যান"));
+                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aএকটি আঘাত, একটি হত্যা");
+                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_LORE, Arrays.asList("&7কোনটি বাছাই করা উচিত নির্বাচন করুন", "&7মুহূর্তের মধ্যে শত্রুদের হত্যা", "", "{state}"));
+                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_NAME, "&aস্বাস্থ্য সহযোগী");
+                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_LORE, Arrays.asList("&7সকল খেলোয়াড়কে সুস্থতা দান করুন", "", "&aবর্তমানে নির্বাচিত: &7{selected}"));
+                    yml.addDefault(ITEM_LOW_GRAVITY_NAME, "&aকম মাধ্যাকর্ষণ");
+                    yml.addDefault(ITEM_LOW_GRAVITY_LORE, Arrays.asList("&7কম মাধ্যাকর্ষণের অভিজ্ঞতা অর্জন করুন... এছাড়াও", "&7বড় লাফ হিসেবে পরিচিত", "", "{state}"));
+                    yml.addDefault(ITEM_SPEED_NAME, "&aগতি");
+                    yml.addDefault(ITEM_SPEED_LORE, Arrays.asList("&7দ্রুত যেতে হবে!", "", "&aবর্তমানে নির্বাচিত: &7{selected}"));
+                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_NAME, "&aপুনর্জন্মের সময়");
+                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_LORE, Arrays.asList("&8খেলা নির্দিষ্ট", "", "&7খেলোয়াড়দের পুনর্জন্মের সময় পরিবর্তন করুন", "", "&aবর্তমানে নির্বাচিত: &7{selected}"));
+                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_NAME, "&aঘটনার সময়");
+                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_LORE, Arrays.asList("&8খেলা নির্দিষ্ট", "", "&7ঘটনাগুলোর জন্য সময় পরিবর্তন করুন", "", "&aবর্তমানে নির্বাচিত: &7{selected}"));
+                    yml.addDefault(ITEM_NO_EMERALDS_NAME, "&aপান্না নেই");
+                    yml.addDefault(ITEM_NO_EMERALDS_LORE, Arrays.asList("&8খেলা নির্দিষ্ট", "", "&7দ্রুত পান্না থেকে মুক্তি পান", "", "{state}"));
+                    yml.addDefault(ITEM_NO_DIAMONDS_NAME, "&aহীরা নেই");
+                    yml.addDefault(ITEM_NO_DIAMONDS_LORE, Arrays.asList("&8খেলা নির্দিষ্ট", "", "&7জাহান্নামে যাক সেই চকচকে জিনিসগুলো ", "", "{state}"));
+                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_NAME, "&aব্লকের সুরক্ষা অক্ষম করুন");
+                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_LORE, Arrays.asList("&8খেলা নির্দিষ্ট", "", "&7খেলোয়াড়দের যেকোনো ব্লক ভাঙ্গার", "&7অনুমতি দিন, চারপাশের ব্লক বাদে", "&7generators and spawns.", "", "{state}"));
+                    yml.addDefault(ITEM_BED_INSTA_BREAK_NAME, "&aএক মাইরে বিছনা ভাঙ্গা");
+                    yml.addDefault(ITEM_BED_INSTA_BREAK_LORE, Arrays.asList("&8খেলা নির্দিষ্ট", "", "&7একটি ঘুষিতে বিছানা ভাঙুন", "", "{state}"));
+                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_NAME, "&aসর্বোচ্চ দলের আপগ্রেড");
+                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8খেলা নির্দিষ্ট", "", "&7সব দলই সর্বোচ্চ দলের", "&7আপগ্রেড নিয়ে শুরু করবে", "", "{state}"));
+                    yml.addDefault(SUBMENU_SPEED_NAME, "&8গতি");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aগতি নেই");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_II_NAME, "&aগতি ১");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_II_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_III_NAME, "&aগতি ২");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_III_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_NAME, "&aগতি ৩");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_NAME, "&aফিরে যান");
+                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_LORE, Arrays.asList("&7সেটিংস তালিকায় ফিরে যান"));
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_NAME, "&8স্বাস্থ্য সহযোগী");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_NAME, "&aস্বাভাবিক স্বাস্থ্য");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_NAME, "&aদ্বিগুন স্বাস্থ্য");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_NAME, "&aতিনগুন স্বাস্থ্য");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_NAME, "&aফিরে যান");
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_LORE, Arrays.asList("&7সেটিংস তালিকায় ফিরে যান"));
+                    yml.addDefault(SUBMENU_EVENTS_TIME_NAME, "&8ঘটনার সময়");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_NAME, "&ax০.৫ - ধীর");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_NAME, "&ax১ - স্বাভাবিক");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_NAME, "&ax২ - দ্রুত");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_NAME, "&ax৪ - অতি দ্রুত");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_NAME, "&aফিরে যান");
+                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_LORE, Arrays.asList("&7সেটিংস তালিকায় ফিরে যান"));
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_NAME, "&8পুনর্জন্মের সময়");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_NAME, "&a১ সেকেন্ড");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_NAME, "&a৫ সেকেন্ড");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_NAME, "&a১০ সেকেন্ড");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_LORE, Arrays.asList("{state}"));
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME, "&aফিরে যান");
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_LORE, Arrays.asList("&7সেটিংস তালিকায় ফিরে যান"));
+                    yml.addDefault(NO_SPEED_MEANING, "&7গতি নেই");
+                    yml.addDefault(SPEED_I_MEANING, "&7গতি ১");
+                    yml.addDefault(SPEED_II_MEANING, "&7গতি ২");
+                    yml.addDefault(SPEED_III_MEANING, "&7গতি ৩");
+                    yml.addDefault(NORMAL_HEALTH_MEANING, "&7স্বাভাবিক স্বাস্থ্য");
+                    yml.addDefault(DOUBLE_HEALTH_MEANING, "&7দ্বিগুন স্বাস্থ্য");
+                    yml.addDefault(TRIPLE_HEALTH_MEANING, "&7তিনগুন স্বাস্থ্য");
+                    yml.addDefault(RESPAWN_EVENT_TIME_I_MEANING, "&7১ সেকেন্ড");
+                    yml.addDefault(RESPAWN_EVENT_TIME_II_MEANING, "&7৫ সেকেন্ড");
+                    yml.addDefault(RESPAWN_EVENT_TIME_III_MEANING, "&7১০ সেকেন্ড");
+                    yml.addDefault(EVENTS_TIME_SLOWER_MEANING, "&7x০.৫ - ধীর");
+                    yml.addDefault(EVENTS_TIME_NORMAL_MEANING, "&7x১ - স্বাভাবিক");
+                    yml.addDefault(EVENTS_TIME_FAST_MEANING, "&7x২ - দ্রুত");
+                    yml.addDefault(EVENTS_TIME_FASTER_MEANING, "&7x৪ - অতি দ্রুত");
+                    yml.addDefault(ONE_HIT_ONE_KILL_MEANING, "&7একটি আঘাত, একটি হত্যা");
+                    yml.addDefault(BED_INSTA_BREAK_MEANING, "&7এক মাইরে বিছনা ভাঙ্গা");
+                    yml.addDefault(LOW_GRAVITY_MEANING, "&7কম মাধ্যাকর্ষণ");
+                    yml.addDefault(MAX_TEAM_UPGRADES_MEANING, "&7সর্বোচ্চ দলের আপগ্রেড");
+                    yml.addDefault(ALLOW_MAP_BREAK_MEANING, "&7মানচিত্র ভাঙার অনুমতি দিন");
+                    yml.addDefault(NO_DIAMONDS_MEANING, "&7হীরা নেই");
+                    yml.addDefault(NO_EMERALDS_MEANING, "&7পান্না নেই");
+                    yml.addDefault(HEALTH_BUFF_MEANING, "&7স্বাস্থ্য সহযোগী");
+                    yml.addDefault(SPEED_MEANING, "&7গতি");
+                    yml.addDefault(EVENTS_TIME_MEANING, "&7ঘটনার সময়");
+                    yml.addDefault(RESPAWN_EVENT_TIME_MEANING, "&7পুনর্জন্মের সময়");
+                    break;
             }
             l.getYml().options().copyDefaults(true);
             l.save();
@@ -616,9 +728,9 @@ public class MessagesData {
             NO_EMERALDS_MEANING = PATH + "meanings.no-emeralds",
             HEALTH_BUFF_MEANING = PATH + "meanings.health-buff",
             RESPAWN_EVENT_TIME_MEANING = PATH + "meanings.respawn-event-time.meaning",
-            RESPAWN_EVENT_TIME_I_MEANING = PATH + "meanings.respawn-event-time.1",
-            RESPAWN_EVENT_TIME_II_MEANING = PATH + "meanings.respawn-event-time.2",
-            RESPAWN_EVENT_TIME_III_MEANING = PATH + "meanings.respawn-event-time.3",
+            RESPAWN_EVENT_TIME_I_MEANING = PATH + "meanings.respawn-event-time.1second",
+            RESPAWN_EVENT_TIME_II_MEANING = PATH + "meanings.respawn-event-time.5seconds",
+            RESPAWN_EVENT_TIME_III_MEANING = PATH + "meanings.respawn-event-time.10seconds",
             NORMAL_HEALTH_MEANING = PATH + "meanings.health.normal",
             DOUBLE_HEALTH_MEANING = PATH + "meanings.health.double",
             TRIPLE_HEALTH_MEANING = PATH + "meanings.health.triple",

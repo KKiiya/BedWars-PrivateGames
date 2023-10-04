@@ -219,7 +219,7 @@ public class PrivateArenaListener implements Listener {
             }
             e.getArena().getOreGenerators().removeIf(g -> g.getType() == GeneratorType.EMERALD);
             e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_II");
-            e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_II");
+            e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_III");
         }
 
         if (pp.getPlayerSettings().isNoDiamondsEnabled()) {
@@ -229,7 +229,7 @@ public class PrivateArenaListener implements Listener {
             }
             e.getArena().getOreGenerators().removeIf(g -> g.getType() == GeneratorType.DIAMOND);
             e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_II");
-            e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_II");
+            e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_III");
         }
 
         if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) {
@@ -245,19 +245,6 @@ public class PrivateArenaListener implements Listener {
                 e.getArena().getConfig().set("allow-map-break", false);
             }
         }
-
-
-        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-            SidebarService.init();
-            for (Player p : e.getArena().getPlayers()) {
-                PlaceholderProvider place  = new PlaceholderProvider("{private}", () -> api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName()) ? Utility.getMsg(p, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER) : "");
-                ISidebar bws = SidebarService.getInstance().getSidebar(p);
-                if (bws != null) {
-                    bws.getHandle().addPlaceholder(place);
-                    bws.getHandle().refreshPlaceholders();
-                }
-            }
-        }, 1L);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -279,7 +266,8 @@ public class PrivateArenaListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerKillEvent e) {
         if (api.getBedWars1058API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()).getPrivateArenaHost();
+        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
+        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByPlayer(e.getVictim()).getPrivateArenaHost();
         switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
             case 0:
             case 2:

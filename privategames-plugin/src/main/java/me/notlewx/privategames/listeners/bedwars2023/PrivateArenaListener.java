@@ -211,7 +211,7 @@ public class PrivateArenaListener implements Listener {
             }
             e.getArena().getOreGenerators().removeIf(g -> g.getType() == GeneratorType.EMERALD);
             e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_II");
-            e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_II");
+            e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_III");
         }
 
         if (pp.getPlayerSettings().isNoDiamondsEnabled()) {
@@ -221,7 +221,7 @@ public class PrivateArenaListener implements Listener {
             }
             e.getArena().getOreGenerators().removeIf(g -> g.getType() == GeneratorType.DIAMOND);
             e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_II");
-            e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_II");
+            e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_III");
         }
 
         if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) {
@@ -249,8 +249,8 @@ public class PrivateArenaListener implements Listener {
         privateArena.getPlayers().forEach(p -> p.setHealth(20.0));
         privateArena.getPlayers().forEach(p -> p.setHealthScale(20.0));
 
-        if (a.getConfig().getBoolean("allow-map-break")) {
-            a.getConfig().set("allow-map-break", false);
+        if (a.isAllowMapBreak()) {
+            a.setAllowMapBreak(false);
         }
         privateArena.destroyData();
     }
@@ -258,6 +258,7 @@ public class PrivateArenaListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerKillEvent e) {
         if (api.getBedWars2023API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
+        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
         IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()).getPrivateArenaHost();
         switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
             case 0:

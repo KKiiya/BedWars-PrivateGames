@@ -51,7 +51,6 @@ public final class PrivateGames extends JavaPlugin {
         return BedWarsProxy.getAPI();
     }
     private void loadSupport() {
-        new PrivateArena();
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
             new BedWars1058(this);
         }

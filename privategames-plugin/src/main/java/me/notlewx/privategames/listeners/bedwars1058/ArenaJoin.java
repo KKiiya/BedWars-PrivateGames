@@ -85,16 +85,6 @@ public class ArenaJoin implements Listener {
                 e.getArena().changeStatus(GameState.starting);
                 e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
             }
-
-            PlaceholderProvider place  = new PlaceholderProvider("{private}", () -> api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName()) ? Utility.getMsg(e.getPlayer(), PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER) : "");
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                SidebarService.init();
-                ISidebar bws = SidebarService.getInstance().getSidebar(e.getPlayer());
-                if (bws != null) {
-                    bws.getHandle().addPlaceholder(place);
-                    bws.getHandle().refreshPlaceholders();
-                }
-            }, 1L);
         }
     }
 }

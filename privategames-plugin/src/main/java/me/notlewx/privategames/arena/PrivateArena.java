@@ -6,7 +6,9 @@ import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.support.Support;
 import org.bukkit.entity.Player;
+
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import static me.notlewx.privategames.PrivateGames.support;
@@ -15,19 +17,20 @@ public class PrivateArena implements IPrivateArena {
     private IPrivatePlayer host;
     private List<Player> players;
     private String arenaName;
-    public static HashMap<String, IPrivateArena> privateArenaByArenaName;
-    public static HashMap<Player, IPrivateArena> privateArenaByPlayer = new HashMap<>();
-    public static LinkedList<IPrivateArena> privateArenas = new LinkedList<>();
+    public static final LinkedHashMap<String, IPrivateArena> privateArenaByArenaName = new LinkedHashMap<>();
+    public static final LinkedHashMap<Player, IPrivateArena> privateArenaByPlayer = new LinkedHashMap<>();
+    public static final LinkedList<IPrivateArena> privateArenas = new LinkedList<>();
+
     public PrivateArena(IPrivatePlayer host, List<Player> players, String arenaName) {
         this.host = host;
         this.players = players;
         this.arenaName = arenaName;
 
+        privateArenaByArenaName.put(arenaName, this);
         privateArenaByPlayer.put(host.getPlayer(), this);
         for (Player p : players) {
             privateArenaByPlayer.put(p, this);
         }
-        privateArenaByArenaName.put(arenaName, this);
         privateArenas.add(this);
 
         switch (support) {
@@ -39,12 +42,6 @@ public class PrivateArena implements IPrivateArena {
                 break;
         }
 
-    }
-
-    public PrivateArena() {
-        if (privateArenaByArenaName == null) privateArenaByArenaName = new HashMap<>();
-        if (privateArenaByPlayer == null) privateArenaByPlayer = new HashMap<>();
-        if (privateArenas == null) privateArenas = new LinkedList<>();
     }
     @Override
     public IPrivatePlayer getPrivateArenaHost() {
