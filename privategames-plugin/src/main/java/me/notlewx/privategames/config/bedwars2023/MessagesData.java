@@ -136,7 +136,7 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_GAME_ENABLED, "&aHas habilitado las partidas privadas");
                     yml.addDefault(PRIVATE_GAME_ENABLED_OTHERS, "&a{player} ha habilitado las partidas privadas");
                     yml.addDefault(PRIVATE_GAME_DISABLED, "&cHas deshabilitado las partidas privadas");
-                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c{player} ha habilitado las partidas privadas");
+                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c{player} ha deshabilitado las partidas privadas");
                     yml.addDefault(PRIVATE_GAME_NOT_OWNER, "&cNo eres el owner de esta party!");
                     yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cNo tienes permiso para usar este comando!");
                     yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cLa partida privada ya está habilitada!");
@@ -170,7 +170,7 @@ public class MessagesData {
                     yml.addDefault(ITEM_BED_INSTA_BREAK_NAME, "&aRotura instantánea");
                     yml.addDefault(ITEM_BED_INSTA_BREAK_LORE, Arrays.asList("&8Juego específico", "", "&7Las camas se romperán con un solo golpe", "", "{state}"));
                     yml.addDefault(ITEM_MAX_TEAM_UPGRADES_NAME, "&aMejoras de Equipos al Máximo");
-                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8Juego específico", "", "&7Todos los equipos comenzarán con las", "&7mejoras del equipo al máximo", "", "{state}"));
+                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8Juego específico", "", "&7Todos los equipos comenzarán con las", "&7mejoras del equips al máximo", "", "{state}"));
                     yml.addDefault(SUBMENU_SPEED_NAME, "&Velocidad");
                     yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aSin Velocidad");
                     yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, Arrays.asList("{state}"));
@@ -773,6 +773,15 @@ public class MessagesData {
     ITEM_ALLOW_MAP_BREAK_NAME = PATH + "menu.allow-map-break.name",
             ITEM_ALLOW_MAP_BREAK_LORE = PATH + "menu.allow-map-break.lore",
 
+    ITEM_OPTIONS_NAME = PATH + "menu.options.name",
+            ITEM_OPTIONS_LORE = PATH + "menu.options.lore",
+
+    ITEM_START_NAME = PATH + "menu.start-game.name",
+            ITEM_START_LORE = PATH + "menu.start-game.lore",
+
+    ITEM_GAMEMODE_CHANGER_NAME = PATH + "menu.gamemode-changer.name",
+            ITEM_GAMEMODE_CHANGER_LORE = PATH + "menu.gamemode-changer.lore",
+
     SUBMENU_SPEED_NAME = PATH + "menu.submenu.speed.name",
             ITEM_SUBMENU_SPEED_I_NAME = PATH + "menu.submenu.speed.level1.name",
             ITEM_SUBMENU_SPEED_I_LORE = PATH + "menu.submenu.speed.level1.lore",
@@ -815,5 +824,23 @@ public class MessagesData {
             ITEM_SUBMENU_EVENTS_TIME_IV_NAME = PATH + "menu.submenu.events-time.level4.name",
             ITEM_SUBMENU_EVENTS_TIME_IV_LORE = PATH + "menu.submenu.events-time.level4.lore",
             SUBMENU_EVENTS_TIME_BACK_ITEM_NAME = PATH + "menu.submenu.events-time.back-item.name",
-            SUBMENU_EVENTS_TIME_BACK_ITEM_LORE = PATH + "menu.submenu.events-time.back-item.lore";
+            SUBMENU_EVENTS_TIME_BACK_ITEM_LORE = PATH + "menu.submenu.events-time.back-item.lore",
+
+    SUBMENU_GAMEMODE_CHANGER_TITLE = PATH + "menu.submenu.gamemode-changer.title",
+
+    SUBMENU_OPTIONS_TITLE = PATH + "menu.submenu.options.title",
+        SUBMENU_OPTIONS_ENABLE_AUTOSTART_NAME = PATH + "menu.submenu.options.auto-start.name",
+        SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE = PATH + "menu.submenu.options.auto-start.lore",
+        SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME = PATH + "menu.submenu.options.allow-join.name",
+        SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE = PATH + "menu.submenu.options.allow-join.lore",
+        SUBMENU_OPTIONS_ENABLE_GENERATORS_NAME = PATH + "menu.submenu.options.generators.name",
+        SUBMENU_OPTIONS_ENABLE_GENERATORS_LORE = PATH + "menu.submenu.options.generators.lore",
+        SUBMENU_OPTIONS_ENABLE_BACK_NAME = PATH + "menu.submenu.options.back-item.name",
+        SUBMENU_OPTIONS_ENABLE_BACK_LORE = PATH + "menu.submenu.options.back-item.lore",
+
+    SUBMENU_GENERATORS_TITLE = PATH + "menu.submenu.generators.title",
+            SUBMENU_GENERATOR_OPTIONS_TITLE = PATH + "menu.submenu.generator.config.title",
+            SUBMENU_GENERATOR_ITEM_LORE = PATH + "menu.submenu.generator.config.gen-item.lore",
+            SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME = PATH + "menu.submenu.generators.config.content.back-item.name",
+            SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE = PATH + "menu.submenu.generators.config.content.back-item.lore";
 }

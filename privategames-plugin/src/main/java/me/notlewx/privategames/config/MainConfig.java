@@ -1,6 +1,5 @@
 package me.notlewx.privategames.config;
 
-import me.notlewx.privategames.config.ConfigManager;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -8,7 +7,7 @@ public class MainConfig extends ConfigManager {
     public MainConfig(Plugin plugin, String name, String dir) {
         super(plugin, name, dir);
         YamlConfiguration yml = getYml();
-        yml.options().header("BedWars1058 PrivateGames Addon by Kiiya#9207");
+        yml.options().header("PrivateGames Addon by Kiiya#9207");
         yml.addDefault(SPEED, true);
         yml.addDefault(ONE_HIT_ONE_KILL, true);
         yml.addDefault(HEALTH_BUFF, true);
@@ -174,6 +173,15 @@ public class MainConfig extends ConfigManager {
            HEALTH_BUFF_LEVEL_III_MATERIAL = "menus.submenus.health-buff.level-3.material",
            HEALTH_BUFF_LEVEL_III_POSITION = "menus.submenus.health-buff.level-3.position",
 
+           OPTIONS_ENABLE_AUTOSTART_MATERIAL = "menus.submenus.options.auto-start.material",
+           OPTIONS_ENABLE_AUTOSTART_POSITION = "menus.submenus.options.auto-start.position",
+           OPTIONS_ALLOWJOIN_MATERIAL = "menus.submenus.options.allow-join.material",
+           OPTIONS_ALLOWJOIN_POSITION = "menus.submenus.options.allow-join.position",
+           OPTIONS_GENERATORS_MATERIAL = "menus.submenus.options.generators.material",
+           OPTIONS_GENERATORS_POSITION = "menus.submenus.options.generators.position",
+           OPTIONS_BACK_MATERIAL = "menus.submenus.options.back-item.material",
+           OPTIONS_BACK_POSITION = "menus.submenus.options.back-item.position",
+
            ALLOW_MAP_BREAK_MATERIAL = "menus.settings.contents.allow-map-break.material",
            ALLOW_MAP_BREAK_POSITION = "menus.settings.contents.allow-map-break.position",
 
@@ -192,4 +200,6 @@ public class MainConfig extends ConfigManager {
            MATERIAL = "private-games-item.material",
            POSITION = "private-games-item.position",
            ENCHANTED = "private-games-item.enchanted";
+
+
 }

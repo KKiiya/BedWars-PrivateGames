@@ -48,7 +48,7 @@ public class ArenaJoin implements Listener {
                     if (pp.hasPermission()) {
                         List<Player> players = new ArrayList<>(party.getPartyMembers());
                         players.add(pp.getPlayer());
-                        new PrivateArena(pp, players, e.getArena().getArenaName());
+                        new PrivateArena(pp, players, e.getArena().getArenaName(), e.getArena().getGroup());
 
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
@@ -64,7 +64,7 @@ public class ArenaJoin implements Listener {
                         List<Player> players = new ArrayList<>(party.getPartyMembers());
                         players.add(pp.getPlayer());
 
-                        new PrivateArena(pp, players, e.getArena().getArenaName());
+                        new PrivateArena(pp, players, e.getArena().getArenaName(), e.getArena().getGroup());
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                             pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
@@ -74,7 +74,7 @@ public class ArenaJoin implements Listener {
                     List<Player> players = new ArrayList<>();
                     players.add(pp.getPlayer());
 
-                    new PrivateArena(pp, players, e.getArena().getArenaName());
+                    new PrivateArena(pp, players, e.getArena().getArenaName(), e.getArena().getGroup());
 
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                         pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);

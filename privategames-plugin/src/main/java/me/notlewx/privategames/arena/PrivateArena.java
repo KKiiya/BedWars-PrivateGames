@@ -17,14 +17,16 @@ public class PrivateArena implements IPrivateArena {
     private IPrivatePlayer host;
     private List<Player> players;
     private String arenaName;
+    private String defaultGroup;
     public static final LinkedHashMap<String, IPrivateArena> privateArenaByArenaName = new LinkedHashMap<>();
     public static final LinkedHashMap<Player, IPrivateArena> privateArenaByPlayer = new LinkedHashMap<>();
     public static final LinkedList<IPrivateArena> privateArenas = new LinkedList<>();
 
-    public PrivateArena(IPrivatePlayer host, List<Player> players, String arenaName) {
+    public PrivateArena(IPrivatePlayer host, List<Player> players, String arenaName, String defaultGroup) {
         this.host = host;
         this.players = players;
         this.arenaName = arenaName;
+        this.defaultGroup = defaultGroup;
 
         privateArenaByArenaName.put(arenaName, this);
         privateArenaByPlayer.put(host.getPlayer(), this);
@@ -57,6 +59,10 @@ public class PrivateArena implements IPrivateArena {
     public String getArenaName() {
         return arenaName;
     }
+    @Override
+    public String getDefaultGroup() {
+        return defaultGroup;
+    }
 
     @Override
     public void stopGame() {
@@ -85,14 +91,24 @@ public class PrivateArena implements IPrivateArena {
 
     @Override
     public void destroyData() {
-        host = null;
+        switch (support) {
+            case BEDWARS1058:
+                PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(arenaName).setGroup(defaultGroup);
+                break;
+            case BEDWARS2023:
+                PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(arenaName).setGroup(defaultGroup);
+                break;
+        }
+
         privateArenaByArenaName.remove(arenaName);
-        arenaName = null;
         for (Player p : players) {
             privateArenaByPlayer.remove(p);
         }
-        players = null;
         privateArenas.remove(this);
 
+        defaultGroup = null;
+        host = null;
+        players = null;
+        arenaName = null;
     }
 }

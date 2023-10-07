@@ -5,19 +5,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class CustomItemStack {
+    private final static LinkedHashMap<ItemStack, String> customId = new LinkedHashMap<>();
     private final ItemStack item;
     private final ItemMeta meta;
-    private static HashMap<ItemStack, String> customItemID;
     public CustomItemStack(ItemStack itemStack) {
-        if (customItemID == null) customItemID = new HashMap<>();
         this.item = itemStack;
         this.meta = itemStack.getItemMeta();
     }
 
-    public void setCustomID(String customID) {
-        customItemID.put(item, customID);
+    public void setCustomID(String ID) {
+        customId.put(item, ID);
     }
     public ItemStack getItem() {
         return item;
@@ -35,6 +35,6 @@ public class CustomItemStack {
         item.removeEnchantment(ench);
     }
     public static String getItemID(ItemStack item) {
-        return customItemID.get(item);
+        return customId.get(item);
     }
 }
