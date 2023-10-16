@@ -106,6 +106,11 @@ public class MainConfig extends ConfigManager {
            NO_DIAMONDS = "enable-modifiers.no-diamonds",
            NO_EMERALDS = "enable-modifiers.no-emeralds",
            GAMEMODE_CHANGER = "enable-modifiers.gamemode-changer",
+           OPTIONS = "enable-modifiers.options",
+           OPTIONS_ENABLE_AUTOSTART = "enable-modifiers.options.enable-auto-start",
+           OPTIONS_ALLOW_JOIN = "enable-modifiers.options.allow-join",
+           OPTIONS_GENERATORS = "enable-modifiers.options.generator-options",
+
 
            SETTINGS_ROWS = "menus.settings.rows",
 
@@ -173,6 +178,7 @@ public class MainConfig extends ConfigManager {
            HEALTH_BUFF_LEVEL_III_MATERIAL = "menus.submenus.health-buff.level-3.material",
            HEALTH_BUFF_LEVEL_III_POSITION = "menus.submenus.health-buff.level-3.position",
 
+           OPTIONS_MENU_ROWS = "menus.submenus.options.rows",
            OPTIONS_ENABLE_AUTOSTART_MATERIAL = "menus.submenus.options.auto-start.material",
            OPTIONS_ENABLE_AUTOSTART_POSITION = "menus.submenus.options.auto-start.position",
            OPTIONS_ALLOWJOIN_MATERIAL = "menus.submenus.options.allow-join.material",
@@ -193,6 +199,12 @@ public class MainConfig extends ConfigManager {
 
            GAMEMODE_CHANGER_MATERIAL = "menus.settings.contents.gamemode-changer.material",
            GAMEMODE_CHANGER_POSITION = "menus.settings.contents.gamemode-changer.position",
+
+           OPTIONS_MATERIAL = "menus.settings.contents.options.material",
+           OPTIONS_POSITION = "menus.settings.contents.options.position",
+
+           START_GAME_MATERIAL = "menus.settings.contents.start-game.material",
+           START_GAME_POSITION = "menus.settings.contents.start-game.position",
 
            BACK_MATERIAL = "menus.settings.contents.back-item.material",
            BACK_POSITION = "menus.settings.contents.back-item.position",
