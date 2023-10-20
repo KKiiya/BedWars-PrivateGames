@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
+import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class MainCommand implements CommandExecutor {
@@ -203,6 +204,11 @@ public class MainCommand implements CommandExecutor {
                         break;
                     case "games" :
                         sender.sendMessage(PrivateGames.api.getPrivateArenaUtil().getPrivateArenas().toString());
+                        break;
+                    case "reload":
+                        sender.sendMessage(Utility.c("&eReloading config..."));
+                        mainConfig.reload();
+                        sender.sendMessage(Utility.c("&aConfig reloaded successfully!"));
                         break;
                 }
             }

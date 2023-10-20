@@ -1,15 +1,24 @@
 package me.notlewx.privategames.utils;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.support.Support;
+import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.support;
@@ -99,5 +108,35 @@ public class Utility {
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2));
             }, 20L);
+    }
+
+    public static ItemStack getSkull(String url) {
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+
+        if (url == null || url.isEmpty())
+            return skull;
+
+        ItemMeta skullMeta = skull.getItemMeta();
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
+        profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+        Field profileField = null;
+
+        try {
+            profileField = skullMeta.getClass().getDeclaredField("profile");
+        } catch (NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+
+        profileField.setAccessible(true);
+
+        try {
+            profileField.set(skullMeta, profile);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        skull.setItemMeta(skullMeta);
+        return skull;
     }
 }

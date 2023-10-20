@@ -7,7 +7,6 @@ import me.notlewx.privategames.menus.submenus.HealthMenu;
 import me.notlewx.privategames.menus.submenus.RespawnTimeMenu;
 import me.notlewx.privategames.menus.submenus.SpeedMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
-import me.notlewx.privategames.utils.CustomItemStack;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -45,55 +44,116 @@ public class SettingsMenu implements GUIHolder {
         return inventory;
     }
     private void addContents(Inventory inventory) {
-        CustomItemStack oneHitOneKill = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(ONE_HIT_ONE_HILL_MATERIAL))));
-        oneHitOneKill.setCustomID("oneHitOneKill");
+        Material oneHitOneKillMat = Material.getMaterial(mainConfig.getString(ONE_HIT_ONE_KILL_MATERIAL));
+        ItemStack oneHitOneKill;
+        if (oneHitOneKillMat == Material.SKULL_ITEM) {
+            oneHitOneKill = Utility.getSkull(mainConfig.getString(ONE_HIT_ONE_KILL_HEAD_URL));
+        } else {
+            oneHitOneKill = new ItemStack(oneHitOneKillMat, 1, (byte) mainConfig.getInt(ONE_HIT_ONE_KILL_ID));
+        }
         ItemMeta oneHitOneKillMeta = oneHitOneKill.getItemMeta();
 
-        CustomItemStack healthBuff = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(HEALTH_BUFF_MATERIAL))));
-        healthBuff.setCustomID("healthBuff");
+        Material healthBuffMat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_MATERIAL));
+        ItemStack healthBuff;
+        if (healthBuffMat == Material.SKULL_ITEM) {
+            healthBuff = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_HEAD_URL));
+        } else {
+            healthBuff = new ItemStack(healthBuffMat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_ID));
+        }
         ItemMeta gappleMeta = healthBuff.getItemMeta();
 
-        CustomItemStack longJump = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(LONG_JUMP_MATERIAL))));
-        longJump.setCustomID("lowGravity");
+        Material longJumpMat = Material.getMaterial(mainConfig.getString(LONG_JUMP_MATERIAL));
+        ItemStack longJump;
+        if (longJumpMat == Material.SKULL_ITEM) {
+            longJump = Utility.getSkull(mainConfig.getString(LONG_JUMP_HEAD_URL));
+        } else {
+            longJump = new ItemStack(longJumpMat, 1, (byte) mainConfig.getInt(LONG_JUMP_ID));
+        }
         ItemMeta longJumpMeta = longJump.getItemMeta();
 
-        CustomItemStack speed = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(SPEED_MATERIAL))));
-        speed.setCustomID("speed");
+        Material speedMat = Material.getMaterial(mainConfig.getString(SPEED_MATERIAL));
+        ItemStack speed;
+        if (speedMat == Material.SKULL_ITEM) {
+            speed = Utility.getSkull(mainConfig.getString(SPEED_HEAD_URL));
+        } else {
+            speed = new ItemStack(speedMat, 1, (byte) mainConfig.getInt(SPEED_ID));
+        }
         ItemMeta speedMeta = speed.getItemMeta();
 
 
-        CustomItemStack respawnTime = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(RESPAWN_TIME_MATERIAL))));
-        respawnTime.setCustomID("respawnTime");
+        Material respawnTimeMat = Material.getMaterial(mainConfig.getString(RESPAWN_TIME_MATERIAL));
+        ItemStack respawnTime;
+        if (respawnTimeMat == Material.SKULL_ITEM) {
+            respawnTime = Utility.getSkull(mainConfig.getString(RESPAWN_TIME_HEAD_URL));
+        } else {
+            respawnTime = new ItemStack(respawnTimeMat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_BACK_ID));
+        }
         ItemMeta respawnTimeMeta = respawnTime.getItemMeta();
 
-        CustomItemStack eventsTime = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(EVENTS_TIME_MATERIAL))));
-        eventsTime.setCustomID("eventsTime");
+        Material eventsTimeMat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_MATERIAL));
+        ItemStack eventsTime;
+        if (eventsTimeMat == Material.SKULL_ITEM) {
+            eventsTime = Utility.getSkull(mainConfig.getString(EVENTS_TIME_HEAD_URL));
+        } else {
+            eventsTime = new ItemStack(eventsTimeMat, 1, (byte) mainConfig.getInt(EVENTS_TIME_ID));
+        }
         ItemMeta eventsTimeMeta = eventsTime.getItemMeta();
 
-        CustomItemStack noEmeralds = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(NO_EMERALDS_MATERIAL))));
-        noEmeralds.setCustomID("noEmeralds");
+        Material noEmeraldsMat = Material.getMaterial(mainConfig.getString(NO_EMERALDS_MATERIAL));
+        ItemStack noEmeralds;
+        if (noEmeraldsMat == Material.SKULL_ITEM) {
+            noEmeralds = Utility.getSkull(mainConfig.getString(NO_EMERALDS_HEAD_URL));
+        } else {
+            noEmeralds = new ItemStack(noEmeraldsMat, 1, (byte) mainConfig.getInt(NO_EMERALDS_ID));
+        }
         ItemMeta noEmeraldsMeta = noEmeralds.getItemMeta();
 
 
-        CustomItemStack noDiamonds = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(NO_DIAMONDS_MATERIAL))));
-        noDiamonds.setCustomID("noDiamonds");
+        Material noDiamondsMat = Material.getMaterial(mainConfig.getString(NO_DIAMONDS_MATERIAL));
+        ItemStack noDiamonds;
+        if (noDiamondsMat == Material.SKULL_ITEM) {
+            noDiamonds = Utility.getSkull(mainConfig.getString(NO_DIAMONDS_HEAD_URL));
+        } else {
+            noDiamonds =new ItemStack(noDiamondsMat, 1, (byte) mainConfig.getInt(NO_DIAMONDS_ID));
+        }
         ItemMeta noDiamondsMeta = noDiamonds.getItemMeta();
 
-        CustomItemStack allowMapBreak = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(ALLOW_MAP_BREAK_MATERIAL))));
-        allowMapBreak.setCustomID("mapBreak");
+        Material allowMapBreakMat = Material.getMaterial(mainConfig.getString(ALLOW_MAP_BREAK_MATERIAL));
+        ItemStack allowMapBreak;
+        if (allowMapBreakMat == Material.SKULL_ITEM) {
+            allowMapBreak = Utility.getSkull(mainConfig.getString(ALLOW_MAP_BREAK_HEAD_URL));
+        } else {
+            allowMapBreak = new ItemStack(allowMapBreakMat, 1, (byte) mainConfig.getInt(ALLOW_MAP_BREAK_ID));
+        }
         ItemMeta allowMapBreakMeta = allowMapBreak.getItemMeta();
 
-        CustomItemStack bedInstaBreak = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(BED_INSTA_BREAK_MATERIAL))));
-        bedInstaBreak.setCustomID("bedInstantBreak");
+        Material bedInstaBreakMat = Material.getMaterial(mainConfig.getString(BED_INSTA_BREAK_MATERIAL));
+        ItemStack bedInstaBreak;
+        if (bedInstaBreakMat == Material.SKULL_ITEM) {
+            bedInstaBreak = Utility.getSkull(mainConfig.getString(BED_INSTA_BREAK_HEAD_URL));
+        } else {
+            bedInstaBreak = new ItemStack(bedInstaBreakMat, 1, (byte) mainConfig.getInt(BED_INSTA_BREAK_ID));
+        }
         ItemMeta bedInstaBreakMeta = bedInstaBreak.getItemMeta();
 
-        CustomItemStack maxTeamUpgrades = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(MAX_TEAM_UPGRADES_MATERIAL))));
-        maxTeamUpgrades.setCustomID("maxTeamUpgrades");
+        Material maxTeamUpgradesMat = Material.getMaterial(mainConfig.getString(MAX_TEAM_UPGRADES_MATERIAL));
+        ItemStack maxTeamUpgrades;
+        if (maxTeamUpgradesMat == Material.SKULL_ITEM) {
+            maxTeamUpgrades = Utility.getSkull(mainConfig.getString(MAX_TEAM_UPGRADES_HEAD_URL));
+        } else {
+            maxTeamUpgrades = new ItemStack(maxTeamUpgradesMat, 1, (byte) mainConfig.getInt(MAX_TEAM_UPGRADES_ID));
+        }
         ItemMeta maxTeamUpgradesMeta = maxTeamUpgrades.getItemMeta();
 
-        CustomItemStack back = new CustomItemStack(new ItemStack(Material.getMaterial(mainConfig.getString(BACK_MATERIAL))));
-        back.setCustomID("backItem");
+        Material matBack = Material.getMaterial(mainConfig.getString(BACK_MATERIAL));
+        ItemStack back;
+        if (matBack == Material.SKULL_ITEM) {
+            back = Utility.getSkull(mainConfig.getString(BACK_HEAD_URL));
+        } else {
+            back = new ItemStack(matBack, 1, (byte) mainConfig.getInt(BACK_HEAD_URL));
+        }
         ItemMeta backMeta = back.getItemMeta();
+
 
         oneHitOneKillMeta.setDisplayName(Utility.getMsg(player, ITEM_ONE_HIT_ONE_KILL_NAME));
         if (playerData.isOneHitOneKillEnabled()) {
@@ -221,6 +281,7 @@ public class SettingsMenu implements GUIHolder {
                 eventsTimeMeta.setLore(Utility.getList(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMsg(player, EVENTS_TIME_FASTER_MEANING))).collect(Collectors.toList()));
                 break;
         }
+
         oneHitOneKill.setItemMeta(oneHitOneKillMeta);
         healthBuff.setItemMeta(gappleMeta);
         longJump.setItemMeta(longJumpMeta);
@@ -237,6 +298,7 @@ public class SettingsMenu implements GUIHolder {
 
         back.setItemMeta(backMeta);
 
+
         if (playerData.isAllowMapBreakEnabled()) allowMapBreak.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
         else allowMapBreak.removeEnchantment(Enchantment.DURABILITY);
         if (playerData.isNoEmeraldsEnabled()) noEmeralds.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
@@ -252,26 +314,26 @@ public class SettingsMenu implements GUIHolder {
         if (playerData.isMaxTeamUpgradesEnabled()) maxTeamUpgrades.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
         else maxTeamUpgrades.removeEnchantment(Enchantment.DURABILITY);
 
-        if (mainConfig.getBoolean(ONE_HIT_ONE_KILL)) inventory.setItem(mainConfig.getInt(ONE_HIT_ONE_HILL_POSITION), oneHitOneKill.getItem());
-        if (mainConfig.getBoolean(HEALTH_BUFF)) inventory.setItem(mainConfig.getInt(HEALTH_BUFF_POSITION), healthBuff.getItem());
-        if (mainConfig.getBoolean(LONG_JUMP)) inventory.setItem(mainConfig.getInt(LONG_JUMP_POSITION), longJump.getItem());
-        if (mainConfig.getBoolean(SPEED)) inventory.setItem(mainConfig.getInt(SPEED_POSITION), speed.getItem());
+        if (mainConfig.getBoolean(ONE_HIT_ONE_KILL)) inventory.setItem(mainConfig.getInt(ONE_HIT_ONE_KILL_POSITION), oneHitOneKill);
+        if (mainConfig.getBoolean(HEALTH_BUFF)) inventory.setItem(mainConfig.getInt(HEALTH_BUFF_POSITION), healthBuff);
+        if (mainConfig.getBoolean(LONG_JUMP)) inventory.setItem(mainConfig.getInt(LONG_JUMP_POSITION), longJump);
+        if (mainConfig.getBoolean(SPEED)) inventory.setItem(mainConfig.getInt(SPEED_POSITION), speed);
 
-        if (mainConfig.getBoolean(RESPAWN_TIME)) inventory.setItem(mainConfig.getInt(RESPAWN_TIME_POSITION), respawnTime.getItem());
-        if (mainConfig.getBoolean(EVENTS_TIME)) inventory.setItem(mainConfig.getInt(EVENTS_TIME_POSITION), eventsTime.getItem());
-        if (mainConfig.getBoolean(NO_EMERALDS)) inventory.setItem(mainConfig.getInt(NO_EMERALDS_POSITION), noEmeralds.getItem());
+        if (mainConfig.getBoolean(RESPAWN_TIME)) inventory.setItem(mainConfig.getInt(RESPAWN_TIME_POSITION), respawnTime);
+        if (mainConfig.getBoolean(EVENTS_TIME)) inventory.setItem(mainConfig.getInt(EVENTS_TIME_POSITION), eventsTime);
+        if (mainConfig.getBoolean(NO_EMERALDS)) inventory.setItem(mainConfig.getInt(NO_EMERALDS_POSITION), noEmeralds);
 
-        if (mainConfig.getBoolean(NO_DIAMONDS)) inventory.setItem(mainConfig.getInt(NO_DIAMONDS_POSITION), noDiamonds.getItem());
-        if (mainConfig.getBoolean(ALLOW_MAP_BREAK)) inventory.setItem(mainConfig.getInt(ALLOW_MAP_BREAK_POSITION), allowMapBreak.getItem());
-        if (mainConfig.getBoolean(BED_INSTA_BREAK)) inventory.setItem(mainConfig.getInt(BED_INSTA_BREAK_POSITION), bedInstaBreak.getItem());
-        if (mainConfig.getBoolean(MAX_TEAM_UPGRADES)) inventory.setItem(mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION), maxTeamUpgrades.getItem());
+        if (mainConfig.getBoolean(NO_DIAMONDS)) inventory.setItem(mainConfig.getInt(NO_DIAMONDS_POSITION), noDiamonds);
+        if (mainConfig.getBoolean(ALLOW_MAP_BREAK)) inventory.setItem(mainConfig.getInt(ALLOW_MAP_BREAK_POSITION), allowMapBreak);
+        if (mainConfig.getBoolean(BED_INSTA_BREAK)) inventory.setItem(mainConfig.getInt(BED_INSTA_BREAK_POSITION), bedInstaBreak);
+        if (mainConfig.getBoolean(MAX_TEAM_UPGRADES)) inventory.setItem(mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION), maxTeamUpgrades);
 
-        inventory.setItem(mainConfig.getInt(BACK_POSITION), back.getItem());
+        inventory.setItem(mainConfig.getInt(BACK_POSITION), back);
     }
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getView().getTitle().equals(Utility.getMsg(player, MAIN_MENU_NAME))) {
-            if (e.getSlot() == mainConfig.getInt(ONE_HIT_ONE_HILL_POSITION)) {
+            if (e.getSlot() == mainConfig.getInt(ONE_HIT_ONE_KILL_POSITION)) {
                 playerData.setOneHitOneKillEnabled(!playerData.isOneHitOneKillEnabled());
                 new SettingsMenu(player);
             }

@@ -45,13 +45,40 @@ public class HealthMenu implements GUIHolder {
 
 
     public void addContents() {
-        ItemStack arrow = new ItemStack(Material.getMaterial(mainConfig.getString(HEALTH_BUFF_BACK_MATERIAL )));
+        Material arrowMat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_BACK_MATERIAL));
+        ItemStack arrow;
+        if (arrowMat == Material.SKULL_ITEM) {
+            arrow = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_BACK_HEAD_URL));
+        } else {
+            arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_BACK_ID));
+        }
         ItemMeta arrowMeta = arrow.getItemMeta();
-        ItemStack gapple1 = new ItemStack(Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_I_MATERIAL)));
+
+        Material book1Mat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_I_MATERIAL));
+        ItemStack gapple1;
+        if (book1Mat == Material.SKULL_ITEM) {
+            gapple1 = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_LEVEL_I_HEAD_URL));
+        } else {
+            gapple1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_LEVEL_I_ID));
+        }
         ItemMeta gapple1Meta = gapple1.getItemMeta();
-        ItemStack gapple2 = new ItemStack(Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_II_MATERIAL)));
+
+        Material book2Mat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_II_MATERIAL));
+        ItemStack gapple2;
+        if (book2Mat == Material.SKULL_ITEM) {
+            gapple2 = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_LEVEL_II_HEAD_URL));
+        } else {
+            gapple2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_LEVEL_II_ID));
+        }
         ItemMeta gapple2Meta = gapple2.getItemMeta();
-        ItemStack gapple3 = new ItemStack(Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_III_MATERIAL)));
+
+        Material book3Mat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_III_MATERIAL));
+        ItemStack gapple3;
+        if (book3Mat == Material.SKULL_ITEM) {
+            gapple3 = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_LEVEL_III_HEAD_URL));
+        } else {
+            gapple3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_LEVEL_III_ID));
+        }
         ItemMeta gapple3Meta = gapple3.getItemMeta();
 
 

@@ -46,15 +46,49 @@ public class EventsTimeMenu implements GUIHolder {
 
 
     public void addContents() {
-        ItemStack arrow = new ItemStack(Material.getMaterial(mainConfig.getString(EVENTS_TIME_BACK_MATERIAL )));
+        Material arrowMat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_BACK_MATERIAL));
+        ItemStack arrow;
+        if (arrowMat == Material.SKULL_ITEM) {
+            arrow = Utility.getSkull(mainConfig.getString(EVENTS_TIME_BACK_HEAD_URL));
+        } else {
+            arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(EVENTS_TIME_BACK_ID));
+        }
         ItemMeta arrowMeta = arrow.getItemMeta();
-        ItemStack book1 = new ItemStack(Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_I_MATERIAL)));
+
+        Material book1Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_I_MATERIAL));
+        ItemStack book1;
+        if (book1Mat == Material.SKULL_ITEM) {
+            book1 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_I_HEAD_URL));
+        } else {
+            book1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_I_ID));
+        }
         ItemMeta book1Meta = book1.getItemMeta();
-        ItemStack book2 = new ItemStack(Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_II_MATERIAL)));
-        ItemMeta book2Meta = book2.getItemMeta();
-        ItemStack book3 = new ItemStack(Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_III_MATERIAL)));
-        ItemMeta book3Meta = book3.getItemMeta();
-        ItemStack book4 = new ItemStack(Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_IV_MATERIAL)));
+
+        Material book2Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_II_MATERIAL));
+        ItemStack book2;
+        if (book2Mat == Material.SKULL_ITEM) {
+            book2 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_II_HEAD_URL));
+        } else {
+            book2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_II_ID));
+        }
+        ItemMeta book2Meta = book1.getItemMeta();
+
+        Material book3Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_III_MATERIAL));
+        ItemStack book3;
+        if (book3Mat == Material.SKULL_ITEM) {
+            book3 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_III_HEAD_URL));
+        } else {
+            book3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_III_ID));
+        }
+        ItemMeta book3Meta = book1.getItemMeta();
+
+        Material book4Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_IV_MATERIAL));
+        ItemStack book4;
+        if (book4Mat == Material.SKULL_ITEM) {
+            book4 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_IV_HEAD_URL));
+        } else {
+            book4 = new ItemStack(book4Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_IV_ID));
+        }
         ItemMeta book4Meta = book4.getItemMeta();
 
 

@@ -26,7 +26,6 @@ me\notlewx\privategames\listeners\bedwars1058\ArenaJoin.class
 me\notlewx\privategames\listeners\PlayerLeave.class
 me\notlewx\privategames\config\bedwars2023\MessagesData.class
 me\notlewx\privategames\menus\submenus\generators\GeneratorSettingsMenu.class
-me\notlewx\privategames\utils\CustomItemStack.class
 me\notlewx\privategames\menus\submenus\HealthMenu.class
 me\notlewx\privategames\menus\SettingsMenu.class
 me\notlewx\privategames\party\Party$1.class
