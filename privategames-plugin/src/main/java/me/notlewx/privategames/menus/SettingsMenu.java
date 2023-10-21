@@ -6,6 +6,7 @@ import me.notlewx.privategames.menus.submenus.EventsTimeMenu;
 import me.notlewx.privategames.menus.submenus.HealthMenu;
 import me.notlewx.privategames.menus.submenus.RespawnTimeMenu;
 import me.notlewx.privategames.menus.submenus.SpeedMenu;
+import me.notlewx.privategames.menus.submenus.generators.GeneratorsMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
@@ -18,6 +19,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.stream.Collectors;
+
+import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
@@ -144,6 +147,15 @@ public class SettingsMenu implements GUIHolder {
             maxTeamUpgrades = new ItemStack(maxTeamUpgradesMat, 1, (byte) mainConfig.getInt(MAX_TEAM_UPGRADES_ID));
         }
         ItemMeta maxTeamUpgradesMeta = maxTeamUpgrades.getItemMeta();
+
+        Material generatorSettingsMat = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATORS_MATERIAL));
+        ItemStack generatorSettings;
+        if (generatorSettingsMat == Material.SKULL_ITEM) {
+            generatorSettings = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATORS_HEAD_URL));
+        } else {
+            generatorSettings = new ItemStack(generatorSettingsMat, 1, (byte) mainConfig.getInt(OPTIONS_GENERATORS_HEAD_URL));
+        }
+        ItemMeta generatorSettingsMeta = generatorSettings.getItemMeta();
 
         Material matBack = Material.getMaterial(mainConfig.getString(BACK_MATERIAL));
         ItemStack back;
@@ -296,6 +308,8 @@ public class SettingsMenu implements GUIHolder {
         bedInstaBreak.setItemMeta(bedInstaBreakMeta);
         maxTeamUpgrades.setItemMeta(maxTeamUpgradesMeta);
 
+        generatorSettings.setItemMeta(generatorSettingsMeta);
+
         back.setItemMeta(backMeta);
 
 
@@ -327,6 +341,8 @@ public class SettingsMenu implements GUIHolder {
         if (mainConfig.getBoolean(ALLOW_MAP_BREAK)) inventory.setItem(mainConfig.getInt(ALLOW_MAP_BREAK_POSITION), allowMapBreak);
         if (mainConfig.getBoolean(BED_INSTA_BREAK)) inventory.setItem(mainConfig.getInt(BED_INSTA_BREAK_POSITION), bedInstaBreak);
         if (mainConfig.getBoolean(MAX_TEAM_UPGRADES)) inventory.setItem(mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION), maxTeamUpgrades);
+
+        if (mainConfig.getBoolean(OPTIONS_GENERATORS)) inventory.setItem(mainConfig.getInt(OPTIONS_GENERATORS_POSITION), generatorSettings);
 
         inventory.setItem(mainConfig.getInt(BACK_POSITION), back);
     }
@@ -372,6 +388,13 @@ public class SettingsMenu implements GUIHolder {
             else if (e.getSlot() == mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION)) {
                 playerData.setMaxTeamUpgradesEnabled(!playerData.isMaxTeamUpgradesEnabled());
                 new SettingsMenu(player);
+            }
+            else if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_POSITION)) {
+                if (api.getPrivateArenaUtil().getPrivateArenaByPlayer(player) == null) {
+                    player.sendMessage(Utility.c("&cNot in an arena!"));
+                    return;
+                }
+                new GeneratorsMenu(player, api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
             }
         }
     }
