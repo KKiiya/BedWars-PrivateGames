@@ -6,7 +6,7 @@
 
     <groupId>me.notlewx</groupId>
     <artifactId>BedWars1058-PrivateGames</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <packaging>pom</packaging>
 
     <name>BedWars1058-PrivateGames</name>
@@ -90,6 +90,13 @@
             <version>1.0-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/bedwars2023-1.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.tomkeuper</groupId>
+            <artifactId>BWProxy2023</artifactId>
+            <version>1.2.5</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/proxy-plugin-1.2.5.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

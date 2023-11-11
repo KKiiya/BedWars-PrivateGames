@@ -153,7 +153,7 @@ public class SettingsMenu implements GUIHolder {
         if (generatorSettingsMat == Material.SKULL_ITEM) {
             generatorSettings = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATORS_HEAD_URL));
         } else {
-            generatorSettings = new ItemStack(generatorSettingsMat, 1, (byte) mainConfig.getInt(OPTIONS_GENERATORS_HEAD_URL));
+            generatorSettings = new ItemStack(generatorSettingsMat, 1, (byte) mainConfig.getInt(OPTIONS_GENERATORS_ID));
         }
         ItemMeta generatorSettingsMeta = generatorSettings.getItemMeta();
 
@@ -235,6 +235,10 @@ public class SettingsMenu implements GUIHolder {
         }
         maxTeamUpgradesMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
+        // generatorSettingsMeta.setDisplayName(Utility.getMsg(player, SUBMENU_OPTIONS_GENERATORS_NAME));
+        // generatorSettingsMeta.setLore(Utility.getList(player, SUBMENU_OPTIONS_GENERATORS_LORE));
+        // generatorSettings.setItemMeta(generatorSettingsMeta);
+
         backMeta.setDisplayName(Utility.getMsg(player, MENU_BACK_ITEM_NAME));
         backMeta.setLore(Utility.getList(player, MENU_BACK_ITEM_LORE));
 
@@ -308,7 +312,7 @@ public class SettingsMenu implements GUIHolder {
         bedInstaBreak.setItemMeta(bedInstaBreakMeta);
         maxTeamUpgrades.setItemMeta(maxTeamUpgradesMeta);
 
-        generatorSettings.setItemMeta(generatorSettingsMeta);
+        // generatorSettings.setItemMeta(generatorSettingsMeta);
 
         back.setItemMeta(backMeta);
 
@@ -342,7 +346,7 @@ public class SettingsMenu implements GUIHolder {
         if (mainConfig.getBoolean(BED_INSTA_BREAK)) inventory.setItem(mainConfig.getInt(BED_INSTA_BREAK_POSITION), bedInstaBreak);
         if (mainConfig.getBoolean(MAX_TEAM_UPGRADES)) inventory.setItem(mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION), maxTeamUpgrades);
 
-        if (mainConfig.getBoolean(OPTIONS_GENERATORS)) inventory.setItem(mainConfig.getInt(OPTIONS_GENERATORS_POSITION), generatorSettings);
+        // if (mainConfig.getBoolean(OPTIONS_GENERATORS)) inventory.setItem(mainConfig.getInt(OPTIONS_GENERATORS_POSITION), generatorSettings);
 
         inventory.setItem(mainConfig.getInt(BACK_POSITION), back);
     }
@@ -389,6 +393,7 @@ public class SettingsMenu implements GUIHolder {
                 playerData.setMaxTeamUpgradesEnabled(!playerData.isMaxTeamUpgradesEnabled());
                 new SettingsMenu(player);
             }
+            /*
             else if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_POSITION)) {
                 if (api.getPrivateArenaUtil().getPrivateArenaByPlayer(player) == null) {
                     player.sendMessage(Utility.c("&cNot in an arena!"));
@@ -396,6 +401,7 @@ public class SettingsMenu implements GUIHolder {
                 }
                 new GeneratorsMenu(player, api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
             }
+            */
         }
     }
 }

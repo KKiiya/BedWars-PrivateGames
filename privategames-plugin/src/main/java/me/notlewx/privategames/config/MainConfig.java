@@ -20,6 +20,7 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(NO_DIAMONDS, true);
         yml.addDefault(NO_EMERALDS, true);
         yml.addDefault(GAMEMODE_CHANGER, true);
+        yml.addDefault(OPTIONS_GENERATORS, true);
         yml.addDefault(SETTINGS_ROWS, 6);
         yml.addDefault(ONE_HIT_ONE_KILL_MATERIAL, "DIAMOND_SWORD");
         yml.addDefault(ONE_HIT_ONE_KILL_POSITION, 10);
@@ -149,6 +150,10 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(HEALTH_BUFF_LEVEL_III_POSITION, 15);
         yml.addDefault(HEALTH_BUFF_LEVEL_III_ID, 0);
         yml.addDefault(HEALTH_BUFF_LEVEL_III_HEAD_URL, "skin-url");
+        yml.addDefault(OPTIONS_GENERATORS_MATERIAL, "DIAMOND_BLOCK");
+        yml.addDefault(OPTIONS_GENERATORS_POSITION, 45);
+        yml.addDefault(OPTIONS_GENERATORS_ID, 0);
+        yml.addDefault(OPTIONS_GENERATORS_HEAD_URL, "skin-url");
         yml.addDefault(MATERIAL, "REDSTONE_BLOCK");
         yml.addDefault(ID, 0);
         yml.addDefault(HEAD_URL, "skin-url");

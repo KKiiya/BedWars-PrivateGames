@@ -20,9 +20,8 @@ public class SQLite implements Database {
         connect();
     }
     public void connect() {
-        if (support == Support.BEDWARS1058) s = "bw1058";
-        else if (support == Support.BEDWARSPROXY) s = "bw1058";
-        else if (support == Support.BEDWARS2023) s = "bw2023";
+        if (support == Support.BEDWARS1058) s = "bedwars";
+        else if (support == Support.BEDWARS2023) s = "bedwars";
 
         Utility.info("&aConnecting to your database...");
         this.connection = getConnection();

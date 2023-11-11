@@ -4,6 +4,7 @@ import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.party.handlers.BedWars1058PARTY;
 import me.notlewx.privategames.party.handlers.BedWars2023PARTY;
+import me.notlewx.privategames.party.handlers.BedWarsProxy2023PARTY;
 import me.notlewx.privategames.party.handlers.BedWarsProxyPARTY;
 import org.bukkit.entity.Player;
 
@@ -20,6 +21,9 @@ public class Party {
                 break;
             case BEDWARSPROXY:
                 partyProvider = new BedWarsProxyPARTY(player);
+                break;
+            case BEDWARSPROXY2023:
+                partyProvider = new BedWarsProxy2023PARTY(player);
                 break;
         }
         return partyProvider;

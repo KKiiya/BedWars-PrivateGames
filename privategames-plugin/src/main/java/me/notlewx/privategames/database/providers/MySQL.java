@@ -47,7 +47,14 @@ public class MySQL implements Database {
             this.user = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.user");
             this.pass = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.pass");
             this.port = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getInt("database.port");
-        } else if (support == Support.BEDWARS2023) {
+        } else if (support == Support.BEDWARSPROXY2023) {
+            s = "bedwars";
+            this.host = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.host");
+            this.database = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.database");
+            this.user = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.user");
+            this.pass = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.pass");
+            this.port = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getInt("database.port");
+        }else if (support == Support.BEDWARS2023) {
             s = "bedwars";
             this.host = PrivateGames.bw2023config.getString("database.host");
             this.database = PrivateGames.bw2023config.getString("database.database");

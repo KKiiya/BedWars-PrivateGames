@@ -4,10 +4,10 @@ import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import me.notlewx.privategames.api.database.Database;
-import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.listeners.*;
 import me.notlewx.privategames.support.BedWars1058;
 import me.notlewx.privategames.support.BedWars2023;
+import me.notlewx.privategames.support.BedWarsProxy2023;
 import me.notlewx.privategames.support.Support;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -29,7 +29,7 @@ public final class PrivateGames extends JavaPlugin {
     @Override
     public void onEnable() {
         int pluginId = 19967;
-        Metrics metrics = new Metrics(this, pluginId);
+        new Metrics(this, pluginId);
         api = new API();
         Bukkit.getServicesManager().register(me.notlewx.privategames.api.PrivateGames.class, api, this, ServicePriority.Highest);
         loadMainListeners();
@@ -53,15 +53,18 @@ public final class PrivateGames extends JavaPlugin {
     public static com.andrei1058.bedwars.proxy.api.BedWars getBwProxyApi() {
         return BedWarsProxy.getAPI();
     }
+    public static com.tomkeuper.bedwars.proxy.api.BedWars getBwProxy2023Api() {
+        return com.tomkeuper.bedwars.proxy.BedWarsProxy.getAPI();
+    }
     private void loadSupport() {
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
             new BedWars1058(this);
-        }
-        else if (Bukkit.getPluginManager().getPlugin("BedWars2023") != null) {
+        } else if (Bukkit.getPluginManager().getPlugin("BedWars2023") != null) {
             new BedWars2023(this);
-        }
-        else if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
+        } else if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
             new me.notlewx.privategames.support.BedWarsProxy(this);
+        } else if (Bukkit.getPluginManager().getPlugin("BWProxy2023") != null) {
+            new BedWarsProxy2023(this);
         }
     }
     private void loadMainListeners() {

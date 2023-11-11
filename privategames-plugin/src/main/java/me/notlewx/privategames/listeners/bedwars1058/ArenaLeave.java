@@ -11,13 +11,9 @@ public class ArenaLeave implements Listener {
     @EventHandler
     public void onArenaLeave(PlayerLeaveArenaEvent e) {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
-        if (api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()).getPrivateArenaHost() != api.getPrivatePlayer(e.getPlayer())) return;
-
-        for (Player p : api.getPrivatePlayer(e.getPlayer()).getPlayerParty().getPartyMembers()) {
-            if (e.getPlayer() != p) e.getArena().removePlayer(p, false);
+        if (e.getArena().getPlayers().size() <= 1) {
+            api.getPrivateArenaUtil().getPrivateArenas().remove(api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()));
+            api.getBedWars1058API().getArenaUtil().getArenas().add(e.getArena());
         }
-
-        api.getPrivateArenaUtil().getPrivateArenas().remove(api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()));
-        api.getBedWars1058API().getArenaUtil().getArenas().add(e.getArena());
     }
 }

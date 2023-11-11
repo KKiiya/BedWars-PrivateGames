@@ -1,6 +1,7 @@
 package me.notlewx.privategames.listeners.bedwars2023;
 
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.events.gameplay.GeneratorUpgradeEvent;
 import com.tomkeuper.bedwars.arena.OreGenerator;
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.IArena;
@@ -15,6 +16,7 @@ import com.tomkeuper.bedwars.api.events.player.PlayerReSpawnEvent;
 import com.tomkeuper.bedwars.arena.Arena;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
+import me.notlewx.privategames.utils.GeneratorProperties;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -158,6 +160,19 @@ public class PrivateArenaListener implements Listener {
                 p.sendMessage(m);
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onGeneratorUpgrade(GeneratorUpgradeEvent e) {
+        /*
+        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getGenerator().getArena().getArenaName())) return;
+        if (GeneratorProperties.getGenProps().get(e.getGenerator()) == null) return;
+        GeneratorProperties.Properties props = GeneratorProperties.getGenProps().get(e.getGenerator());
+        IGenerator gen = e.getGenerator();
+        gen.setDelay(props.getDelay());
+        gen.setAmount(props.getAmount());
+        gen.setSpawnLimit(props.getSpawnLimit());
+         */
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

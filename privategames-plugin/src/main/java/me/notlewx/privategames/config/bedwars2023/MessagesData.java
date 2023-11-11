@@ -100,6 +100,8 @@ public class MessagesData {
                     yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_LORE, Arrays.asList("{state}"));
                     yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME, "&aGo Back");
                     yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_LORE, Arrays.asList("&7Go Back to the settings menu"));
+                    yml.addDefault(SUBMENU_OPTIONS_GENERATORS_NAME, "&bGenerators");
+                    yml.addDefault(SUBMENU_OPTIONS_GENERATORS_LORE, Arrays.asList("&7Click here to open arena generators", "", "&7On this menu you can configure", "&7generator attributes", "", "&eClick to open!"));
                     yml.addDefault(NO_SPEED_MEANING, "&7No speed");
                     yml.addDefault(SPEED_I_MEANING, "&7Speed I");
                     yml.addDefault(SPEED_II_MEANING, "&7Speed II");
@@ -125,6 +127,8 @@ public class MessagesData {
                     yml.addDefault(SPEED_MEANING, "&7Speed");
                     yml.addDefault(EVENTS_TIME_MEANING, "&7Events Time");
                     yml.addDefault(RESPAWN_EVENT_TIME_MEANING, "&7Respawn Time");
+                    yml.addDefault(SUBMENU_GENERATORS_TITLE, "Arena generators");
+                    yml.addDefault(SUBMENU_GENERATOR_ITEM_LORE, Arrays.asList("&7Team: {team}", "&7Location: {location}", "&7Amount: {amount}", "&7Delay: {delay}",  "§7Spawn Limit: {spawnLimit}"));
                     break;
                 case "es":
                     yml.addDefault(MAIN_MENU_NAME, "&8Ajustes de Partida Privada");
@@ -833,14 +837,14 @@ public class MessagesData {
         SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE = PATH + "menu.submenu.options.auto-start.lore",
         SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME = PATH + "menu.submenu.options.allow-join.name",
         SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE = PATH + "menu.submenu.options.allow-join.lore",
-        SUBMENU_OPTIONS_ENABLE_GENERATORS_NAME = PATH + "menu.submenu.options.generators.name",
-        SUBMENU_OPTIONS_ENABLE_GENERATORS_LORE = PATH + "menu.submenu.options.generators.lore",
-        SUBMENU_OPTIONS_ENABLE_BACK_NAME = PATH + "menu.submenu.options.back-item.name",
-        SUBMENU_OPTIONS_ENABLE_BACK_LORE = PATH + "menu.submenu.options.back-item.lore",
+        SUBMENU_OPTIONS_GENERATORS_NAME = PATH + "menu.submenu.options.generators.name",
+        SUBMENU_OPTIONS_GENERATORS_LORE = PATH + "menu.submenu.options.generators.lore",
+        SUBMENU_OPTIONS_BACK_NAME = PATH + "menu.submenu.options.back-item.name",
+        SUBMENU_OPTIONS_BACK_LORE = PATH + "menu.submenu.options.back-item.lore",
 
     SUBMENU_GENERATORS_TITLE = PATH + "menu.submenu.generators.title",
-            SUBMENU_GENERATOR_OPTIONS_TITLE = PATH + "menu.submenu.generator.config.title",
-            SUBMENU_GENERATOR_ITEM_LORE = PATH + "menu.submenu.generator.config.gen-item.lore",
+            SUBMENU_GENERATOR_OPTIONS_TITLE = PATH + "menu.submenu.generators.config.title",
+            SUBMENU_GENERATOR_ITEM_LORE = PATH + "menu.submenu.generators.config.gen-item.lore",
             SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME = PATH + "menu.submenu.generators.config.content.back-item.name",
             SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE = PATH + "menu.submenu.generators.config.content.back-item.lore";
 }

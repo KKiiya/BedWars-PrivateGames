@@ -56,7 +56,7 @@ public class PrivatePlayer implements IPrivatePlayer {
 
     @Override
     public boolean isInPrivateArena() {
-        return PrivateArena.privateArenaByPlayer != null;
+        return PrivateArena.privateArenaByPlayer.get(player) != null;
     }
 
     @Override

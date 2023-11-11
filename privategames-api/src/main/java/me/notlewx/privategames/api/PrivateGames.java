@@ -104,4 +104,9 @@ public interface PrivateGames {
      * @return - BedWarsProxy API
      */
     com.andrei1058.bedwars.proxy.api.BedWars getBedWarsProxyAPI();
+    /**
+     * Get the BedWarsProxy2023 API
+     * @return - BedWarsProxy2023 API
+     */
+    com.tomkeuper.bedwars.proxy.api.BedWars getBedWarsProxy2023API();
 }

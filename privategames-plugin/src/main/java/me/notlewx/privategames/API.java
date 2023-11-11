@@ -97,4 +97,9 @@ public class API implements PrivateGames {
     public com.andrei1058.bedwars.proxy.api.BedWars getBedWarsProxyAPI() {
         return me.notlewx.privategames.PrivateGames.getBwProxyApi();
     }
+
+    @Override
+    public com.tomkeuper.bedwars.proxy.api.BedWars getBedWarsProxy2023API() {
+        return me.notlewx.privategames.PrivateGames.getBwProxy2023Api();
+    }
 }

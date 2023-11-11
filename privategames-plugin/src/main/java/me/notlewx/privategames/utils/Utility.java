@@ -43,6 +43,7 @@ public class Utility {
         if (support == Support.BEDWARSPROXY) return p(player, PrivateGames.getBwProxyApi().getLanguageUtil().getMsg(player, path));
         else if (support == Support.BEDWARS1058) return p(player, PrivateGames.getBw1058Api().getPlayerLanguage(player).getString(path));
         else if (support == Support.BEDWARS2023) return p(player, PrivateGames.getBw2023Api().getPlayerLanguage(player).getString(path));
+        else if (support == Support.BEDWARSPROXY2023) return p(player, PrivateGames.getBwProxy2023Api().getLanguageUtil().getMsg(player, path));
         else return null;
     }
 
@@ -50,6 +51,7 @@ public class Utility {
         if (support == Support.BEDWARSPROXY) return p(player, PrivateGames.getBwProxyApi().getLanguageUtil().getList(player, path));
         else if (support == Support.BEDWARS1058) return p(player, PrivateGames.getBw1058Api().getPlayerLanguage(player).getList(path));
         else if (support == Support.BEDWARS2023) return p(player, PrivateGames.getBw2023Api().getPlayerLanguage(player).getList(path));
+        else if (support == Support.BEDWARSPROXY2023) return p(player, PrivateGames.getBwProxy2023Api().getLanguageUtil().getList(player, path));
         else return null;
     }
 
