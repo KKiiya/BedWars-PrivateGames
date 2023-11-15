@@ -69,12 +69,15 @@ public class PrivateArena implements IPrivateArena {
         if (support == Support.BEDWARS1058) {
             for (Player player : PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(arenaName).getPlayers()) {
                 PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(arenaName).abandonGame(player);
+                PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(arenaName).setGroup(defaultGroup);
             }
         } else if (support == Support.BEDWARS2023) {
             for (Player player : PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(arenaName).getPlayers()) {
                 PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(arenaName).abandonGame(player);
+                PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(arenaName).setGroup(defaultGroup);
             }
         }
+        privateArenas.remove(this);
     }
 
     @Override

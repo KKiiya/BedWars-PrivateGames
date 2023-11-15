@@ -5,9 +5,9 @@ import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.listeners.*;
-import me.notlewx.privategames.support.BedWars1058;
-import me.notlewx.privategames.support.BedWars2023;
-import me.notlewx.privategames.support.BedWarsProxy2023;
+import me.notlewx.privategames.support.bedwars1058.BedWars1058;
+import me.notlewx.privategames.support.bedwars2023.BedWars2023;
+import me.notlewx.privategames.support.bedwars2023.BedWarsProxy2023;
 import me.notlewx.privategames.support.Support;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -62,7 +62,7 @@ public final class PrivateGames extends JavaPlugin {
         } else if (Bukkit.getPluginManager().getPlugin("BedWars2023") != null) {
             new BedWars2023(this);
         } else if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
-            new me.notlewx.privategames.support.BedWarsProxy(this);
+            new me.notlewx.privategames.support.bedwars1058.BedWarsProxy(this);
         } else if (Bukkit.getPluginManager().getPlugin("BWProxy2023") != null) {
             new BedWarsProxy2023(this);
         }

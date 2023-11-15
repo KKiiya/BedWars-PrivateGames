@@ -1,4 +1,4 @@
-package me.notlewx.privategames.support;
+package me.notlewx.privategames.support.bedwars1058;
 
 import com.andrei1058.bedwars.api.BedWars;
 import me.notlewx.privategames.PrivateGames;
@@ -8,6 +8,7 @@ import me.notlewx.privategames.config.bedwars1058.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
 import me.notlewx.privategames.database.providers.SQLite;
 import me.notlewx.privategames.listeners.bedwars1058.*;
+import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;

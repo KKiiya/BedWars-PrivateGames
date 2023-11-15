@@ -1,4 +1,4 @@
-package me.notlewx.privategames.support;
+package me.notlewx.privategames.support.bedwars2023;
 
 import com.tomkeuper.bedwars.api.addon.Addon;
 import me.notlewx.privategames.PrivateGames;

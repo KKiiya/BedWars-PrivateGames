@@ -7,6 +7,7 @@ import me.notlewx.privategames.api.player.IPrivatePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface PrivateGames {
 
@@ -85,6 +86,20 @@ public interface PrivateGames {
          * @return - boolean
          */
         boolean isArenaPrivate(String arenaName);
+
+        /**
+         * Check if a player is playing
+         * @param uuid - UUID of the player
+         * @return - boolean
+         */
+        boolean isPlaying(UUID uuid);
+
+        /**
+         * Check if a player is playing
+         * @param player - Player
+         * @return - boolean
+         */
+        boolean isPlaying(Player player);
     }
 
     /**

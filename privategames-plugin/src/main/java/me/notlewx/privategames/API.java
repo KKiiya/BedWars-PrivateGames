@@ -11,9 +11,12 @@ import me.notlewx.privategames.menus.submenus.EventsTimeMenu;
 import me.notlewx.privategames.menus.submenus.HealthMenu;
 import me.notlewx.privategames.menus.submenus.RespawnTimeMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class API implements PrivateGames {
@@ -80,6 +83,16 @@ public class API implements PrivateGames {
         @Override
         public boolean isArenaPrivate(String arenaName) {
             return getPrivateArenas().stream().map(IPrivateArena::getArenaName).collect(Collectors.toList()).contains(arenaName);
+        }
+
+        @Override
+        public boolean isPlaying(UUID uuid) {
+            return getPrivateArenaByPlayer(Bukkit.getPlayer(uuid)) != null;
+        }
+
+        @Override
+        public boolean isPlaying(Player player) {
+            return getPrivateArenaByPlayer(player) != null;
         }
     }
 

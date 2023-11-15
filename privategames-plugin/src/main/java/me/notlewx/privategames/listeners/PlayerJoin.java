@@ -1,5 +1,6 @@
 package me.notlewx.privategames.listeners;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -9,9 +10,11 @@ public class PlayerJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        database.createPlayerData(e.getPlayer());
-        e.getPlayer().setHealth(20.0);
-        e.getPlayer().setMaxHealth(20.0);
-        e.getPlayer().setHealthScale(20.0);
+        Player p = e.getPlayer();
+        database.createPlayerData(p);
+
+        p.setHealth(20.0);
+        p.setMaxHealth(20.0);
+        p.setHealthScale(20.0);
     }
 }

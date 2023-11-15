@@ -1,10 +1,11 @@
-package me.notlewx.privategames.support;
+package me.notlewx.privategames.support.bedwars1058;
 
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.commands.proxy.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.proxy.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
+import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;

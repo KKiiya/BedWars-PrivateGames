@@ -1,9 +1,7 @@
 package me.notlewx.privategames.listeners;
 
-import com.andrei1058.bedwars.api.events.upgrades.UpgradeBuyEvent;
 import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.utils.Utility;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

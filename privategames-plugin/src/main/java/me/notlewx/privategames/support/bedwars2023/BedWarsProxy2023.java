@@ -1,10 +1,11 @@
-package me.notlewx.privategames.support;
+package me.notlewx.privategames.support.bedwars2023;
 
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.commands.proxy2023.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.proxy2023.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
+import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -24,7 +25,7 @@ public class BedWarsProxy2023 {
             support = Support.BEDWARSPROXY2023;
             bwProxyConfig = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig();
             Utility.info("&eCreating main config...");
-            mainConfig = new MainConfig(pl, "config", Bukkit.getWorldContainer().getPath() + "/plugins/BedWarsProxy/Addons/PrivateGames/");
+            mainConfig = new MainConfig(pl, "config", Bukkit.getWorldContainer().getPath() + "/plugins/BWProxy2023/Addons/PrivateGames/");
             Utility.info("&aMain config created successfully!");
             Utility.info("&eLoading messages...");
             new MessagesData();
