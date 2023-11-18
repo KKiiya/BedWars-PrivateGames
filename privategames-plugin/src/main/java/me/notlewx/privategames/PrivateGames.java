@@ -4,11 +4,14 @@ import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import me.notlewx.privategames.api.database.Database;
+import me.notlewx.privategames.config.MainConfig;
+import me.notlewx.privategames.database.providers.MySQL;
 import me.notlewx.privategames.listeners.*;
 import me.notlewx.privategames.support.bedwars1058.BedWars1058;
 import me.notlewx.privategames.support.bedwars2023.BedWars2023;
 import me.notlewx.privategames.support.bedwars2023.BedWarsProxy2023;
 import me.notlewx.privategames.support.Support;
+import me.notlewx.privategames.utils.Utility;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,6 +26,7 @@ public final class PrivateGames extends JavaPlugin {
     public static Support support;
     public static BedWars bedWars1058API;
     public static com.tomkeuper.bedwars.api.BedWars bedWars2023API;
+    public static boolean isBedWarsServer;
     public static Database database;
     public static API api;
 
@@ -58,13 +62,20 @@ public final class PrivateGames extends JavaPlugin {
     }
     private void loadSupport() {
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
+            isBedWarsServer = true;
             new BedWars1058(this);
         } else if (Bukkit.getPluginManager().getPlugin("BedWars2023") != null) {
+            isBedWarsServer = true;
             new BedWars2023(this);
         } else if (Bukkit.getPluginManager().getPlugin("BedWarsProxy") != null) {
+            isBedWarsServer = true;
             new me.notlewx.privategames.support.bedwars1058.BedWarsProxy(this);
         } else if (Bukkit.getPluginManager().getPlugin("BWProxy2023") != null) {
+            isBedWarsServer = true;
             new BedWarsProxy2023(this);
+        } else {
+            Utility.warn("No BedWars plugin was found! Disabling...");
+            Bukkit.getPluginManager().disablePlugin(this);
         }
     }
     private void loadMainListeners() {

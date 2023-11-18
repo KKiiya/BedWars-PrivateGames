@@ -42,6 +42,7 @@ public class ArenaJoin implements Listener {
         settings.setItemMeta(settingsMeta);
 
         if (e.getArena().isSpectator(pp.getPlayer())) return;
+        if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
 
         if (p.isPrivateGameEnabled()) {
             if (party.hasParty()) {

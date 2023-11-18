@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static me.notlewx.privategames.PrivateGames.isBedWarsServer;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class MySQL implements Database {
@@ -32,47 +34,55 @@ public class MySQL implements Database {
     }
 
     public void connect() {
-        if (support == Support.BEDWARS1058) {
-            s = "bedwars";
-            this.host = PrivateGames.bw1058config.getString("database.host");
-            this.database = PrivateGames.bw1058config.getString("database.database");
-            this.user = PrivateGames.bw1058config.getString("database.user");
-            this.pass = PrivateGames.bw1058config.getString("database.pass");
-            this.port = PrivateGames.bw1058config.getInt("database.port");
-        }
-        else if (support == Support.BEDWARSPROXY) {
-            s = "bedwars";
-            this.host = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.host");
-            this.database = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.database");
-            this.user = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.user");
-            this.pass = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.pass");
-            this.port = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getInt("database.port");
-        } else if (support == Support.BEDWARSPROXY2023) {
-            s = "bedwars";
-            this.host = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.host");
-            this.database = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.database");
-            this.user = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.user");
-            this.pass = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.pass");
-            this.port = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getInt("database.port");
-        }else if (support == Support.BEDWARS2023) {
-            s = "bedwars";
-            this.host = PrivateGames.bw2023config.getString("database.host");
-            this.database = PrivateGames.bw2023config.getString("database.database");
-            this.user = PrivateGames.bw2023config.getString("database.user");
-            this.pass = PrivateGames.bw2023config.getString("database.pass");
-            this.port = PrivateGames.bw2023config.getInt("database.port");
-        }
+        if (!isBedWarsServer) {
+            s = "privategames";
+            this.host = PrivateGames.mainConfig.getString("database.host");
+            this.database = PrivateGames.mainConfig.getString("database.database");
+            this.user = PrivateGames.mainConfig.getString("database.username");
+            this.pass = PrivateGames.mainConfig.getString("database.password");
+            this.port = PrivateGames.mainConfig.getInt("database.port");
+        } else {
+            if (support == Support.BEDWARS1058) {
+                s = "bedwars";
+                this.host = PrivateGames.bw1058config.getString("database.host");
+                this.database = PrivateGames.bw1058config.getString("database.database");
+                this.user = PrivateGames.bw1058config.getString("database.user");
+                this.pass = PrivateGames.bw1058config.getString("database.pass");
+                this.port = PrivateGames.bw1058config.getInt("database.port");
+            } else if (support == Support.BEDWARSPROXY) {
+                s = "bedwars";
+                this.host = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.host");
+                this.database = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.database");
+                this.user = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.user");
+                this.pass = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.pass");
+                this.port = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getInt("database.port");
+            } else if (support == Support.BEDWARSPROXY2023) {
+                s = "bedwars";
+                this.host = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.host");
+                this.database = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.database");
+                this.user = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.user");
+                this.pass = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.pass");
+                this.port = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getInt("database.port");
+            } else if (support == Support.BEDWARS2023) {
+                s = "bedwars";
+                this.host = PrivateGames.bw2023config.getString("database.host");
+                this.database = PrivateGames.bw2023config.getString("database.database");
+                this.user = PrivateGames.bw2023config.getString("database.user");
+                this.pass = PrivateGames.bw2023config.getString("database.pass");
+                this.port = PrivateGames.bw2023config.getInt("database.port");
+            }
 
-        db = new HikariDataSource();
-        db.setPoolName("PrivateGames-Pool");
-        db.setConnectionTimeout(480000000L);
-        db.setMaximumPoolSize(10);
-        db.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        db.addDataSourceProperty("serverName", this.host);
-        db.addDataSourceProperty("databaseName", this.database);
-        db.addDataSourceProperty("port", this.port);
-        db.addDataSourceProperty("user", this.user);
-        db.addDataSourceProperty("password", this.pass);
+            db = new HikariDataSource();
+            db.setPoolName("PrivateGames-Pool");
+            db.setConnectionTimeout(480000000L);
+            db.setMaximumPoolSize(10);
+            db.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+            db.addDataSourceProperty("serverName", this.host);
+            db.addDataSourceProperty("databaseName", this.database);
+            db.addDataSourceProperty("port", this.port);
+            db.addDataSourceProperty("user", this.user);
+            db.addDataSourceProperty("password", this.pass);
+        }
     }
 
     public void createTables() {

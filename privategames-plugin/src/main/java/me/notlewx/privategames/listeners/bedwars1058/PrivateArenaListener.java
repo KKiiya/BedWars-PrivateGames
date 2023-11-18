@@ -10,13 +10,10 @@ import com.andrei1058.bedwars.api.events.gameplay.NextEventChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
-import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.arena.OreGenerator;
-import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
-import com.andrei1058.bedwars.sidebar.SidebarService;
-import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
@@ -33,13 +30,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
@@ -177,6 +171,7 @@ public class PrivateArenaListener implements Listener {
             }
             IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByPlayer((Player) e.getDamager());
 
+            if (privateArena == null) return;
             if (api.getPrivateArenaUtil().isArenaPrivate(arena.getArenaName())) {
                 if (privateArena.getPrivateArenaHost().getPlayerSettings().isOneHitOneKillEnabled()) {
                     if (arena.getStatus() != GameState.playing) return;
@@ -253,6 +248,7 @@ public class PrivateArenaListener implements Listener {
         IArena a = e.getArena();
         IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName());
 
+        if (privateArena == null) return;
         privateArena.getPlayers().forEach(p -> p.setMaxHealth(20.0));
         privateArena.getPlayers().forEach(p -> p.setHealth(20.0));
         privateArena.getPlayers().forEach(p -> p.setHealthScale(20.0));
@@ -372,37 +368,80 @@ public class PrivateArenaListener implements Listener {
 
     public void upgradeTeams(IArena a) {
         for (ITeam team : a.getTeams()) {
-            ConfigurationSection conf = api.getBedWars1058API().getConfigs().getUpgradesConfig().getYml().getConfigurationSection("");
-            System.out.println(conf.getCurrentPath());
-            team.getTeamUpgradeTiers().put("upgrade-armor", 3);
-            team.getTeamUpgradeTiers().put("upgrade-swords", 0);
-            team.getTeamUpgradeTiers().put("upgrade-miner", 1);
-            team.getTeamUpgradeTiers().put("upgrade-forge", 3);
-            team.getTeamUpgradeTiers().put("upgrade-heal-pool", 0);
-            team.getTeamUpgradeTiers().put("upgrade-dragon", 0);
+            ConfigManager upgradesConfig = api.getBedWars1058API().getConfigs().getUpgradesConfig();
+            ConfigurationSection conf = upgradesConfig.getYml().getConfigurationSection(a.getGroup() + "-upgrades-settings");
 
-            team.addBaseEffect(PotionEffectType.REGENERATION, 0, Integer.MAX_VALUE);
-            team.addArmorEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
-            team.addSwordEnchantment(Enchantment.DAMAGE_ALL, 1);
-            Location genLoc = null;
-            for (IGenerator g : team.getGenerators()) {
-                if (g.getType() == GeneratorType.IRON) {
-                    g.setDelay(1);
-                    g.setAmount(4);
-                    g.setSpawnLimit(120);
-                } else if (g.getType() == GeneratorType.GOLD) {
-                    g.setDelay(2);
-                    g.setAmount(4);
-                    g.setSpawnLimit(80);
-                }
-                genLoc = g.getLocation();
+            if (conf == null) {
+                conf = api.getBedWars2023API().getConfigs().getUpgradesConfig().getYml().getConfigurationSection("default-upgrades-settings");
             }
-            IGenerator g = new OreGenerator(genLoc, a, GeneratorType.CUSTOM, team);
-            g.setOre(new ItemStack(Material.EMERALD));
-            g.setDelay(10);
-            g.setAmount(2);
-            g.setSpawnLimit(20);
-            team.getGenerators().add(g);
+
+            for (Object up : conf.getList("menu-content")) {
+                String upgrade = ((String) up).split(",")[0];
+                if (!upgrade.startsWith("upgrade-")) continue;
+                Set<String> tiers = upgradesConfig.getYml().getConfigurationSection(upgrade).getKeys(false);
+                for (String tier : tiers) {
+                    int level = Integer.parseInt(tier.split("-")[1]);
+                    if (level != tiers.size()) continue;
+                    team.getTeamUpgradeTiers().put(upgrade, level-1);
+
+                    for (String recieve : upgradesConfig.getYml().getStringList(upgrade + "." + tier + ".recieve")) {
+                        String[] r = recieve.split(":");
+                        switch (r[0]) {
+                            case "generator-edit":
+                                switch (r[1].replace(" ", "").split(",")[0]) {
+                                    case "iron":
+                                        team.getGenerators().stream().filter(g -> g.getType() == GeneratorType.IRON).forEach(g -> {
+                                            g.setDelay(Integer.parseInt(r[1].replace(" ", "").split(",")[1]));
+                                            g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                            g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+                                        });
+                                        break;
+                                    case "gold":
+                                        team.getGenerators().stream().filter(g -> g.getType() == GeneratorType.GOLD).forEach(g -> {
+                                            g.setDelay(Integer.parseInt(r[1].replace(" ", "").split(",")[1]));
+                                            g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                            g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+                                        });
+                                        break;
+                                    case "emerald":
+                                        IGenerator g = new OreGenerator(team.getGenerators().get(0).getLocation(), a, GeneratorType.CUSTOM, team);
+                                        g.setDelay(Integer.parseInt(r[1].replace(" ", "").split(",")[1]));
+                                        g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+                                        team.getGenerators().add(g);
+                                        break;
+                                }
+                                break;
+                            case "player-effect":
+                                switch (r[1].replace(" ", "").split(",")[3]) {
+                                    case "base":
+                                        PotionEffectType type = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
+                                        team.addBaseEffect(type, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        break;
+                                    case "team":
+                                        PotionEffectType type2 = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
+                                        team.addTeamEffect(type2, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        break;
+                                }
+                                break;
+                            case "enchant-item":
+                                Enchantment ecnh =  Enchantment.getByName(r[1].split(",")[0].replace(" ", ""));
+                                switch (r[1].split(",")[2]) {
+                                    case "armor":
+                                        team.addArmorEnchantment(ecnh, Integer.parseInt(r[1].split(",")[1]));
+                                        break;
+                                    case "sword":
+                                        team.addSwordEnchantment(ecnh, Integer.parseInt(r[1].split(",")[1]));
+                                        break;
+                                }
+                                break;
+                            case "dragon":
+                                team.setDragons(Integer.parseInt(r[1]));
+                                break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

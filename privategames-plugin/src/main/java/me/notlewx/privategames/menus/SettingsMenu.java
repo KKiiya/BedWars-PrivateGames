@@ -237,7 +237,6 @@ public class SettingsMenu implements GUIHolder {
 
         // generatorSettingsMeta.setDisplayName(Utility.getMsg(player, SUBMENU_OPTIONS_GENERATORS_NAME));
         // generatorSettingsMeta.setLore(Utility.getList(player, SUBMENU_OPTIONS_GENERATORS_LORE));
-        // generatorSettings.setItemMeta(generatorSettingsMeta);
 
         backMeta.setDisplayName(Utility.getMsg(player, MENU_BACK_ITEM_NAME));
         backMeta.setLore(Utility.getList(player, MENU_BACK_ITEM_LORE));
@@ -348,7 +347,7 @@ public class SettingsMenu implements GUIHolder {
 
         // if (mainConfig.getBoolean(OPTIONS_GENERATORS)) inventory.setItem(mainConfig.getInt(OPTIONS_GENERATORS_POSITION), generatorSettings);
 
-        inventory.setItem(mainConfig.getInt(BACK_POSITION), back);
+        if (mainConfig.getBoolean(BACK_ENABLE)) inventory.setItem(mainConfig.getInt(BACK_POSITION), back);
     }
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
@@ -393,15 +392,24 @@ public class SettingsMenu implements GUIHolder {
                 playerData.setMaxTeamUpgradesEnabled(!playerData.isMaxTeamUpgradesEnabled());
                 new SettingsMenu(player);
             }
-            /*
-            else if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_POSITION)) {
+            /* else if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_POSITION)) {
                 if (api.getPrivateArenaUtil().getPrivateArenaByPlayer(player) == null) {
                     player.sendMessage(Utility.c("&cNot in an arena!"));
                     return;
                 }
                 new GeneratorsMenu(player, api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+            } */ else if (e.getSlot() == mainConfig.getInt(BACK_POSITION)) {
+                if (mainConfig.getString(BACK_COMMAND).equalsIgnoreCase("close")) {
+                    player.closeInventory();
+                } else {
+                    if (!api.getPrivateArenaUtil().isPlaying(player)) {
+                        player.performCommand(mainConfig.getString(BACK_COMMAND));
+                    } else {
+                        player.closeInventory();
+                    }
+                }
             }
-            */
+
         }
     }
 }

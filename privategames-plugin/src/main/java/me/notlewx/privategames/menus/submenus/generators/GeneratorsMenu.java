@@ -38,7 +38,7 @@ public class GeneratorsMenu implements GUIHolder {
     }
     private void addContents() {
         if (support == Support.BEDWARS1058) {
-            IArena a = api.getBedWars1058API().getArenaUtil().getArenaByIdentifier(arenaName);
+            IArena a = api.getBedWars1058API().getArenaUtil().getArenaByName(arenaName);
             for (int i = 0; i < a.getOreGenerators().size(); i++) {
                 String team;
                 String location;
@@ -69,7 +69,7 @@ public class GeneratorsMenu implements GUIHolder {
                 inv.setItem(i, mat);
             }
         } else if (support == Support.BEDWARS2023) {
-            com.tomkeuper.bedwars.api.arena.IArena a = api.getBedWars2023API().getArenaUtil().getArenaByIdentifier(arenaName);
+            com.tomkeuper.bedwars.api.arena.IArena a = api.getBedWars2023API().getArenaUtil().getArenaByName(arenaName);
             for (int i = 0; i < a.getOreGenerators().size(); i++) {
                 String team;
                 String location;

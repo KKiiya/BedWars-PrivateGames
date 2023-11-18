@@ -1,6 +1,7 @@
 package me.notlewx.privategames.utils;
 
 import com.andrei1058.bedwars.api.arena.generator.IGenerator;
+import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.support.Support;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ public class GeneratorProperties {
     private Object gen;
 
     public static  HashMap<Object, Properties> genProps = new HashMap<>();
+    public static HashMap<IPrivatePlayer, GeneratorProperties> playerGenProps = new HashMap<>();
     public GeneratorProperties(Object gen) {
         this.gen = gen;
         if (support == Support.BEDWARS1058) {

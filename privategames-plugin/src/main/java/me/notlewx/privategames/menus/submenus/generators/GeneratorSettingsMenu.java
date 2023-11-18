@@ -15,8 +15,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.support;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.SUBMENU_GENERATOR_ITEM_LORE;
+import static me.notlewx.privategames.utils.GeneratorProperties.playerGenProps;
 
 public class GeneratorSettingsMenu implements GUIHolder {
     private final Player p;
@@ -161,12 +163,12 @@ public class GeneratorSettingsMenu implements GUIHolder {
                     break;
                 case 21:
                     if (g.getDelay() == 1) return;
-                    g.setDelay(g.getDelay() - 1);
-                    properties.setDelay((int) g.getDelay());
+                    g.setDelay(g.getDelay()/4 - 1);
+                    properties.setDelay(g.getDelay());
                     break;
                 case 23:
-                    g.setDelay(g.getDelay() + 1);
-                    properties.setDelay((int) g.getDelay());
+                    g.setDelay(g.getDelay()/4 + 1);
+                    properties.setDelay(g.getDelay());
                     break;
                 case 30:
                     if (g.getSpawnLimit() == 1) return;
@@ -178,6 +180,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
                     properties.setSpawnLimit(g.getSpawnLimit());
                     break;
             }
+            playerGenProps.put(api.getPrivatePlayer(p), new GeneratorProperties(p));
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.generator.IGenerator g = (com.tomkeuper.bedwars.api.arena.generator.IGenerator) gen;
             if (GeneratorProperties.getGenProps().get(g) == null) {
@@ -197,11 +200,11 @@ public class GeneratorSettingsMenu implements GUIHolder {
                     break;
                 case 21:
                     if (g.getDelay() == 1) return;
-                    g.setDelay(g.getDelay() - 1);
+                    g.setDelay(g.getDelay()/4 -1);
                     properties.setDelay((int) g.getDelay());
                     break;
                 case 23:
-                    g.setDelay(g.getDelay() + 1);
+                    g.setDelay(g.getDelay()/4 + 1);
                     properties.setDelay((int) g.getDelay());
                     break;
                 case 30:

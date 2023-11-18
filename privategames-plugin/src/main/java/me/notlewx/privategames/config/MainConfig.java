@@ -3,11 +3,20 @@ package me.notlewx.privategames.config;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import static me.notlewx.privategames.PrivateGames.isBedWarsServer;
+
 public class MainConfig extends ConfigManager {
     public MainConfig(Plugin plugin, String name, String dir) {
         super(plugin, name, dir);
         YamlConfiguration yml = getYml();
         yml.options().header("PrivateGames Addon by Kiiya#9207");
+        if (!isBedWarsServer) {
+            yml.addDefault("database.host", "localhost");
+            yml.addDefault("database.database", "cheese");
+            yml.addDefault("database.username", "root");
+            yml.addDefault("database.password", "password");
+            yml.addDefault("database.port", 3306);
+        }
         yml.addDefault(SPEED, true);
         yml.addDefault(ONE_HIT_ONE_KILL, true);
         yml.addDefault(HEALTH_BUFF, true);
@@ -72,6 +81,8 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(GAMEMODE_CHANGER_HEAD_URL, "skin-url");
         yml.addDefault(BACK_MATERIAL, "ARROW");
         yml.addDefault(BACK_POSITION, 49);
+        yml.addDefault(BACK_ENABLE, true);
+        yml.addDefault(BACK_COMMAND, "close");
         yml.addDefault(BACK_ID, 0);
         yml.addDefault(BACK_HEAD_URL, "skin-url");
         yml.addDefault(SPEED_MENU_ROWS, 4);
@@ -357,6 +368,8 @@ public class MainConfig extends ConfigManager {
 
            BACK_MATERIAL = "menus.settings.contents.back-item.material",
            BACK_POSITION = "menus.settings.contents.back-item.position",
+                    BACK_ENABLE = "menus.settings.contents.back-item.enable",
+                    BACK_COMMAND = "menus.settings.contents.back-item.command",
                     BACK_ID = "menus.settings.contents.back-item.id",
                     BACK_HEAD_URL = "menus.settings.contents.back-item.head-url",
 
