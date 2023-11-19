@@ -30,6 +30,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.List;
@@ -384,59 +385,70 @@ public class PrivateArenaListener implements Listener {
                     if (level != tiers.size()) continue;
                     team.getTeamUpgradeTiers().put(upgrade, level-1);
 
-                    for (String recieve : upgradesConfig.getYml().getStringList(upgrade + "." + tier + ".recieve")) {
-                        String[] r = recieve.split(":");
-                        switch (r[0]) {
+                    for (String r : upgradesConfig.getYml().getStringList(upgrade + "." + tier + ".recieve")) {
+                        String[] recieve = r.split(":");
+                        String action = recieve[0];
+                        String option = recieve[1].replace(" ", "");
+                        switch (action) {
                             case "generator-edit":
-                                switch (r[1].replace(" ", "").split(",")[0]) {
+                                switch (recieve[1].replace(" ", "").split(",")[0]) {
                                     case "iron":
                                         team.getGenerators().stream().filter(g -> g.getType() == GeneratorType.IRON).forEach(g -> {
-                                            g.setDelay(Integer.parseInt(r[1].replace(" ", "").split(",")[1]));
-                                            g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
-                                            g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+                                            g.setDelay(Integer.parseInt(option.split(",")[1]));
+                                            g.setAmount(Integer.parseInt(option.split(",")[2]));
+                                            g.setSpawnLimit(Integer.parseInt(option.split(",")[3]));
                                         });
                                         break;
                                     case "gold":
                                         team.getGenerators().stream().filter(g -> g.getType() == GeneratorType.GOLD).forEach(g -> {
-                                            g.setDelay(Integer.parseInt(r[1].replace(" ", "").split(",")[1]));
-                                            g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
-                                            g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+                                            g.setDelay(Integer.parseInt(option.split(",")[1]));
+                                            g.setAmount(Integer.parseInt(option.split(",")[2]));
+                                            g.setSpawnLimit(Integer.parseInt(option.split(",")[3]));
                                         });
                                         break;
                                     case "emerald":
                                         IGenerator g = new OreGenerator(team.getGenerators().get(0).getLocation(), a, GeneratorType.CUSTOM, team);
-                                        g.setDelay(Integer.parseInt(r[1].replace(" ", "").split(",")[1]));
-                                        g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
-                                        g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+                                        g.setOre(new ItemStack(Material.EMERALD));
+                                        g.setDelay(Integer.parseInt(option.split(",")[1]));
+                                        g.setAmount(Integer.parseInt(option.split(",")[2]));
+                                        g.setSpawnLimit(Integer.parseInt(option.split(",")[3]));
                                         team.getGenerators().add(g);
+                                        break;
+                                    case "diamond":
+                                        IGenerator g2 = new OreGenerator(team.getGenerators().get(0).getLocation(), a, GeneratorType.CUSTOM, team);
+                                        g2.setOre(new ItemStack(Material.DIAMOND));
+                                        g2.setDelay(Integer.parseInt(option.split(",")[1]));
+                                        g2.setAmount(Integer.parseInt(option.split(",")[2]));
+                                        g2.setSpawnLimit(Integer.parseInt(option.split(",")[3]));
+                                        team.getGenerators().add(g2);
                                         break;
                                 }
                                 break;
                             case "player-effect":
-                                switch (r[1].replace(" ", "").split(",")[3]) {
+                                switch (option.split(",")[3]) {
                                     case "base":
-                                        PotionEffectType type = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
-                                        team.addBaseEffect(type, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        PotionEffectType type = PotionEffectType.getByName(option.split(",")[0]);
+                                        team.addBaseEffect(type, Integer.parseInt(option.split(",")[1]), Integer.parseInt(option.split(",")[2]));
                                         break;
                                     case "team":
-                                        PotionEffectType type2 = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
-                                        team.addTeamEffect(type2, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        PotionEffectType type2 = PotionEffectType.getByName(option.split(",")[0]);
+                                        team.addTeamEffect(type2, Integer.parseInt(option.split(",")[1]), Integer.parseInt(option.split(",")[2]));
                                         break;
                                 }
                                 break;
                             case "enchant-item":
-                                Enchantment ecnh =  Enchantment.getByName(r[1].split(",")[0].replace(" ", ""));
-                                switch (r[1].split(",")[2]) {
+                                Enchantment ecnh =  Enchantment.getByName(option.split(",")[0]);
+                                switch (option.split(",")[2]) {
                                     case "armor":
-                                        team.addArmorEnchantment(ecnh, Integer.parseInt(r[1].split(",")[1]));
+                                        team.addArmorEnchantment(ecnh, Integer.parseInt(option.split(",")[1]));
                                         break;
                                     case "sword":
-                                        team.addSwordEnchantment(ecnh, Integer.parseInt(r[1].split(",")[1]));
+                                        team.addSwordEnchantment(ecnh, Integer.parseInt(option.split(",")[1]));
                                         break;
                                 }
                                 break;
                             case "dragon":
-                                team.setDragons(Integer.parseInt(r[1]));
+                                team.setDragons(Integer.parseInt(option));
                                 break;
                         }
                     }
