@@ -441,19 +441,20 @@ public class SettingsMenu implements GUIHolder {
                 switch (support) {
                     case BEDWARS2023:
                         IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
-                        if (a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.playing) {
+                        if (a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.playing && a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.starting) {
                             a.changeStatus(com.tomkeuper.bedwars.api.arena.GameState.starting);
                             a.getStartingTask().setCountdown(bw2023config.getInt("countdowns.game-start-regular"));
                         }
                         break;
                     case BEDWARS1058:
                         com.andrei1058.bedwars.api.arena.IArena a1 = PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
-                        if (a1.getStatus() != GameState.playing) {
+                        if (a1.getStatus() != GameState.playing && a1.getStatus() != GameState.starting) {
                             a1.changeStatus(GameState.starting);
                             a1.getStartingTask().setCountdown(bw1058config.getInt("countdowns.game-start-regular"));
                         }
                         break;
                 }
+                new SettingsMenu(player);
             } else if (e.getSlot() == mainConfig.getInt(BACK_POSITION)) {
                 if (mainConfig.getString(BACK_COMMAND).equalsIgnoreCase("close")) {
                     player.closeInventory();

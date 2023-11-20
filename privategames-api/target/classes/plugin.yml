@@ -1,5 +1,5 @@
 name: PrivateGames
-version: '1.0.8'
+version: '1.0.9'
 main: me.notlewx.privategames.PrivateGames
 description: Private Games for bedwars like a well known server!
 soft-dependencies: [ BedWars1058, PlaceholderAPI, BedWars2023, BedWarsProxy]

@@ -14,9 +14,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import java.util.Arrays;
+import java.util.List;
 
+import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
+import static me.notlewx.privategames.config.bedwars2023.MessagesData.ADMIN_HELP_MESSAGE;
 
 public class MainCommand implements CommandExecutor {
     private IPlayerSettings playerData;
@@ -28,7 +31,9 @@ public class MainCommand implements CommandExecutor {
             playerData = (new PrivatePlayer((Player) sender)).getPlayerSettings();
             party = (new PrivatePlayer((Player) sender)).getPlayerParty();
             if (args.length < 1) {
-                sender.sendMessage(Utility.c("&cNot enough args"));
+                for (String m : Utility.getList((Player) sender, HELP_MESSAGE)) {
+                    sender.sendMessage(m);
+                }
             }
 
             else {
@@ -173,8 +178,14 @@ public class MainCommand implements CommandExecutor {
                         break;
 
                     case "help":
-                        for (String message : Utility.getList((Player) sender, HELP_MESSAGE)) {
-                            sender.sendMessage(message);
+                        List<String> message;
+                        if (sender.hasPermission("pg.help") || sender.isOp()) {
+                            message = Utility.getList((Player) sender, ADMIN_HELP_MESSAGE);
+                        } else {
+                            message = Utility.getList((Player) sender, HELP_MESSAGE);
+                        }
+                        for (String m : message) {
+                            sender.sendMessage(m);
                         }
                         break;
                     case "join" :
@@ -191,6 +202,9 @@ public class MainCommand implements CommandExecutor {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
 
                                     } else {
+                                        if (api.getPrivatePlayer((Player) sender).getPlayerOptions().isAllowJoin()) {
+                                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
+                                        }
                                         a.addPlayer((Player) sender, true);
                                         PrivateGameJoinEvent event = new PrivateGameJoinEvent(((Player) sender), PrivateGames.api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()));
                                         Bukkit.getPluginManager().callEvent(event);

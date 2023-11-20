@@ -1,6 +1,7 @@
 package me.notlewx.privategames.menus.submenus.generators;
 
 import com.andrei1058.bedwars.api.arena.generator.IGenerator;
+import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.GeneratorProperties;
@@ -33,7 +34,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
     }
 
     private void createInventory() {
-        inv = Bukkit.createInventory(this, 9*4, "Generator settings");
+        inv = Bukkit.createInventory(this, 9*4, Utility.getMsg(p, SUBMENU_GENERATOR_OPTIONS_TITLE));
     }
 
     private void addContents() {
@@ -134,8 +135,8 @@ public class GeneratorSettingsMenu implements GUIHolder {
         }
         ItemMeta backMeta = back.getItemMeta();
 
-        backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME));
-        backMeta.setLore(Utility.getList(p, SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE));
+        backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_NAME));
+        backMeta.setLore(Utility.getList(p, SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_LORE));
         back.setItemMeta(backMeta);
 
 
@@ -152,19 +153,24 @@ public class GeneratorSettingsMenu implements GUIHolder {
         inv.setItem(30, reduceSpawnLimit);
         inv.setItem(32, increaseSpawnLimit);
 
-        inv.setItem(35, back);
+        inv.setItem(mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION), back);
     }
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (!e.getInventory().getTitle().equals("Generator settings")) return;
+        if (!e.getInventory().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATOR_OPTIONS_TITLE))) return;
         GeneratorProperties.Properties properties;
+        IPrivatePlayer pp = api.getPrivatePlayer(p);
         if (support == Support.BEDWARS1058) {
             IGenerator g = (IGenerator) gen;
-            if (GeneratorProperties.getGeneratorProperties(api.getPrivatePlayer(p)).getProperties(g) == null) {
-                GeneratorProperties.setGeneratorProperties(api.getPrivatePlayer(p), new GeneratorProperties(g));
+            if (GeneratorProperties.getGeneratorProperties(pp) == null) {
+                GeneratorProperties.setGeneratorProperties(pp, new GeneratorProperties(g));
             }
-            properties = GeneratorProperties.getGeneratorProperties(api.getPrivatePlayer(p)).getProperties(g);
+            properties = GeneratorProperties.getGeneratorProperties(pp).getProperties(g);
+            if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION)) {
+                new GeneratorsMenu(p, g.getArena().getArenaName());
+                return;
+            }
             switch (e.getSlot()) {
                 case 12:
                     if (g.getAmount() == 1) return;
@@ -197,10 +203,14 @@ public class GeneratorSettingsMenu implements GUIHolder {
             new GeneratorSettingsMenu(p, gen);
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.generator.IGenerator g = (com.tomkeuper.bedwars.api.arena.generator.IGenerator) gen;
-            if (GeneratorProperties.getGeneratorProperties(api.getPrivatePlayer(p)).getProperties(g) == null) {
-                GeneratorProperties.setGeneratorProperties(api.getPrivatePlayer(p), new GeneratorProperties(g));
+            if (GeneratorProperties.getGeneratorProperties(pp) == null) {
+                GeneratorProperties.setGeneratorProperties(pp, new GeneratorProperties(g));
             }
-            properties = GeneratorProperties.getGeneratorProperties(api.getPrivatePlayer(p)).getProperties(g);
+            properties = GeneratorProperties.getGeneratorProperties(pp).getProperties(g);
+            if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION)) {
+                new GeneratorsMenu(p, g.getArena().getArenaName());
+                return;
+            }
             switch (e.getSlot()) {
                 case 12:
                     if (g.getAmount() == 1) return;

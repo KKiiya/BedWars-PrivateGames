@@ -168,7 +168,9 @@ public class MessagesData {
         yml.addDefault(SUBMENU_GENERATOR_OPTIONS_ITEM_LORE, Arrays.asList("&7Team: {team}", "&7Location: {location}", "&7Amount: {amount}", "&7Delay: {delay}",  "§7Spawn Limit: {spawnLimit}"));
         yml.addDefault(SUBMENU_GENERATOR_OPTIONS_TITLE, "Generator options");
         yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME, "&aGo Back");
-        yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE, Arrays.asList("&7Go Back to the generators menu"));
+        yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE, Arrays.asList("&7Go Back to the options menu"));
+        yml.addDefault(SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_NAME, "&aGo Back");
+        yml.addDefault(SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_LORE, Arrays.asList("&7Go Back to the generators menu"));
         yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aEnabled");
         yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cDisabled");
         yml.addDefault(MENU_CLICK_TO_START_MEANING, "&eClick to start!");

@@ -84,7 +84,7 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(GAMEMODE_CHANGER_ID, 0);
         yml.addDefault(GAMEMODE_CHANGER_HEAD_URL, "skin-url");
         yml.addDefault(START_GAME_MATERIAL, "EYE_OF_ENDER");
-        yml.addDefault(START_GAME_POSITION, 51);
+        yml.addDefault(START_GAME_POSITION, 46);
         yml.addDefault(START_GAME_ID, 0);
         yml.addDefault(START_GAME_HEAD_URL, "skin-url");
         yml.addDefault(OPTIONS_MATERIAL, "REDSTONE_COMPARATOR");
@@ -186,8 +186,12 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(OPTIONS_GENERATORS_POSITION, 45);
         yml.addDefault(OPTIONS_GENERATORS_ID, 0);
         yml.addDefault(OPTIONS_GENERATORS_HEAD_URL, "skin-url");
+        yml.addDefault(OPTIONS_GENERATORS_BACK_MATERIAL, "ARROW");
+        yml.addDefault(OPTIONS_GENERATORS_BACK_POSITION, 31);
+        yml.addDefault(OPTIONS_GENERATORS_BACK_ID, 0);
+        yml.addDefault(OPTIONS_GENERATORS_BACK_HEAD_URL, "skin-url");
         yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL, "ARROW");
-        yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION, 31);
+        yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION, 0);
         yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_ID, 0);
         yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL, "skin-url");
         yml.addDefault(OPTIONS_BACK_MATERIAL, "ARROW");
@@ -361,10 +365,15 @@ public class MainConfig extends ConfigManager {
                    OPTIONS_GENERATORS_ID = "menus.submenus.options.generators.id",
                    OPTIONS_GENERATORS_HEAD_URL = "menus.submenus.options.generators.head-url",
 
-                   OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL = "menus.submenus.options.generators.back-material",
-                   OPTIONS_GENERATOR_OPTIONS_BACK_POSITION = "menus.submenus.options.generators.back-position",
-                   OPTIONS_GENERATOR_OPTIONS_BACK_ID = "menus.submenus.options.generators.back-id",
-                   OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL = "menus.submenus.options.generators.back-head-url",
+                   OPTIONS_GENERATORS_BACK_MATERIAL = "menus.submenus.options.generators.back-material",
+                   OPTIONS_GENERATORS_BACK_POSITION = "menus.submenus.options.generators.back-position",
+                   OPTIONS_GENERATORS_BACK_ID = "menus.submenus.options.generators.back-id",
+                   OPTIONS_GENERATORS_BACK_HEAD_URL = "menus.submenus.options.generators.back-head-url",
+
+                   OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL = "menus.submenus.options.generator-config.back-material",
+                   OPTIONS_GENERATOR_OPTIONS_BACK_POSITION = "menus.submenus.options.generator-config.back-position",
+                   OPTIONS_GENERATOR_OPTIONS_BACK_ID = "menus.submenus.options.generator-config.back-id",
+                   OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL = "menus.submenus.options.generator-config.back-head-url",
 
            OPTIONS_BACK_MATERIAL = "menus.submenus.options.back-item.material",
            OPTIONS_BACK_POSITION = "menus.submenus.options.back-item.position",

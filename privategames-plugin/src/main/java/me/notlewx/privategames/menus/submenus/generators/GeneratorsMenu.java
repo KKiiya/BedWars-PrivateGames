@@ -2,6 +2,7 @@ package me.notlewx.privategames.menus.submenus.generators;
 
 import com.andrei1058.bedwars.api.arena.IArena;
 import me.notlewx.privategames.menus.GUIHolder;
+import me.notlewx.privategames.menus.OptionsMenu;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
@@ -116,7 +117,7 @@ public class GeneratorsMenu implements GUIHolder {
 
         back.setItemMeta(backMeta);
 
-        inv.setItem(mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION), back);
+        inv.setItem(mainConfig.getInt(OPTIONS_GENERATORS_BACK_POSITION), back);
     }
 
     @Override
@@ -127,7 +128,13 @@ public class GeneratorsMenu implements GUIHolder {
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getInventory().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_TITLE))) {
-            new GeneratorSettingsMenu(p, generatorPos.get(e.getSlot()));
+            if (generatorPos.get(e.getSlot()) != null) {
+                new GeneratorSettingsMenu(p, generatorPos.get(e.getSlot()));
+            } else {
+                if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_BACK_POSITION)) {
+                    new OptionsMenu(p);
+                }
+            }
         }
     }
 }
