@@ -33,6 +33,12 @@ public interface IPrivatePlayer {
     IPlayerSettings getPlayerSettings();
 
     /**
+     * Get the player's options
+     * @return - Player options
+     */
+    IPlayerOptions getPlayerOptions();
+
+    /**
      * Get the player's party
      * @return - Party info
      */

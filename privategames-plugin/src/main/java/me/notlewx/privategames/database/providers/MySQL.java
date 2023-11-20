@@ -88,7 +88,7 @@ public class MySQL implements Database {
     public void createTables() {
         try {
             Connection c = db.getConnection();
-            PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS " + s + "_private_games(player varchar(200), privateGameEnabled varchar(200), oneHitOneKill varchar(200), lowGravity varchar(200), speed int, bedInstaBreak varchar(200), maxTeamUpgrades varchar(200), allowMapBreak varchar(200), noDiamonds varchar(200), noEmeralds varchar(200), respawnEventTime int, healthBuffLevel int, eventsTime int)");
+            PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS " + s + "_private_games(player varchar(200), privateGameEnabled varchar(200), oneHitOneKill varchar(200), lowGravity varchar(200), speed int, bedInstaBreak varchar(200), maxTeamUpgrades varchar(200), allowMapBreak varchar(200), noDiamonds varchar(200), noEmeralds varchar(200), respawnEventTime int, healthBuffLevel int, eventsTime int, allowJoin varchar(200), autoStart varchar(200))");
             ps.executeUpdate();
             ps.close();
             c.close();
@@ -110,7 +110,7 @@ public class MySQL implements Database {
                     c.close();
                 }
                 else {
-                    String sql = "INSERT INTO " + s + "_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql = "INSERT INTO " + s + "_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime, allowJoin, autoStart) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement ps = c.prepareStatement(sql);
                     ps.setString(1, player.getUniqueId().toString());
                     ps.setString(2, "false");
@@ -125,6 +125,8 @@ public class MySQL implements Database {
                     ps.setInt(11, 0);
                     ps.setInt(12, 0);
                     ps.setInt(13, 0);
+                    ps.setString(14, "true");
+                    ps.setString(15, "true");
                     ps.executeUpdate();
                     ps.close();
                     c.close();
@@ -164,20 +166,20 @@ public class MySQL implements Database {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return null;
     }
 
     public Connection getConnection() {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = db.getConnection();
         } catch (SQLException e) {
             try {
                 connection = db.getConnection();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                throw new RuntimeException(ex);
             }
         }
         return connection;

@@ -16,6 +16,27 @@ public class MessagesData {
             YamlConfiguration yml = l.getYml();
             switch (l.getIso()) {
                 default:
+                    yml.addDefault(HELP_MESSAGE, Arrays.asList(
+                            "&8&m-----------------------------------------------------",
+                            "&6Private Games &7- &eHelp",
+                            "",
+                            "&7- &e/pg gui &7- &aOpen the private games menu",
+                            "&7- &e/pg enable &7- &aEnable private games",
+                            "&7- &e/pg disable &7- &aDisable private games",
+                            "&7- &e/pg join <player> &7- &aJoin to the private game of a player",
+                            "&7- &e/pg leave &7- &aLeave the private game of a player",
+                            "&8&m-----------------------------------------------------"
+                    ));
+                    yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
+                            "&8&m-----------------------------------------------------",
+                            "&6Private Games &7- &eAdmin Help",
+                            "",
+                            "&7- &e/pg reload &7- &aReload the messages",
+                            "&7- &e/pg enable admin &7- &aEnable the private games only for you (party too)",
+                            "&7- &e/pg disable admin &7- &aDisable the private games only for you (party too)",
+                            "&8&m-----------------------------------------------------"
+
+                    ));
                     yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate Game Settings");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "with up to 11 different options!"));
@@ -60,6 +81,12 @@ public class MessagesData {
                     yml.addDefault(ITEM_BED_INSTA_BREAK_LORE, Arrays.asList("&8Game Specific", "", "&7Beds break with a single punch", "", "{state}"));
                     yml.addDefault(ITEM_MAX_TEAM_UPGRADES_NAME, "&aMax Team Upgrades");
                     yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8Game Specific", "", "&7All teams will start with maxed", "&7out team upgrade", "", "{state}"));
+                    yml.addDefault(ITEM_OPTIONS_NAME, "&aOptions");
+                    yml.addDefault(ITEM_OPTIONS_LORE, Arrays.asList("&7Click here to open arena options", "", "&7On this menu you can configure", "&7arena attributes and your settings", "", "&eClick to open!"));
+                    yml.addDefault(ITEM_START_NAME, "&aStart");
+                    yml.addDefault(ITEM_START_LORE, Arrays.asList("&7Click here to start the game", "", "&7You can start the game if you are", "&7the owner of the party", "", "&eClick to start!"));
+                    yml.addDefault(ITEM_GAMEMODE_CHANGER_NAME, "&aGamemode Changer");
+                    yml.addDefault(ITEM_GAMEMODE_CHANGER_LORE, Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&eClick to change!"));
                     yml.addDefault(SUBMENU_SPEED_NAME, "&8Speed");
                     yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aNo Speed");
                     yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, Arrays.asList("{state}"));
@@ -101,7 +128,9 @@ public class MessagesData {
                     yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME, "&aGo Back");
                     yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_LORE, Arrays.asList("&7Go Back to the settings menu"));
                     yml.addDefault(SUBMENU_OPTIONS_GENERATORS_NAME, "&bGenerators");
-                    yml.addDefault(SUBMENU_OPTIONS_GENERATORS_LORE, Arrays.asList("&7Click here to open arena generators", "", "&7On this menu you can configure", "&7generator attributes", "", "&eClick to open!"));
+                    yml.addDefault(SUBMENU_OPTIONS_GENERATORS_LORE, Arrays.asList("&7Click here to open arena generators", "", "&7Configure generator attributes here", "", "&eClick to open!"));
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aEnabled");
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cDisabled");
                     yml.addDefault(NO_SPEED_MEANING, "&7No speed");
                     yml.addDefault(SPEED_I_MEANING, "&7Speed I");
                     yml.addDefault(SPEED_II_MEANING, "&7Speed II");
@@ -127,8 +156,23 @@ public class MessagesData {
                     yml.addDefault(SPEED_MEANING, "&7Speed");
                     yml.addDefault(EVENTS_TIME_MEANING, "&7Events Time");
                     yml.addDefault(RESPAWN_EVENT_TIME_MEANING, "&7Respawn Time");
-                    yml.addDefault(SUBMENU_GENERATORS_TITLE, "Arena generators");
-                    yml.addDefault(SUBMENU_GENERATOR_ITEM_LORE, Arrays.asList("&7Team: {team}", "&7Location: {location}", "&7Amount: {amount}", "&7Delay: {delay}",  "§7Spawn Limit: {spawnLimit}"));
+                    yml.addDefault(SUBMENU_GAMEMODE_CHANGER_TITLE, "&8Gamemode Changer");
+                    yml.addDefault(SUBMENU_OPTIONS_TITLE, "Options");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_NAME, "&aEnable AutoStart");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE, Arrays.asList("&7Enable the auto start of the game", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME, "&aAllow Others to Join");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE, Arrays.asList("&7Allow others to join your game", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_BACK_NAME, "&aGo Back");
+                    yml.addDefault(SUBMENU_OPTIONS_BACK_LORE, Arrays.asList("&7Go Back to the settings menu"));
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_TITLE, "Arena generators");
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_ITEM_LORE, Arrays.asList("&7Team: {team}", "&7Location: {location}", "&7Amount: {amount}", "&7Delay: {delay}",  "§7Spawn Limit: {spawnLimit}"));
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_TITLE, "Generator options");
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME, "&aGo Back");
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE, Arrays.asList("&7Go Back to the generators menu"));
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aEnabled");
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cDisabled");
+                    yml.addDefault(MENU_CLICK_TO_START_MEANING, "&eClick to start!");
+                    yml.addDefault(MENU_STARTING_MEANING, "&aStarting...");
                     break;
                 case "es":
                     yml.addDefault(MAIN_MENU_NAME, "&8Ajustes de Partida Privada");
@@ -699,6 +743,8 @@ public class MessagesData {
             MENU_SELECTED_MEANING = PATH + "menu.selected-meaning",
             PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER = PATH + "scoreboard-placeholder",
             MENU_CLICK_TO_SELECT_MEANING = PATH + "menu.click-to-select-meaning",
+            MENU_CLICK_TO_START_MEANING = PATH + "menu.click-to-start-meaning",
+            MENU_STARTING_MEANING = PATH + "menu.starting-meaning",
             MENU_BACK_ITEM_NAME = PATH + "menu.back-item.name",
             MENU_BACK_ITEM_LORE = PATH + "menu.back-item.lore",
             PRIVATE_GAME_MENU_ITEM_NAME = PATH + "menu.private-game-item.name",
@@ -718,6 +764,7 @@ public class MessagesData {
             PRIVATE_GAME_COULDNT_JOIN = PATH + "game.couldnt-join",
             PRIVATE_GAME_CANT_IN_GAME = PATH + "game.cant-in-game",
             HELP_MESSAGE = PATH + "help-message",
+            ADMIN_HELP_MESSAGE = PATH + "admin-help-message",
             NO_SPEED_MEANING = PATH + "meanings.speed.no-speed",
             SPEED_MEANING = PATH + "meanings.speed.normal",
             SPEED_I_MEANING = PATH + "meanings.speed.speed1",
@@ -837,14 +884,16 @@ public class MessagesData {
         SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE = PATH + "menu.submenu.options.auto-start.lore",
         SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME = PATH + "menu.submenu.options.allow-join.name",
         SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE = PATH + "menu.submenu.options.allow-join.lore",
+        SUBMENU_OPTIONS_MEANING_ENABLED = PATH + "menu.submenu.options.enabled-meaning",
+        SUBMENU_OPTIONS_MEANING_DISABLED = PATH + "menu.submenu.options.disabled-meaning",
         SUBMENU_OPTIONS_GENERATORS_NAME = PATH + "menu.submenu.options.generators.name",
         SUBMENU_OPTIONS_GENERATORS_LORE = PATH + "menu.submenu.options.generators.lore",
         SUBMENU_OPTIONS_BACK_NAME = PATH + "menu.submenu.options.back-item.name",
         SUBMENU_OPTIONS_BACK_LORE = PATH + "menu.submenu.options.back-item.lore",
 
-    SUBMENU_GENERATORS_TITLE = PATH + "menu.submenu.generators.title",
+    SUBMENU_GENERATORS_OPTIONS_TITLE = PATH + "menu.submenu.generators.title",
             SUBMENU_GENERATOR_OPTIONS_TITLE = PATH + "menu.submenu.generators.config.title",
-            SUBMENU_GENERATOR_ITEM_LORE = PATH + "menu.submenu.generators.config.gen-item.lore",
+            SUBMENU_GENERATOR_OPTIONS_ITEM_LORE = PATH + "menu.submenu.generators.config.gen-item.lore",
             SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME = PATH + "menu.submenu.generators.config.content.back-item.name",
             SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE = PATH + "menu.submenu.generators.config.content.back-item.lore";
 }

@@ -35,13 +35,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
@@ -55,115 +51,118 @@ public class PrivateArenaListener implements Listener {
 
 
         for (Player p : e.getArena().getPlayers()) {
-            List<String> modifiers = new ArrayList<>();
             List<String> message = Utility.getList(p, PRIVATE_GAME_ENABLED_MODIFIERS);
-            modifiers.add(message.get(0));
-            modifiers.add(message.get(1).replace("{player}", pp.getPlayer().getDisplayName()));
-            if (pp.getPlayerSettings().isOneHitOneKillEnabled()) {
-                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ONE_HIT_ONE_KILL_MEANING)));
+            List<String> finalMessage = new ArrayList<>();
+            for (String m : message) {
+                if (m.equals("{modifiers}")) {
+                    if (pp.getPlayerSettings().isOneHitOneKillEnabled()) {
+                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ONE_HIT_ONE_KILL_MEANING)));
+                    }
+                    switch (pp.getPlayerSettings().getHealthBuffLevel()) {
+                        case 0:
+                        case 1:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, NORMAL_HEALTH_MEANING)));
+                            break;
+                        case 2:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, DOUBLE_HEALTH_MEANING)));
+                            break;
+                        case 3:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, TRIPLE_HEALTH_MEANING)));
+                            break;
+                    }
+                    if (pp.getPlayerSettings().isLowGravityEnabled()) {
+                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ONE_HIT_ONE_KILL_MEANING)));
+                    }
+                    switch (pp.getPlayerSettings().getSpeedLevel()) {
+                        case 0:
+                        case 2:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, NO_SPEED_MEANING)));
+                            break;
+                        case 1:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, SPEED_I_MEANING)));
+                            break;
+                        case 3:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, SPEED_II_MEANING)));
+                            break;
+                        case 4:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, SPEED_III_MEANING)));
+                            break;
+                    }
+                    switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
+                        case 0:
+                        case 2:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_II_MEANING)));
+                            break;
+                        case 1:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_I_MEANING)));
+                            break;
+                        case 3:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_III_MEANING)));
+                            break;
+                    }
+                    switch (pp.getPlayerSettings().getEventsTimeLevel()) {
+                        case 0:
+                        case 2:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_NORMAL_MEANING)));
+                            break;
+                        case 1:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_SLOWER_MEANING)));
+                            break;
+                        case 3:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_FAST_MEANING)));
+                            break;
+                        case 4:
+                            finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
+                                    .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
+                                    .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_FASTER_MEANING)));
+                            break;
+                    }
+                    if (pp.getPlayerSettings().isNoEmeraldsEnabled()) {
+                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, NO_EMERALDS_MEANING)));
+                    }
+                    if (pp.getPlayerSettings().isNoDiamondsEnabled()) {
+                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, NO_DIAMONDS_MEANING)));
+                    }
+                    if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {
+                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ALLOW_MAP_BREAK_MEANING)));
+                    }
+                    if (pp.getPlayerSettings().isBedInstaBreakEnabled()) {
+                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, BED_INSTA_BREAK_MEANING)));
+                    }
+                    if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) {
+                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, MAX_TEAM_UPGRADES_MEANING)));
+                    }
+                } else {
+                    finalMessage.add(m.replace("{player}", pp.getPlayer().getDisplayName()));
+                }
             }
-            switch (pp.getPlayerSettings().getHealthBuffLevel()) {
-                case 0:
-                case 1:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, NORMAL_HEALTH_MEANING)));
-                    break;
-                case 2:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, DOUBLE_HEALTH_MEANING)));
-                    break;
-                case 3:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, HEALTH_BUFF_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, TRIPLE_HEALTH_MEANING)));
-                    break;
-            }
-            if (pp.getPlayerSettings().isLowGravityEnabled()) {
-                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ONE_HIT_ONE_KILL_MEANING)));
-            }
-            switch (pp.getPlayerSettings().getSpeedLevel()) {
-                case 0:
-                case 2:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, NO_SPEED_MEANING)));
-                    break;
-                case 1:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, SPEED_I_MEANING)));
-                    break;
-                case 3:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, SPEED_II_MEANING)));
-                    break;
-                case 4:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, SPEED_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, SPEED_III_MEANING)));
-                    break;
-            }
-            switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
-                case 0:
-                case 2:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_II_MEANING)));
-                    break;
-                case 1:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_I_MEANING)));
-                    break;
-                case 3:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, RESPAWN_EVENT_TIME_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, RESPAWN_EVENT_TIME_III_MEANING)));
-                    break;
-            }
-            switch (pp.getPlayerSettings().getEventsTimeLevel()) {
-                case 0:
-                case 2:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_NORMAL_MEANING)));
-                    break;
-                case 1:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_SLOWER_MEANING)));
-                    break;
-                case 3:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_FAST_MEANING)));
-                    break;
-                case 4:
-                    modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT)
-                            .replace("{modifier}", Utility.getMsg(p, EVENTS_TIME_MEANING))
-                            .replace("{selected}", Utility.getMsg(p, EVENTS_TIME_FASTER_MEANING)));
-                    break;
-            }
-            if (pp.getPlayerSettings().isNoEmeraldsEnabled()) {
-                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, NO_EMERALDS_MEANING)));
-            }
-            if (pp.getPlayerSettings().isNoDiamondsEnabled()) {
-                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, NO_DIAMONDS_MEANING)));
-            }
-            if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {
-                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ALLOW_MAP_BREAK_MEANING)));
-            }
-            if (pp.getPlayerSettings().isBedInstaBreakEnabled()) {
-                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, BED_INSTA_BREAK_MEANING)));
-            }
-            if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) {
-                modifiers.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, MAX_TEAM_UPGRADES_MEANING)));
-            }
-            modifiers.add(message.get(3));
-            for (String m : modifiers) {
+            for (String m : finalMessage) {
                 p.sendMessage(m);
             }
         }
@@ -171,15 +170,18 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onGeneratorUpgrade(GeneratorUpgradeEvent e) {
-        /*
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getGenerator().getArena().getArenaName())) return;
-        if (GeneratorProperties.getGenProps().get(e.getGenerator()) == null) return;
-        GeneratorProperties.Properties props = GeneratorProperties.getGenProps().get(e.getGenerator());
+
+        IPrivateArena a = api.getPrivateArenaUtil().getPrivateArenaByName(e.getGenerator().getArena().getArenaName());
+
+        if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()) == null) return;
+        if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()).getProperties(e.getGenerator()) == null) return;
+
+        GeneratorProperties.Properties props = GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()).getProperties(e.getGenerator());
         IGenerator gen = e.getGenerator();
         gen.setDelay(props.getDelay());
         gen.setAmount(props.getAmount());
         gen.setSpawnLimit(props.getSpawnLimit());
-         */
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -404,70 +406,68 @@ public class PrivateArenaListener implements Listener {
                     if (level != tiers.size()) continue;
                     team.getTeamUpgradeTiers().put(upgrade, level-1);
 
-                    for (String r : upgradesConfig.getYml().getStringList(upgrade + "." + tier + ".recieve")) {
-                        String[] recieve = r.split(":");
-                        String action = recieve[0];
-                        String option = recieve[1].replace(" ", "");
-                        switch (action) {
+                    for (String recieve : upgradesConfig.getYml().getStringList(upgrade + "." + tier + ".receive")) {
+                        String[] r = recieve.split(":");
+                        switch (r[0]) {
                             case "generator-edit":
-                                switch (recieve[1].replace(" ", "").split(",")[0]) {
+                                switch (r[1].replace(" ", "").split(",")[0]) {
                                     case "iron":
                                         team.getGenerators().stream().filter(g -> g.getType() == GeneratorType.IRON).forEach(g -> {
-                                            g.setDelay(Integer.parseInt(option.split(",")[1]));
-                                            g.setAmount(Integer.parseInt(option.split(",")[2]));
-                                            g.setSpawnLimit(Integer.parseInt(option.split(",")[3]));
+                                            g.setDelay(Double.parseDouble(r[1].replace(" ", "").split(",")[1]));
+                                            g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                            g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
                                         });
                                         break;
                                     case "gold":
                                         team.getGenerators().stream().filter(g -> g.getType() == GeneratorType.GOLD).forEach(g -> {
-                                            g.setDelay(Integer.parseInt(option.split(",")[1]));
-                                            g.setAmount(Integer.parseInt(option.split(",")[2]));
-                                            g.setSpawnLimit(Integer.parseInt(option.split(",")[3]));
+                                            g.setDelay(Double.parseDouble(r[1].replace(" ", "").split(",")[1]));
+                                            g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                            g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
                                         });
                                         break;
                                     case "emerald":
                                         IGenerator g = new OreGenerator(team.getGenerators().get(0).getLocation(), a, GeneratorType.CUSTOM, team);
                                         g.setOre(new ItemStack(Material.EMERALD));
-                                        g.setDelay(Integer.parseInt(option.split(",")[1]));
-                                        g.setAmount(Integer.parseInt(option.split(",")[2]));
-                                        g.setSpawnLimit(Integer.parseInt(option.split(",")[3]));
+                                        g.setDelay(Double.parseDouble(r[1].replace(" ", "").split(",")[1]));
+                                        g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
                                         team.getGenerators().add(g);
                                         break;
                                     case "diamond":
                                         IGenerator g2 = new OreGenerator(team.getGenerators().get(0).getLocation(), a, GeneratorType.CUSTOM, team);
                                         g2.setOre(new ItemStack(Material.DIAMOND));
-                                        g2.setDelay(Integer.parseInt(option.split(",")[1]));
-                                        g2.setAmount(Integer.parseInt(option.split(",")[2]));
-                                        g2.setSpawnLimit(Integer.parseInt(option.split(",")[3]));
+                                        g2.setDelay(Double.parseDouble(r[1].replace(" ", "").split(",")[1]));
+                                        g2.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        g2.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
                                         team.getGenerators().add(g2);
                                         break;
                                 }
                                 break;
                             case "player-effect":
-                                switch (option.split(",")[3]) {
+                                switch (r[1].replace(" ", "").split(",")[3]) {
                                     case "base":
-                                        PotionEffectType type = PotionEffectType.getByName(option.split(",")[0]);
-                                        team.addBaseEffect(type, Integer.parseInt(option.split(",")[1]), Integer.parseInt(option.split(",")[2]));
+                                        PotionEffectType type = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
+                                        team.addBaseEffect(type, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
                                         break;
                                     case "team":
-                                        PotionEffectType type2 = PotionEffectType.getByName(option.split(",")[0]);
-                                        team.addTeamEffect(type2, Integer.parseInt(option.split(",")[1]), Integer.parseInt(option.split(",")[2]));
+                                        PotionEffectType type2 = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
+                                        team.addTeamEffect(type2, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
                                         break;
                                 }
                                 break;
                             case "enchant-item":
-                                Enchantment ecnh =  Enchantment.getByName(option.split(",")[0]);
-                                switch (option.split(",")[2]) {
+                                Enchantment ecnh =  Enchantment.getByName(r[1].split(",")[0].replace(" ", ""));
+                                switch (r[1].split(",")[2]) {
                                     case "armor":
-                                        team.addArmorEnchantment(ecnh, Integer.parseInt(option.split(",")[1]));
+                                        team.addArmorEnchantment(ecnh, Integer.parseInt(r[1].split(",")[1]));
                                         break;
                                     case "sword":
-                                        team.addSwordEnchantment(ecnh, Integer.parseInt(option.split(",")[1]));
+                                        team.addSwordEnchantment(ecnh, Integer.parseInt(r[1].split(",")[1]));
                                         break;
                                 }
                                 break;
                             case "dragon":
-                                team.setDragonAmount(Integer.parseInt(option));
+                                team.setDragonAmount(Integer.parseInt(r[1].replace(" ", "")));
                                 break;
                         }
                     }

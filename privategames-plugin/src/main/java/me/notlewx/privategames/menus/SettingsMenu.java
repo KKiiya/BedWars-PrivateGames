@@ -1,12 +1,14 @@
 package me.notlewx.privategames.menus;
 
+import com.andrei1058.bedwars.api.arena.GameState;
+import com.tomkeuper.bedwars.api.arena.IArena;
+import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.config.bedwars1058.MessagesData;
 import me.notlewx.privategames.menus.submenus.EventsTimeMenu;
 import me.notlewx.privategames.menus.submenus.HealthMenu;
 import me.notlewx.privategames.menus.submenus.RespawnTimeMenu;
 import me.notlewx.privategames.menus.submenus.SpeedMenu;
-import me.notlewx.privategames.menus.submenus.generators.GeneratorsMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
@@ -20,8 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.stream.Collectors;
 
-import static me.notlewx.privategames.PrivateGames.api;
-import static me.notlewx.privategames.PrivateGames.mainConfig;
+import static me.notlewx.privategames.PrivateGames.*;
 import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
@@ -148,14 +149,23 @@ public class SettingsMenu implements GUIHolder {
         }
         ItemMeta maxTeamUpgradesMeta = maxTeamUpgrades.getItemMeta();
 
-        Material generatorSettingsMat = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATORS_MATERIAL));
-        ItemStack generatorSettings;
-        if (generatorSettingsMat == Material.SKULL_ITEM) {
-            generatorSettings = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATORS_HEAD_URL));
+        Material optionsMat = Material.getMaterial(mainConfig.getString(OPTIONS_MATERIAL));
+        ItemStack options;
+        if (optionsMat == Material.SKULL_ITEM) {
+            options = Utility.getSkull(mainConfig.getString(OPTIONS_HEAD_URL));
         } else {
-            generatorSettings = new ItemStack(generatorSettingsMat, 1, (byte) mainConfig.getInt(OPTIONS_GENERATORS_ID));
+            options = new ItemStack(optionsMat, 1, (byte) mainConfig.getInt(OPTIONS_ID));
         }
-        ItemMeta generatorSettingsMeta = generatorSettings.getItemMeta();
+        ItemMeta optionsMeta = options.getItemMeta();
+
+        Material startMat = Material.getMaterial(mainConfig.getString(START_GAME_MATERIAL));
+        ItemStack start;
+        if (startMat == Material.SKULL_ITEM) {
+            start = Utility.getSkull(mainConfig.getString(START_GAME_HEAD_URL));
+        } else {
+            start = new ItemStack(startMat, 1, (byte) mainConfig.getInt(START_GAME_ID));
+        }
+        ItemMeta startMeta = start.getItemMeta();
 
         Material matBack = Material.getMaterial(mainConfig.getString(BACK_MATERIAL));
         ItemStack back;
@@ -235,8 +245,40 @@ public class SettingsMenu implements GUIHolder {
         }
         maxTeamUpgradesMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-        // generatorSettingsMeta.setDisplayName(Utility.getMsg(player, SUBMENU_OPTIONS_GENERATORS_NAME));
-        // generatorSettingsMeta.setLore(Utility.getList(player, SUBMENU_OPTIONS_GENERATORS_LORE));
+        optionsMeta.setDisplayName(Utility.getMsg(player, ITEM_OPTIONS_NAME));
+        optionsMeta.setLore(Utility.getList(player, ITEM_OPTIONS_LORE));
+
+        switch (support) {
+            case BEDWARS2023:
+                if (api.getPrivateArenaUtil().isPlaying(player)) {
+                    IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+                    if (a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.starting) {
+                        startMeta.setDisplayName(Utility.getMsg(player, ITEM_START_NAME));
+                        startMeta.setLore(Utility.getList(player, ITEM_START_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_START_MEANING))).collect(Collectors.toList()));
+                        start.removeEnchantment(Enchantment.DURABILITY);
+                    } else {
+                        startMeta.setDisplayName(Utility.getMsg(player, ITEM_START_NAME));
+                        startMeta.setLore(Utility.getList(player, ITEM_START_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_STARTING_MEANING))).collect(Collectors.toList()));
+                        start.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                    }
+                }
+                break;
+            case BEDWARS1058:
+                if (api.getPrivateArenaUtil().isPlaying(player)) {
+                    com.andrei1058.bedwars.api.arena.IArena a = PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+                    if (a.getStatus() != GameState.starting) {
+                        startMeta.setDisplayName(Utility.getMsg(player, ITEM_START_NAME));
+                        startMeta.setLore(Utility.getList(player, ITEM_START_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_START_MEANING))).collect(Collectors.toList()));
+                        start.removeEnchantment(Enchantment.DURABILITY);
+                    } else {
+                        startMeta.setDisplayName(Utility.getMsg(player, ITEM_START_NAME));
+                        startMeta.setLore(Utility.getList(player, ITEM_START_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_STARTING_MEANING))).collect(Collectors.toList()));
+                        start.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                    }
+                }
+                break;
+        }
+        startMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         backMeta.setDisplayName(Utility.getMsg(player, MENU_BACK_ITEM_NAME));
         backMeta.setLore(Utility.getList(player, MENU_BACK_ITEM_LORE));
@@ -311,7 +353,8 @@ public class SettingsMenu implements GUIHolder {
         bedInstaBreak.setItemMeta(bedInstaBreakMeta);
         maxTeamUpgrades.setItemMeta(maxTeamUpgradesMeta);
 
-        // generatorSettings.setItemMeta(generatorSettingsMeta);
+        options.setItemMeta(optionsMeta);
+        start.setItemMeta(startMeta);
 
         back.setItemMeta(backMeta);
 
@@ -345,7 +388,8 @@ public class SettingsMenu implements GUIHolder {
         if (mainConfig.getBoolean(BED_INSTA_BREAK)) inventory.setItem(mainConfig.getInt(BED_INSTA_BREAK_POSITION), bedInstaBreak);
         if (mainConfig.getBoolean(MAX_TEAM_UPGRADES)) inventory.setItem(mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION), maxTeamUpgrades);
 
-        // if (mainConfig.getBoolean(OPTIONS_GENERATORS)) inventory.setItem(mainConfig.getInt(OPTIONS_GENERATORS_POSITION), generatorSettings);
+        if (mainConfig.getBoolean(OPTIONS_ENABLE)) inventory.setItem(mainConfig.getInt(OPTIONS_POSITION), options);
+        if (mainConfig.getBoolean(START_GAME)) if (api.getPrivateArenaUtil().isPlaying(player)) inventory.setItem(mainConfig.getInt(START_GAME_POSITION), start);
 
         if (mainConfig.getBoolean(BACK_ENABLE)) inventory.setItem(mainConfig.getInt(BACK_POSITION), back);
     }
@@ -391,14 +435,26 @@ public class SettingsMenu implements GUIHolder {
             else if (e.getSlot() == mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION)) {
                 playerData.setMaxTeamUpgradesEnabled(!playerData.isMaxTeamUpgradesEnabled());
                 new SettingsMenu(player);
-            }
-            /* else if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_POSITION)) {
-                if (api.getPrivateArenaUtil().getPrivateArenaByPlayer(player) == null) {
-                    player.sendMessage(Utility.c("&cNot in an arena!"));
-                    return;
+            } else if (e.getSlot() == mainConfig.getInt(OPTIONS_POSITION)) {
+                new OptionsMenu(player);
+            } else if (e.getSlot() == mainConfig.getInt(START_GAME_POSITION)) {
+                switch (support) {
+                    case BEDWARS2023:
+                        IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+                        if (a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.playing) {
+                            a.changeStatus(com.tomkeuper.bedwars.api.arena.GameState.starting);
+                            a.getStartingTask().setCountdown(bw2023config.getInt("countdowns.game-start-regular"));
+                        }
+                        break;
+                    case BEDWARS1058:
+                        com.andrei1058.bedwars.api.arena.IArena a1 = PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+                        if (a1.getStatus() != GameState.playing) {
+                            a1.changeStatus(GameState.starting);
+                            a1.getStartingTask().setCountdown(bw1058config.getInt("countdowns.game-start-regular"));
+                        }
+                        break;
                 }
-                new GeneratorsMenu(player, api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
-            } */ else if (e.getSlot() == mainConfig.getInt(BACK_POSITION)) {
+            } else if (e.getSlot() == mainConfig.getInt(BACK_POSITION)) {
                 if (mainConfig.getString(BACK_COMMAND).equalsIgnoreCase("close")) {
                     player.closeInventory();
                 } else {

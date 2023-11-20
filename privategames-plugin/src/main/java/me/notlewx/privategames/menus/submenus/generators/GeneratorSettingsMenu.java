@@ -12,13 +12,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static me.notlewx.privategames.PrivateGames.api;
-import static me.notlewx.privategames.PrivateGames.support;
-import static me.notlewx.privategames.config.bedwars2023.MessagesData.SUBMENU_GENERATOR_ITEM_LORE;
-import static me.notlewx.privategames.utils.GeneratorProperties.playerGenProps;
+import static me.notlewx.privategames.PrivateGames.*;
+import static me.notlewx.privategames.PrivateGames.mainConfig;
+import static me.notlewx.privategames.config.MainConfig.*;
+import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class GeneratorSettingsMenu implements GUIHolder {
     private final Player p;
@@ -77,7 +77,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
         String name = gene.getType().toString();
         ItemMeta geneMeta = gene.getItemMeta();
         geneMeta.setDisplayName(Utility.c("&a" + name + " generator"));
-        geneMeta.setLore(Utility.getList(p, SUBMENU_GENERATOR_ITEM_LORE).stream().map(s -> s
+        geneMeta.setLore(Utility.getList(p, SUBMENU_GENERATOR_OPTIONS_ITEM_LORE).stream().map(s -> s
                 .replace("{team}", team)
                 .replace("{location}", location)
                 .replace("{amount}", amount)
@@ -90,40 +90,53 @@ public class GeneratorSettingsMenu implements GUIHolder {
         ItemStack reduceAmount = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceAmountMeta = reduceAmount.getItemMeta();
         reduceAmountMeta.setDisplayName(Utility.c("&cReduce Amount"));
-        reduceAmountMeta.setLore((Arrays.asList("", "&7Reduce the amount of minerals dropped", "&7in this generator", "", "&eClick to decrease!")).stream().map(Utility::c).collect(Collectors.toList()));
+        reduceAmountMeta.setLore(Stream.of("", "&7Reduce the amount of minerals dropped", "&7in this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceAmount.setItemMeta(reduceAmountMeta);
 
         ItemStack increaseAmount = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseAmountMeta = increaseAmount.getItemMeta();
         increaseAmountMeta.setDisplayName(Utility.c("&aIncrease Amount"));
-        increaseAmountMeta.setLore((Arrays.asList("", "&7Increase the amount of minerals dropped", "&7in this generator", "", "&eClick to increase!")).stream().map(Utility::c).collect(Collectors.toList()));
+        increaseAmountMeta.setLore(Stream.of("", "&7Increase the amount of minerals dropped", "&7in this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
         increaseAmount.setItemMeta(increaseAmountMeta);
 
 
         ItemStack reduceDelay = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceDelayMeta = reduceDelay.getItemMeta();
         reduceDelayMeta.setDisplayName(Utility.c("&cReduce Delay"));
-        reduceDelayMeta.setLore((Arrays.asList("", "&7Reduce the delay of", "&7this generator", "", "&eClick to decrease!")).stream().map(Utility::c).collect(Collectors.toList()));
+        reduceDelayMeta.setLore(Stream.of("", "&7Reduce the delay of", "&7this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceDelay.setItemMeta(reduceDelayMeta);
 
         ItemStack increaseDelay = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseDelayMeta = increaseDelay.getItemMeta();
         increaseDelayMeta.setDisplayName(Utility.c("&aIncrease Delay"));
-        increaseDelayMeta.setLore((Arrays.asList("", "&7Increase the delay of", "&7this generator", "", "&eClick to increase!")).stream().map(Utility::c).collect(Collectors.toList()));
+        increaseDelayMeta.setLore(Stream.of("", "&7Increase the delay of", "&7this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
         increaseDelay.setItemMeta(increaseDelayMeta);
 
 
         ItemStack reduceSpawnLimit = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceSpawnLimitMeta = reduceSpawnLimit.getItemMeta();
         reduceSpawnLimitMeta.setDisplayName(Utility.c("&cReduce"));
-        reduceSpawnLimitMeta.setLore((Arrays.asList("", "&7Reduce the amount minerals stacked", "&7in this generator", "", "&eClick to decrease!")).stream().map(Utility::c).collect(Collectors.toList()));
+        reduceSpawnLimitMeta.setLore(Stream.of("", "&7Reduce the amount minerals stacked", "&7in this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceSpawnLimit.setItemMeta(reduceSpawnLimitMeta);
 
         ItemStack increaseSpawnLimit = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseSpawnLimitMeta = increaseSpawnLimit.getItemMeta();
         increaseSpawnLimitMeta.setDisplayName(Utility.c("&aIncrease Spawn Limit"));
-        increaseSpawnLimitMeta.setLore((Arrays.asList("", "&7Increase the amount minerals stacked", "&7in this generator", "", "&eClick to increase!")).stream().map(Utility::c).collect(Collectors.toList()));
+        increaseSpawnLimitMeta.setLore(Stream.of("", "&7Increase the amount minerals stacked", "&7in this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
         increaseSpawnLimit.setItemMeta(increaseSpawnLimitMeta);
+
+        Material backMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL));
+        ItemStack back;
+        if (backMaterial == Material.SKULL_ITEM) {
+            back = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
+        } else {
+            back = new ItemStack(backMaterial, 1, (short) mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_ID));
+        }
+        ItemMeta backMeta = back.getItemMeta();
+
+        backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME));
+        backMeta.setLore(Utility.getList(p, SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE));
+        back.setItemMeta(backMeta);
 
 
 
@@ -138,6 +151,8 @@ public class GeneratorSettingsMenu implements GUIHolder {
 
         inv.setItem(30, reduceSpawnLimit);
         inv.setItem(32, increaseSpawnLimit);
+
+        inv.setItem(35, back);
     }
 
     @Override
@@ -146,11 +161,10 @@ public class GeneratorSettingsMenu implements GUIHolder {
         GeneratorProperties.Properties properties;
         if (support == Support.BEDWARS1058) {
             IGenerator g = (IGenerator) gen;
-            if (GeneratorProperties.getGenProps().get(g) == null) {
-                properties = new GeneratorProperties(g).getProperties();
-            } else {
-                properties = GeneratorProperties.getGenProps().get(g);
+            if (GeneratorProperties.getGeneratorProperties(api.getPrivatePlayer(p)).getProperties(g) == null) {
+                GeneratorProperties.setGeneratorProperties(api.getPrivatePlayer(p), new GeneratorProperties(g));
             }
+            properties = GeneratorProperties.getGeneratorProperties(api.getPrivatePlayer(p)).getProperties(g);
             switch (e.getSlot()) {
                 case 12:
                     if (g.getAmount() == 1) return;
@@ -180,14 +194,13 @@ public class GeneratorSettingsMenu implements GUIHolder {
                     properties.setSpawnLimit(g.getSpawnLimit());
                     break;
             }
-            playerGenProps.put(api.getPrivatePlayer(p), new GeneratorProperties(p));
+            new GeneratorSettingsMenu(p, gen);
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.generator.IGenerator g = (com.tomkeuper.bedwars.api.arena.generator.IGenerator) gen;
-            if (GeneratorProperties.getGenProps().get(g) == null) {
-                properties = new GeneratorProperties(g).getProperties();
-            } else {
-                properties = GeneratorProperties.getGenProps().get(g);
+            if (GeneratorProperties.getGeneratorProperties(api.getPrivatePlayer(p)).getProperties(g) == null) {
+                GeneratorProperties.setGeneratorProperties(api.getPrivatePlayer(p), new GeneratorProperties(g));
             }
+            properties = GeneratorProperties.getGeneratorProperties(api.getPrivatePlayer(p)).getProperties(g);
             switch (e.getSlot()) {
                 case 12:
                     if (g.getAmount() == 1) return;

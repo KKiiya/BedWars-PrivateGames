@@ -4,6 +4,7 @@ import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
 import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
+import com.andrei1058.bedwars.sidebar.BwSidebar;
 import com.andrei1058.bedwars.sidebar.SidebarService;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.party.IParty;
@@ -41,6 +42,20 @@ public class ArenaJoin implements Listener {
         settingsMeta.setLore(Utility.getList(pp.getPlayer(), PRIVATE_GAME_MENU_ITEM_LORE));
         settings.setItemMeta(settingsMeta);
 
+        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+            ISidebar sidebar = SidebarService.getInstance().getSidebar(e.getPlayer());
+            sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
+                if (api.getPrivateArenaUtil().isPlaying(e.getPlayer())) {
+                    return Utility.getMsg(e.getPlayer(), PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
+                } else {
+                    return "";
+                }
+            }));
+            sidebar.getHandle().refreshPlaceholders();
+        }, 1L);
+
+
+        if (e.getArena().getPlayers().size() > 1) return;
         if (e.getArena().isSpectator(pp.getPlayer())) return;
         if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
 
@@ -55,9 +70,11 @@ public class ArenaJoin implements Listener {
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                             pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                        }, 35L);
-                        e.getArena().changeStatus(GameState.starting);
-                        e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+                        }, 20L);
+                        if (pp.getPlayerOptions().isAutoStart()) {
+                            e.getArena().changeStatus(GameState.starting);
+                            e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+                        }
                     }
                 }
             } else if (pp.getPlayer().isOp() || pp.getPlayer().hasPermission("pg.admin")) {
@@ -70,7 +87,7 @@ public class ArenaJoin implements Listener {
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                             pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                        }, 35L);
+                        }, 20L);
                     }
                 } else {
                     List<Player> players = new ArrayList<>();
@@ -80,11 +97,13 @@ public class ArenaJoin implements Listener {
 
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                         pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                    }, 35L);
+                    }, 20L);
                 }
 
-                e.getArena().changeStatus(GameState.starting);
-                e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+                if (pp.getPlayerOptions().isAutoStart()) {
+                    e.getArena().changeStatus(GameState.starting);
+                    e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+                }
             }
         }
     }

@@ -9,10 +9,10 @@ import java.util.HashMap;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class GeneratorProperties {
-    private Object gen;
+    private final Object gen;
+    public HashMap<Object, Properties> genProps = new HashMap<>();
+    private static final HashMap<IPrivatePlayer, GeneratorProperties> playerGenProps = new HashMap<>();
 
-    public static  HashMap<Object, Properties> genProps = new HashMap<>();
-    public static HashMap<IPrivatePlayer, GeneratorProperties> playerGenProps = new HashMap<>();
     public GeneratorProperties(Object gen) {
         this.gen = gen;
         if (support == Support.BEDWARS1058) {
@@ -24,12 +24,17 @@ public class GeneratorProperties {
         }
     }
 
-    public Properties getProperties() {
+    public Properties getProperties(Object gen) {
         return genProps.get(gen);
     }
-
-    public static HashMap<Object, Properties> getGenProps() {
-        return genProps;
+    public Object getGenerator() {
+        return this.gen;
+    }
+    public static GeneratorProperties getGeneratorProperties(IPrivatePlayer player) {
+        return playerGenProps.get(player);
+    }
+    public static void setGeneratorProperties(IPrivatePlayer player, GeneratorProperties props) {
+        playerGenProps.put(player, props);
     }
 
     public static class Properties {

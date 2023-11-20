@@ -3,6 +3,7 @@ me\notlewx\privategames\api\events\PrivateGameEnableEvent.class
 me\notlewx\privategames\api\player\IPrivatePlayer.class
 me\notlewx\privategames\api\PrivateGames$IPrivateArenaUtil.class
 me\notlewx\privategames\api\PrivateGames.class
+me\notlewx\privategames\api\player\IPlayerOptions.class
 me\notlewx\privategames\api\database\Database.class
 me\notlewx\privategames\api\PrivateGames$IMenuUtil.class
 me\notlewx\privategames\api\arena\IPrivateArena.class

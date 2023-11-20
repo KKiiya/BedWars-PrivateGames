@@ -5,6 +5,7 @@ import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -14,8 +15,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-import static me.notlewx.privategames.PrivateGames.api;
-import static me.notlewx.privategames.PrivateGames.support;
+import static me.notlewx.privategames.PrivateGames.*;
+import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class GeneratorsMenu implements GUIHolder {
@@ -34,7 +35,7 @@ public class GeneratorsMenu implements GUIHolder {
     }
 
     private void createInventory() {
-        inv = Bukkit.createInventory(this, 9*4, Utility.getMsg(p, SUBMENU_GENERATORS_TITLE));
+        inv = Bukkit.createInventory(this, 9*4, Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_TITLE));
     }
     private void addContents() {
         if (support == Support.BEDWARS1058) {
@@ -57,7 +58,7 @@ public class GeneratorsMenu implements GUIHolder {
                 ItemStack mat = (a.getOreGenerators().get(i)).getOre();
                 ItemMeta matMeta = mat.getItemMeta();
                 matMeta.setDisplayName("§a" + a.getOreGenerators().get(i).getType().toString());
-                matMeta.setLore(Utility.getList(p, SUBMENU_GENERATOR_ITEM_LORE).stream().map(s -> s
+                matMeta.setLore(Utility.getList(p, SUBMENU_GENERATOR_OPTIONS_ITEM_LORE).stream().map(s -> s
                                 .replace("{team}", team)
                                 .replace("{location}", location)
                                 .replace("{amount}", amount)
@@ -88,7 +89,7 @@ public class GeneratorsMenu implements GUIHolder {
                 ItemStack mat = (a.getOreGenerators().get(i)).getOre();
                 ItemMeta matMeta = mat.getItemMeta();
                 matMeta.setDisplayName("§a" + a.getOreGenerators().get(i).getType().toString());
-                matMeta.setLore(Utility.getList(p, SUBMENU_GENERATOR_ITEM_LORE).stream().map(s -> s
+                matMeta.setLore(Utility.getList(p, SUBMENU_GENERATOR_OPTIONS_ITEM_LORE).stream().map(s -> s
                                 .replace("{team}", team)
                                 .replace("{location}", location)
                                 .replace("{amount}", amount)
@@ -100,6 +101,22 @@ public class GeneratorsMenu implements GUIHolder {
                 inv.setItem(i, mat);
             }
         }
+
+        Material backMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL));
+        ItemStack back;
+        if (backMaterial == Material.SKULL_ITEM) {
+            back = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
+        } else {
+            back = new ItemStack(backMaterial, 1, (short) mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_ID));
+        }
+        ItemMeta backMeta = back.getItemMeta();
+
+        backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME));
+        backMeta.setLore(Utility.getList(p, SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE));
+
+        back.setItemMeta(backMeta);
+
+        inv.setItem(mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION), back);
     }
 
     @Override
@@ -109,7 +126,7 @@ public class GeneratorsMenu implements GUIHolder {
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getInventory().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATORS_TITLE))) {
+        if (e.getInventory().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_TITLE))) {
             new GeneratorSettingsMenu(p, generatorPos.get(e.getSlot()));
         }
     }

@@ -29,7 +29,11 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(NO_DIAMONDS, true);
         yml.addDefault(NO_EMERALDS, true);
         yml.addDefault(GAMEMODE_CHANGER, true);
+        yml.addDefault(START_GAME, true);
+        yml.addDefault(OPTIONS_ENABLE, true);
+        yml.addDefault(OPTIONS_ALLOW_JOIN, true);
         yml.addDefault(OPTIONS_GENERATORS, true);
+        yml.addDefault(OPTIONS_ENABLE_AUTOSTART, true);
         yml.addDefault(SETTINGS_ROWS, 6);
         yml.addDefault(ONE_HIT_ONE_KILL_MATERIAL, "DIAMOND_SWORD");
         yml.addDefault(ONE_HIT_ONE_KILL_POSITION, 10);
@@ -79,6 +83,14 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(GAMEMODE_CHANGER_POSITION, 53);
         yml.addDefault(GAMEMODE_CHANGER_ID, 0);
         yml.addDefault(GAMEMODE_CHANGER_HEAD_URL, "skin-url");
+        yml.addDefault(START_GAME_MATERIAL, "EYE_OF_ENDER");
+        yml.addDefault(START_GAME_POSITION, 51);
+        yml.addDefault(START_GAME_ID, 0);
+        yml.addDefault(START_GAME_HEAD_URL, "skin-url");
+        yml.addDefault(OPTIONS_MATERIAL, "REDSTONE_COMPARATOR");
+        yml.addDefault(OPTIONS_POSITION, 45);
+        yml.addDefault(OPTIONS_ID, 0);
+        yml.addDefault(OPTIONS_HEAD_URL, "skin-url");
         yml.addDefault(BACK_MATERIAL, "ARROW");
         yml.addDefault(BACK_POSITION, 49);
         yml.addDefault(BACK_ENABLE, true);
@@ -161,10 +173,27 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(HEALTH_BUFF_LEVEL_III_POSITION, 15);
         yml.addDefault(HEALTH_BUFF_LEVEL_III_ID, 0);
         yml.addDefault(HEALTH_BUFF_LEVEL_III_HEAD_URL, "skin-url");
+        yml.addDefault(OPTIONS_MENU_ROWS, 4);
+        yml.addDefault(OPTIONS_ALLOWJOIN_MATERIAL, "DIAMOND");
+        yml.addDefault(OPTIONS_ALLOWJOIN_POSITION, 10);
+        yml.addDefault(OPTIONS_ALLOWJOIN_ID, 0);
+        yml.addDefault(OPTIONS_ALLOWJOIN_HEAD_URL, "skin-url");
+        yml.addDefault(OPTIONS_ENABLE_AUTOSTART_MATERIAL, "EYE_OF_ENDER");
+        yml.addDefault(OPTIONS_ENABLE_AUTOSTART_POSITION, 12);
+        yml.addDefault(OPTIONS_ENABLE_AUTOSTART_ID, 0);
+        yml.addDefault(OPTIONS_ENABLE_AUTOSTART_HEAD_URL, "skin-url");
         yml.addDefault(OPTIONS_GENERATORS_MATERIAL, "DIAMOND_BLOCK");
         yml.addDefault(OPTIONS_GENERATORS_POSITION, 45);
         yml.addDefault(OPTIONS_GENERATORS_ID, 0);
         yml.addDefault(OPTIONS_GENERATORS_HEAD_URL, "skin-url");
+        yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL, "ARROW");
+        yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION, 31);
+        yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_ID, 0);
+        yml.addDefault(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL, "skin-url");
+        yml.addDefault(OPTIONS_BACK_MATERIAL, "ARROW");
+        yml.addDefault(OPTIONS_BACK_POSITION, 31);
+        yml.addDefault(OPTIONS_BACK_ID, 0);
+        yml.addDefault(OPTIONS_BACK_HEAD_URL, "skin-url");
         yml.addDefault(MATERIAL, "REDSTONE_BLOCK");
         yml.addDefault(ID, 0);
         yml.addDefault(HEAD_URL, "skin-url");
@@ -186,10 +215,11 @@ public class MainConfig extends ConfigManager {
            NO_DIAMONDS = "enable-modifiers.no-diamonds",
            NO_EMERALDS = "enable-modifiers.no-emeralds",
            GAMEMODE_CHANGER = "enable-modifiers.gamemode-changer",
-           OPTIONS = "enable-modifiers.options",
-           OPTIONS_ENABLE_AUTOSTART = "enable-modifiers.options.enable-auto-start",
-           OPTIONS_ALLOW_JOIN = "enable-modifiers.options.allow-join",
-           OPTIONS_GENERATORS = "enable-modifiers.options.generator-options",
+           OPTIONS_ENABLE = "enable-modifiers.options",
+           OPTIONS_ENABLE_AUTOSTART = "enable-modifiers.options-expansion.enable-auto-start",
+           OPTIONS_ALLOW_JOIN = "enable-modifiers.options-expansion.allow-join",
+           OPTIONS_GENERATORS = "enable-modifiers.options-expansion.generator-options",
+           START_GAME = "enable-modifiers.start-game",
 
 
            SETTINGS_ROWS = "menus.settings.rows",
@@ -330,6 +360,11 @@ public class MainConfig extends ConfigManager {
            OPTIONS_GENERATORS_POSITION = "menus.submenus.options.generators.position",
                    OPTIONS_GENERATORS_ID = "menus.submenus.options.generators.id",
                    OPTIONS_GENERATORS_HEAD_URL = "menus.submenus.options.generators.head-url",
+
+                   OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL = "menus.submenus.options.generators.back-material",
+                   OPTIONS_GENERATOR_OPTIONS_BACK_POSITION = "menus.submenus.options.generators.back-position",
+                   OPTIONS_GENERATOR_OPTIONS_BACK_ID = "menus.submenus.options.generators.back-id",
+                   OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL = "menus.submenus.options.generators.back-head-url",
 
            OPTIONS_BACK_MATERIAL = "menus.submenus.options.back-item.material",
            OPTIONS_BACK_POSITION = "menus.submenus.options.back-item.position",

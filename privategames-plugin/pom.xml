@@ -7,7 +7,7 @@
     <parent>
         <groupId>me.notlewx</groupId>
         <artifactId>BedWars1058-PrivateGames</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </parent>
     <artifactId>privategames-plugin</artifactId>
     <packaging>jar</packaging>
@@ -33,6 +33,10 @@
             <url>https://repo.codemc.io/repository/maven-public/</url>
             <layout>default</layout>
         </repository>
+        <repository>
+            <id>krypton</id>
+            <url>https://repo.kryptonmc.org/releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -51,13 +55,19 @@
         <dependency>
             <groupId>me.notlewx</groupId>
             <artifactId>privategames-api</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.2</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.neznamy</groupId>
+            <artifactId>tab-api</artifactId>
+            <version>4.0.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

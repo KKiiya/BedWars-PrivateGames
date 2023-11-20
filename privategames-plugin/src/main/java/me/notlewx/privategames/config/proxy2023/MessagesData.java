@@ -16,6 +16,27 @@ public class MessagesData {
     public void setupMessages() {
         file = new File(Bukkit.getPluginManager().getPlugin("BWProxy2023").getDataFolder().getPath() + "/Languages/", "messages_en.yml");
         yml = YamlConfiguration.loadConfiguration(file);
+        yml.addDefault(HELP_MESSAGE, Arrays.asList(
+                "&8&m-----------------------------------------------------",
+                "&6Private Games &7- &eHelp",
+                "",
+                "&7- &e/pg gui &7- &aOpen the private games menu",
+                "&7- &e/pg enable &7- &aEnable private games",
+                "&7- &e/pg disable &7- &aDisable private games",
+                "&7- &e/pg join <player> &7- &aJoin to the private game of a player",
+                "&7- &e/pg leave &7- &aLeave the private game of a player",
+                "&8&m-----------------------------------------------------"
+        ));
+        yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
+                "&8&m-----------------------------------------------------",
+                "&6Private Games &7- &eAdmin Help",
+                "",
+                "&7- &e/pg reload &7- &aReload the messages",
+                "&7- &e/pg enable admin &7- &aEnable the private games only for you (party too)",
+                "&7- &e/pg disable admin &7- &aDisable the private games only for you (party too)",
+                "&8&m-----------------------------------------------------"
+
+        ));
         yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
         yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate Game Settings");
         yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "with up to 11 different options!"));
@@ -60,6 +81,12 @@ public class MessagesData {
         yml.addDefault(ITEM_BED_INSTA_BREAK_LORE, Arrays.asList("&8Game Specific", "", "&7Beds break with a single punch", "", "{state}"));
         yml.addDefault(ITEM_MAX_TEAM_UPGRADES_NAME, "&aMax Team Upgrades");
         yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8Game Specific", "", "&7All teams will start with maxed", "&7out team upgrade", "", "{state}"));
+        yml.addDefault(ITEM_OPTIONS_NAME, "&aOptions");
+        yml.addDefault(ITEM_OPTIONS_LORE, Arrays.asList("&7Click here to open arena options", "", "&7On this menu you can configure", "&7arena attributes and your settings", "", "&eClick to open!"));
+        yml.addDefault(ITEM_START_NAME, "&aStart");
+        yml.addDefault(ITEM_START_LORE, Arrays.asList("&7Click here to start the game", "", "&7You can start the game if you are", "&7the owner of the party", "", "&eClick to start!"));
+        yml.addDefault(ITEM_GAMEMODE_CHANGER_NAME, "&aGamemode Changer");
+        yml.addDefault(ITEM_GAMEMODE_CHANGER_LORE, Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&eClick to change!"));
         yml.addDefault(SUBMENU_SPEED_NAME, "&8Speed");
         yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aNo Speed");
         yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, Arrays.asList("{state}"));
@@ -101,7 +128,9 @@ public class MessagesData {
         yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME, "&aGo Back");
         yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_LORE, Arrays.asList("&7Go Back to the settings menu"));
         yml.addDefault(SUBMENU_OPTIONS_GENERATORS_NAME, "&bGenerators");
-        yml.addDefault(SUBMENU_OPTIONS_GENERATORS_LORE, Arrays.asList("&7Click here to open arena generators", "", "&7On this menu you can configure", "&7generator attributes", "", "&eClick to open!"));
+        yml.addDefault(SUBMENU_OPTIONS_GENERATORS_LORE, Arrays.asList("&7Click here to open arena generators", "", "&7Configure generator attributes here", "", "&eClick to open!"));
+        yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aEnabled");
+        yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cDisabled");
         yml.addDefault(NO_SPEED_MEANING, "&7No speed");
         yml.addDefault(SPEED_I_MEANING, "&7Speed I");
         yml.addDefault(SPEED_II_MEANING, "&7Speed II");
@@ -127,8 +156,23 @@ public class MessagesData {
         yml.addDefault(SPEED_MEANING, "&7Speed");
         yml.addDefault(EVENTS_TIME_MEANING, "&7Events Time");
         yml.addDefault(RESPAWN_EVENT_TIME_MEANING, "&7Respawn Time");
-        yml.addDefault(SUBMENU_GENERATORS_TITLE, "Arena generators");
-        yml.addDefault(SUBMENU_GENERATOR_ITEM_LORE, Arrays.asList("&7Team: {team}", "&7Location: {location}", "&7Amount: {amount}", "&7Delay: {delay}",  "§7Spawn Limit: {spawnLimit}"));
+        yml.addDefault(SUBMENU_GAMEMODE_CHANGER_TITLE, "&8Gamemode Changer");
+        yml.addDefault(SUBMENU_OPTIONS_TITLE, "Options");
+        yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_NAME, "&aEnable AutoStart");
+        yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE, Arrays.asList("&7Enable the auto start of the game", "", "{state}"));
+        yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME, "&aAllow Others to Join");
+        yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE, Arrays.asList("&7Allow others to join your game", "", "{state}"));
+        yml.addDefault(SUBMENU_OPTIONS_BACK_NAME, "&aGo Back");
+        yml.addDefault(SUBMENU_OPTIONS_BACK_LORE, Arrays.asList("&7Go Back to the settings menu"));
+        yml.addDefault(SUBMENU_GENERATORS_OPTIONS_TITLE, "Arena generators");
+        yml.addDefault(SUBMENU_GENERATOR_OPTIONS_ITEM_LORE, Arrays.asList("&7Team: {team}", "&7Location: {location}", "&7Amount: {amount}", "&7Delay: {delay}",  "§7Spawn Limit: {spawnLimit}"));
+        yml.addDefault(SUBMENU_GENERATOR_OPTIONS_TITLE, "Generator options");
+        yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME, "&aGo Back");
+        yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE, Arrays.asList("&7Go Back to the generators menu"));
+        yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aEnabled");
+        yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cDisabled");
+        yml.addDefault(MENU_CLICK_TO_START_MEANING, "&eClick to start!");
+        yml.addDefault(MENU_STARTING_MEANING, "&aStarting...");
         yml.options().copyDefaults(true);
         save();
     }

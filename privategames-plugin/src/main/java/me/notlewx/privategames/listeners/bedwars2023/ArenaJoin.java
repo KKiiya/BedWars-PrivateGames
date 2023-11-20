@@ -1,10 +1,11 @@
 package me.notlewx.privategames.listeners.bedwars2023;
 
+import com.tomkeuper.bedwars.BedWars;
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.events.player.PlayerJoinArenaEvent;
-import com.tomkeuper.bedwars.sidebar.BoardListener;
-import com.tomkeuper.bedwars.sidebar.BoardManager;
+import me.neznamy.tab.api.TabAPI;
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
@@ -26,6 +27,7 @@ import static me.notlewx.privategames.config.MainConfig.MATERIAL;
 import static me.notlewx.privategames.config.MainConfig.POSITION;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_LORE;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
+import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER;
 
 public class ArenaJoin implements Listener {
     @EventHandler
@@ -40,6 +42,16 @@ public class ArenaJoin implements Listener {
         settingsMeta.setLore(Utility.getList(pp.getPlayer(), PRIVATE_GAME_MENU_ITEM_LORE));
         settings.setItemMeta(settingsMeta);
 
+        int placeholderRefresh = BedWars.config.getInt("scoreboard-settings.scoreboard.placeholders-refresh-interval");
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%bw_private%", placeholderRefresh, tp -> {
+            if (api.getPrivateArenaUtil().isPlaying((Player) tp.getPlayer())) {
+                return Utility.getMsg((Player) tp.getPlayer(), PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
+            } else {
+                return "";
+            }
+        });
+
+        if (e.getArena().getPlayers().size() > 1) return;
         if (e.getArena().isSpectator(pp.getPlayer())) return;
         if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
 
@@ -55,8 +67,10 @@ public class ArenaJoin implements Listener {
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                             pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
                         }, 35L);
-                        e.getArena().changeStatus(GameState.starting);
-                        e.getArena().getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
+                        if (pp.getPlayerOptions().isAutoStart()) {
+                            e.getArena().changeStatus(GameState.starting);
+                            e.getArena().getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
+                        }
                     }
                 }
             } else if (pp.getPlayer().isOp() || pp.getPlayer().hasPermission("pg.admin")) {
@@ -81,11 +95,10 @@ public class ArenaJoin implements Listener {
                         pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
                     }, 35L);
                 }
-
-                if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting)
-                    return;
-                e.getArena().changeStatus(GameState.starting);
-                e.getArena().getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
+                if (pp.getPlayerOptions().isAutoStart()) {
+                    e.getArena().changeStatus(GameState.starting);
+                    e.getArena().getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
+                }
             }
         }
     }

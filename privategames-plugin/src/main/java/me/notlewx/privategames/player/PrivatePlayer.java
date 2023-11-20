@@ -3,6 +3,7 @@ package me.notlewx.privategames.player;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
+import me.notlewx.privategames.api.player.IPlayerOptions;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
@@ -32,6 +33,12 @@ public class PrivatePlayer implements IPrivatePlayer {
     public IPlayerSettings getPlayerSettings() {
         return new PlayerSettings(player);
     }
+
+    @Override
+    public IPlayerOptions getPlayerOptions() {
+        return new PlayerOptions(player);
+    }
+
     @Override
     @Nullable
     public IParty getPlayerParty() {
