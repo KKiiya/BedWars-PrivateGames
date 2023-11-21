@@ -10,15 +10,11 @@ import com.andrei1058.bedwars.api.events.gameplay.NextEventChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
-import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.arena.OreGenerator;
-import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
-import com.andrei1058.bedwars.sidebar.SidebarService;
 import com.andrei1058.bedwars.api.events.gameplay.GeneratorUpgradeEvent;
-import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.utils.GeneratorProperties;
@@ -264,20 +260,6 @@ public class PrivateArenaListener implements Listener {
             if (e.getArena().getConfig().getBoolean("allow-map-break")) {
                 e.getArena().getConfig().set("allow-map-break", false);
             }
-        }
-
-        for (Player p : e.getArena().getPlayers()) {
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                ISidebar sidebar = SidebarService.getInstance().getSidebar(p);
-                sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
-                    if (api.getPrivateArenaUtil().isPlaying(p)) {
-                        return Utility.getMsg(p, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
-                    } else {
-                        return "";
-                    }
-                }));
-                sidebar.getHandle().refreshPlaceholders();
-            }, 1L);
         }
     }
 

@@ -188,7 +188,7 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(OPTIONS_ENABLE_PRIVATEGAMES_ID, 0);
         yml.addDefault(OPTIONS_ENABLE_PRIVATEGAMES_HEAD_URL, "skin-url");
         yml.addDefault(OPTIONS_GENERATORS_MATERIAL, "DIAMOND_BLOCK");
-        yml.addDefault(OPTIONS_GENERATORS_POSITION, 45);
+        yml.addDefault(OPTIONS_GENERATORS_POSITION, 16);
         yml.addDefault(OPTIONS_GENERATORS_ID, 0);
         yml.addDefault(OPTIONS_GENERATORS_HEAD_URL, "skin-url");
         yml.addDefault(OPTIONS_GENERATORS_BACK_MATERIAL, "ARROW");

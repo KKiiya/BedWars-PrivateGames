@@ -65,7 +65,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
             }
             location = "X: " + g.getLocation().getX() + " Y: " + g.getLocation().getY() + " Z: " + g.getLocation().getZ() + " Pitch: " + g.getLocation().getPitch() + " Yaw: " + g.getLocation().getYaw();
             amount = String.valueOf(g.getAmount());
-            delay = String.valueOf(g.getDelay());
+            delay = String.valueOf(g.getDelay()/4);
             spawnLimit = String.valueOf(g.getSpawnLimit());
             gene = g.getOre();
         } else {
@@ -183,11 +183,11 @@ public class GeneratorSettingsMenu implements GUIHolder {
                     break;
                 case 21:
                     if (g.getDelay() == 1) return;
-                    g.setDelay(g.getDelay()/4 - 1);
+                    g.setDelay(g.getDelay() - 1);
                     properties.setDelay(g.getDelay());
                     break;
                 case 23:
-                    g.setDelay(g.getDelay()/4 + 1);
+                    g.setDelay(g.getDelay() + 1);
                     properties.setDelay(g.getDelay());
                     break;
                 case 30:

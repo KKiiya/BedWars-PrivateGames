@@ -2,6 +2,7 @@ package me.notlewx.privategames.support.bedwars1058;
 
 import com.andrei1058.bedwars.api.BedWars;
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.database.DatabaseType;
 import me.notlewx.privategames.commands.bedwars1058.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.bedwars1058.MessagesData;
@@ -47,9 +48,11 @@ public class BedWars1058 {
         if (bw1058config.getBoolean("database.enable")) {
             Utility.info("&eUsing &cMySQL &eas database provider...");
             database = new MySQL();
+            databaseType = DatabaseType.MySQL;
         } else {
             Utility.info("&eUsing &cSQLite &eas database provider...");
             database = new SQLite();
+            databaseType = DatabaseType.SQLite;
         }
         Utility.info("&aYour database is ready!");
     }
@@ -60,6 +63,7 @@ public class BedWars1058 {
         pl.getServer().getPluginManager().registerEvents(new ArenaLeave(), pl);
         pl.getServer().getPluginManager().registerEvents(new PrivateArenaListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new StatsListener(), pl);
+        pl.getServer().getPluginManager().registerEvents(new ScoreboardListener(), pl);
         Utility.info("&aListeners loaded successfully");
     }
 

@@ -30,7 +30,7 @@ public class SQLite implements Database {
         Utility.info("&eCreating tables...");
         try {
             Statement statement = this.connection.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + s + "_private_games (`player` varchar(200) NOT NULL, `privateGameEnabled` boolean(11) NOT NULL,`oneHitOneKill` boolean(11) NOT NULL,`lowGravity` boolean(11) NOT NULL,`speed` boolean(11) NOT NULL,`bedInstaBreak` boolean(11) NOT NULL,`maxTeamUpgrades` boolean(11) NOT NULL,`allowMapBreak` boolean(11) NOT NULL,`noDiamonds` boolean(11) NOT NULL,`noEmeralds` boolean(11) NOT NULL,`respawnEventTime` int(11) NOT NULL,`healthBuffLevel` int(11) NOT NULL, `eventsTime` int(11) NOT NULL, autoStart boolean(11), allowJoin boolean(11), PRIMARY KEY (`player`));");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + s + "_private_games (`player` varchar(200) NOT NULL, `privateGameEnabled` boolean(11) NOT NULL,`oneHitOneKill` boolean(11) NOT NULL,`lowGravity` boolean(11) NOT NULL,`speed` boolean(11) NOT NULL,`bedInstaBreak` boolean(11) NOT NULL,`maxTeamUpgrades` boolean(11) NOT NULL,`allowMapBreak` boolean(11) NOT NULL,`noDiamonds` boolean(11) NOT NULL,`noEmeralds` boolean(11) NOT NULL,`respawnEventTime` int(11) NOT NULL,`healthBuffLevel` int(11) NOT NULL, `eventsTime` int(11) NOT NULL, autoStart boolean(11) NOT NULL, allowJoin boolean(11) NOT NULL, PRIMARY KEY (`player`));");
             statement.close();
             Utility.info("&aTables created successfully!");
         } catch (SQLException e) {

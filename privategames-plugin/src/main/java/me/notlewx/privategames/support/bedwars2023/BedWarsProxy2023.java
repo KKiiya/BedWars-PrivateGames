@@ -1,6 +1,7 @@
 package me.notlewx.privategames.support.bedwars2023;
 
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.database.DatabaseType;
 import me.notlewx.privategames.commands.proxy2023.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.proxy2023.MessagesData;
@@ -45,6 +46,7 @@ public class BedWarsProxy2023 {
         if (bwProxyConfig.getBoolean("database.enable")) {
             Utility.info("&eUsing &cMySQL &eas database provider...");
             database = new MySQL();
+            databaseType = DatabaseType.MySQL;
             Utility.info("&aYour database is ready!");
         } else {
             Utility.info("&cPlease, to use the plugin in PROXY MODE use a MySQL database...");

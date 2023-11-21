@@ -52,8 +52,7 @@ public class ArenaJoin implements Listener {
                 }
             }));
             sidebar.getHandle().refreshPlaceholders();
-        }, 1L);
-
+        }, 20L);
 
         if (e.getArena().getPlayers().size() > 1) return;
         if (e.getArena().isSpectator(pp.getPlayer())) return;

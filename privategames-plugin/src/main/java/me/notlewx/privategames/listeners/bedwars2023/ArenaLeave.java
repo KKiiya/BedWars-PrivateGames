@@ -1,6 +1,7 @@
 package me.notlewx.privategames.listeners.bedwars2023;
 
 import com.tomkeuper.bedwars.api.events.player.PlayerLeaveArenaEvent;
+import me.notlewx.privategames.api.arena.IPrivateArena;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,8 +12,11 @@ public class ArenaLeave implements Listener {
     public void onArenaLeave(PlayerLeaveArenaEvent e) {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
         if (e.getArena().getPlayers().size() <= 1) {
-            api.getPrivateArenaUtil().getPrivateArenas().remove(api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName()));
-            api.getBedWars2023API().getArenaUtil().getArenas().add(e.getArena());
+            IPrivateArena arena = api.getPrivateArenaUtil().getPrivateArenaByName(e.getArena().getArenaName());
+            arena.destroyData();
         }
+        e.getPlayer().setHealth(20);
+        e.getPlayer().setHealthScale(20);
+        e.getPlayer().setMaxHealth(20);
     }
 }

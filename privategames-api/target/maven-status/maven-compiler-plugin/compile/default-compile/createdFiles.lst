@@ -1,5 +1,6 @@
 me\notlewx\privategames\api\modifiers\ModifierType.class
 me\notlewx\privategames\api\events\PrivateGameEnableEvent.class
+me\notlewx\privategames\api\database\DatabaseType.class
 me\notlewx\privategames\api\player\IPrivatePlayer.class
 me\notlewx\privategames\api\PrivateGames$IPrivateArenaUtil.class
 me\notlewx\privategames\api\PrivateGames.class

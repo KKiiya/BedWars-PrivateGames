@@ -5,40 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28c61859-df31-45b6-b215-f5d5f51d848b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/target/BedWars1058-PrivateGames-1.0.9-HOTFIX-shaded.pom" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/privategames-api/src/main/java/me/notlewx/privategames/api/database/DatabaseType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/ScoreboardListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-api/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-api/target/classes/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-api/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-api/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-api/target/original-privategames-api-1.0.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-api/target/privategames-api-1.0.9.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-api/target/original-privategames-api-1.0.9-HOTFIX.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-api/target/privategames-api-1.0.9-HOTFIX.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-plugin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/PrivateGames.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/PrivateGames.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/MainConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/MainConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/bedwars1058/MessagesData.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/bedwars1058/MessagesData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/bedwars2023/MessagesData.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/bedwars2023/MessagesData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/proxy/MessagesData.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/proxy/MessagesData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/proxy2023/MessagesData.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/proxy2023/MessagesData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/database/providers/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/database/providers/SQLite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/ArenaJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/ArenaJoin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/ArenaLeave.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/ArenaLeave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/PrivateArenaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/PrivateArenaListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/PrivateArenaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/PrivateArenaListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/menus/OptionsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/menus/OptionsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/utils/GeneratorProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/utils/GeneratorProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/ArenaLeave.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/ArenaLeave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/menus/submenus/generators/GeneratorSettingsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/menus/submenus/generators/GeneratorSettingsMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/menus/submenus/generators/GeneratorsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/menus/submenus/generators/GeneratorsMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/support/bedwars1058/BedWars1058.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/support/bedwars1058/BedWars1058.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/support/bedwars1058/BedWarsProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/support/bedwars1058/BedWarsProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/support/bedwars2023/BW2023Addon.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/support/bedwars2023/BW2023Addon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/support/bedwars2023/BedWarsProxy2023.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/support/bedwars2023/BedWarsProxy2023.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/PrivateGames.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/PrivateGames.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/MainConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/MainConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/bedwars1058/MessagesData.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/bedwars1058/MessagesData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/bedwars2023/MessagesData.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/bedwars2023/MessagesData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/proxy/MessagesData.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/proxy/MessagesData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/proxy2023/MessagesData.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/config/proxy2023/MessagesData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/database/providers/SQLite.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/database/providers/SQLite.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars1058/ArenaJoin.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars1058/ArenaJoin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars1058/ArenaLeave.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars1058/ArenaLeave.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars1058/PrivateArenaListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars1058/PrivateArenaListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars2023/PrivateArenaListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars2023/PrivateArenaListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/menus/OptionsMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/menus/OptionsMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/utils/GeneratorProperties$Properties.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/utils/GeneratorProperties$Properties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/utils/GeneratorProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/utils/GeneratorProperties.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars2023/ArenaLeave.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/listeners/bedwars2023/ArenaLeave.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/menus/submenus/generators/GeneratorSettingsMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/menus/submenus/generators/GeneratorSettingsMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/menus/submenus/generators/GeneratorsMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/menus/submenus/generators/GeneratorsMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/support/bedwars1058/BedWars1058.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/support/bedwars1058/BedWars1058.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/support/bedwars1058/BedWarsProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/support/bedwars1058/BedWarsProxy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/support/bedwars2023/BW2023Addon.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/support/bedwars2023/BW2023Addon.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/support/bedwars2023/BedWarsProxy2023.class" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/me/notlewx/privategames/support/bedwars2023/BedWarsProxy2023.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-plugin/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/classes/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-plugin/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/maven-archiver/pom.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privategames-plugin/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/original-privategames-plugin-1.0.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/privategames-plugin-1.0.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BedWars1058-PrivateGames-1.0.9-shaded.pom" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/original-privategames-plugin-1.0.9-HOTFIX.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/privategames-plugin-1.0.9-HOTFIX.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BedWars1058-PrivateGames-1.0.9-HOTFIX-shaded.pom" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +60,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -81,6 +92,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="me.notlewx.privategames.listeners.bedwars1058" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\config" />
       <recent name="C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\libs" />

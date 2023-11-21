@@ -52,7 +52,7 @@ public class GeneratorsMenu implements GUIHolder {
                 } else {
                     team = a.getOreGenerators().get(i).getBwt().getName();
                 }
-                location = "X: " + a.getOreGenerators().get(i).getLocation().getX() + " Y: " + a.getOreGenerators().get(i).getLocation().getY() + " Z: " + a.getOreGenerators().get(i).getLocation().getZ() + " Pitch: " + a.getOreGenerators().get(i).getLocation().getPitch() + " Yaw: " + a.getOreGenerators().get(i).getLocation().getYaw();
+                location = "X: " + a.getOreGenerators().get(i).getLocation().getX() + " Y: " + a.getOreGenerators().get(i).getLocation().getY() + " Z: " + a.getOreGenerators().get(i).getLocation().getZ();
                 amount = String.valueOf(a.getOreGenerators().get(i).getAmount());
                 delay = String.valueOf(a.getOreGenerators().get(i).getDelay());
                 spawnLimit = String.valueOf(a.getOreGenerators().get(i).getSpawnLimit());
@@ -83,9 +83,9 @@ public class GeneratorsMenu implements GUIHolder {
                 } else {
                     team = a.getOreGenerators().get(i).getBedWarsTeam().getName();
                 }
-                location = "X: " + a.getOreGenerators().get(i).getLocation().getX() + " Y: " + a.getOreGenerators().get(i).getLocation().getY() + " Z: " + a.getOreGenerators().get(i).getLocation().getZ() + " Pitch: " + a.getOreGenerators().get(i).getLocation().getPitch() + " Yaw: " + a.getOreGenerators().get(i).getLocation().getYaw();
+                location = "X: " + a.getOreGenerators().get(i).getLocation().getX() + " Y: " + a.getOreGenerators().get(i).getLocation().getY() + " Z: " + a.getOreGenerators().get(i).getLocation().getZ();
                 amount = String.valueOf(a.getOreGenerators().get(i).getAmount());
-                delay = String.valueOf(a.getOreGenerators().get(i).getDelay());
+                delay = String.valueOf(a.getOreGenerators().get(i).getDelay()/4);
                 spawnLimit = String.valueOf(a.getOreGenerators().get(i).getSpawnLimit());
                 ItemStack mat = (a.getOreGenerators().get(i)).getOre();
                 ItemMeta matMeta = mat.getItemMeta();
