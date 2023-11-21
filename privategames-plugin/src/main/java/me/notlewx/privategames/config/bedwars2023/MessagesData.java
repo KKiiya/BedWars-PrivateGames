@@ -162,6 +162,8 @@ public class MessagesData {
                     yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE, Arrays.asList("&7Enable the auto start of the game", "", "{state}"));
                     yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME, "&aAllow Others to Join");
                     yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE, Arrays.asList("&7Allow others to join your game", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME, "&aEnable Private Games");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE, Arrays.asList("&7Enable private games", "", "{state}"));
                     yml.addDefault(SUBMENU_OPTIONS_BACK_NAME, "&aGo Back");
                     yml.addDefault(SUBMENU_OPTIONS_BACK_LORE, Arrays.asList("&7Go Back to the settings menu"));
                     yml.addDefault(SUBMENU_GENERATORS_OPTIONS_TITLE, "Arena generators");
@@ -327,6 +329,8 @@ public class MessagesData {
         SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE = PATH + "menu.submenu.options.auto-start.lore",
         SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME = PATH + "menu.submenu.options.allow-join.name",
         SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE = PATH + "menu.submenu.options.allow-join.lore",
+        SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME = PATH + "menu.submenu.options.private-games.name",
+        SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE = PATH + "menu.submenu.options.private-games.lore",
         SUBMENU_OPTIONS_MEANING_ENABLED = PATH + "menu.submenu.options.enabled-meaning",
         SUBMENU_OPTIONS_MEANING_DISABLED = PATH + "menu.submenu.options.disabled-meaning",
         SUBMENU_OPTIONS_GENERATORS_NAME = PATH + "menu.submenu.options.generators.name",

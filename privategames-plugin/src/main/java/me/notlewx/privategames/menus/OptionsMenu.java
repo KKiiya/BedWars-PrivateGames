@@ -1,6 +1,9 @@
 package me.notlewx.privategames.menus;
 
+import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerOptions;
+import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.menus.submenus.generators.GeneratorsMenu;
 import me.notlewx.privategames.utils.Utility;
@@ -15,14 +18,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.stream.Collectors;
 
-import static me.notlewx.privategames.PrivateGames.api;
-import static me.notlewx.privategames.PrivateGames.mainConfig;
+import static me.notlewx.privategames.PrivateGames.*;
 import static me.notlewx.privategames.config.MainConfig.*;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_ENABLED;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_ENABLED_OTHERS;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_NOT_IN_PARTY;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_NOT_OWNER;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class OptionsMenu implements GUIHolder {
     private Inventory inv;
-    private Player p;
+    private final Player p;
 
     public OptionsMenu(Player p) {
         this.p = p;
@@ -62,6 +68,15 @@ public class OptionsMenu implements GUIHolder {
         }
         ItemMeta autoStartMeta = autoStart.getItemMeta();
 
+        Material privateGamesMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_ENABLE_PRIVATEGAMES_MATERIAL));
+        ItemStack privateGames;
+        if (privateGamesMaterial == Material.SKULL_ITEM) {
+            privateGames = Utility.getSkull(mainConfig.getString(OPTIONS_ENABLE_PRIVATEGAMES_HEAD_URL));
+        } else {
+            privateGames = new ItemStack(privateGamesMaterial, 1, (short) mainConfig.getInt(OPTIONS_ENABLE_PRIVATEGAMES_ID));
+        }
+        ItemMeta privateGamesMeta = privateGames.getItemMeta();
+
         Material backMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_BACK_MATERIAL));
         ItemStack back;
         if (backMaterial == Material.SKULL_ITEM) {
@@ -73,6 +88,7 @@ public class OptionsMenu implements GUIHolder {
 
 
         IPlayerOptions po = api.getPrivatePlayer(p).getPlayerOptions();
+        IPlayerSettings ps = api.getPrivatePlayer(p).getPlayerSettings();
 
         generatorSettingsMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_GENERATORS_NAME));
         generatorSettingsMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_GENERATORS_LORE));
@@ -85,12 +101,16 @@ public class OptionsMenu implements GUIHolder {
         autoStartMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE).stream().map(s -> s.replace("{state}", po.isAutoStart() ? Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
         autoStartMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
+        privateGamesMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME));
+        privateGamesMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE).stream().map(s -> s.replace("{state}", ps.isPrivateGameEnabled() ? Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
+
         backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_BACK_NAME));
         backMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_BACK_LORE));
 
         generatorSettings.setItemMeta(generatorSettingsMeta);
         allowJoin.setItemMeta(allowJoinMeta);
         autoStart.setItemMeta(autoStartMeta);
+        privateGames.setItemMeta(privateGamesMeta);
 
         if (po.isAllowJoin()) allowJoin.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
         else allowJoin.removeEnchantment(Enchantment.DURABILITY);
@@ -100,6 +120,7 @@ public class OptionsMenu implements GUIHolder {
         if (mainConfig.getBoolean(OPTIONS_GENERATORS)) if (api.getPrivateArenaUtil().isPlaying(p)) inv.setItem(mainConfig.getInt(OPTIONS_GENERATORS_POSITION), generatorSettings);
         if (mainConfig.getBoolean(OPTIONS_ALLOW_JOIN)) inv.setItem(mainConfig.getInt(OPTIONS_ALLOWJOIN_POSITION), allowJoin);
         if (mainConfig.getBoolean(OPTIONS_ENABLE_AUTOSTART)) inv.setItem(mainConfig.getInt(OPTIONS_ENABLE_AUTOSTART_POSITION), autoStart);
+        if (mainConfig.getBoolean(OPTIONS_ENABLE_PRIVATEGAMES)) inv.setItem(mainConfig.getInt(OPTIONS_ENABLE_PRIVATEGAMES_POSITION), privateGames);
         inv.setItem(mainConfig.getInt(OPTIONS_BACK_POSITION), back);
     }
     @Override
@@ -119,7 +140,204 @@ public class OptionsMenu implements GUIHolder {
                 new OptionsMenu(p);
             } else if (e.getSlot() == mainConfig.getInt(OPTIONS_BACK_POSITION)) {
                 new SettingsMenu(p);
+            } else if (e.getSlot() == mainConfig.getInt(OPTIONS_ENABLE_PRIVATEGAMES_POSITION)) {
+                IPrivatePlayer pp = api.getPrivatePlayer(p);
+                IPlayerSettings ps = pp.getPlayerSettings();
+                IParty party = pp.getPlayerParty();
+                switch (support) {
+                    case BEDWARS1058:
+                        if (PrivateGames.getBw1058Api().getArenaUtil().isPlaying(p)) {
+                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_CANT_IN_GAME));
+                        } else {
+                            if (!ps.isPrivateGameEnabled()) {
+                                if (p.hasPermission("pg.admin")) {
+                                    ps.setPrivateGameEnabled();
+                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
+                                    if (party.hasParty() && party.isOwner()) {
+                                        for (Player player : party.getPartyMembers()) {
+                                            if (player != p) {
+                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (party.hasParty()) {
+                                        if (party.isOwner()) {
+                                            ps.setPrivateGameEnabled();
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
+                                            for (Player player : party.getPartyMembers()) {
+                                                if (player != p) {
+                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                                }
+                                            }
+                                        } else {
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                        }
+                                    } else {
+                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_IN_PARTY));
+                                    }
+                                }
+                            } else {
+                                if (p.hasPermission("pg.admin")) {
+                                    ps.setPrivateGameDisabled(false);
+                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                    if (party.hasParty() && party.isOwner()) {
+                                        for (Player player : party.getPartyMembers()) {
+                                            if (player != p) {
+                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (party.hasParty()) {
+                                        if (party.isOwner()) {
+                                            ps.setPrivateGameDisabled(false);
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                            for (Player player : party.getPartyMembers()) {
+                                                if (player != p) {
+                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                                }
+                                            }
+                                        } else {
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                        }
+                                    } else {
+                                        ps.setPrivateGameDisabled(false);
+                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case BEDWARS2023:
+                        if (PrivateGames.getBw2023Api().getArenaUtil().isPlaying(p)) {
+                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_CANT_IN_GAME));
+                        } else {
+                            if (!ps.isPrivateGameEnabled()) {
+                                if (p.hasPermission("pg.admin")) {
+                                    ps.setPrivateGameEnabled();
+                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
+                                    if (party.hasParty() && party.isOwner()) {
+                                        for (Player player : party.getPartyMembers()) {
+                                            if (player != p) {
+                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (party.hasParty()) {
+                                        if (party.isOwner()) {
+                                            ps.setPrivateGameEnabled();
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
+                                            for (Player player : party.getPartyMembers()) {
+                                                if (player != p) {
+                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                                }
+                                            }
+                                        } else {
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                        }
+                                    } else {
+                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_IN_PARTY));
+                                    }
+                                }
+                            } else {
+                                if (p.hasPermission("pg.admin")) {
+                                    ps.setPrivateGameDisabled(false);
+                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                    if (party.hasParty() && party.isOwner()) {
+                                        for (Player player : party.getPartyMembers()) {
+                                            if (player != p) {
+                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (party.hasParty()) {
+                                        if (party.isOwner()) {
+                                            ps.setPrivateGameDisabled(false);
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                            for (Player player : party.getPartyMembers()) {
+                                                if (player != p) {
+                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                                }
+                                            }
+                                        } else {
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                        }
+                                    } else {
+                                        ps.setPrivateGameDisabled(false);
+                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case BEDWARSPROXY:
+                    case BEDWARSPROXY2023:
+                            if (!ps.isPrivateGameEnabled()) {
+                                if (p.hasPermission("pg.admin")) {
+                                    ps.setPrivateGameEnabled();
+                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
+                                    if (party.hasParty() && party.isOwner()) {
+                                        for (Player player : party.getPartyMembers()) {
+                                            if (player != p) {
+                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (party.hasParty()) {
+                                        if (party.isOwner()) {
+                                            ps.setPrivateGameEnabled();
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
+                                            for (Player player : party.getPartyMembers()) {
+                                                if (player != p) {
+                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                                }
+                                            }
+                                        } else {
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                        }
+                                    } else {
+                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_IN_PARTY));
+                                    }
+                                }
+                            } else {
+                                if (p.hasPermission("pg.admin")) {
+                                    ps.setPrivateGameDisabled(false);
+                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                    if (party.hasParty() && party.isOwner()) {
+                                        for (Player player : party.getPartyMembers()) {
+                                            if (player != p) {
+                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (party.hasParty()) {
+                                        if (party.isOwner()) {
+                                            ps.setPrivateGameDisabled(false);
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                            for (Player player : party.getPartyMembers()) {
+                                                if (player != p) {
+                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                                }
+                                            }
+                                        } else {
+                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                        }
+                                    } else {
+                                        ps.setPrivateGameDisabled(false);
+                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                    }
+                                }
+                            }
+                        break;
+                }
+                new OptionsMenu(p);
             }
+
         }
     }
 

@@ -36,6 +36,9 @@ public class GeneratorProperties {
     public static void setGeneratorProperties(IPrivatePlayer player, GeneratorProperties props) {
         playerGenProps.put(player, props);
     }
+    public static void removeGeneratorProperties(IPrivatePlayer player) {
+        playerGenProps.remove(player);
+    }
 
     public static class Properties {
         private int delay;

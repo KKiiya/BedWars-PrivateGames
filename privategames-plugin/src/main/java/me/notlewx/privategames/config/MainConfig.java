@@ -34,6 +34,7 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(OPTIONS_ALLOW_JOIN, true);
         yml.addDefault(OPTIONS_GENERATORS, true);
         yml.addDefault(OPTIONS_ENABLE_AUTOSTART, true);
+        yml.addDefault(OPTIONS_ENABLE_PRIVATEGAMES, true);
         yml.addDefault(SETTINGS_ROWS, 6);
         yml.addDefault(ONE_HIT_ONE_KILL_MATERIAL, "DIAMOND_SWORD");
         yml.addDefault(ONE_HIT_ONE_KILL_POSITION, 10);
@@ -182,6 +183,10 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(OPTIONS_ENABLE_AUTOSTART_POSITION, 12);
         yml.addDefault(OPTIONS_ENABLE_AUTOSTART_ID, 0);
         yml.addDefault(OPTIONS_ENABLE_AUTOSTART_HEAD_URL, "skin-url");
+        yml.addDefault(OPTIONS_ENABLE_PRIVATEGAMES_MATERIAL, "REDSTONE_BLOCK");
+        yml.addDefault(OPTIONS_ENABLE_PRIVATEGAMES_POSITION, 14);
+        yml.addDefault(OPTIONS_ENABLE_PRIVATEGAMES_ID, 0);
+        yml.addDefault(OPTIONS_ENABLE_PRIVATEGAMES_HEAD_URL, "skin-url");
         yml.addDefault(OPTIONS_GENERATORS_MATERIAL, "DIAMOND_BLOCK");
         yml.addDefault(OPTIONS_GENERATORS_POSITION, 45);
         yml.addDefault(OPTIONS_GENERATORS_ID, 0);
@@ -222,6 +227,7 @@ public class MainConfig extends ConfigManager {
            OPTIONS_ENABLE = "enable-modifiers.options",
            OPTIONS_ENABLE_AUTOSTART = "enable-modifiers.options-expansion.enable-auto-start",
            OPTIONS_ALLOW_JOIN = "enable-modifiers.options-expansion.allow-join",
+           OPTIONS_ENABLE_PRIVATEGAMES = "enable-modifiers.options-expansion.enable-privategames",
            OPTIONS_GENERATORS = "enable-modifiers.options-expansion.generator-options",
            START_GAME = "enable-modifiers.start-game",
 
@@ -359,6 +365,11 @@ public class MainConfig extends ConfigManager {
            OPTIONS_ALLOWJOIN_POSITION = "menus.submenus.options.allow-join.position",
                    OPTIONS_ALLOWJOIN_ID = "menus.submenus.options.allow-join.id",
                    OPTIONS_ALLOWJOIN_HEAD_URL = "menus.submenus.options.allow-join.head-url",
+
+           OPTIONS_ENABLE_PRIVATEGAMES_MATERIAL = "menus.submenus.options.enable-privategames.material",
+           OPTIONS_ENABLE_PRIVATEGAMES_POSITION = "menus.submenus.options.enable-privategames.position",
+                   OPTIONS_ENABLE_PRIVATEGAMES_ID = "menus.submenus.options.enable-privategames.id",
+                   OPTIONS_ENABLE_PRIVATEGAMES_HEAD_URL = "menus.submenus.options.enable-privategames.head-url",
 
            OPTIONS_GENERATORS_MATERIAL = "menus.submenus.options.generators.material",
            OPTIONS_GENERATORS_POSITION = "menus.submenus.options.generators.position",

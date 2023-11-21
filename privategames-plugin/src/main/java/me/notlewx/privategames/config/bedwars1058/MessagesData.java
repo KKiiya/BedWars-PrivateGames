@@ -163,6 +163,8 @@ public class MessagesData {
                     yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE, Arrays.asList("&7Enable the auto start of the game", "", "{state}"));
                     yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME, "&aAllow Others to Join");
                     yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE, Arrays.asList("&7Allow others to join your game", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME, "&aEnable Private Games");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE, Arrays.asList("&7Enable the private games", "", "{state}"));
                     yml.addDefault(SUBMENU_OPTIONS_BACK_NAME, "&aGo Back");
                     yml.addDefault(SUBMENU_OPTIONS_BACK_LORE, Arrays.asList("&7Go Back to the settings menu"));
                     yml.addDefault(SUBMENU_GENERATORS_OPTIONS_TITLE, "Arena generators");

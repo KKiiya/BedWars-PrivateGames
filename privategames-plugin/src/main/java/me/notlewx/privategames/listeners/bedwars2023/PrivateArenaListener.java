@@ -278,6 +278,9 @@ public class PrivateArenaListener implements Listener {
             a.setAllowMapBreak(false);
         }
         privateArena.destroyData();
+        if (GeneratorProperties.getGeneratorProperties(privateArena.getPrivateArenaHost()) != null) {
+            GeneratorProperties.removeGeneratorProperties(privateArena.getPrivateArenaHost());
+        }
     }
 
     @EventHandler
