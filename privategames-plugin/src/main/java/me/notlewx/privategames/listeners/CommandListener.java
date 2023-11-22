@@ -16,7 +16,7 @@ public class CommandListener implements Listener {
         if (e.getPlayer().hasPermission("pg.join") || e.getPlayer().isOp()) return;
         if (api.getPrivateArenaUtil().getPrivateArenas() == null) return;
         if (api.getPrivateArenaUtil().getPrivateArenas().isEmpty()) return;
-        for (String arenaName : api.getPrivateArenaUtil().getPrivateArenas().stream().map(IPrivateArena::getArenaName).collect(Collectors.toList())) {
+        for (String arenaName : api.getPrivateArenaUtil().getPrivateArenas().stream().map(IPrivateArena::getArenaIdentifier).collect(Collectors.toList())) {
             if (e.getMessage().equalsIgnoreCase("/bw join " + arenaName)) {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(Utility.getMsg(e.getPlayer(), "cmd-join-not-found")

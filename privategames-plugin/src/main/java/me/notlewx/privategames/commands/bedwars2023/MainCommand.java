@@ -197,7 +197,7 @@ public class MainCommand implements CommandExecutor {
                                     if (a == null) {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
                                     }
-                                    else if (!PrivateGames.api.getPrivateArenaUtil().isArenaPrivate(a.getArenaName())) {
+                                    else if (!PrivateGames.api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
 
                                     } else {
@@ -206,7 +206,7 @@ public class MainCommand implements CommandExecutor {
                                             return false;
                                         }
                                         a.addPlayer((Player) sender, true);
-                                        PrivateGameJoinEvent event = new PrivateGameJoinEvent(((Player) sender), PrivateGames.api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()));
+                                        PrivateGameJoinEvent event = new PrivateGameJoinEvent(((Player) sender), PrivateGames.api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName()));
                                         Bukkit.getPluginManager().callEvent(event);
                                     }
                                 } else {

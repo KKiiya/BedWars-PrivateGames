@@ -8,7 +8,7 @@ import java.util.List;
 public interface IPrivateArena {
     IPrivatePlayer getPrivateArenaHost();
     List<Player> getPlayers();
-    String getArenaName();
+    String getArenaIdentifier();
     String getDefaultGroup();
     void stopGame();
     boolean isFull();

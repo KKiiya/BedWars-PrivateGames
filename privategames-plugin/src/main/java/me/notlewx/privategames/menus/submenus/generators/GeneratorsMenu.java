@@ -23,11 +23,9 @@ import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 public class GeneratorsMenu implements GUIHolder {
     private Inventory inv;
     private final Player p;
-    private final String arenaName;
     private final HashMap<Integer, Object> generatorPos;
-    public GeneratorsMenu(Player p, String arenaName) {
+    public GeneratorsMenu(Player p) {
         this.p = p;
-        this.arenaName = arenaName;
         generatorPos = new HashMap<>();
         if (!api.getPrivateArenaUtil().isPlaying(p)) return;
         createInventory();
@@ -40,7 +38,7 @@ public class GeneratorsMenu implements GUIHolder {
     }
     private void addContents() {
         if (support == Support.BEDWARS1058) {
-            IArena a = api.getBedWars1058API().getArenaUtil().getArenaByName(arenaName);
+            IArena a = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(p);
             for (int i = 0; i < a.getOreGenerators().size(); i++) {
                 String team;
                 String location;
@@ -71,7 +69,7 @@ public class GeneratorsMenu implements GUIHolder {
                 inv.setItem(i, mat);
             }
         } else if (support == Support.BEDWARS2023) {
-            com.tomkeuper.bedwars.api.arena.IArena a = api.getBedWars2023API().getArenaUtil().getArenaByName(arenaName);
+            com.tomkeuper.bedwars.api.arena.IArena a = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(p);
             for (int i = 0; i < a.getOreGenerators().size(); i++) {
                 String team;
                 String location;

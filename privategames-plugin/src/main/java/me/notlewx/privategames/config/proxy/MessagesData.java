@@ -39,7 +39,7 @@ public class MessagesData {
         ));
         yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
         yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate Game Settings");
-        yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "with up to 11 different options!"));
+        yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "&7with up to 11 different options!"));
         yml.addDefault(MENU_SELECTED_MEANING, "&aSelected!");
         yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eClick to Select!");
         yml.addDefault(PRIVATE_GAME_NOT_IN_PARTY, "&cYou are not in a party!");

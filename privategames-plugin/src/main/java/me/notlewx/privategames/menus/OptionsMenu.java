@@ -132,7 +132,7 @@ public class OptionsMenu implements GUIHolder {
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_OPTIONS_TITLE))) {
             if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_POSITION)) {
-                new GeneratorsMenu(p, api.getPrivateArenaUtil().getPrivateArenaByPlayer(p).getArenaName());
+                new GeneratorsMenu(p);
             } else if (e.getSlot() == mainConfig.getInt(OPTIONS_ALLOWJOIN_POSITION)) {
                 IPrivatePlayer pp = api.getPrivatePlayer(p);
                 IPlayerOptions po = pp.getPlayerOptions();

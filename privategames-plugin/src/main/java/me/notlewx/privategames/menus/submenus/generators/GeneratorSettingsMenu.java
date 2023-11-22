@@ -116,7 +116,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
 
         ItemStack reduceSpawnLimit = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceSpawnLimitMeta = reduceSpawnLimit.getItemMeta();
-        reduceSpawnLimitMeta.setDisplayName(Utility.c("&cReduce"));
+        reduceSpawnLimitMeta.setDisplayName(Utility.c("&cReduce Spawn Limit"));
         reduceSpawnLimitMeta.setLore(Stream.of("", "&7Reduce the amount minerals stacked", "&7in this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceSpawnLimit.setItemMeta(reduceSpawnLimitMeta);
 
@@ -168,7 +168,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
             }
             properties = GeneratorProperties.getGeneratorProperties(pp).getProperties(g);
             if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION)) {
-                new GeneratorsMenu(p, g.getArena().getArenaName());
+                new GeneratorsMenu(p);
                 return;
             }
             switch (e.getSlot()) {
@@ -208,7 +208,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
             }
             properties = GeneratorProperties.getGeneratorProperties(pp).getProperties(g);
             if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION)) {
-                new GeneratorsMenu(p, g.getArena().getArenaName());
+                new GeneratorsMenu(p);
                 return;
             }
             switch (e.getSlot()) {

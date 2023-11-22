@@ -4,6 +4,8 @@ import com.tomkeuper.bedwars.api.language.Language;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.util.Arrays;
 
+import static me.notlewx.privategames.PrivateGames.mainConfig;
+
 public class MessagesData {
     public final static String PATH = "addons.private-games.";
 
@@ -39,7 +41,7 @@ public class MessagesData {
                     ));
                     yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate Game Settings");
-                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "with up to 11 different options!"));
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "&7with up to 11 different options!"));
                     yml.addDefault(MENU_SELECTED_MEANING, "&aSelected!");
                     yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eClick to Select!");
                     yml.addDefault(PRIVATE_GAME_NOT_IN_PARTY, "&cYou are not in a party!");
@@ -86,7 +88,7 @@ public class MessagesData {
                     yml.addDefault(ITEM_START_NAME, "&aStart");
                     yml.addDefault(ITEM_START_LORE, Arrays.asList("&7Click here to start the game", "", "&7You can start the game if you are", "&7the owner of the party", "", "&eClick to start!"));
                     yml.addDefault(ITEM_GAMEMODE_CHANGER_NAME, "&aGamemode Changer");
-                    yml.addDefault(ITEM_GAMEMODE_CHANGER_LORE, Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&eClick to change!"));
+                    yml.addDefault(ITEM_GAMEMODE_CHANGER_LORE, Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&7Current: &a{state}", "&7Default: &e{default}", "", "&cRight Click to set the default Game Mode", "&eLeft Click to change!"));
                     yml.addDefault(SUBMENU_SPEED_NAME, "&8Speed");
                     yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aNo Speed");
                     yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, Arrays.asList("{state}"));
@@ -177,6 +179,18 @@ public class MessagesData {
                     yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cDisabled");
                     yml.addDefault(MENU_CLICK_TO_START_MEANING, "&eClick to start!");
                     yml.addDefault(MENU_STARTING_MEANING, "&aStarting...");
+
+                    for (String p : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu").getKeys(false)) {
+                        for (String group : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + p + ".modes").getKeys(false)) {
+                            if (group.equals("back-item")) {
+                                yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&aGo Back");
+                                yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", Arrays.asList("&7Go back to the settings menu"));
+                            } else {
+                                yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&a" + group);
+                                yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&eClick to change!"));
+                            }
+                        }
+                    }
                     break;
             }
             l.getYml().options().copyDefaults(true);
@@ -186,7 +200,7 @@ public class MessagesData {
     public static final String
             MAIN_MENU_NAME = PATH + "menu.menu-name",
             MENU_SELECTED_MEANING = PATH + "menu.selected-meaning",
-            PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER = PATH + "scoreboard-placeholder",
+            PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER = PATH + "game.scoreboard-placeholder",
             MENU_CLICK_TO_SELECT_MEANING = PATH + "menu.click-to-select-meaning",
             MENU_CLICK_TO_START_MEANING = PATH + "menu.click-to-start-meaning",
             MENU_STARTING_MEANING = PATH + "menu.starting-meaning",
@@ -194,7 +208,7 @@ public class MessagesData {
             MENU_BACK_ITEM_LORE = PATH + "menu.back-item.lore",
             PRIVATE_GAME_MENU_ITEM_NAME = PATH + "menu.private-game-item.name",
             PRIVATE_GAME_MENU_ITEM_LORE = PATH + "menu.private-game-item.lore",
-            PRIVATE_GAME_NOT_IN_PARTY = PATH + "not-in-party",
+            PRIVATE_GAME_NOT_IN_PARTY = PATH + "game.not-in-party",
             PRIVATE_GAME_ENABLED = PATH + "game.enabled",
             PRIVATE_GAME_NOT_OWNER = PATH + "game.not-owner",
             PRIVATE_GAME_ENABLED_OTHERS = PATH + "game.enabled-others",

@@ -37,6 +37,7 @@ me\notlewx\privategames\menus\submenus\HealthMenu.class
 me\notlewx\privategames\utils\GeneratorProperties.class
 me\notlewx\privategames\menus\SettingsMenu.class
 me\notlewx\privategames\party\Party$1.class
+me\notlewx\privategames\menus\submenus\GamemodeChangerMenu$1.class
 me\notlewx\privategames\menus\submenus\GamemodeChangerMenu.class
 me\notlewx\privategames\support\bedwars2023\BedWarsProxy2023.class
 me\notlewx\privategames\commands\proxy2023\MainCommand.class

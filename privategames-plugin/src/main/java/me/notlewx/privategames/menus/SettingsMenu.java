@@ -1,20 +1,22 @@
 package me.notlewx.privategames.menus;
 
 import com.andrei1058.bedwars.api.arena.GameState;
+import com.andrei1058.bedwars.api.sidebar.ISidebar;
+import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
+import com.andrei1058.bedwars.sidebar.SidebarService;
 import com.tomkeuper.bedwars.api.arena.IArena;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.config.bedwars1058.MessagesData;
-import me.notlewx.privategames.menus.submenus.EventsTimeMenu;
-import me.notlewx.privategames.menus.submenus.HealthMenu;
-import me.notlewx.privategames.menus.submenus.RespawnTimeMenu;
-import me.notlewx.privategames.menus.submenus.SpeedMenu;
+import me.notlewx.privategames.menus.submenus.*;
 import me.notlewx.privategames.player.PrivatePlayer;
+import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.*;
 import static me.notlewx.privategames.config.MainConfig.*;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class SettingsMenu implements GUIHolder {
@@ -167,6 +170,15 @@ public class SettingsMenu implements GUIHolder {
         }
         ItemMeta startMeta = start.getItemMeta();
 
+        Material gamemodeChangerMat = Material.getMaterial(mainConfig.getString(GAMEMODE_CHANGER_MATERIAL));
+        ItemStack gamemodeChanger;
+        if (gamemodeChangerMat == Material.SKULL_ITEM) {
+            gamemodeChanger = Utility.getSkull(mainConfig.getString(GAMEMODE_CHANGER_HEAD_URL));
+        } else {
+            gamemodeChanger = new ItemStack(gamemodeChangerMat, 1, (byte) mainConfig.getInt(GAMEMODE_CHANGER_ID));
+        }
+        ItemMeta gamemodeChangerMeta = gamemodeChanger.getItemMeta();
+
         Material matBack = Material.getMaterial(mainConfig.getString(BACK_MATERIAL));
         ItemStack back;
         if (matBack == Material.SKULL_ITEM) {
@@ -253,10 +265,28 @@ public class SettingsMenu implements GUIHolder {
         optionsMeta.setLore(Utility.getList(player, ITEM_OPTIONS_LORE));
         optionsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
+        gamemodeChangerMeta.setDisplayName(Utility.getMsg(player, ITEM_GAMEMODE_CHANGER_NAME));
+        String group;
+        if (api.getPrivateArenaUtil().isPlaying(player)) {
+            if (support == Support.BEDWARS1058) {
+                group = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player).getGroup();
+            } else if (support == Support.BEDWARS2023) {
+                group = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player).getGroup();
+            } else {
+                group = "";
+            }
+
+            gamemodeChangerMeta.setLore(Utility.getList(player, ITEM_GAMEMODE_CHANGER_LORE).stream().map(s -> s
+                            .replace("{state}", Utility.getMsg(player, "display-group-" + group))
+                            .replace("{default}", Utility.getMsg(player, "display-group-" + api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup())))
+                    .collect(Collectors.toList()));
+        }
+        gamemodeChangerMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
+
         switch (support) {
             case BEDWARS2023:
                 if (api.getPrivateArenaUtil().isPlaying(player)) {
-                    IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+                    IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaIdentifier());
                     if (a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.starting) {
                         startMeta.setDisplayName(Utility.getMsg(player, ITEM_START_NAME));
                         startMeta.setLore(Utility.getList(player, ITEM_START_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_START_MEANING))).collect(Collectors.toList()));
@@ -270,7 +300,7 @@ public class SettingsMenu implements GUIHolder {
                 break;
             case BEDWARS1058:
                 if (api.getPrivateArenaUtil().isPlaying(player)) {
-                    com.andrei1058.bedwars.api.arena.IArena a = PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+                    com.andrei1058.bedwars.api.arena.IArena a = PrivateGames.getBw1058Api().getArenaUtil().getArenaByIdentifier(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaIdentifier());
                     if (a.getStatus() != GameState.starting) {
                         startMeta.setDisplayName(Utility.getMsg(player, ITEM_START_NAME));
                         startMeta.setLore(Utility.getList(player, ITEM_START_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_START_MEANING))).collect(Collectors.toList()));
@@ -364,6 +394,7 @@ public class SettingsMenu implements GUIHolder {
 
         options.setItemMeta(optionsMeta);
         start.setItemMeta(startMeta);
+        gamemodeChanger.setItemMeta(gamemodeChangerMeta);
 
         back.setItemMeta(backMeta);
 
@@ -399,6 +430,14 @@ public class SettingsMenu implements GUIHolder {
 
         if (mainConfig.getBoolean(OPTIONS_ENABLE)) inventory.setItem(mainConfig.getInt(OPTIONS_POSITION), options);
         if (mainConfig.getBoolean(START_GAME)) if (api.getPrivateArenaUtil().isPlaying(player)) inventory.setItem(mainConfig.getInt(START_GAME_POSITION), start);
+
+        if (mainConfig.getBoolean(GAMEMODE_CHANGER)) {
+            if (api.getPrivateArenaUtil().isPlaying(player)) {
+                if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup()) != null) {
+                    inventory.setItem(mainConfig.getInt(GAMEMODE_CHANGER_POSITION), gamemodeChanger);
+                }
+            }
+        }
 
         if (mainConfig.getBoolean(BACK_ENABLE)) inventory.setItem(mainConfig.getInt(BACK_POSITION), back);
     }
@@ -449,14 +488,14 @@ public class SettingsMenu implements GUIHolder {
             } else if (e.getSlot() == mainConfig.getInt(START_GAME_POSITION)) {
                 switch (support) {
                     case BEDWARS2023:
-                        IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+                        IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaIdentifier());
                         if (a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.playing && a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.starting) {
                             a.changeStatus(com.tomkeuper.bedwars.api.arena.GameState.starting);
                             a.getStartingTask().setCountdown(bw2023config.getInt("countdowns.game-start-regular"));
                         }
                         break;
                     case BEDWARS1058:
-                        com.andrei1058.bedwars.api.arena.IArena a1 = PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaName());
+                        com.andrei1058.bedwars.api.arena.IArena a1 = PrivateGames.getBw1058Api().getArenaUtil().getArenaByIdentifier(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaIdentifier());
                         if (a1.getStatus() != GameState.playing && a1.getStatus() != GameState.starting) {
                             a1.changeStatus(GameState.starting);
                             a1.getStartingTask().setCountdown(bw1058config.getInt("countdowns.game-start-regular"));
@@ -473,6 +512,37 @@ public class SettingsMenu implements GUIHolder {
                     } else {
                         player.closeInventory();
                     }
+                }
+            } else if (e.getSlot() == mainConfig.getInt(GAMEMODE_CHANGER_POSITION)) {
+                switch (support) {
+                    case BEDWARS1058:
+                        if (e.getClick() == ClickType.RIGHT) {
+                            api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player).setGroup(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup());
+                            SidebarService.getInstance().remove(player);
+                            SidebarService.getInstance().giveSidebar(player, api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player), true);
+
+                            ISidebar sidebar = SidebarService.getInstance().getSidebar(player);
+                            sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
+                                if (api.getPrivateArenaUtil().isPlaying(player)) {
+                                    return Utility.getMsg(player, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
+                                } else {
+                                    return "";
+                                }
+                            }));
+                            sidebar.getHandle().refreshPlaceholders();
+                            new SettingsMenu(player);
+                        } else {
+                            new GamemodeChangerMenu(player, api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player));
+                        }
+                        break;
+                    case BEDWARS2023:
+                        if (e.getClick() == ClickType.RIGHT) {
+                            api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player).setGroup(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup());
+                            new SettingsMenu(player);
+                        } else {
+                            new GamemodeChangerMenu(player, api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player));
+                        }
+                        break;
                 }
             }
 

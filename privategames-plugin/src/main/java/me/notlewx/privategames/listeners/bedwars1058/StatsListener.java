@@ -16,7 +16,7 @@ import static me.notlewx.privategames.PrivateGames.api;
 public class StatsListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public static void onPlayerDeath(PlayerKillEvent e) {
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
+        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
 
         PlayerStats victimStats = BedWars.getStatsManager().get(e.getVictim().getUniqueId());
 
@@ -47,7 +47,7 @@ public class StatsListener implements Listener {
     public void onArenaLeave(PlayerLeaveArenaEvent e) {
         Player player = e.getPlayer();
         ITeam team = e.getArena().getExTeam(player.getUniqueId());
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getArenaName())) return;
+        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
         if (team != null) {
             if (e.getArena().getStatus() != GameState.starting && e.getArena().getStatus() != GameState.waiting) {
                 PlayerStats playerStats = BedWars.getStatsManager().get(player.getUniqueId());

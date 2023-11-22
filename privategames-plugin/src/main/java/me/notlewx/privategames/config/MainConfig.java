@@ -80,7 +80,7 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(MAX_TEAM_UPGRADES_POSITION, 34);
         yml.addDefault(MAX_TEAM_UPGRADES_ID, 0);
         yml.addDefault(MAX_TEAM_UPGRADES_HEAD_URL, "skin-url");
-        yml.addDefault(GAMEMODE_CHANGER_MATERIAL, "REDSTONE_COMPARATOR");
+        yml.addDefault(GAMEMODE_CHANGER_MATERIAL, "ENDER_PORTAL_FRAME");
         yml.addDefault(GAMEMODE_CHANGER_POSITION, 53);
         yml.addDefault(GAMEMODE_CHANGER_ID, 0);
         yml.addDefault(GAMEMODE_CHANGER_HEAD_URL, "skin-url");

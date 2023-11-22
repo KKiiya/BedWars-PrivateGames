@@ -75,11 +75,11 @@ public interface PrivateGames {
         IPrivateArena getPrivateArenaByPlayer(Player player);
 
         /**
-         * Get a private arena via arena name
-         * @param arenaName - Arena name of an arena you want to get the arena from
+         * Get a private arena via arena world name
+         * @param worldName - World name (remoteIdentifier) of an arena you want to get the arena from
          * @return - Private arena
          */
-        IPrivateArena getPrivateArenaByName(String arenaName);
+        IPrivateArena getPrivateArenaByIdentifier(String worldName);
 
         /**
          * Check if an arena is private
