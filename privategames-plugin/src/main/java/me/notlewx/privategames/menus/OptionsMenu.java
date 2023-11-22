@@ -92,6 +92,7 @@ public class OptionsMenu implements GUIHolder {
 
         generatorSettingsMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_GENERATORS_NAME));
         generatorSettingsMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_GENERATORS_LORE));
+        generatorSettingsMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
         allowJoinMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME));
         allowJoinMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE).stream().map(s -> s.replace("{state}", po.isAllowJoin() ? Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
@@ -103,14 +104,18 @@ public class OptionsMenu implements GUIHolder {
 
         privateGamesMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME));
         privateGamesMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE).stream().map(s -> s.replace("{state}", ps.isPrivateGameEnabled() ? Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
+        privateGamesMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
         backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_BACK_NAME));
         backMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_BACK_LORE));
+        backMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
         generatorSettings.setItemMeta(generatorSettingsMeta);
         allowJoin.setItemMeta(allowJoinMeta);
         autoStart.setItemMeta(autoStartMeta);
         privateGames.setItemMeta(privateGamesMeta);
+
+        back.setItemMeta(backMeta);
 
         if (po.isAllowJoin()) allowJoin.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
         else allowJoin.removeEnchantment(Enchantment.DURABILITY);

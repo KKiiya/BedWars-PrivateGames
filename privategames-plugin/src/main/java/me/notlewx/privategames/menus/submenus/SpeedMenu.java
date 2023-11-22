@@ -114,6 +114,7 @@ public class SpeedMenu implements GUIHolder {
         book2.setItemMeta(book2Meta);
         book3.setItemMeta(book3Meta);
         book4.setItemMeta(book4Meta);
+
         arrow.setItemMeta(arrowMeta);
 
         switch (playerData.getSpeedLevel()) {

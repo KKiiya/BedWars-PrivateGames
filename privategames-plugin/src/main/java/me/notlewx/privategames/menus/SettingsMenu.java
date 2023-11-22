@@ -187,6 +187,7 @@ public class SettingsMenu implements GUIHolder {
 
         gappleMeta.setDisplayName(Utility.getMsg(player, ITEM_HEALTH_BUFF_LEVEL_NAME));
         gappleMeta.setLore(Utility.getList(player, ITEM_HEALTH_BUFF_LEVEL_LORE));
+        gappleMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         longJumpMeta.setDisplayName(Utility.getMsg(player, ITEM_LOW_GRAVITY_NAME));
         if (playerData.isLowGravityEnabled()) {
@@ -194,16 +195,19 @@ public class SettingsMenu implements GUIHolder {
         } else if (!playerData.isLowGravityEnabled()) {
             longJumpMeta.setLore(Utility.getList(player, ITEM_LOW_GRAVITY_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
         }
-        longJumpMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        longJumpMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         speedMeta.setDisplayName(Utility.getMsg(player, ITEM_SPEED_NAME));
         speedMeta.setLore(Utility.getList(player, ITEM_SPEED_LORE));
+        speedMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         respawnTimeMeta.setDisplayName(Utility.getMsg(player, ITEM_RESPAWN_EVENT_TIME_NAME));
         respawnTimeMeta.setLore(Utility.getList(player, ITEM_RESPAWN_EVENT_TIME_LORE));
+        eventsTimeMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         eventsTimeMeta.setDisplayName(Utility.getMsg(player, ITEM_EVENTS_TIME_LEVEL_NAME));
         eventsTimeMeta.setLore(Utility.getList(player, ITEM_EVENTS_TIME_LEVEL_LORE));
+        eventsTimeMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         allowMapBreakMeta.setDisplayName(Utility.getMsg(player, ITEM_ALLOW_MAP_BREAK_NAME));
         if (playerData.isAllowMapBreakEnabled()) {
@@ -211,7 +215,7 @@ public class SettingsMenu implements GUIHolder {
         } else if (!playerData.isAllowMapBreakEnabled()) {
             allowMapBreakMeta.setLore(Utility.getList(player, ITEM_ALLOW_MAP_BREAK_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
         }
-        allowMapBreakMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        allowMapBreakMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         noEmeraldsMeta.setDisplayName(Utility.getMsg(player, ITEM_NO_EMERALDS_NAME));
         if (playerData.isNoEmeraldsEnabled()) {
@@ -219,7 +223,7 @@ public class SettingsMenu implements GUIHolder {
         } else if (!playerData.isNoEmeraldsEnabled()) {
             noEmeraldsMeta.setLore(Utility.getList(player, ITEM_NO_EMERALDS_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
         }
-        noEmeraldsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        noEmeraldsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         bedInstaBreakMeta.setDisplayName(Utility.getMsg(player, ITEM_BED_INSTA_BREAK_NAME));
         if (playerData.isBedInstaBreakEnabled()) {
@@ -227,7 +231,7 @@ public class SettingsMenu implements GUIHolder {
         } else if (!playerData.isBedInstaBreakEnabled()) {
             bedInstaBreakMeta.setLore(Utility.getList(player, ITEM_BED_INSTA_BREAK_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
         }
-        bedInstaBreakMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        bedInstaBreakMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         noDiamondsMeta.setDisplayName(Utility.getMsg(player, ITEM_NO_DIAMONDS_NAME));
         if (playerData.isNoDiamondsEnabled()) {
@@ -235,7 +239,7 @@ public class SettingsMenu implements GUIHolder {
         } else if (!playerData.isNoDiamondsEnabled()) {
             noDiamondsMeta.setLore(Utility.getList(player, ITEM_NO_DIAMONDS_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
         }
-        noDiamondsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        noDiamondsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         maxTeamUpgradesMeta.setDisplayName(Utility.getMsg(player, ITEM_MAX_TEAM_UPGRADES_NAME));
         if (playerData.isMaxTeamUpgradesEnabled()) {
@@ -243,10 +247,11 @@ public class SettingsMenu implements GUIHolder {
         } else if (!playerData.isMaxTeamUpgradesEnabled()) {
             maxTeamUpgradesMeta.setLore(Utility.getList(player, ITEM_MAX_TEAM_UPGRADES_LORE).stream().map(s -> s.replace("{state}", Utility.getMsg(player, MENU_CLICK_TO_SELECT_MEANING))).collect(Collectors.toList()));
         }
-        maxTeamUpgradesMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        maxTeamUpgradesMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         optionsMeta.setDisplayName(Utility.getMsg(player, ITEM_OPTIONS_NAME));
         optionsMeta.setLore(Utility.getList(player, ITEM_OPTIONS_LORE));
+        optionsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         switch (support) {
             case BEDWARS2023:
@@ -296,6 +301,7 @@ public class SettingsMenu implements GUIHolder {
                 respawnTimeMeta.setLore(Utility.getList(player, ITEM_RESPAWN_EVENT_TIME_LORE).stream().map(s -> s.replace("{selected}", Utility.getMsg(player, RESPAWN_EVENT_TIME_III_MEANING))).collect(Collectors.toList()));
                 break;
         }
+        respawnTimeMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
         switch (playerData.getHealthBuffLevel()) {
             case 0:
             case 1:
@@ -308,6 +314,7 @@ public class SettingsMenu implements GUIHolder {
                 gappleMeta.setLore(Utility.getList(player, ITEM_HEALTH_BUFF_LEVEL_LORE).stream().map(s -> s.replace("{selected}", Utility.getMsg(player, TRIPLE_HEALTH_MEANING))).collect(Collectors.toList()));
                 break;
         }
+        gappleMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
         switch (playerData.getSpeedLevel()) {
             case 0:
             case 1:
@@ -323,6 +330,7 @@ public class SettingsMenu implements GUIHolder {
                 speedMeta.setLore(Utility.getList(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMsg(player, SPEED_III_MEANING))).collect(Collectors.toList()));
                 break;
         }
+        speedMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
         switch (playerData.getEventsTimeLevel()) {
             case 0:
             case 2:
@@ -338,6 +346,7 @@ public class SettingsMenu implements GUIHolder {
                 eventsTimeMeta.setLore(Utility.getList(player, ITEM_SPEED_LORE).stream().map(s -> s.replace("{selected}", Utility.getMsg(player, EVENTS_TIME_FASTER_MEANING))).collect(Collectors.toList()));
                 break;
         }
+        eventsTimeMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         oneHitOneKill.setItemMeta(oneHitOneKillMeta);
         healthBuff.setItemMeta(gappleMeta);

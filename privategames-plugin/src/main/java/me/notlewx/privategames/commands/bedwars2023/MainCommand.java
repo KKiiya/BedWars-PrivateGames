@@ -168,8 +168,7 @@ public class MainCommand implements CommandExecutor {
                                 } else {
                                     new SettingsMenu((Player) sender);
                                 }
-                            }
-                            else {
+                            } else {
                                 new SettingsMenu((Player) sender);
                             }
                         } else {
@@ -202,8 +201,9 @@ public class MainCommand implements CommandExecutor {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
 
                                     } else {
-                                        if (api.getPrivatePlayer((Player) sender).getPlayerOptions().isAllowJoin()) {
+                                        if (!api.getPrivatePlayer((Player) sender).getPlayerOptions().isAllowJoin()) {
                                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
+                                            return false;
                                         }
                                         a.addPlayer((Player) sender, true);
                                         PrivateGameJoinEvent event = new PrivateGameJoinEvent(((Player) sender), PrivateGames.api.getPrivateArenaUtil().getPrivateArenaByName(a.getArenaName()));
