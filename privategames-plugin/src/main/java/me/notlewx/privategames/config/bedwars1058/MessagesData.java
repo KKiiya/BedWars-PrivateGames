@@ -180,14 +180,16 @@ public class MessagesData {
                     yml.addDefault(MENU_CLICK_TO_START_MEANING, "&eClick to start!");
                     yml.addDefault(MENU_STARTING_MEANING, "&aStarting...");
 
-                    for (String p : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu").getKeys(false)) {
-                        for (String group : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + p + ".modes").getKeys(false)) {
-                            if (group.equals("back-item")) {
-                                yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&aGo Back");
-                                yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", Arrays.asList("&7Go back to the settings menu"));
-                            } else {
-                                yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&a" + group);
-                                yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&eClick to change!"));
+                    if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu") != null) {
+                        for (String p : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu").getKeys(false)) {
+                            for (String group : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + p + ".modes").getKeys(false)) {
+                                if (group.equals("back-item")) {
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&aGo Back");
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", Arrays.asList("&7Go back to the settings menu"));
+                                } else {
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&a" + group);
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&eClick to change!"));
+                                }
                             }
                         }
                     }

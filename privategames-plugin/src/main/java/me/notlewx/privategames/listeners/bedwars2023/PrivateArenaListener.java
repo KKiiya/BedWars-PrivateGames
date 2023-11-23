@@ -293,10 +293,10 @@ public class PrivateArenaListener implements Listener {
             case 2:
                 break;
             case 1:
-                e.getArena().getRespawnSessions().put(e.getVictim(), 1);
+                e.getArena().startReSpawnSession(e.getVictim(), 1);
                 break;
             case 3:
-                e.getArena().getRespawnSessions().put(e.getVictim(), 10);
+                e.getArena().startReSpawnSession(e.getVictim(), 10);
                 break;
         }
     }
@@ -450,11 +450,11 @@ public class PrivateArenaListener implements Listener {
                                 switch (r[1].replace(" ", "").split(",")[3]) {
                                     case "base":
                                         PotionEffectType type = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
-                                        team.addBaseEffect(type, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        team.addBaseEffect(type, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.MAX_VALUE);
                                         break;
                                     case "team":
                                         PotionEffectType type2 = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
-                                        team.addTeamEffect(type2, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        team.addTeamEffect(type2, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.MAX_VALUE);
                                         break;
                                 }
                                 break;

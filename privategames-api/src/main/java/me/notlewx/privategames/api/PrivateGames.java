@@ -56,6 +56,11 @@ public interface PrivateGames {
          * Open the respawn time menu
          */
         void openRespawnTimeMenu(Player p);
+
+        /**
+         * Open the options menu
+         */
+        void openOptionsMenu(Player p);
     }
 
 

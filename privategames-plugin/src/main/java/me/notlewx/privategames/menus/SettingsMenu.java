@@ -4,7 +4,10 @@ import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
 import com.andrei1058.bedwars.sidebar.SidebarService;
+import com.tomkeuper.bedwars.BedWars;
 import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.sidebar.BoardManager;
+import me.neznamy.tab.api.TabAPI;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.config.bedwars1058.MessagesData;
@@ -537,7 +540,8 @@ public class SettingsMenu implements GUIHolder {
                         break;
                     case BEDWARS2023:
                         if (e.getClick() == ClickType.RIGHT) {
-                            api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player).setGroup(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup());
+                            IArena a2 = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player);
+                            a2.setGroup(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup());
                             new SettingsMenu(player);
                         } else {
                             new GamemodeChangerMenu(player, api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player));

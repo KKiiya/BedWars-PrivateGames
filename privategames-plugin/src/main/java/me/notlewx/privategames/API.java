@@ -6,6 +6,7 @@ import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
+import me.notlewx.privategames.menus.OptionsMenu;
 import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.menus.submenus.EventsTimeMenu;
 import me.notlewx.privategames.menus.submenus.HealthMenu;
@@ -59,6 +60,11 @@ public class API implements PrivateGames {
         @Override
         public void openRespawnTimeMenu(Player p) {
             new RespawnTimeMenu(p);
+        }
+
+        @Override
+        public void openOptionsMenu(Player p) {
+            new OptionsMenu(p);
         }
     }
 

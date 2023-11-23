@@ -449,11 +449,11 @@ public class PrivateArenaListener implements Listener {
                                 switch (r[1].replace(" ", "").split(",")[3]) {
                                     case "base":
                                         PotionEffectType type = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
-                                        team.addBaseEffect(type, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        team.addBaseEffect(type, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.MAX_VALUE);
                                         break;
                                     case "team":
                                         PotionEffectType type2 = PotionEffectType.getByName(r[1].replace(" ", "").split(",")[0]);
-                                        team.addTeamEffect(type2, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+                                        team.addTeamEffect(type2, Integer.parseInt(r[1].replace(" ", "").split(",")[1]), Integer.MAX_VALUE);
                                         break;
                                 }
                                 break;
