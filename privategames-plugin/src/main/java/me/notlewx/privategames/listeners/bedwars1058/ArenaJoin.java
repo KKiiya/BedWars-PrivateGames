@@ -4,13 +4,14 @@ import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
 import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
-import com.andrei1058.bedwars.sidebar.BwSidebar;
 import com.andrei1058.bedwars.sidebar.SidebarService;
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
+import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -64,8 +65,9 @@ public class ArenaJoin implements Listener {
                     if (pp.hasPermission()) {
                         List<Player> players = new ArrayList<>(party.getPartyMembers());
                         players.add(pp.getPlayer());
-                        new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                        IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                             pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
@@ -82,7 +84,13 @@ public class ArenaJoin implements Listener {
                         List<Player> players = new ArrayList<>(party.getPartyMembers());
                         players.add(pp.getPlayer());
 
-                        new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                        IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+
+                        try {
+                            MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                             pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
@@ -92,7 +100,13 @@ public class ArenaJoin implements Listener {
                     List<Player> players = new ArrayList<>();
                     players.add(pp.getPlayer());
 
-                    new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                    IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+
+                    try {
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
 
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                         pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);

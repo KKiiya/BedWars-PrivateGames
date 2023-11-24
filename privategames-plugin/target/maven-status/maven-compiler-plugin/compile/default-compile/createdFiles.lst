@@ -7,10 +7,12 @@ me\notlewx\privategames\config\ConfigManager.class
 me\notlewx\privategames\config\bedwars1058\MessagesData.class
 me\notlewx\privategames\listeners\PlayerJoin.class
 me\notlewx\privategames\commands\proxy\MainCommand.class
+me\notlewx\privategames\messaging\redis\ProxyListener.class
+me\notlewx\privategames\utils\MessagesUtil$1.class
 me\notlewx\privategames\listeners\bedwars2023\ArenaJoin.class
+me\notlewx\privategames\listeners\bedwars2023\CommandListener.class
 me\notlewx\privategames\menus\submenus\RespawnTimeMenu.class
 me\notlewx\privategames\listeners\bedwars1058\PrivateArenaListener.class
-me\notlewx\privategames\listeners\CommandListener.class
 me\notlewx\privategames\arena\PrivateArena$1.class
 me\notlewx\privategames\support\bedwars1058\BedWars1058.class
 me\notlewx\privategames\utils\GeneratorProperties$Properties.class
@@ -28,6 +30,8 @@ me\notlewx\privategames\menus\OptionsMenu$1.class
 me\notlewx\privategames\listeners\bedwars1058\ScoreboardListener.class
 me\notlewx\privategames\database\providers\MySQL.class
 me\notlewx\privategames\player\PrivatePlayer$1.class
+me\notlewx\privategames\listeners\bedwars1058\CommandListener.class
+me\notlewx\privategames\messaging\socket\ProxySocket.class
 me\notlewx\privategames\listeners\bedwars1058\ArenaJoin.class
 me\notlewx\privategames\listeners\PlayerLeave.class
 me\notlewx\privategames\config\bedwars2023\MessagesData.class
@@ -42,7 +46,9 @@ me\notlewx\privategames\menus\submenus\GamemodeChangerMenu.class
 me\notlewx\privategames\support\bedwars2023\BedWarsProxy2023.class
 me\notlewx\privategames\commands\proxy2023\MainCommand.class
 me\notlewx\privategames\listeners\bedwars2023\StatsListener.class
+me\notlewx\privategames\utils\MessagesUtil.class
 me\notlewx\privategames\listeners\bedwars1058\StatsListener.class
+me\notlewx\privategames\messaging\socket\ArenasSocket.class
 me\notlewx\privategames\support\bedwars1058\BedWarsProxy.class
 me\notlewx\privategames\arena\PrivateArena.class
 me\notlewx\privategames\config\MainConfig.class
@@ -56,6 +62,7 @@ me\notlewx\privategames\player\PrivatePlayer.class
 me\notlewx\privategames\menus\GUIHolder.class
 me\notlewx\privategames\menus\submenus\EventsTimeMenu.class
 me\notlewx\privategames\party\Party.class
+me\notlewx\privategames\messaging\redis\ArenasListener.class
 me\notlewx\privategames\listeners\InventoryListener.class
 me\notlewx\privategames\config\proxy\MessagesData.class
 me\notlewx\privategames\support\Support.class

@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import static me.notlewx.privategames.PrivateGames.bw1058config;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class PrivateArena implements IPrivateArena {

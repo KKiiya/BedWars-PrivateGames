@@ -10,6 +10,7 @@ import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
+import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -61,8 +62,10 @@ public class ArenaJoin implements Listener {
                     if (pp.hasPermission()) {
                         List<Player> players = new ArrayList<>(party.getPartyMembers());
                         players.add(pp.getPlayer());
-                        new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
+                        IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                             pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
@@ -79,7 +82,9 @@ public class ArenaJoin implements Listener {
                         List<Player> players = new ArrayList<>(party.getPartyMembers());
                         players.add(pp.getPlayer());
 
-                        new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                        IPrivateArena a =  new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                             pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
@@ -89,7 +94,9 @@ public class ArenaJoin implements Listener {
                     List<Player> players = new ArrayList<>();
                     players.add(pp.getPlayer());
 
-                    new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                    IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+
+                    MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
 
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                         pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);

@@ -6,10 +6,15 @@ import me.notlewx.privategames.commands.proxy2023.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.proxy2023.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
+import me.notlewx.privategames.messaging.redis.ProxyListener;
+import me.notlewx.privategames.messaging.socket.ProxySocket;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+
+import java.io.IOException;
+
 import static me.notlewx.privategames.PrivateGames.*;
 
 public class BedWarsProxy2023 {
@@ -32,6 +37,7 @@ public class BedWarsProxy2023 {
             new MessagesData();
             registerCommands();
             loadDatabase();
+            registerListeners();
         }
     }
 
@@ -52,5 +58,19 @@ public class BedWarsProxy2023 {
             Utility.info("&cPlease, to use the plugin in PROXY MODE use a MySQL database...");
             Bukkit.getPluginManager().disablePlugin(pl);
         }
+    }
+
+    private void registerListeners() {
+        Utility.info("&eLoading listeners...");
+        if (bwProxyConfig.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("socket")) {
+            try {
+                new ProxySocket().start(mainConfig.getInt("port"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (bwProxyConfig.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("redis")) {
+            pl.getServer().getPluginManager().registerEvents(new ProxyListener(), pl);
+        }
+        Utility.info("&eListeners loaded successfully");
     }
 }

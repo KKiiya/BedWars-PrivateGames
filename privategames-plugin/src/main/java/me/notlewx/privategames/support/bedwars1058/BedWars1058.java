@@ -9,6 +9,7 @@ import me.notlewx.privategames.config.bedwars1058.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
 import me.notlewx.privategames.database.providers.SQLite;
 import me.notlewx.privategames.listeners.bedwars1058.*;
+import me.notlewx.privategames.messaging.socket.ArenasSocket;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
@@ -64,6 +65,15 @@ public class BedWars1058 {
         pl.getServer().getPluginManager().registerEvents(new PrivateArenaListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new StatsListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new ScoreboardListener(), pl);
+        pl.getServer().getPluginManager().registerEvents(new CommandListener(), pl);
+        for (String connection : mainConfig.getList("lobby-sockets")) {
+            String[] split = connection.split(":");
+            try {
+                new ArenasSocket().startConnection(split[0], Integer.parseInt(split[1]));
+            } catch (Exception e) {
+                Utility.info("&cError while connecting to socket: " + e.getMessage());
+            }
+        }
         Utility.info("&aListeners loaded successfully");
     }
 

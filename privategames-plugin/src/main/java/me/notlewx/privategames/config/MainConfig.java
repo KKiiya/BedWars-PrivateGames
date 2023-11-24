@@ -1,15 +1,26 @@
 package me.notlewx.privategames.config;
 
+import me.notlewx.privategames.support.Support;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
+
 import static me.notlewx.privategames.PrivateGames.isBedWarsServer;
+import static me.notlewx.privategames.PrivateGames.support;
 
 public class MainConfig extends ConfigManager {
     public MainConfig(Plugin plugin, String name, String dir) {
         super(plugin, name, dir);
         YamlConfiguration yml = getYml();
         yml.options().header("PrivateGames Addon by Kiiya#9207");
+
+        if (support == Support.BEDWARS2023 || support == Support.BEDWARS1058) {
+            yml.addDefault("lobby-sockets", Arrays.asList("127.0.0.1:2023"));
+        } else if (support == Support.BEDWARSPROXY || support == Support.BEDWARSPROXY2023) {
+            yml.addDefault("port", 2023);
+        }
+
         if (!isBedWarsServer) {
             yml.addDefault("database.host", "localhost");
             yml.addDefault("database.database", "cheese");

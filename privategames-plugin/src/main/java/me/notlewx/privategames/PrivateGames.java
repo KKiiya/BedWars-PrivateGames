@@ -89,6 +89,5 @@ public final class PrivateGames extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteraction(), this);
-        getServer().getPluginManager().registerEvents(new CommandListener(), this);
     }
 }

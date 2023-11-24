@@ -8,13 +8,14 @@ import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.bedwars2023.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
 import me.notlewx.privategames.database.providers.SQLite;
-import me.notlewx.privategames.listeners.bedwars2023.ArenaJoin;
-import me.notlewx.privategames.listeners.bedwars2023.ArenaLeave;
-import me.notlewx.privategames.listeners.bedwars2023.PrivateArenaListener;
-import me.notlewx.privategames.listeners.bedwars2023.StatsListener;
+import me.notlewx.privategames.listeners.bedwars2023.*;
+import me.notlewx.privategames.messaging.redis.ArenasListener;
+import me.notlewx.privategames.messaging.socket.ArenasSocket;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.plugin.Plugin;
 import java.io.File;
+import java.io.IOException;
+
 import static me.notlewx.privategames.PrivateGames.*;
 import static me.notlewx.privategames.PrivateGames.database;
 
@@ -95,6 +96,19 @@ public class BW2023Addon extends Addon {
         pl.getServer().getPluginManager().registerEvents(new ArenaLeave(), pl);
         pl.getServer().getPluginManager().registerEvents(new PrivateArenaListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new StatsListener(), pl);
+        pl.getServer().getPluginManager().registerEvents(new CommandListener(), pl);
+        if (bw2023config.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("socket")) {
+            try {
+                for (String connection: mainConfig.getList("lobby-sockets")) {
+                    String[] data = connection.split(":");
+                    new ArenasSocket().startConnection(data[0], Integer.parseInt(data[1]));
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (bw2023config.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("redis")) {
+            pl.getServer().getPluginManager().registerEvents(new ArenasListener(), pl);
+        }
         Utility.info("&eListeners loaded successfully");
     }
 

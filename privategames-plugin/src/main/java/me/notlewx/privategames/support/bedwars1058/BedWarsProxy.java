@@ -6,10 +6,14 @@ import me.notlewx.privategames.commands.proxy.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.proxy.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
+import me.notlewx.privategames.messaging.socket.ProxySocket;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+
+import java.io.IOException;
+
 import static me.notlewx.privategames.PrivateGames.*;
 
 public class BedWarsProxy {
@@ -52,5 +56,15 @@ public class BedWarsProxy {
             Utility.info("&ePlease, to use the plugin in PROXY MODE use a MySQL database...");
             Bukkit.getPluginManager().disablePlugin(pl);
         }
+    }
+
+    private void loadListeners() {
+        Utility.info("&eLoading listeners...");
+        try {
+            new ProxySocket().start(mainConfig.getInt("port"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Utility.info("&aListeners loaded successfully!");
     }
 }
