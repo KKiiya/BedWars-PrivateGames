@@ -22,6 +22,8 @@ public class MessagesUtil {
                 if (api.getBedWars2023API().getServerType() == com.tomkeuper.bedwars.api.server.ServerType.BUNGEE) {
                     switch (bw2023config.getString("bungeecord-settings.messaging-protocol")) {
                         case "redis":
+                            System.out.println("Sending message to redis");
+                            System.out.println(message);
                             api.getBedWars2023API().getRedisClient().sendMessage(new JsonParser().parse(message).getAsJsonObject(), "private-games");
                             break;
                         case "socket":
@@ -68,6 +70,6 @@ public class MessagesUtil {
         jsonObject.addProperty("players", Arrays.toString(arena.getPlayers().stream().map(player -> player.getUniqueId().toString()).toArray(String[]::new)));
         jsonObject.addProperty("arenaIdentifier", arena.getArenaIdentifier());
         jsonObject.addProperty("defaultGroup", arena.getDefaultGroup());
-        return jsonObject.toString();
+        return new JsonParser().parse(jsonObject.toString()).getAsJsonObject().toString().replace("\\", "");
     }
 }

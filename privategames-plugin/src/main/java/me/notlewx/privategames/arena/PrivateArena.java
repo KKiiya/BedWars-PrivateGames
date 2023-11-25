@@ -5,6 +5,7 @@ import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.support.Support;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.LinkedHashMap;
@@ -14,22 +15,22 @@ import static me.notlewx.privategames.PrivateGames.support;
 
 public class PrivateArena implements IPrivateArena {
     private IPrivatePlayer host;
-    private List<Player> players;
+    private List<OfflinePlayer> players;
     private String arenaName;
     private String defaultGroup;
     public static final LinkedHashMap<String, IPrivateArena> privateArenaByIdentifier = new LinkedHashMap<>();
-    public static final LinkedHashMap<Player, IPrivateArena> privateArenaByPlayer = new LinkedHashMap<>();
+    public static final LinkedHashMap<OfflinePlayer, IPrivateArena> privateArenaByPlayer = new LinkedHashMap<>();
     public static final LinkedList<IPrivateArena> privateArenas = new LinkedList<>();
 
-    public PrivateArena(IPrivatePlayer host, List<Player> players, String arenaIdentifier, String defaultGroup) {
+    public PrivateArena(IPrivatePlayer host, List<OfflinePlayer> players, String arenaIdentifier, String defaultGroup) {
         this.host = host;
         this.players = players;
         this.arenaName = arenaIdentifier;
         this.defaultGroup = defaultGroup;
 
         privateArenaByIdentifier.put(arenaIdentifier, this);
-        privateArenaByPlayer.put((Player) host.getPlayer(), this);
-        for (Player p : players) {
+        privateArenaByPlayer.put(host.getPlayer(), this);
+        for (OfflinePlayer p : players) {
             privateArenaByPlayer.put(p, this);
         }
         privateArenas.add(this);
@@ -50,7 +51,7 @@ public class PrivateArena implements IPrivateArena {
     }
 
     @Override
-    public List<Player> getPlayers() {
+    public List<OfflinePlayer> getPlayers() {
         return players;
     }
 
@@ -61,6 +62,12 @@ public class PrivateArena implements IPrivateArena {
     @Override
     public String getDefaultGroup() {
         return defaultGroup;
+    }
+    @Override
+    public void addPlayer(Player p) {
+        if (players.contains(p)) return;
+        this.players.add(p);
+        privateArenaByPlayer.put(p, this);
     }
 
     @Override
@@ -77,7 +84,7 @@ public class PrivateArena implements IPrivateArena {
             }
         }
         privateArenaByIdentifier.remove(arenaName);
-        for (Player p : players) {
+        for (OfflinePlayer p : players) {
             privateArenaByPlayer.remove(p);
         }
         privateArenas.remove(this);
@@ -98,7 +105,7 @@ public class PrivateArena implements IPrivateArena {
     @Override
     public void destroyData() {
         privateArenaByIdentifier.remove(arenaName);
-        for (Player p : players) {
+        for (OfflinePlayer p : players) {
             privateArenaByPlayer.remove(p);
         }
         privateArenas.remove(this);

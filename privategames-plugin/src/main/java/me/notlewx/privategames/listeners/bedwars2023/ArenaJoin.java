@@ -2,7 +2,12 @@ package me.notlewx.privategames.listeners.bedwars2023;
 
 import com.tomkeuper.bedwars.BedWars;
 import com.tomkeuper.bedwars.api.arena.GameState;
+import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import com.tomkeuper.bedwars.api.events.player.PlayerJoinArenaEvent;
+import com.tomkeuper.bedwars.shop.ShopCache;
+import com.tomkeuper.bedwars.shop.ShopManager;
+import com.tomkeuper.bedwars.shop.main.ShopIndex;
+import com.tomkeuper.bedwars.shop.quickbuy.PlayerQuickBuyCache;
 import me.neznamy.tab.api.TabAPI;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
@@ -13,15 +18,21 @@ import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static com.tomkeuper.bedwars.BedWars.getForCurrentVersion;
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.MainConfig.MATERIAL;
@@ -52,6 +63,50 @@ public class ArenaJoin implements Listener {
             }
         });
 
+        if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
+            IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
+            pa.addPlayer(e.getPlayer());
+
+            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                if (e.getArena().isSpectator(e.getPlayer())) {
+                    for (ITeam team : e.getArena().getTeams()) {
+                        if (team.getSize() == e.getArena().getMaxInTeam()) continue;
+
+                        e.getPlayer().setAllowFlight(false);
+                        e.getPlayer().setFlying(false);
+                        team.addPlayers(e.getPlayer());
+                        Material[] materialList = Arrays.stream(Material.values()).filter(material -> material.name().contains("BED_BLOCK")).toArray(Material[]::new);
+
+                        BlockState bedFoot = team.getBed().getBlock().getState();
+                        BlockFace face = bedFoot.getBlock().getFace(bedFoot.getBlock());
+                        BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
+                        bedFoot.setType(Material.BED_BLOCK);
+                        bedHead.setType(Material.BED_BLOCK);
+                        bedFoot.setRawData((byte) face.ordinal());
+                        bedHead.setRawData((byte) (face.ordinal() + 8));
+                        bedFoot.update(true, true);
+                        bedHead.update(true, true);
+                        team.setBedDestroyed(false);
+                        team.spawnNPCs();
+                        e.getPlayer().getInventory().clear();
+                        team.respawnMember(e.getPlayer());
+
+                        e.getArena().getSpectators().remove(e.getPlayer());
+                        e.getArena().getPlayers().add(e.getPlayer());
+                        new PlayerQuickBuyCache(e.getPlayer());
+                        new ShopCache(e.getPlayer().getUniqueId());
+                        e.getPlayer().setGameMode(org.bukkit.GameMode.SURVIVAL);
+                        e.getPlayer().getActivePotionEffects().forEach(potionEffect -> e.getPlayer().removePotionEffect(potionEffect.getType()));
+                        e.getPlayer().setAllowFlight(false);
+                        e.getPlayer().setFlying(false);
+                        e.getPlayer().closeInventory();
+                        break;
+                    }
+                }
+            }, 10L);
+            return;
+        }
+
         if (e.getArena().getPlayers().size() > 1) return;
         if (e.getArena().isSpectator(((Player) pp.getPlayer()))) return;
         if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
@@ -60,8 +115,8 @@ public class ArenaJoin implements Listener {
             if (party.hasParty()) {
                 if (party.isOwner()) {
                     if (pp.hasPermission()) {
-                        List<Player> players = new ArrayList<>(party.getPartyMembers());
-                        players.add(((Player) pp.getPlayer()));
+                        List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
+                        players.add(pp.getPlayer());
 
                         IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
@@ -79,8 +134,8 @@ public class ArenaJoin implements Listener {
             } else if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
                 if (party.hasParty()) {
                     if (party.isOwner()) {
-                        List<Player> players = new ArrayList<>(party.getPartyMembers());
-                        players.add(((Player) pp.getPlayer()));
+                        List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
+                        players.add(pp.getPlayer());
 
                         IPrivateArena a =  new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
@@ -91,8 +146,8 @@ public class ArenaJoin implements Listener {
                         }, 35L);
                     }
                 } else {
-                    List<Player> players = new ArrayList<>();
-                    players.add(((Player) pp.getPlayer()));
+                    List<OfflinePlayer> players = new ArrayList<>();
+                    players.add(pp.getPlayer());
 
                     IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 

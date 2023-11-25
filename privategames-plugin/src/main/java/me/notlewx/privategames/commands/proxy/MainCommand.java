@@ -1,12 +1,11 @@
 package me.notlewx.privategames.commands.proxy;
 
+import com.andrei1058.bedwars.proxy.api.ArenaStatus;
 import com.andrei1058.bedwars.proxy.api.CachedArena;
 import com.andrei1058.bedwars.proxy.arenamanager.ArenaManager;
-import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
-import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
@@ -190,22 +189,27 @@ public class MainCommand implements CommandExecutor {
                         }
                         break;
                     case "join":
-                        List<IPrivateArena> arenas = PrivateArena.privateArenas;
                         if (args.length > 2) return false;
                         IPrivatePlayer host = null;
+                        for (CachedArena a : ArenaManager.getArenas()) {
+                            if (!api.getPrivateArenaUtil().isArenaPrivate(a.getRemoteIdentifier())) continue;
+                            if (a.getCurrentPlayers() >= a.getMaxPlayers()) continue;
 
-                        for (IPrivateArena a : arenas) {
-                            if (a.getPrivateArenaHost().getPlayer().getName().equals(args[1])) {
-                                host = a.getPrivateArenaHost();
-                                CachedArena arena = ArenaManager.getArenaByIdentifier(a.getArenaIdentifier());
+                            if (api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getRemoteIdentifier()).getPrivateArenaHost().getPlayer().getName().equals(args[1])) {
+                                host = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getRemoteIdentifier()).getPrivateArenaHost();
                                 if (!host.getPlayerOptions().isAllowJoin()) {
                                     sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN).replace("{player}", host.getPlayer().getName()));
                                     return false;
                                 }
-                                arena.addPlayer((Player) sender, host.getPlayer().getName());
+                                if (a.getStatus() == ArenaStatus.WAITING || a.getStatus() == ArenaStatus.STARTING) {
+                                    a.addPlayer((Player) sender, null);
+                                } else if (a.getStatus() == ArenaStatus.PLAYING) {
+                                    a.addSpectator((Player) sender, null);
+                                } else {
+                                    sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN).replace("{player}", host.getPlayer().getName()));
+                                }
                             }
                         }
-
                         if (host == null) {
                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN).replace("{player}", args[1]));
                         }

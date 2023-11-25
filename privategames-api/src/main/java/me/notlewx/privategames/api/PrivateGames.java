@@ -25,6 +25,13 @@ public interface PrivateGames {
     IPrivatePlayer getPrivatePlayer(Player player);
 
     /**
+     * Get info of a specific player
+     * @param player - Player
+     * @return - IPrivatePlayer
+     */
+    IPrivatePlayer getPrivatePlayer(UUID player);
+
+    /**
      * Get the private arena util
      * @return - Private arena util
      */

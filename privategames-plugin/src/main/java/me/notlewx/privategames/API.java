@@ -31,6 +31,11 @@ public class API implements PrivateGames {
     }
 
     @Override
+    public IPrivatePlayer getPrivatePlayer(UUID uuid) {
+        return new PrivatePlayer(Bukkit.getOfflinePlayer(uuid));
+    }
+
+    @Override
     public IPrivateArenaUtil getPrivateArenaUtil() {
         return new PrivateArenaUtil();
     }

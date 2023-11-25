@@ -227,9 +227,9 @@ public class PrivateArenaListener implements Listener {
         IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).getPrivateArenaHost();
         IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
 
-        privateArena.getPlayers().forEach(Utility::giveLongJump);
-        privateArena.getPlayers().forEach(Utility::giveHealthBuff);
-        privateArena.getPlayers().forEach(Utility::giveSpeedLevel);
+        privateArena.getPlayers().forEach(p -> Utility.giveLongJump((Player) p));
+        privateArena.getPlayers().forEach(p -> Utility.giveHealthBuff((Player) p));
+        privateArena.getPlayers().forEach(p -> Utility.giveSpeedLevel((Player) p));
 
         if (pp.getPlayerSettings().isNoEmeraldsEnabled()) {
             for (IGenerator gen : e.getArena().getOreGenerators()) {
@@ -272,9 +272,9 @@ public class PrivateArenaListener implements Listener {
         IArena a = e.getArena();
         IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
 
-        privateArena.getPlayers().forEach(p -> p.setMaxHealth(20.0));
-        privateArena.getPlayers().forEach(p -> p.setHealth(20.0));
-        privateArena.getPlayers().forEach(p -> p.setHealthScale(20.0));
+        privateArena.getPlayers().forEach(p -> ((Player) p).setMaxHealth(20.0));
+        privateArena.getPlayers().forEach(p -> ((Player) p).setHealth(20.0));
+        privateArena.getPlayers().forEach(p -> ((Player) p).setHealthScale(20.0));
 
         if (a.isAllowMapBreak()) {
             a.setAllowMapBreak(false);

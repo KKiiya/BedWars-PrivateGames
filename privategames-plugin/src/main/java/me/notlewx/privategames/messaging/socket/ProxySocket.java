@@ -58,10 +58,10 @@ public class ProxySocket {
 
                 switch (json.get("action").getAsString()) {
                     case "privateArenaCreation":
-                        IPrivatePlayer host = api.getPrivatePlayer(Bukkit.getPlayer(UUID.fromString(json.get("host").getAsString())));
+                        IPrivatePlayer host = api.getPrivatePlayer(UUID.fromString(json.get("host").getAsString()));
                         String[] players = json.get("players").getAsString().replace("[", "").replace("]", "").split(",");
                         List<UUID> playersList = Arrays.stream(players).map(UUID::fromString).collect(Collectors.toList());
-                        new PrivateArena(host, playersList.stream().map(Bukkit::getPlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString());
+                        new PrivateArena(host, playersList.stream().map(Bukkit::getOfflinePlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString());
                         break;
                     case "privateArenaDeletion":
                         IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(json.get("arenaIdentifier").getAsString());

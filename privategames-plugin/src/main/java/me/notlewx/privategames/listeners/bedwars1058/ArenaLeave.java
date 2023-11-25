@@ -13,6 +13,7 @@ public class ArenaLeave implements Listener {
     @EventHandler
     public void onArenaLeave(PlayerLeaveArenaEvent e) {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
+        if (e.getArena().isSpectator(e.getPlayer())) return;
         if (e.getArena().getPlayers().size() <= 1) {
             IPrivateArena arena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
             arena.destroyData();
