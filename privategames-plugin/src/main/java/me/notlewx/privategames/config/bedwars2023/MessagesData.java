@@ -26,7 +26,6 @@ public class MessagesData {
                             "&7- &e/pg enable &7- &aEnable private games",
                             "&7- &e/pg disable &7- &aDisable private games",
                             "&7- &e/pg join <player> &7- &aJoin to the private game of a player",
-                            "&7- &e/pg leave &7- &aLeave the private game of a player",
                             "&8&m-----------------------------------------------------"
                     ));
                     yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(

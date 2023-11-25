@@ -39,8 +39,8 @@ public class ArenaJoin implements Listener {
 
         ItemStack settings = new ItemStack(Material.valueOf(mainConfig.getString(MATERIAL)));
         ItemMeta settingsMeta = settings.getItemMeta();
-        settingsMeta.setDisplayName(Utility.getMsg(pp.getPlayer(), PRIVATE_GAME_MENU_ITEM_NAME));
-        settingsMeta.setLore(Utility.getList(pp.getPlayer(), PRIVATE_GAME_MENU_ITEM_LORE));
+        settingsMeta.setDisplayName(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_MENU_ITEM_NAME));
+        settingsMeta.setLore(Utility.getList(((Player) pp.getPlayer()), PRIVATE_GAME_MENU_ITEM_LORE));
         settings.setItemMeta(settingsMeta);
 
         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
@@ -56,7 +56,7 @@ public class ArenaJoin implements Listener {
         }, 20L);
 
         if (e.getArena().getPlayers().size() > 1) return;
-        if (e.getArena().isSpectator(pp.getPlayer())) return;
+        if (e.getArena().isSpectator(((Player) pp.getPlayer()))) return;
         if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
 
         if (p.isPrivateGameEnabled()) {
@@ -64,13 +64,13 @@ public class ArenaJoin implements Listener {
                 if (party.isOwner()) {
                     if (pp.hasPermission()) {
                         List<Player> players = new ArrayList<>(party.getPartyMembers());
-                        players.add(pp.getPlayer());
+                        players.add(((Player) pp.getPlayer()));
                         IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                            pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                            ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings);
                         }, 20L);
                         if (pp.getPlayerOptions().isAutoStart()) {
                             e.getArena().changeStatus(GameState.starting);
@@ -78,11 +78,11 @@ public class ArenaJoin implements Listener {
                         }
                     }
                 }
-            } else if (pp.getPlayer().isOp() || pp.getPlayer().hasPermission("pg.admin")) {
+            } else if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
                 if (party.hasParty()) {
                     if (party.isOwner()) {
                         List<Player> players = new ArrayList<>(party.getPartyMembers());
-                        players.add(pp.getPlayer());
+                        players.add(((Player) pp.getPlayer()));
 
                         IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
@@ -93,12 +93,12 @@ public class ArenaJoin implements Listener {
                         }
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                            pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                            ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings);
                         }, 20L);
                     }
                 } else {
                     List<Player> players = new ArrayList<>();
-                    players.add(pp.getPlayer());
+                    players.add(((Player) pp.getPlayer()));
 
                     IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
@@ -109,7 +109,7 @@ public class ArenaJoin implements Listener {
                     }
 
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                        pp.getPlayer().getInventory().setItem(mainConfig.getInt(POSITION), settings);
+                        ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings);
                     }, 20L);
                 }
 

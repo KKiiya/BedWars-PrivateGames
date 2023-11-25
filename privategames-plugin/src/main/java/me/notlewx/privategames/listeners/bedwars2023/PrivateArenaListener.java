@@ -1,5 +1,6 @@
 package me.notlewx.privategames.listeners.bedwars2023;
 
+import com.google.gson.JsonObject;
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import com.tomkeuper.bedwars.api.configuration.ConfigManager;
 import com.tomkeuper.bedwars.arena.OreGenerator;
@@ -18,6 +19,7 @@ import com.tomkeuper.bedwars.arena.Arena;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.utils.GeneratorProperties;
+import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -159,7 +161,7 @@ public class PrivateArenaListener implements Listener {
                         finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, MAX_TEAM_UPGRADES_MEANING)));
                     }
                 } else {
-                    finalMessage.add(m.replace("{player}", pp.getPlayer().getDisplayName()));
+                    finalMessage.add(m.replace("{player}", ((Player) pp.getPlayer()).getDisplayName()));
                 }
             }
             for (String m : finalMessage) {
@@ -212,9 +214,9 @@ public class PrivateArenaListener implements Listener {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
         IPrivatePlayer pp = api.getPrivatePlayer(e.getPlayer());
 
-        Utility.giveLongJump(pp.getPlayer());
-        Utility.giveHealthBuff(pp.getPlayer());
-        Utility.giveSpeedLevel(pp.getPlayer());
+        Utility.giveLongJump(((Player) pp.getPlayer()));
+        Utility.giveHealthBuff(((Player) pp.getPlayer()));
+        Utility.giveSpeedLevel(((Player) pp.getPlayer()));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -278,6 +280,11 @@ public class PrivateArenaListener implements Listener {
             a.setAllowMapBreak(false);
         }
         privateArena.destroyData();
+        JsonObject object = new JsonObject();
+        object.addProperty("action", "privateArenaDeletion");
+        object.addProperty("arenaIdentifier", privateArena.getArenaIdentifier());
+
+        MessagesUtil.sendMessage(object.toString());
         if (GeneratorProperties.getGeneratorProperties(privateArena.getPrivateArenaHost()) != null) {
             GeneratorProperties.removeGeneratorProperties(privateArena.getPrivateArenaHost());
         }
@@ -318,6 +325,11 @@ public class PrivateArenaListener implements Listener {
                     }
                 }
                 api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).destroyData();
+                JsonObject object = new JsonObject();
+                object.addProperty("action", "privateArenaDeletion");
+                object.addProperty("arenaIdentifier", e.getArena().getWorldName());
+
+                MessagesUtil.sendMessage(object.toString());
             }
         }
     }

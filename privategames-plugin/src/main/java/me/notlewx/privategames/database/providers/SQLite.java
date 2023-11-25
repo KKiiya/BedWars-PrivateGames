@@ -5,6 +5,7 @@ import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +63,7 @@ public class SQLite implements Database {
         }
     }
 
-    public String getData(Player player, String column) {
+    public String getData(OfflinePlayer player, String column) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -86,7 +87,7 @@ public class SQLite implements Database {
         return null;
     }
 
-    public void setData(Player player, String column, String value) {
+    public void setData(OfflinePlayer player, String column, String value) {
         try {
             Connection c = getConnection();
             PreparedStatement ps = c.prepareStatement("UPDATE " + s + "_private_games SET " + column + "=? WHERE player=?");
@@ -100,7 +101,7 @@ public class SQLite implements Database {
         }
     }
 
-    public void createPlayerData(Player p) {
+    public void createPlayerData(OfflinePlayer p) {
         Connection connection = null;
         PreparedStatement ps = null;
         try {

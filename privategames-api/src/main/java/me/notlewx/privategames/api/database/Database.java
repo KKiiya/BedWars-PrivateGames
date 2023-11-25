@@ -1,5 +1,6 @@
 package me.notlewx.privategames.api.database;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ public interface Database {
      * @param column - Column you are searching the data from
      * @return - String
      */
-    String getData(Player player, String column);
+    String getData(OfflinePlayer player, String column);
 
     /**
      * Set the data of a player
@@ -20,7 +21,7 @@ public interface Database {
      * @param column - Column you want to set the data for
      * @param value - Value you want to write
      */
-    void setData(Player player, String column, String value);
+    void setData(OfflinePlayer player, String column, String value);
 
     /**
      * Create the data of a player
@@ -29,7 +30,7 @@ public interface Database {
      * Doing it more than once wont do anything
      * @param player - Player you want to create the data to
      */
-    void createPlayerData(Player player);
+    void createPlayerData(OfflinePlayer player);
 
     /**
      * Get the database connection

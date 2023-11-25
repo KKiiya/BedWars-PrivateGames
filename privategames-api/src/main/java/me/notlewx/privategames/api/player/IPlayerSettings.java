@@ -1,13 +1,13 @@
 package me.notlewx.privategames.api.player;
 
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 public interface IPlayerSettings {
     /**
      * Get the player
      * @return - Player
      */
-    Player getPlayer();
+    OfflinePlayer getPlayer();
 
     /**
      * Check if the player has private

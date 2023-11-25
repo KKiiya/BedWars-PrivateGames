@@ -15,9 +15,11 @@ import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.arena.OreGenerator;
 import com.andrei1058.bedwars.api.events.gameplay.GeneratorUpgradeEvent;
+import com.google.gson.JsonObject;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.utils.GeneratorProperties;
+import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -158,7 +160,7 @@ public class PrivateArenaListener implements Listener {
                         finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, MAX_TEAM_UPGRADES_MEANING)));
                     }
                 } else {
-                    finalMessage.add(m.replace("{player}", pp.getPlayer().getDisplayName()));
+                    finalMessage.add(m.replace("{player}", ((Player) pp.getPlayer()).getDisplayName()));
                 }
             }
             for (String m : finalMessage) {
@@ -211,9 +213,9 @@ public class PrivateArenaListener implements Listener {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
         IPrivatePlayer pp = api.getPrivatePlayer(e.getPlayer());
 
-        Utility.giveLongJump(pp.getPlayer());
-        Utility.giveHealthBuff(pp.getPlayer());
-        Utility.giveSpeedLevel(pp.getPlayer());
+        Utility.giveLongJump(((Player) pp.getPlayer()));
+        Utility.giveHealthBuff(((Player) pp.getPlayer()));
+        Utility.giveSpeedLevel(((Player) pp.getPlayer()));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -278,6 +280,13 @@ public class PrivateArenaListener implements Listener {
             a.getConfig().set("allow-map-break", false);
         }
         privateArena.destroyData();
+
+        JsonObject object = new JsonObject();
+        object.addProperty("action", "privateArenaDeletion");
+        object.addProperty("arenaIdentifier", privateArena.getArenaIdentifier());
+
+        MessagesUtil.sendMessage(object.toString());
+
         if (GeneratorProperties.getGeneratorProperties(privateArena.getPrivateArenaHost()) != null) {
             GeneratorProperties.removeGeneratorProperties(privateArena.getPrivateArenaHost());
         }

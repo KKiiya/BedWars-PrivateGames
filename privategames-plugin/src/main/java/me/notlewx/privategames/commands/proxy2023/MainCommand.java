@@ -1,7 +1,12 @@
 package me.notlewx.privategames.commands.proxy2023;
 
+import com.tomkeuper.bedwars.proxy.api.CachedArena;
+import com.tomkeuper.bedwars.proxy.arenamanager.ArenaManager;
+import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
+import me.notlewx.privategames.api.player.IPrivatePlayer;
+import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
@@ -171,7 +176,26 @@ public class MainCommand implements CommandExecutor {
                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                         }
                         break;
+                    case "join":
+                        List<IPrivateArena> arenas = PrivateArena.privateArenas;
+                        if (args.length > 2) return false;
+                        IPrivatePlayer host = null;
+                        for (IPrivateArena a : arenas) {
+                            if (a.getPrivateArenaHost().getPlayer().getName().equals(args[1])) {
+                                host = a.getPrivateArenaHost();
+                                CachedArena arena = ArenaManager.getArenaByIdentifier(a.getArenaIdentifier());
+                                if (!host.getPlayerOptions().isAllowJoin()) {
+                                    sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN).replace("{player}", host.getPlayer().getName()));
+                                    return false;
+                                }
+                                arena.addPlayer((Player) sender, host.getPlayer().getName());
+                            }
+                        }
 
+                        if (host == null) {
+                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN).replace("{player}", args[1]));
+                        }
+                        break;
                     case "help":
                         List<String> message;
                         if (sender.hasPermission("pg.help") || sender.isOp()) {

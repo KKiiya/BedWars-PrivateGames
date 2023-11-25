@@ -2,6 +2,7 @@ package me.notlewx.privategames.api.player;
 
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -12,7 +13,7 @@ public interface IPrivatePlayer {
      * Get the player
      * @return - Player
      */
-    Player getPlayer();
+    OfflinePlayer getPlayer();
 
     /**
      * Get the player's unique ID (UUID)

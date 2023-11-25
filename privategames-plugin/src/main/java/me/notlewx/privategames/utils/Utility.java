@@ -29,7 +29,7 @@ public class Utility {
         PrivateGames.getPlugins().getLogger().info(c(infoLog));
     }
     public static void warn(String warnLog) {
-        PrivateGames.getPlugins().getLogger().info(c(warnLog));
+        PrivateGames.getPlugins().getLogger().warning(c(warnLog));
     }
     public static String c(String value) {
         return ChatColor.translateAlternateColorCodes('&', value);
@@ -58,7 +58,7 @@ public class Utility {
 
     public static void giveSpeedLevel(Player player) {
         if (!api.getPrivateArenaUtil().isPlaying(player)) return;
-        IPrivatePlayer owner = api.getPrivatePlayer(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
+        IPrivatePlayer owner = api.getPrivatePlayer((Player) api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
         switch (owner.getPlayerSettings().getSpeedLevel()) {
             case 0:
             case 1:
@@ -83,7 +83,7 @@ public class Utility {
 
     public static void giveHealthBuff(Player player) {
         if (!api.getPrivateArenaUtil().isPlaying(player)) return;
-        IPrivatePlayer owner = api.getPrivatePlayer(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
+        IPrivatePlayer owner = api.getPrivatePlayer((Player) api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
         switch (owner.getPlayerSettings().getHealthBuffLevel()) {
             case 0:
             case 1:
@@ -106,7 +106,7 @@ public class Utility {
 
     public static void giveLongJump(Player player) {
         if (!api.getPrivateArenaUtil().isPlaying(player)) return;
-        IPrivatePlayer owner = api.getPrivatePlayer(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
+        IPrivatePlayer owner = api.getPrivatePlayer((Player) api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
         if (owner.getPlayerSettings().isLowGravityEnabled())
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2));

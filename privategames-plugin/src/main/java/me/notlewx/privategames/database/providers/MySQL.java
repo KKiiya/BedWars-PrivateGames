@@ -6,6 +6,7 @@ import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -97,7 +98,7 @@ public class MySQL implements Database {
         }
     }
 
-    public void createPlayerData(Player player) {
+    public void createPlayerData(OfflinePlayer player) {
         Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), () -> {
             try {
                 Connection c = db.getConnection();
@@ -137,7 +138,7 @@ public class MySQL implements Database {
         });
     }
 
-    public void setData(Player player, String column, String value) {
+    public void setData(OfflinePlayer player, String column, String value) {
         try {
             Connection c = db.getConnection();
             PreparedStatement ps = c.prepareStatement("UPDATE " + s + "_private_games SET " + column + "=? WHERE player=?");
@@ -151,7 +152,7 @@ public class MySQL implements Database {
         }
     }
 
-    public String getData(Player player, String column) {
+    public String getData(OfflinePlayer player, String column) {
         try {
             Connection c = db.getConnection();
             PreparedStatement ps = c.prepareStatement("SELECT " + column + " FROM " + s + "_private_games WHERE player=?");

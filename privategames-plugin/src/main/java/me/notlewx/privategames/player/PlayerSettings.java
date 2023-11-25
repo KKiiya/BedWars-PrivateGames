@@ -6,18 +6,19 @@ import me.notlewx.privategames.api.events.PrivateSettingUpdateEvent;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.modifiers.ModifierType;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import static me.notlewx.privategames.PrivateGames.database;
 
 public class PlayerSettings implements IPlayerSettings {
-    private final Player player;
-    public PlayerSettings(Player player)  {
+    private final OfflinePlayer player;
+    public PlayerSettings(OfflinePlayer player)  {
         this.player = player;
     }
 
     @Override
-    public Player getPlayer() {
+    public OfflinePlayer getPlayer() {
         return player;
     }
 
@@ -63,7 +64,8 @@ public class PlayerSettings implements IPlayerSettings {
 
     @Override
     public boolean setPrivateGameEnabled() {
-        PrivateGameEnableEvent event = new PrivateGameEnableEvent(player);
+        if (!player.isOnline()) return false;
+        PrivateGameEnableEvent event = new PrivateGameEnableEvent((Player) player);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
         database.setData(player, "privateGameEnabled", "true");
@@ -72,7 +74,8 @@ public class PlayerSettings implements IPlayerSettings {
 
     @Override
     public boolean setPrivateGameDisabled(boolean leaving) {
-        PrivateGameDisableEvent event = new PrivateGameDisableEvent(player, leaving);
+        if (!player.isOnline()) return false;
+        PrivateGameDisableEvent event = new PrivateGameDisableEvent((Player) player, leaving);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
         database.setData(player, "privateGameEnabled", "false");
@@ -102,49 +105,56 @@ public class PlayerSettings implements IPlayerSettings {
     @Override
     public void setOneHitOneKillEnabled(boolean value) {
         database.setData(player, "oneHitOneKill", String.valueOf(value));
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.ONE_HIT_ONE_KILL, null, value);
+        if (!player.isOnline()) return;
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.ONE_HIT_ONE_KILL, null, value);
         Bukkit.getPluginManager().callEvent(event);
     }
 
     @Override
     public void setLowGravityEnabled(boolean value) {
         database.setData(player, "lowGravity", String.valueOf(value));
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.LOW_GRAVITY, null, value);
+        if (!player.isOnline()) return;
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.LOW_GRAVITY, null, value);
         Bukkit.getPluginManager().callEvent(event);
     }
 
     @Override
     public void setBedInstaBreakEnabled(boolean value) {
         database.setData(player, "bedInstaBreak", String.valueOf(value));
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.INSTANT_BED_BREAK, null, value);
+        if (!player.isOnline()) return;
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.INSTANT_BED_BREAK, null, value);
         Bukkit.getPluginManager().callEvent(event);
     }
 
     @Override
     public void setMaxTeamUpgradesEnabled(boolean value) {
         database.setData(player, "maxTeamUpgrades", String.valueOf(value));
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.MAX_TEAM_UPGRADES, null, value);
+        if (!player.isOnline()) return;
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.MAX_TEAM_UPGRADES, null, value);
         Bukkit.getPluginManager().callEvent(event);
     }
 
     @Override
     public void setAllowMapBreakEnabled(boolean value) {
         database.setData(player, "allowMapBreak", String.valueOf(value));
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.ALLOW_MAP_BREAK, null, value);
+        if (!player.isOnline()) return;
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.ALLOW_MAP_BREAK, null, value);
         Bukkit.getPluginManager().callEvent(event);
     }
 
     @Override
     public void setNoDiamondsEnabled(boolean value) {
         database.setData(player, "noDiamonds", String.valueOf(value));
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.NO_DIAMONDS, null, value);
+        if (!player.isOnline()) return;
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.NO_DIAMONDS, null, value);
         Bukkit.getPluginManager().callEvent(event);
     }
 
     @Override
     public void setNoEmeraldsEnabled(boolean value) {
         database.setData(player, "noEmeralds", String.valueOf(value));
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.NO_EMERALDS, null, value);
+        if (!player.isOnline()) return;
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.NO_EMERALDS, null, value);
         Bukkit.getPluginManager().callEvent(event);
     }
 
@@ -152,8 +162,9 @@ public class PlayerSettings implements IPlayerSettings {
     public void setRespawnTimeLevel(int value) throws IndexOutOfBoundsException {
         if (value < 0 || value > 3) throw new IndexOutOfBoundsException("Value out of bounds! The respawn time value cannot be higher than 3 or lower than 0");
         database.setData(player, "respawnEventTime", String.valueOf(value));
+        if (!player.isOnline()) return;
         boolean enabled = value != 0 && value != 1;
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.RESPAWN_TIME, value, enabled);
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.RESPAWN_TIME, value, enabled);
         Bukkit.getPluginManager().callEvent(event);
     }
 
@@ -161,8 +172,9 @@ public class PlayerSettings implements IPlayerSettings {
     public void setHealthBuffLevel(int value) throws IndexOutOfBoundsException {
         if (value < 0 || value > 3) throw new IndexOutOfBoundsException("Value out of bounds! The health buff value cannot be higher than 3 or lower than 0");
         database.setData(player, "healthBuffLevel", String.valueOf(value));
+        if (!player.isOnline()) return;
         boolean enabled = value != 0 && value != 1;
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.HEALTH_BUFF, value, enabled);
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.HEALTH_BUFF, value, enabled);
         Bukkit.getPluginManager().callEvent(event);
     }
 
@@ -170,8 +182,9 @@ public class PlayerSettings implements IPlayerSettings {
     public void setEventsTimeLevel(int value) throws IndexOutOfBoundsException {
         if (value < 0 || value > 4) throw new IndexOutOfBoundsException("Value out of bounds! The events time value cannot be higher than 4 or lower than 0");
         database.setData(player, "eventsTime", String.valueOf(value));
+        if (!player.isOnline()) return;
         boolean enabled = value != 0 && value != 1;
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.EVENTS_TIME, value, enabled);
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.EVENTS_TIME, value, enabled);
         Bukkit.getPluginManager().callEvent(event);
     }
 
@@ -179,8 +192,9 @@ public class PlayerSettings implements IPlayerSettings {
     public void setSpeedLevel(int value) throws IndexOutOfBoundsException {
         if (value < 0 || value > 4) throw new IndexOutOfBoundsException("Value out of bounds! The speed value cannot be higher than 4 or lower than 0");
         database.setData(player, "speed", String.valueOf(value));
+        if (!player.isOnline()) return;
         boolean enabled = value != 0 && value != 1;
-        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent(player, ModifierType.SPEED, value, enabled);
+        PrivateSettingUpdateEvent event = new PrivateSettingUpdateEvent((Player) player, ModifierType.SPEED, value, enabled);
         Bukkit.getPluginManager().callEvent(event);
     }
 }

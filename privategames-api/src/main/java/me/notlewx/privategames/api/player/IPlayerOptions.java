@@ -1,6 +1,6 @@
 package me.notlewx.privategames.api.player;
 
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 public interface IPlayerOptions {
     /**
@@ -8,7 +8,7 @@ public interface IPlayerOptions {
      *
      * @return The player that this object is associated with.
      */
-    Player getPlayer();
+    OfflinePlayer getPlayer();
 
     /**
      * Check if the player has allowed others to join their game

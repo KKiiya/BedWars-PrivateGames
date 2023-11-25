@@ -8,8 +8,6 @@ import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +15,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.api;
 
@@ -24,52 +23,50 @@ public class ProxySocket {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
-    private Scanner in;
+    private BufferedReader in;
     private Boolean compute = true;
 
     public void start(int port) throws IOException {
-        System.out.println("Starting socket on port " + port);
+        Utility.warn("Starting socket on port " + port);
         serverSocket = new ServerSocket(port);
-        System.out.println("Waiting for client...");
+        Utility.warn("Waiting for client...");
         clientSocket = serverSocket.accept();
-        System.out.println("Client connected: " + clientSocket.toString());
+        Utility.info("Client connected: " + clientSocket.toString());
         out = new PrintWriter(clientSocket.getOutputStream(), true);
-        System.out.println("Output stream created: " + out);
-        in = new Scanner(clientSocket.getInputStream());
-        System.out.println("Input stream created: " + in);
+        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 
         Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), () -> {
             while (compute) {
-                if (!in.hasNext()) disable();
-                else {
-                    String inputLine = in.next();
-                    final JsonObject json;
+                String inputLine;
 
-                    if (inputLine == null || inputLine.isEmpty()) continue;
+                try {
+                    inputLine = in.readLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
-                    try {
-                        json = new JsonParser().parse(inputLine).getAsJsonObject();
-                    } catch (Exception e) {
-                        Utility.info("Error while parsing json: " + inputLine);
-                        continue;
-                    }
+                if (inputLine == null) continue;
+                if (inputLine.isEmpty()) continue;
 
-                    if (json == null) continue;
-                    if (!json.has("action")) continue;
+                final JsonObject json;
 
-                    switch (json.get("action").getAsString()) {
-                        case "privateArenaCreation":
-                            IPrivatePlayer host = api.getPrivatePlayer(Bukkit.getPlayer(UUID.fromString(json.get("host").getAsString())));
-                            Player[] players = (Player[]) Arrays.stream(json.get("players").getAsString().replace("[", "").replace("]", "").split(",")).map(uuid -> Bukkit.getPlayer(UUID.fromString(uuid))).toArray();
-                            List<Player> playersList = new ArrayList<>(Arrays.asList(players));
-                            new PrivateArena(host, playersList, json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString());
-                            break;
-                        case "privateArenaDeletion":
-                            IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(json.get("arenaIdentifier").getAsString());
-                            privateArena.destroyData();
-                            break;
-                    }
+                json = new JsonParser().parse(inputLine).getAsJsonObject();
+
+                if (json == null) continue;
+                if (!json.has("action")) continue;
+
+                switch (json.get("action").getAsString()) {
+                    case "privateArenaCreation":
+                        IPrivatePlayer host = api.getPrivatePlayer(Bukkit.getPlayer(UUID.fromString(json.get("host").getAsString())));
+                        String[] players = json.get("players").getAsString().replace("[", "").replace("]", "").split(",");
+                        List<UUID> playersList = Arrays.stream(players).map(UUID::fromString).collect(Collectors.toList());
+                        new PrivateArena(host, playersList.stream().map(Bukkit::getPlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString());
+                        break;
+                    case "privateArenaDeletion":
+                        IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(json.get("arenaIdentifier").getAsString());
+                        privateArena.destroyData();
+                        break;
                 }
             }
         });
@@ -77,19 +74,7 @@ public class ProxySocket {
 
     @SuppressWarnings("UnusedReturnValue")
     public boolean sendMessage(String message) {
-        if (clientSocket == null) {
-            disable();
-            return false;
-        }
-        if (isClosed()) {
-            disable();
-            return false;
-        }
-        if (out == null) {
-            disable();
-            return false;
-        }
-        if (in == null) {
+        if (clientSocket == null || isClosed() || out == null || in == null) {
             disable();
             return false;
         }
@@ -109,7 +94,11 @@ public class ProxySocket {
         } catch (IOException e) {
             throw new RuntimeException("Error while closing socket: " + clientSocket.toString(), e);
         }
-        in.close();
+        try {
+            in.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Error while closing input stream: " + clientSocket.toString(), e);
+        }
         out.close();
         in = null;
         out = null;
