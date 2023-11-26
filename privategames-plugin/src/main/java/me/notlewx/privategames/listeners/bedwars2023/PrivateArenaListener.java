@@ -372,7 +372,10 @@ public class PrivateArenaListener implements Listener {
     }
 
     private void modifyEventTime(Arena arena) {
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(arena.getWorldName()).getPrivateArenaHost();
+        IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(arena.getWorldName());
+        if (pa == null) return;
+        IPrivatePlayer pp = pa.getPrivateArenaHost();
+
         switch (pp.getPlayerSettings().getEventsTimeLevel()) {
             case 0:
             case 2:

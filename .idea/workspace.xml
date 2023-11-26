@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28c61859-df31-45b6-b215-f5d5f51d848b" name="Changes" comment="" />
+    <list default="true" id="28c61859-df31-45b6-b215-f5d5f51d848b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/PrivateArenaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/PrivateArenaListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/PrivateArenaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/PrivateArenaListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/original-privategames-plugin-1.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/original-privategames-plugin-1.1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/target/privategames-plugin-1.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/target/privategames-plugin-1.1.0.jar" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

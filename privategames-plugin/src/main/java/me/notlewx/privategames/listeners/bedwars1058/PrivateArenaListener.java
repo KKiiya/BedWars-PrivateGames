@@ -363,12 +363,15 @@ public class PrivateArenaListener implements Listener {
                 e.getClickedBlock().setType(Material.AIR);
             }
         } catch (Exception ex) {
-            // PREVENT A USELESs ERROR
+            // PREVENT A USELESS ERROR
         }
     }
 
     private void modifyEventTime(Arena arena) {
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(arena.getWorldName()).getPrivateArenaHost();
+        IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(arena.getWorldName());
+        if (pa == null) return;
+        IPrivatePlayer pp = pa.getPrivateArenaHost();
+
         switch (pp.getPlayerSettings().getEventsTimeLevel()) {
             case 0:
             case 2:
