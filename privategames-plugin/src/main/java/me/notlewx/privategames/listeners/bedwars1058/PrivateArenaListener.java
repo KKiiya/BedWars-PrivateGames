@@ -294,7 +294,7 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerKillEvent e) {
-        if (api.getBedWars2023API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
+        if (api.getBedWars1058API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
         if (e.getArena().isSpectator(e.getVictim())) return;
         IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
@@ -306,10 +306,10 @@ public class PrivateArenaListener implements Listener {
             case 2:
                 break;
             case 1:
-                e.getArena().startReSpawnSession(e.getVictim(), 1);
+                e.getArena().getRespawnSessions().put(e.getVictim(), 1);
                 break;
             case 3:
-                e.getArena().startReSpawnSession(e.getVictim(), 10);
+                e.getArena().getRespawnSessions().put(e.getVictim(), 10);
                 break;
         }
     }
