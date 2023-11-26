@@ -17,7 +17,7 @@ public class PlayerInteraction implements Listener {
             if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(Utility.getMsg(p, PRIVATE_GAME_MENU_ITEM_NAME)))
                 new SettingsMenu(p);
         } catch (Throwable ex) {
-
+            // Do nothing
         }
     }
 }

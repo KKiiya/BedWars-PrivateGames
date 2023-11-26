@@ -184,7 +184,7 @@ public class MessagesData {
         try {
             yml.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Could not save messages", e);
         }
     }
 }

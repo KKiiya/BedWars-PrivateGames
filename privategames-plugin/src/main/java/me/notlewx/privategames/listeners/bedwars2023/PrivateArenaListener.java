@@ -176,6 +176,7 @@ public class PrivateArenaListener implements Listener {
 
         IPrivateArena a = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getGenerator().getArena().getWorldName());
 
+        if (a == null) return;
         if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()) == null) return;
         if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()).getProperties(e.getGenerator()) == null) return;
 
@@ -361,7 +362,7 @@ public class PrivateArenaListener implements Listener {
             if (pp.getPlayerSettings().isAllowMapBreakEnabled() && !b.getType().toString().contains("BED")) {
                 a.addPlacedBlock(b);
             }
-            if (pp.getPlayerSettings().isBedInstaBreakEnabled() && b.getType().toString().contains("BED") && this.getBedLocations(b.getLocation()).stream().noneMatch(l -> l.getBlock().getLocation().equals((Object) a.getTeam(player).getBed().getBlock().getLocation()))) {
+            if (pp.getPlayerSettings().isBedInstaBreakEnabled() && b.getType().toString().contains("BED") && this.getBedLocations(b.getLocation()).stream().noneMatch(l -> l.getBlock().getLocation().equals(a.getTeam(player).getBed().getBlock().getLocation()))) {
                 Bukkit.getPluginManager().callEvent(new BlockBreakEvent(b, player));
                 b.setType(Material.AIR);
             }

@@ -10,6 +10,8 @@ public class PlayerJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+        if (e == null) return;
+
         Player p = e.getPlayer();
         database.createPlayerData(p);
 

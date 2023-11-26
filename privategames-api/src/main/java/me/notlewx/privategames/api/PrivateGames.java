@@ -97,7 +97,7 @@ public interface PrivateGames {
          * Check if an arena is private
          * @return - boolean
          */
-        boolean isArenaPrivate(String arenaName);
+        boolean isArenaPrivate(String worldName);
 
         /**
          * Check if a player is playing

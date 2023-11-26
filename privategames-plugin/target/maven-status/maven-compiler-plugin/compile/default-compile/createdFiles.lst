@@ -5,6 +5,7 @@ me\notlewx\privategames\PrivateGames.class
 me\notlewx\privategames\menus\SettingsMenu$1.class
 me\notlewx\privategames\config\ConfigManager.class
 me\notlewx\privategames\config\bedwars1058\MessagesData.class
+me\notlewx\privategames\listeners\bedwarsproxy\CommandListener.class
 me\notlewx\privategames\listeners\PlayerJoin.class
 me\notlewx\privategames\commands\proxy\MainCommand.class
 me\notlewx\privategames\messaging\redis\ProxyListener.class
@@ -24,6 +25,7 @@ me\notlewx\privategames\listeners\PlayerInteraction.class
 me\notlewx\privategames\party\handlers\BedWarsProxyPARTY.class
 me\notlewx\privategames\menus\OptionsMenu.class
 me\notlewx\privategames\API$PrivateArenaUtil.class
+me\notlewx\privategames\listeners\bwproxy2023\CommandListener.class
 me\notlewx\privategames\commands\bedwars2023\MainCommand.class
 me\notlewx\privategames\player\PlayerOptions.class
 me\notlewx\privategames\menus\OptionsMenu$1.class

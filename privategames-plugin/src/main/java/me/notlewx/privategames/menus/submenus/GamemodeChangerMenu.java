@@ -3,18 +3,12 @@ package me.notlewx.privategames.menus.submenus;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
-import com.andrei1058.bedwars.libs.sidebar.SidebarLine;
 import com.andrei1058.bedwars.sidebar.SidebarService;
-import com.tomkeuper.bedwars.BedWars;
-import com.tomkeuper.bedwars.sidebar.BoardManager;
-import me.neznamy.tab.api.TabAPI;
-import me.notlewx.privategames.config.bedwars2023.MessagesData;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -26,7 +20,6 @@ import java.util.HashMap;
 
 import static me.notlewx.privategames.PrivateGames.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER;
-import static me.notlewx.privategames.config.bedwars2023.MessagesData.ITEM_GAMEMODE_CHANGER_LORE;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.SUBMENU_GAMEMODE_CHANGER_TITLE;
 
 public class GamemodeChangerMenu implements GUIHolder {

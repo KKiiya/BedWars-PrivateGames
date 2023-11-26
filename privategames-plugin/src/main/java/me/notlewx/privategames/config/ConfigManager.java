@@ -40,7 +40,7 @@ public class ConfigManager {
                     return;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
 
@@ -79,7 +79,7 @@ public class ConfigManager {
         try {
             yml.save(config);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

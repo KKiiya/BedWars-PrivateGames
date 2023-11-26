@@ -5,14 +5,12 @@ import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.api.player.IPlayerOptions;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-
 import java.util.UUID;
 
 public class PlayerOptions implements IPlayerOptions {
 
-    private OfflinePlayer p;
-    private UUID uuid;
+    private final OfflinePlayer p;
+    private final UUID uuid;
     private Database db;
 
     public PlayerOptions(OfflinePlayer p) {
@@ -22,7 +20,7 @@ public class PlayerOptions implements IPlayerOptions {
     }
 
     public PlayerOptions(UUID uuid) {
-        this.p = Bukkit.getPlayer(uuid);
+        this.p = Bukkit.getOfflinePlayer(uuid);
         this.uuid = uuid;
     }
 

@@ -28,8 +28,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Bed;
-import org.bukkit.material.MaterialData;
-
 import java.util.*;
 
 import static me.notlewx.privategames.PrivateGames.api;
@@ -125,9 +123,7 @@ public class ArenaJoin implements Listener {
 
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
 
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                            ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                        }, 35L);
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                         if (pp.getPlayerOptions().isAutoStart()) {
                             e.getArena().changeStatus(GameState.starting);
                             e.getArena().getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
@@ -144,9 +140,7 @@ public class ArenaJoin implements Listener {
 
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
 
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                            ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                        }, 35L);
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                     }
                 } else {
                     List<OfflinePlayer> players = new ArrayList<>();
@@ -156,9 +150,7 @@ public class ArenaJoin implements Listener {
 
                     MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
 
-                    Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                        ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings);
-                    }, 35L);
+                    Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                 }
                 if (pp.getPlayerOptions().isAutoStart()) {
                     e.getArena().changeStatus(GameState.starting);

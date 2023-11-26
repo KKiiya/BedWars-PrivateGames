@@ -52,7 +52,7 @@ public class PrivatePlayer implements IPrivatePlayer {
     @Nullable
     public IPrivateArena getArena() {
         if (!player.isOnline()) return null;
-        return PrivateArena.privateArenaByPlayer.get((Player) player);
+        return PrivateArena.privateArenaByPlayer.get(player);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class PrivatePlayer implements IPrivatePlayer {
     @Override
     public boolean isInPrivateArena() {
         if (!player.isOnline()) return false;
-        return PrivateArena.privateArenaByPlayer.get((Player) player) != null;
+        return PrivateArena.privateArenaByPlayer.get(player) != null;
     }
 
     @Override

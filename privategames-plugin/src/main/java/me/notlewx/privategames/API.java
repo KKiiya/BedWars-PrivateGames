@@ -91,8 +91,8 @@ public class API implements PrivateGames {
         }
 
         @Override
-        public boolean isArenaPrivate(String arenaName) {
-            return getPrivateArenas().stream().map(IPrivateArena::getArenaIdentifier).collect(Collectors.toList()).contains(arenaName);
+        public boolean isArenaPrivate(String worldName) {
+            return getPrivateArenas().stream().map(IPrivateArena::getArenaIdentifier).collect(Collectors.toList()).contains(worldName);
         }
 
         @Override

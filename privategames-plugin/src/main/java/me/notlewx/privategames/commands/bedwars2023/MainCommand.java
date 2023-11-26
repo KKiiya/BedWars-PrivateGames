@@ -2,8 +2,6 @@ package me.notlewx.privategames.commands.bedwars2023;
 
 import com.tomkeuper.bedwars.api.arena.IArena;
 import me.notlewx.privategames.PrivateGames;
-import me.notlewx.privategames.api.arena.IPrivateArena;
-import me.notlewx.privategames.api.events.PrivateGameJoinEvent;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.menus.SettingsMenu;

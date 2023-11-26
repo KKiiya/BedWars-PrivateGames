@@ -71,7 +71,7 @@ public class PrivateArena implements IPrivateArena {
         if (isFull()) return;
 
         if (callEvent) {
-            PrivateGameJoinEvent event = new PrivateGameJoinEvent(p, this)
+            PrivateGameJoinEvent event = new PrivateGameJoinEvent(p, this);
             Bukkit.getPluginManager().callEvent(event);
 
             if (event.isCancelled()) return;

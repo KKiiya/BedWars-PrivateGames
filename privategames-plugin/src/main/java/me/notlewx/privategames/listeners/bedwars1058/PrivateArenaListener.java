@@ -175,6 +175,7 @@ public class PrivateArenaListener implements Listener {
 
         IPrivateArena a = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getGenerator().getArena().getWorldName());
 
+        if (a == null) return;
         if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()) == null) return;
         if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()).getProperties(e.getGenerator()) == null) return;
 
