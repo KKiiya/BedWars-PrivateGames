@@ -1,6 +1,7 @@
 package me.notlewx.privategames.support.bedwars2023;
 
 import com.tomkeuper.bedwars.api.addon.Addon;
+import com.tomkeuper.bedwars.api.server.ServerType;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.database.DatabaseType;
 import me.notlewx.privategames.commands.bedwars2023.MainCommand;
@@ -97,17 +98,19 @@ public class BW2023Addon extends Addon {
         pl.getServer().getPluginManager().registerEvents(new PrivateArenaListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new StatsListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new CommandListener(), pl);
-        if (bw2023config.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("socket")) {
-            try {
-                for (String connection: mainConfig.getList("lobby-sockets")) {
-                    String[] data = connection.split(":");
-                    new ArenasSocket().startConnection(data[0], Integer.parseInt(data[1]));
+        if (api.getBedWars2023API().getServerType() == ServerType.BUNGEE) {
+            if (bw2023config.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("socket")) {
+                try {
+                    for (String connection : mainConfig.getList("lobby-sockets")) {
+                        String[] data = connection.split(":");
+                        new ArenasSocket().startConnection(data[0], Integer.parseInt(data[1]));
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } else if (bw2023config.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("redis")) {
+                pl.getServer().getPluginManager().registerEvents(new ArenasListener(), pl);
             }
-        } else if (bw2023config.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("redis")) {
-            pl.getServer().getPluginManager().registerEvents(new ArenasListener(), pl);
         }
         Utility.info("&eListeners loaded successfully");
     }

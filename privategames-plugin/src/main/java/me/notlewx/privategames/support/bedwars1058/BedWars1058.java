@@ -1,6 +1,7 @@
 package me.notlewx.privategames.support.bedwars1058;
 
 import com.andrei1058.bedwars.api.BedWars;
+import com.andrei1058.bedwars.api.server.ServerType;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.database.DatabaseType;
 import me.notlewx.privategames.commands.bedwars1058.MainCommand;
@@ -66,12 +67,14 @@ public class BedWars1058 {
         pl.getServer().getPluginManager().registerEvents(new StatsListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new ScoreboardListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new CommandListener(), pl);
-        for (String connection : mainConfig.getList("lobby-sockets")) {
-            String[] split = connection.split(":");
-            try {
-                new ArenasSocket().startConnection(split[0], Integer.parseInt(split[1]));
-            } catch (Exception e) {
-                Utility.info("&cError while connecting to socket: " + e.getMessage());
+        if (api.getBedWars1058API().getServerType() == ServerType.BUNGEE) {
+            for (String connection : mainConfig.getList("lobby-sockets")) {
+                String[] split = connection.split(":");
+                try {
+                    new ArenasSocket().startConnection(split[0], Integer.parseInt(split[1]));
+                } catch (Exception e) {
+                    Utility.info("&cError while connecting to socket: " + e.getMessage());
+                }
             }
         }
         Utility.info("&aListeners loaded successfully");
