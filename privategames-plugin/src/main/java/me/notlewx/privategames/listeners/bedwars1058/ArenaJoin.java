@@ -4,10 +4,11 @@ import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
 import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
-import com.andrei1058.bedwars.shop.ShopCache;
-import com.andrei1058.bedwars.shop.quickbuy.PlayerQuickBuyCache;
 import com.andrei1058.bedwars.sidebar.SidebarService;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
+import com.andrei1058.bedwars.shop.ShopCache;
+import com.andrei1058.bedwars.shop.quickbuy.PlayerQuickBuyCache;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
@@ -16,15 +17,20 @@ import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
+import me.zuyte.admin.storage.Cache_BW1058;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Bed;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static me.notlewx.privategames.PrivateGames.api;
@@ -34,6 +40,17 @@ import static me.notlewx.privategames.config.MainConfig.POSITION;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class ArenaJoin implements Listener {
+
+    public static HashMap<ITeam, BlockFace> bedDirection = new HashMap<>();
+
+    @EventHandler
+    public void onGameStateChange(GameStateChangeEvent e) {
+        if (e.getNewState() == GameState.starting) {
+            for (ITeam team : e.getArena().getTeams()) {
+                bedDirection.put(team, ((Bed) team.getBed().getBlock().getState().getData()).getFacing());
+            }
+        }
+    }
 
     @EventHandler
     public void onArenaJoin(PlayerJoinArenaEvent e) {
@@ -61,9 +78,14 @@ public class ArenaJoin implements Listener {
 
         if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
             IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
-            pa.addPlayer(e.getPlayer());
+            pa.addPlayer(e.getPlayer(), true);
+
 
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                if (e.getArena().getTeams().stream().anyMatch(t -> t.wasMember(e.getPlayer().getUniqueId()))) {
+                    return;
+                }
+
                 if (e.getArena().isSpectator(e.getPlayer())) {
                     for (ITeam team : e.getArena().getTeams()) {
                         if (team.getSize() == e.getArena().getMaxInTeam()) continue;
@@ -71,6 +93,7 @@ public class ArenaJoin implements Listener {
                         e.getPlayer().setAllowFlight(false);
                         e.getPlayer().setFlying(false);
                         team.addPlayers(e.getPlayer());
+                        spawnBed(team);
                         team.setBedDestroyed(false);
                         team.spawnNPCs();
                         e.getPlayer().getInventory().clear();
@@ -94,11 +117,6 @@ public class ArenaJoin implements Listener {
 
         if (e.getArena().getPlayers().size() > 1) return;
         if (e.getArena().isSpectator(((Player) pp.getPlayer()))) return;
-        if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
-            IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
-            pa.addPlayer((Player) pp.getPlayer());
-            return;
-        }
         if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
 
         if (p.isPrivateGameEnabled()) {
@@ -161,5 +179,25 @@ public class ArenaJoin implements Listener {
                 }
             }
         }
+    }
+
+    public void spawnBed(ITeam team) {
+        Bed bed = new Bed();
+        BlockFace face = getBedFacing(team);
+        if (Bukkit.getPluginManager().getPlugin("BedWars-AdminAddon") != null) {
+            Cache_BW1058.setArenaBedsCache(team, face);
+        }
+        BlockState bedFoot = team.getBed().getBlock().getState();
+        BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
+        bedFoot.setType(bed.toItemStack().getType());
+        bedHead.setType(bed.toItemStack().getType());
+        bedFoot.setRawData((byte) face.ordinal());
+        bedHead.setRawData((byte) (face.ordinal() + 8));
+        bedFoot.update(true, false);
+        bedHead.update(true, true);
+    }
+
+    public static BlockFace getBedFacing(ITeam team) {
+        return bedDirection.get(team);
     }
 }

@@ -15,12 +15,12 @@ public class ArenaLeave implements Listener {
         if (e.getArena().isSpectator(e.getPlayer())) return;
         if (e.getArena().getPlayers().size() <= 1) {
             IPrivateArena arena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
-            arena.destroyData();
-
             JsonObject object = new JsonObject();
             object.addProperty("action", "privateArenaDeletion");
-            object.addProperty("arenaIdentifier", e.getArena().getWorldName());
+            object.addProperty("arenaIdentifier", arena.getArenaIdentifier());
             MessagesUtil.sendMessage(object.toString());
+            arena.destroyData();
+
 
             api.getBedWars2023API().getArenaUtil().getArenas().add(e.getArena());
         }

@@ -282,7 +282,7 @@ public class PrivateArenaListener implements Listener {
         privateArena.destroyData();
         JsonObject object = new JsonObject();
         object.addProperty("action", "privateArenaDeletion");
-        object.addProperty("arenaIdentifier", privateArena.getArenaIdentifier());
+        object.addProperty("arenaIdentifier", e.getArena().getWorldName());
 
         MessagesUtil.sendMessage(object.toString());
         if (GeneratorProperties.getGeneratorProperties(privateArena.getPrivateArenaHost()) != null) {
@@ -294,7 +294,11 @@ public class PrivateArenaListener implements Listener {
     public void onPlayerDeath(PlayerKillEvent e) {
         if (api.getBedWars2023API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
+        if (e.getArena().isSpectator(e.getVictim())) return;
+        IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
+        if (e.getCause().isFinalKill()) pa.getPlayers().remove(e.getVictim());
         IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).getPrivateArenaHost();
+        if (!pa.getPlayers().contains(e.getVictim())) return;
         switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
             case 0:
             case 2:

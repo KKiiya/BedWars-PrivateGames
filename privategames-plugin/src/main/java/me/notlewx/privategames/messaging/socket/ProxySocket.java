@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.api;
@@ -36,8 +37,22 @@ public class ProxySocket {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 
+        AtomicBoolean announce = new AtomicBoolean(false);
         Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), () -> {
             while (compute) {
+                if (!announce.get()) {
+                    if (clientSocket.isClosed()) {
+                        announce.set(true);
+                        Utility.warn("Client disconnected: " + clientSocket.toString());
+                        Utility.warn("Waiting for client...");
+                        try {
+                            serverSocket.accept();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        continue;
+                    }
+                }
                 String inputLine;
 
                 try {
@@ -49,7 +64,7 @@ public class ProxySocket {
                 if (inputLine == null) continue;
                 if (inputLine.isEmpty()) continue;
 
-                final JsonObject json;
+                JsonObject json;
 
                 json = new JsonParser().parse(inputLine).getAsJsonObject();
 

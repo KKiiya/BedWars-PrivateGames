@@ -3,10 +3,9 @@ package me.notlewx.privategames.listeners.bedwars2023;
 import com.tomkeuper.bedwars.BedWars;
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.events.gameplay.GameStateChangeEvent;
 import com.tomkeuper.bedwars.api.events.player.PlayerJoinArenaEvent;
 import com.tomkeuper.bedwars.shop.ShopCache;
-import com.tomkeuper.bedwars.shop.ShopManager;
-import com.tomkeuper.bedwars.shop.main.ShopIndex;
 import com.tomkeuper.bedwars.shop.quickbuy.PlayerQuickBuyCache;
 import me.neznamy.tab.api.TabAPI;
 import me.notlewx.privategames.PrivateGames;
@@ -17,8 +16,8 @@ import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
+import me.zuyte.admin.storage.Cache_BW2023;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.BlockFace;
@@ -28,11 +27,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.bukkit.material.Bed;
+import org.bukkit.material.MaterialData;
 
-import static com.tomkeuper.bedwars.BedWars.getForCurrentVersion;
+import java.util.*;
+
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.MainConfig.MATERIAL;
@@ -42,6 +41,16 @@ import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GA
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER;
 
 public class ArenaJoin implements Listener {
+    public static HashMap<ITeam, BlockFace> bedDirection = new HashMap<>();
+
+    @EventHandler
+    public void onGameStateChange(GameStateChangeEvent e) {
+        if (e.getNewState() == GameState.starting) {
+            for (ITeam team : e.getArena().getTeams()) {
+                bedDirection.put(team, ((Bed) team.getBed().getBlock().getState().getData()).getFacing());
+            }
+        }
+    }
     @EventHandler
     public void onArenaJoin(PlayerJoinArenaEvent e) {
         IPrivatePlayer pp = PrivateGames.api.getPrivatePlayer(e.getPlayer());
@@ -65,27 +74,21 @@ public class ArenaJoin implements Listener {
 
         if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
             IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
-            pa.addPlayer(e.getPlayer());
+            pa.addPlayer(e.getPlayer(), true);
 
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                 if (e.getArena().isSpectator(e.getPlayer())) {
+                    if (e.getArena().getTeams().stream().anyMatch(t -> t.wasMember(e.getPlayer().getUniqueId()))) {
+                        return;
+                    }
+
                     for (ITeam team : e.getArena().getTeams()) {
                         if (team.getSize() == e.getArena().getMaxInTeam()) continue;
 
                         e.getPlayer().setAllowFlight(false);
                         e.getPlayer().setFlying(false);
                         team.addPlayers(e.getPlayer());
-                        Material[] materialList = Arrays.stream(Material.values()).filter(material -> material.name().contains("BED_BLOCK")).toArray(Material[]::new);
-
-                        BlockState bedFoot = team.getBed().getBlock().getState();
-                        BlockFace face = bedFoot.getBlock().getFace(bedFoot.getBlock());
-                        BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
-                        bedFoot.setType(Material.BED_BLOCK);
-                        bedHead.setType(Material.BED_BLOCK);
-                        bedFoot.setRawData((byte) face.ordinal());
-                        bedHead.setRawData((byte) (face.ordinal() + 8));
-                        bedFoot.update(true, true);
-                        bedHead.update(true, true);
+                        spawnBed(team);
                         team.setBedDestroyed(false);
                         team.spawnNPCs();
                         e.getPlayer().getInventory().clear();
@@ -163,5 +166,25 @@ public class ArenaJoin implements Listener {
                 }
             }
         }
+    }
+
+    public void spawnBed(ITeam team) {
+        Bed bed = new Bed();
+        BlockFace face = getBedFacing(team);
+        if (Bukkit.getPluginManager().getPlugin("BedWars-AdminAddon") != null) {
+            Cache_BW2023.setArenaBedsCache(team, face);
+        }
+        BlockState bedFoot = team.getBed().getBlock().getState();
+        BlockState bedHead = bedFoot.getBlock().getRelative(face.getOppositeFace()).getState();
+        bedFoot.setType(bed.toItemStack().getType());
+        bedHead.setType(bed.toItemStack().getType());
+        bedFoot.setRawData((byte) face.ordinal());
+        bedHead.setRawData((byte) (face.ordinal() + 8));
+        bedFoot.update(true, false);
+        bedHead.update(true, true);
+    }
+
+    public static BlockFace getBedFacing(ITeam team) {
+        return bedDirection.get(team);
     }
 }

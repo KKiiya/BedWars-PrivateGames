@@ -98,5 +98,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/proxy-plugin-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>me.zuyte</groupId>
+            <artifactId>AdminAddon</artifactId>
+            <version>1.2.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/bedwars-adminaddon-1.2.1.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

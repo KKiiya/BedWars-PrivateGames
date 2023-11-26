@@ -2,6 +2,7 @@ package me.notlewx.privategames.commands.bedwars2023;
 
 import com.tomkeuper.bedwars.api.arena.IArena;
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.events.PrivateGameJoinEvent;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
@@ -206,8 +207,6 @@ public class MainCommand implements CommandExecutor {
                                             return false;
                                         }
                                         a.addPlayer((Player) sender, true);
-                                        PrivateGameJoinEvent event = new PrivateGameJoinEvent(((Player) sender), PrivateGames.api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName()));
-                                        Bukkit.getPluginManager().callEvent(event);
                                     }
                                 } else {
                                     sender.sendMessage(Utility.c("&cCouldn't find this player"));

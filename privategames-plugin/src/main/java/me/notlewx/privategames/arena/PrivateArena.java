@@ -3,8 +3,10 @@ package me.notlewx.privategames.arena;
 import com.andrei1058.bedwars.api.arena.IArena;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
+import me.notlewx.privategames.api.events.PrivateGameJoinEvent;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.support.Support;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -64,8 +66,17 @@ public class PrivateArena implements IPrivateArena {
         return defaultGroup;
     }
     @Override
-    public void addPlayer(Player p) {
+    public void addPlayer(Player p, boolean callEvent) {
         if (players.contains(p)) return;
+        if (isFull()) return;
+
+        if (callEvent) {
+            PrivateGameJoinEvent event = new PrivateGameJoinEvent(p, this)
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) return;
+        }
+
         this.players.add(p);
         privateArenaByPlayer.put(p, this);
     }

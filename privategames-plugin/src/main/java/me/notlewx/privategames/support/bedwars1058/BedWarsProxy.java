@@ -6,6 +6,7 @@ import me.notlewx.privategames.commands.proxy.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.proxy.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
+import me.notlewx.privategames.listeners.bedwarsproxy.CommandListener;
 import me.notlewx.privategames.messaging.socket.ProxySocket;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import static me.notlewx.privategames.PrivateGames.*;
 
 public class BedWarsProxy {
-    private Plugin pl;
+    private final Plugin pl;
 
     public BedWarsProxy(Plugin plugin) {
         this.pl = plugin;
@@ -66,6 +67,7 @@ public class BedWarsProxy {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        pl.getServer().getPluginManager().registerEvents(new CommandListener(), PrivateGames.getPlugins());
         Utility.info("&aListeners loaded successfully!");
     }
 }

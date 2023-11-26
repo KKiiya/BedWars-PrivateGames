@@ -283,7 +283,7 @@ public class PrivateArenaListener implements Listener {
 
         JsonObject object = new JsonObject();
         object.addProperty("action", "privateArenaDeletion");
-        object.addProperty("arenaIdentifier", privateArena.getArenaIdentifier());
+        object.addProperty("arenaIdentifier", e.getArena().getWorldName());
 
         MessagesUtil.sendMessage(object.toString());
 
@@ -294,18 +294,22 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerKillEvent e) {
-        if (api.getBedWars1058API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
+        if (api.getBedWars2023API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByPlayer(e.getVictim()).getPrivateArenaHost();
+        if (e.getArena().isSpectator(e.getVictim())) return;
+        IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
+        if (e.getCause().isFinalKill()) pa.getPlayers().remove(e.getVictim());
+        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).getPrivateArenaHost();
+        if (!pa.getPlayers().contains(e.getVictim())) return;
         switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
             case 0:
             case 2:
                 break;
             case 1:
-                e.getArena().getRespawnSessions().put(e.getVictim(), 1);
+                e.getArena().startReSpawnSession(e.getVictim(), 1);
                 break;
             case 3:
-                e.getArena().getRespawnSessions().put(e.getVictim(), 10);
+                e.getArena().startReSpawnSession(e.getVictim(), 10);
                 break;
         }
     }

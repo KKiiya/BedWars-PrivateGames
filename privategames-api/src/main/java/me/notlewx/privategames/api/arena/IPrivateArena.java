@@ -12,7 +12,7 @@ public interface IPrivateArena {
     String getArenaIdentifier();
     String getDefaultGroup();
     void stopGame();
-    void addPlayer(Player p);
+    void addPlayer(Player p, boolean callEvent);
     boolean isFull();
     void destroyData();
 }
