@@ -214,6 +214,10 @@ public class MainCommand implements CommandExecutor {
                         }
                         break;
                     case "reload":
+                        if (!sender.hasPermission("pg.reload") || !sender.isOp()) {
+                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
+                            return false;
+                        }
                         sender.sendMessage(Utility.c("&eReloading config..."));
                         mainConfig.reload();
                         sender.sendMessage(Utility.c("&aConfig reloaded successfully!"));

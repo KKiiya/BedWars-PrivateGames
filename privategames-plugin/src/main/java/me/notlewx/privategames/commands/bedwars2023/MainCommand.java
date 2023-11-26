@@ -200,7 +200,7 @@ public class MainCommand implements CommandExecutor {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
 
                                     } else {
-                                        if (!api.getPrivatePlayer((Player) sender).getPlayerOptions().isAllowJoin()) {
+                                        if (!api.getPrivatePlayer(Bukkit.getPlayer(args[1])).getPlayerOptions().isAllowJoin()) {
                                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
                                             return false;
                                         }
@@ -212,10 +212,11 @@ public class MainCommand implements CommandExecutor {
                             }
                         }
                         break;
-                    case "games" :
-                        sender.sendMessage(PrivateGames.api.getPrivateArenaUtil().getPrivateArenas().toString());
-                        break;
                     case "reload":
+                        if (!sender.hasPermission("pg.reload") || !sender.isOp()) {
+                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
+                            return false;
+                        }
                         sender.sendMessage(Utility.c("&eReloading config..."));
                         mainConfig.reload();
                         sender.sendMessage(Utility.c("&aConfig reloaded successfully!"));
