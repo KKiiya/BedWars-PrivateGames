@@ -299,7 +299,7 @@ public class PrivateArenaListener implements Listener {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
         if (e.getArena().isSpectator(e.getVictim())) return;
         IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
-        if (e.getCause().isFinalKill()) pa.getPlayers().remove(e.getVictim());
+        if (e.getCause().isFinalKill()) pa.removePlayer(e.getVictim());
         IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).getPrivateArenaHost();
         if (!pa.getPlayers().contains(e.getVictim())) return;
         switch (pp.getPlayerSettings().getRespawnTimeLevel()) {

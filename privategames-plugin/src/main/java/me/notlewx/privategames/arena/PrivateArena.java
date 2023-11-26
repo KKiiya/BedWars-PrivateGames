@@ -82,6 +82,14 @@ public class PrivateArena implements IPrivateArena {
     }
 
     @Override
+    public void removePlayer(Player p) {
+        if (!players.contains(p)) return;
+
+        this.players.remove(p);
+        privateArenaByPlayer.remove(p);
+    }
+
+    @Override
     public void stopGame() {
         if (support == Support.BEDWARS1058) {
             for (Player player : PrivateGames.getBw1058Api().getArenaUtil().getArenaByName(arenaName).getPlayers()) {

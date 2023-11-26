@@ -1,6 +1,7 @@
 package me.notlewx.privategames.listeners.bedwars2023;
 
 import com.google.gson.JsonObject;
+import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.utils.MessagesUtil;
@@ -13,6 +14,7 @@ public class ArenaLeave implements Listener {
     public void onArenaLeave(PlayerLeaveArenaEvent e) {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
         if (e.getArena().isSpectator(e.getPlayer())) return;
+        if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
         if (e.getArena().getPlayers().size() <= 1) {
             IPrivateArena arena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
             JsonObject object = new JsonObject();
