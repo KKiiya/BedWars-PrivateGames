@@ -108,7 +108,6 @@ public class ArenaJoin implements Listener {
             return;
         }
 
-        if (e.getArena().getPlayers().size() > 1) return;
         if (e.getArena().isSpectator(((Player) pp.getPlayer()))) return;
         if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
 
@@ -121,7 +120,7 @@ public class ArenaJoin implements Listener {
 
                         IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
-                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                         if (pp.getPlayerOptions().isAutoStart()) {
@@ -138,7 +137,7 @@ public class ArenaJoin implements Listener {
 
                         IPrivateArena a =  new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
-                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                     }
@@ -148,7 +147,7 @@ public class ArenaJoin implements Listener {
 
                     IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
-                    MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
+                    MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
 
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                 }

@@ -177,6 +177,10 @@ public class MainCommand implements CommandExecutor {
                         }
                         break;
                     case "join":
+                        if (!sender.hasPermission("pg.join")) {
+                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
+                            return false;
+                        }
                         if (args.length > 2) return false;
                         IPrivatePlayer host = null;
                         for (CachedArena a : ArenaManager.getArenas()) {

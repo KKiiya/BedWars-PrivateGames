@@ -4,6 +4,7 @@ import me.notlewx.privategames.utils.Utility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -15,12 +16,17 @@ public class ArenasSocket {
     private BufferedReader in;
 
     public void startConnection(String ip, int port) throws IOException {
-        Utility.warn("Connecting to " + ip + ":" + port);
-        clientSocket = new Socket(ip, port);
-        Utility.info("Connected to " + ip + ":" + port);
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new java.io.InputStreamReader(clientSocket.getInputStream()));
-        sockets.add(this);
+        try {
+            Utility.warn("Connecting to " + ip + ":" + port);
+            clientSocket = new Socket(ip, port);
+            Utility.info("Connected to " + ip + ":" + port);
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            sockets.add(this);
+        } catch (IOException ignored) {
+
+        }
+
     }
 
     public void sendMessage(String msg) throws IOException {

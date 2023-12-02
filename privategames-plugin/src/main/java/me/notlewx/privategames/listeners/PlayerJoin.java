@@ -13,6 +13,8 @@ public class PlayerJoin implements Listener {
         if (e == null) return;
 
         Player p = e.getPlayer();
+        if (p == null) return;
+
         database.createPlayerData(p);
 
         p.setHealth(20.0);

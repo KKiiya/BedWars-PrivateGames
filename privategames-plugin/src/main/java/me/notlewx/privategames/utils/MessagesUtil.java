@@ -61,9 +61,9 @@ public class MessagesUtil {
         });
     }
 
-    public static String formatPrivateArena(IPrivateArena arena) {
+    public static String formatPrivateArena(String action, IPrivateArena arena) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("action", "privateArenaCreation");
+        jsonObject.addProperty("action", action);
         jsonObject.addProperty("host", arena.getPrivateArenaHost().getPlayer().getUniqueId().toString());
         jsonObject.addProperty("players", Arrays.toString(arena.getPlayers().stream().map(player -> player.getUniqueId().toString()).toArray(String[]::new)));
         jsonObject.addProperty("arenaIdentifier", arena.getArenaIdentifier());

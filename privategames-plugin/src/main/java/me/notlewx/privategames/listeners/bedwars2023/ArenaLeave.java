@@ -14,6 +14,7 @@ public class ArenaLeave implements Listener {
     public void onArenaLeave(PlayerLeaveArenaEvent e) {
         if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
         if (e.getArena().isSpectator(e.getPlayer())) return;
+        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaUpdate", api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName())));
         if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
         if (e.getArena().getPlayers().size() <= 1) {
             IPrivateArena arena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());

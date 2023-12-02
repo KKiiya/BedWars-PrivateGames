@@ -29,6 +29,7 @@ me\notlewx\privategames\listeners\bwproxy2023\CommandListener.class
 me\notlewx\privategames\commands\bedwars2023\MainCommand.class
 me\notlewx\privategames\player\PlayerOptions.class
 me\notlewx\privategames\menus\OptionsMenu$1.class
+me\notlewx\privategames\messaging\socket\ArenaSocketTask.class
 me\notlewx\privategames\listeners\bedwars1058\ScoreboardListener.class
 me\notlewx\privategames\database\providers\MySQL.class
 me\notlewx\privategames\player\PrivatePlayer$1.class
@@ -39,6 +40,7 @@ me\notlewx\privategames\listeners\PlayerLeave.class
 me\notlewx\privategames\config\bedwars2023\MessagesData.class
 me\notlewx\privategames\party\handlers\BedWarsProxy2023PARTY.class
 me\notlewx\privategames\menus\submenus\generators\GeneratorSettingsMenu.class
+me\notlewx\privategames\listeners\PrivateArenaJoin.class
 me\notlewx\privategames\menus\submenus\HealthMenu.class
 me\notlewx\privategames\utils\GeneratorProperties.class
 me\notlewx\privategames\menus\SettingsMenu.class

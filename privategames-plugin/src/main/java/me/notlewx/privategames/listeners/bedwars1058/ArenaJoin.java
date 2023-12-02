@@ -80,7 +80,6 @@ public class ArenaJoin implements Listener {
             IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
             pa.addPlayer(e.getPlayer(), true);
 
-
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
                 if (e.getArena().getTeams().stream().anyMatch(t -> t.wasMember(e.getPlayer().getUniqueId()))) {
                     return;
@@ -115,7 +114,6 @@ public class ArenaJoin implements Listener {
             return;
         }
 
-        if (e.getArena().getPlayers().size() > 1) return;
         if (e.getArena().isSpectator(((Player) pp.getPlayer()))) return;
         if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
 
@@ -127,7 +125,7 @@ public class ArenaJoin implements Listener {
                         players.add(pp.getPlayer());
                         IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
-                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 20L);
                         if (pp.getPlayerOptions().isAutoStart()) {
@@ -145,7 +143,7 @@ public class ArenaJoin implements Listener {
                         IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
                         try {
-                            MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
+                            MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -159,7 +157,7 @@ public class ArenaJoin implements Listener {
                     IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
                     try {
-                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena(a));
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }

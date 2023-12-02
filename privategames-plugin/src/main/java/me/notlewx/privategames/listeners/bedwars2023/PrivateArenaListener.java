@@ -305,10 +305,10 @@ public class PrivateArenaListener implements Listener {
             case 2:
                 break;
             case 1:
-                e.getArena().startReSpawnSession(e.getVictim(), 1);
+                e.getArena().getRespawnSessions().put(e.getVictim(), 1);
                 break;
             case 3:
-                e.getArena().startReSpawnSession(e.getVictim(), 10);
+                e.getArena().getRespawnSessions().put(e.getVictim(), 10);
                 break;
         }
     }

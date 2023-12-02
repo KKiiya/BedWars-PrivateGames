@@ -7,6 +7,7 @@ import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import java.util.Arrays;
@@ -29,6 +30,17 @@ public class ProxyListener implements Listener {
                 String[] players = json.get("players").getAsString().replace("[", "").replace("]", "").split(",");
                 List<UUID> playersList = Arrays.stream(players).map(UUID::fromString).collect(Collectors.toList());
                 new PrivateArena(host, playersList.stream().map(Bukkit::getOfflinePlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString());
+                break;
+            case "privateArenaUpdate":
+                IPrivateArena privateArena1 = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(json.get("arenaIdentifier").getAsString());
+                String[] players1 = json.get("players").getAsString().replace("[", "").replace("]", "").split(",");
+                List<UUID> playersList1 = Arrays.stream(players1).map(UUID::fromString).collect(Collectors.toList());
+                PrivateArena.privateArenas.remove(privateArena1);
+                PrivateArena.privateArenaByIdentifier.remove(privateArena1.getArenaIdentifier());
+                for (OfflinePlayer pd : privateArena1.getPlayers()) {
+                    PrivateArena.privateArenaByPlayer.remove(pd);
+                }
+                new PrivateArena(privateArena1.getPrivateArenaHost(), playersList1.stream().map(Bukkit::getOfflinePlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString());
                 break;
             case "privateArenaDeletion":
                 IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(json.get("arenaIdentifier").getAsString());

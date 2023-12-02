@@ -210,6 +210,8 @@ public class MainCommand implements CommandExecutor {
                                     sender.sendMessage(Utility.c("&cCouldn't find this player"));
                                 }
                             }
+                        } else {
+                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                         }
                         break;
                     case "reload":

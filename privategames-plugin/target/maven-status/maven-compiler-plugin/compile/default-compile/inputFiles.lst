@@ -23,6 +23,7 @@ C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\player\PlayerSettings.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bwproxy2023\CommandListener.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\database\providers\MySQL.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\messaging\socket\ArenaSocketTask.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\API.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\menus\submenus\GamemodeChangerMenu.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\menus\submenus\generators\GeneratorsMenu.java
@@ -47,6 +48,7 @@ C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\party\handlers\BedWars1058PARTY.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\config\MainConfig.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars1058\ScoreboardListener.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\PrivateArenaJoin.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars2023\ArenaLeave.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\menus\submenus\EventsTimeMenu.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\support\bedwars2023\BW2023Addon.java
