@@ -124,10 +124,10 @@ public class PrivateArena implements IPrivateArena {
     public boolean isFull() {
         if (support == Support.BEDWARS1058) {
             IArena arena = PrivateGames.getBw1058Api().getArenaUtil().getArenaByIdentifier(worldName);
-            return arena.getPlayers().size() == arena.getMaxPlayers();
+            return arena.getPlayers().size() == arena.getMaxPlayers()-1;
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.IArena arena = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(worldName);
-            return arena.getPlayers().size() == arena.getMaxPlayers();
+            return arena.getPlayers().size() == arena.getMaxPlayers()-1;
         }
         return false;
     }

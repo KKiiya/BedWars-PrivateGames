@@ -18,7 +18,7 @@ public class MessagesData {
         yml = YamlConfiguration.loadConfiguration(file);
         yml.addDefault(HELP_MESSAGE, Arrays.asList(
                 "&8&m-----------------------------------------------------",
-                "&6Private Games &7- &eHelp",
+                "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: 1.1.1",
                 "",
                 "&7- &e/pg gui &7- &aOpen the private games menu",
                 "&7- &e/pg enable &7- &aEnable private games",
@@ -32,7 +32,7 @@ public class MessagesData {
         ));
         yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
                 "&8&m-----------------------------------------------------",
-                "&6Private Games &7- &eAdmin Help",
+                "&6Private Games &7- &eAdmin Help &7- &8Author: Kiiya, Version: 1.1.1",
                 "",
                 "&7- &e/pg reload &7- &aReload the messages",
                 "&7- &e/pg enable admin &7- &aEnable the private games only for you (party too)",
@@ -55,6 +55,7 @@ public class MessagesData {
         yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cThe private game is already disabled!");
         yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cCouldnt join to the private game of this player!");
         yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cYou cant do this in game!");
+        yml.addDefault(PRIVATE_GAME_CANT_JOIN_SELF, "&cYou cant join to your own private game!");
         yml.addDefault(PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER, "&7[P]");
         yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lhas enabled private game modifiers!", "{modifiers}", "&6-----------------------------------------------------"));
         yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
@@ -65,9 +66,9 @@ public class MessagesData {
                 "{buttons}",
                 "&6&m-----------------------------------------------------"));
         yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_SENT,
-                "&6m-----------------------------------------------------\n" +
+                "&6&m-----------------------------------------------------\n" +
                         "&7You've requested to join to the private game of &e{player}!\n" +
-                        "&6m-----------------------------------------------------\n");
+                        "&6&m-----------------------------------------------------\n");
         yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT, "&a&lAccept");
         yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER, "&aClick to accept!");
         yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY, "&c&lDecline");

@@ -124,8 +124,12 @@ public class MainCommand implements CommandExecutor {
                                         sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
                                     }
                                 } else {
-                                    playerData.setPrivateGameDisabled(false);
-                                    sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
+                                    if (playerData.isPrivateGameEnabled()) {
+                                        playerData.setPrivateGameDisabled(false);
+                                        sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
+                                    } else {
+                                        sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
+                                    }
                                 }
                             } else {
                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
@@ -149,15 +153,19 @@ public class MainCommand implements CommandExecutor {
                                                     sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_OWNER));
                                                 }
                                             } else {
-                                                playerData.setPrivateGameDisabled(false);
-                                                sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
+                                                if (playerData.isPrivateGameEnabled()) {
+                                                    playerData.setPrivateGameDisabled(false);
+                                                    sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
+                                                } else {
+                                                    sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
+                                                }
                                             }
                                         } else {
                                             sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
                                         }
                                         break;
                                     default:
-                                        sender.sendMessage(Utility.getMsg((((Player) sender)), ""));
+                                        sender.sendMessage(Utility.getMsg((((Player) sender)), "cmd-not-found"));
                                         break;
                                 }
                             } else {

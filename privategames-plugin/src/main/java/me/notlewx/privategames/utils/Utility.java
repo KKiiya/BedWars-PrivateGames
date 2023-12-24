@@ -60,7 +60,7 @@ public class Utility {
 
     public static void sendJoinRequestMessage(Player p, UUID requester) {
         OfflinePlayer op = Bukkit.getOfflinePlayer(requester);
-        TextComponent textComponent = new TextComponent();
+        TextComponent textComponent = new TextComponent("");
 
         TextComponent accept = new TextComponent(Utility.getMsg(p, MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT).replace("{requester}", op.getName()));
         accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utility.getMsg(p, MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER).replace("{requester}", op.getName())).create()));
