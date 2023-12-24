@@ -22,7 +22,9 @@ public class PrivateGameJoinEvent extends Event {
     public IPrivateArena getPrivateArena() {
         return privateArena;
     }
-    public boolean isCancelled() {return cancelled;}
+    public boolean isCancelled() {
+        return cancelled;
+    }
     public void setCancelled(boolean cancelled) {this.cancelled = cancelled;}
     public HandlerList getHandlers() {
         return HANDLERS;

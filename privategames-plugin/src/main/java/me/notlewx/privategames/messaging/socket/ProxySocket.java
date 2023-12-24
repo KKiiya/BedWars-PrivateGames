@@ -1,6 +1,7 @@
 package me.notlewx.privategames.messaging.socket;
 
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.messaging.socket.tasks.ArenaSocketTask;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import java.io.BufferedReader;
@@ -16,8 +17,12 @@ public class ProxySocket {
     private PrintWriter out;
     private BufferedReader in;
     public static Boolean compute = true;
+    private static ProxySocket instance;
 
     public void start(int port) throws IOException {
+        if (instance != null) {
+            throw new RuntimeException("Socket already started!");
+        }
         Utility.warn("Starting socket on port " + port);
         serverSocket = new ServerSocket(port);
 
@@ -35,45 +40,50 @@ public class ProxySocket {
                 }
             }
         });
+        instance = this;
 }
 
     @SuppressWarnings("UnusedReturnValue")
     public boolean sendMessage(String message) {
-        if (clientSocket == null || isClosed() || out == null || in == null) {
+        if (instance.clientSocket == null || isClosed() || instance.out == null || instance.in == null) {
             disable();
             return false;
         }
-        if (out.checkError()) {
+        if (instance.out.checkError()) {
             disable();
             return false;
         }
-        out.println(message);
+        instance.out.println(message);
         return true;
     }
 
     private void disable() {
         compute = false;
-        Utility.info("Disabling socket: " + clientSocket.toString());
+        Utility.info("Disabling socket: " + instance.clientSocket.toString());
         try {
             clientSocket.close();
         } catch (IOException e) {
-            throw new RuntimeException("Error while closing socket: " + clientSocket.toString(), e);
+            throw new RuntimeException("Error while closing socket: " + instance.clientSocket.toString(), e);
         }
         try {
-            in.close();
+            instance.in.close();
         } catch (IOException e) {
-            throw new RuntimeException("Error while closing input stream: " + clientSocket.toString(), e);
+            throw new RuntimeException("Error while closing input stream: " + instance.clientSocket.toString(), e);
         }
-        out.close();
-        in = null;
-        out = null;
+        instance.out.close();
+        instance.in = null;
+        instance.out = null;
     }
 
     public boolean isConnected() {
-        return clientSocket.isConnected();
+        return instance.clientSocket.isConnected();
     }
 
     public boolean isClosed() {
-        return clientSocket.isClosed();
+        return instance.clientSocket.isClosed();
+    }
+
+    public static ProxySocket getInstance() {
+        return instance;
     }
 }

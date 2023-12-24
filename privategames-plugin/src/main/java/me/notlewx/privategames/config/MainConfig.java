@@ -15,6 +15,7 @@ public class MainConfig extends ConfigManager {
         YamlConfiguration yml = getYml();
         yml.options().header("PrivateGames Addon by Kiiya#9207");
 
+        yml.addDefault("debug", false);
         if (support == Support.BEDWARS2023 || support == Support.BEDWARS1058) {
             yml.addDefault("lobby-sockets", Arrays.asList("127.0.0.1:2023"));
         } else if (support == Support.BEDWARSPROXY || support == Support.BEDWARSPROXY2023) {

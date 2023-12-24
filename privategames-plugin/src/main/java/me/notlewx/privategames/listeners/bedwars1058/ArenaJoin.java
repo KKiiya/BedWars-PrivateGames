@@ -1,6 +1,7 @@
 package me.notlewx.privategames.listeners.bedwars1058;
 
 import com.andrei1058.bedwars.api.arena.GameState;
+import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
 import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
@@ -56,6 +57,7 @@ public class ArenaJoin implements Listener {
     public void onArenaJoin(PlayerJoinArenaEvent e) {
         IPrivatePlayer pp = PrivateGames.api.getPrivatePlayer(e.getPlayer());
         IPlayerSettings p = pp.getPlayerSettings();
+        IArena a = e.getArena();
         IParty party = pp.getPlayerParty();
 
         ItemStack settings = new ItemStack(Material.valueOf(mainConfig.getString(MATERIAL)));
@@ -77,18 +79,28 @@ public class ArenaJoin implements Listener {
         }, 20L);
 
         if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
-            IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
-            pa.addPlayer(e.getPlayer(), true);
+            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
+                IPrivatePlayer ppa = pa.getPrivateArenaHost();
+                if (ppa.getRequests().contains(e.getPlayer().getUniqueId())) {
+                    ppa.removeRequest(e.getPlayer().getUniqueId());
+                    if (pa.getPlayers().size() == a.getMaxPlayers()) return;
+
+                    api.getBedWars1058API().getArenaUtil().getArenas().remove(a);
+
+                    pa.addPlayer(e.getPlayer(), true);
+                }
+            }, 5L);
 
             Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                if (e.getArena().getTeams().stream().anyMatch(t -> t.wasMember(e.getPlayer().getUniqueId()))) {
-                    return;
-                }
+                IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
+                if (a.isSpectator(e.getPlayer()) && a.getStatus() == GameState.playing && pa.getPlayers().contains(e.getPlayer())) {
+                    if (a.getTeams().stream().anyMatch(t -> t.wasMember(e.getPlayer().getUniqueId()))) return;
 
-                if (e.getArena().isSpectator(e.getPlayer())) {
-                    for (ITeam team : e.getArena().getTeams()) {
-                        if (team.getSize() == e.getArena().getMaxInTeam()) continue;
+                    for (ITeam team : a.getTeams()) {
+                        if (team.getSize() == a.getMaxInTeam()) continue;
 
+                        e.getPlayer().getActivePotionEffects().forEach(potionEffect -> e.getPlayer().removePotionEffect(potionEffect.getType()));
                         e.getPlayer().setAllowFlight(false);
                         e.getPlayer().setFlying(false);
                         team.addPlayers(e.getPlayer());
@@ -98,12 +110,11 @@ public class ArenaJoin implements Listener {
                         e.getPlayer().getInventory().clear();
                         team.respawnMember(e.getPlayer());
 
-                        e.getArena().getSpectators().remove(e.getPlayer());
-                        e.getArena().getPlayers().add(e.getPlayer());
+                        a.getSpectators().remove(e.getPlayer());
+                        a.getPlayers().add(e.getPlayer());
                         new PlayerQuickBuyCache(e.getPlayer());
                         new ShopCache(e.getPlayer().getUniqueId());
                         e.getPlayer().setGameMode(org.bukkit.GameMode.SURVIVAL);
-                        e.getPlayer().getActivePotionEffects().forEach(potionEffect -> e.getPlayer().removePotionEffect(potionEffect.getType()));
                         e.getPlayer().setAllowFlight(false);
                         e.getPlayer().setFlying(false);
                         e.getPlayer().closeInventory();
@@ -114,23 +125,23 @@ public class ArenaJoin implements Listener {
             return;
         }
 
-        if (e.getArena().isSpectator(((Player) pp.getPlayer()))) return;
-        if (e.getArena().getStatus() == GameState.playing || e.getArena().getStatus() == GameState.restarting) return;
+        if (a.isSpectator(((Player) pp.getPlayer()))) return;
+        if (a.getStatus() == GameState.playing || a.getStatus() == GameState.restarting) return;
 
         if (p.isPrivateGameEnabled()) {
             if (party.hasParty()) {
                 if (party.isOwner()) {
                     if (pp.hasPermission()) {
                         List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
-                        players.add(pp.getPlayer());
-                        IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
-                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
+                        IPrivateArena pa = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 20L);
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
+
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                         if (pp.getPlayerOptions().isAutoStart()) {
-                            e.getArena().changeStatus(GameState.starting);
-                            e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+                            a.changeStatus(GameState.starting);
+                            a.getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
                         }
                     }
                 }
@@ -138,36 +149,26 @@ public class ArenaJoin implements Listener {
                 if (party.hasParty()) {
                     if (party.isOwner()) {
                         List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
-                        players.add(pp.getPlayer());
 
-                        IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                        IPrivateArena pa =  new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
-                        try {
-                            MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
-                        } catch (Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 20L);
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                     }
                 } else {
                     List<OfflinePlayer> players = new ArrayList<>();
                     players.add(pp.getPlayer());
 
-                    IPrivateArena a = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                    IPrivateArena pa = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
-                    try {
-                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",a));
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
-                    Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 20L);
+                    Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                 }
-
                 if (pp.getPlayerOptions().isAutoStart()) {
-                    e.getArena().changeStatus(GameState.starting);
-                    e.getArena().getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
+                    a.changeStatus(GameState.starting);
+                    a.getStartingTask().setCountdown(PrivateGames.bw1058config.getInt("countdowns.game-start-regular"));
                 }
             }
         }

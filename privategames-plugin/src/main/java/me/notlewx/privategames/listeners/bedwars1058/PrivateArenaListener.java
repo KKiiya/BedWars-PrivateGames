@@ -324,6 +324,7 @@ public class PrivateArenaListener implements Listener {
             p.setHealth(20.0);
             p.setHealthScale(20.0);
 
+            if (e.getArena().isSpectator(p)) return;
             IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByPlayer(p).getPrivateArenaHost();
             if (e.getArena().getPlayers().size() <= 1) {
                 if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {

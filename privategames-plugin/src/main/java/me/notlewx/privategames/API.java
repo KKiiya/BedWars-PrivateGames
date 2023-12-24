@@ -13,6 +13,7 @@ import me.notlewx.privategames.menus.submenus.HealthMenu;
 import me.notlewx.privategames.menus.submenus.RespawnTimeMenu;
 import me.notlewx.privategames.player.PrivatePlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -81,13 +82,13 @@ public class API implements PrivateGames {
         }
 
         @Override
-        public IPrivateArena getPrivateArenaByPlayer(Player player) {
+        public IPrivateArena getPrivateArenaByPlayer(OfflinePlayer player) {
             return PrivateArena.privateArenaByPlayer.get(player);
         }
 
         @Override
         public IPrivateArena getPrivateArenaByIdentifier(String worldName) {
-            return PrivateArena.privateArenaByIdentifier.get(worldName);
+            return getPrivateArenas().stream().filter(arena -> arena.getArenaIdentifier().equals(worldName)).findFirst().orElse(null);
         }
 
         @Override
@@ -97,7 +98,7 @@ public class API implements PrivateGames {
 
         @Override
         public boolean isPlaying(UUID uuid) {
-            return getPrivateArenaByPlayer(Bukkit.getPlayer(uuid)) != null;
+            return getPrivateArenaByPlayer(Bukkit.getOfflinePlayer(uuid)) != null;
         }
 
         @Override

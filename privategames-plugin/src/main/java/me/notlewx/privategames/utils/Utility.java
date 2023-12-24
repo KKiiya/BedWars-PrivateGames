@@ -5,11 +5,17 @@ import com.mojang.authlib.properties.Property;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
+import me.notlewx.privategames.config.bedwars2023.MessagesData;
 import me.notlewx.privategames.support.Support;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,8 +27,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import static me.notlewx.privategames.PrivateGames.api;
-import static me.notlewx.privategames.PrivateGames.support;
+
+import static me.notlewx.privategames.PrivateGames.*;
 
 public class Utility {
     public static void info(String infoLog) {
@@ -30,6 +36,10 @@ public class Utility {
     }
     public static void warn(String warnLog) {
         PrivateGames.getPlugins().getLogger().warning(c(warnLog));
+    }
+    public static void debug(String debugLog) {
+        if (!mainConfig.getBoolean("debug")) return;
+        PrivateGames.getPlugins().getLogger().info(c("DEBUG: " + debugLog));
     }
     public static String c(String value) {
         return ChatColor.translateAlternateColorCodes('&', value);
@@ -47,6 +57,33 @@ public class Utility {
         else if (support == Support.BEDWARSPROXY2023) return p(player, PrivateGames.getBwProxy2023Api().getLanguageUtil().getMsg(player, path));
         else return c("&cMISSING");
     }
+
+    public static void sendJoinRequestMessage(Player p, UUID requester) {
+        OfflinePlayer op = Bukkit.getOfflinePlayer(requester);
+        TextComponent textComponent = new TextComponent();
+
+        TextComponent accept = new TextComponent(Utility.getMsg(p, MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT).replace("{requester}", op.getName()));
+        accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utility.getMsg(p, MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER).replace("{requester}", op.getName())).create()));
+        accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pg accept " + op.getName()));
+
+        TextComponent deny = new TextComponent(Utility.getMsg(p, MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_DENY).replace("{requester}", op.getName()));
+        deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utility.getMsg(p, MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_DENY_HOVER).replace("{requester}", op.getName())).create()));
+        deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pg deny " + op.getName()));
+
+        textComponent.addExtra(accept);
+        textComponent.addExtra(" ");
+        textComponent.addExtra(deny);
+
+        for (String s : Utility.getList(p, MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED)) {
+            if (!s.equals("{buttons}")) {
+                p.sendMessage(s.replace("{player}", op.getName()));
+            } else {
+                p.spigot().sendMessage(textComponent);
+            }
+        }
+    }
+
+
 
     public static List<String> getList(Player player, String path) {
         if (support == Support.BEDWARSPROXY) return p(player, PrivateGames.getBwProxyApi().getLanguageUtil().getList(player, path));

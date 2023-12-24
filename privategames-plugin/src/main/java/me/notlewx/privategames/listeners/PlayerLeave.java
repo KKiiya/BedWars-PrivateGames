@@ -10,6 +10,7 @@ public class PlayerLeave implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e) {
         IPrivatePlayer pp = api.getPrivatePlayer(e.getPlayer());
+        pp.clearRequests();
         if (!pp.hasPermission()) return;
         if (!pp.getPlayerSettings().isPrivateGameEnabled()) return;
     }

@@ -1,21 +1,21 @@
 package me.notlewx.privategames.listeners.bedwars2023;
 
 import com.google.gson.JsonObject;
-import com.tomkeuper.bedwars.api.arena.team.ITeam;
-import com.tomkeuper.bedwars.api.configuration.ConfigManager;
-import com.tomkeuper.bedwars.arena.OreGenerator;
-import com.tomkeuper.bedwars.api.events.gameplay.GeneratorUpgradeEvent;
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.IArena;
 import com.tomkeuper.bedwars.api.arena.generator.GeneratorType;
 import com.tomkeuper.bedwars.api.arena.generator.IGenerator;
+import com.tomkeuper.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.configuration.ConfigManager;
 import com.tomkeuper.bedwars.api.events.gameplay.GameEndEvent;
 import com.tomkeuper.bedwars.api.events.gameplay.GameStateChangeEvent;
+import com.tomkeuper.bedwars.api.events.gameplay.GeneratorUpgradeEvent;
 import com.tomkeuper.bedwars.api.events.gameplay.NextEventChangeEvent;
 import com.tomkeuper.bedwars.api.events.player.PlayerKillEvent;
 import com.tomkeuper.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.tomkeuper.bedwars.api.events.player.PlayerReSpawnEvent;
 import com.tomkeuper.bedwars.arena.Arena;
+import com.tomkeuper.bedwars.arena.OreGenerator;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.utils.GeneratorProperties;
@@ -37,9 +37,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
@@ -322,6 +324,7 @@ public class PrivateArenaListener implements Listener {
             p.setHealth(20.0);
             p.setHealthScale(20.0);
 
+            if (e.getArena().isSpectator(p)) return;
             IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByPlayer(p).getPrivateArenaHost();
             if (e.getArena().getPlayers().size() <= 1) {
                 if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {

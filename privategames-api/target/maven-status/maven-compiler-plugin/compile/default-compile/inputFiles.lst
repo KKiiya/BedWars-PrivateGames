@@ -6,6 +6,7 @@ C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\src\ma
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\src\main\java\me\notlewx\privategames\api\PrivateGames.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\src\main\java\me\notlewx\privategames\api\modifiers\ModifierType.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\src\main\java\me\notlewx\privategames\api\events\PrivateGameDisableEvent.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\src\main\java\me\notlewx\privategames\api\events\PrivateGameJoinRequestSendEvent.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\src\main\java\me\notlewx\privategames\api\player\IPlayerOptions.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\src\main\java\me\notlewx\privategames\api\database\Database.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-api\src\main\java\me\notlewx\privategames\api\party\IParty.java

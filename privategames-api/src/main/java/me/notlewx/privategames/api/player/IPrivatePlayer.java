@@ -3,8 +3,9 @@ package me.notlewx.privategames.api.player;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
+
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
 public interface IPrivatePlayer {
@@ -38,6 +39,56 @@ public interface IPrivatePlayer {
      * @return - Player options
      */
     IPlayerOptions getPlayerOptions();
+
+
+    /**
+     * Get the last join request the
+     * player has received
+     * @return - Last join request
+     */
+    @Nullable
+    UUID getLastJoinRequest();
+
+    /**
+     * Set the last join request the
+     * player has received
+     * @param player - Player
+     */
+    void addRequest(UUID player);
+
+    /**
+     * Get the player's join requests
+     * @return - Join requests
+     */
+    List<UUID> getRequests();
+
+    /**
+     * Remove a join request
+     * @param player - Player
+     */
+    void removeRequest(UUID player);
+
+    /**
+     * Clear all join requests
+     */
+    void clearRequests();
+
+    /**
+     * Get the player's join request
+     * by name
+     * @param name - Player name
+     * @return - Join request
+     */
+    @Nullable
+    UUID getRequestByName(String name);
+
+    /**
+     * Set the last join request the
+     * player has received
+     * @param player - Player
+     */
+    void setLastJoinRequest(UUID player);
+
 
     /**
      * Get the player's party

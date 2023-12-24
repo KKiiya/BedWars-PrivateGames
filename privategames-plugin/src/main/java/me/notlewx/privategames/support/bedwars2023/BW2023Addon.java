@@ -64,8 +64,8 @@ public class BW2023Addon extends Addon {
         new MessagesData();
         Utility.info("&aMessages loaded successfully!");
         registerCommands();
-        loadListeners();
         loadDatabase();
+        loadListeners();
 
         Utility.info("&aPrivate Games Addon loaded successfully! Enjoy!");
     }

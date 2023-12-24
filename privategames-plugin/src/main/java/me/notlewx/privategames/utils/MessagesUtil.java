@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static me.notlewx.privategames.PrivateGames.*;
 
@@ -36,7 +37,7 @@ public class MessagesUtil {
                         BedWarsProxy.getRedisConnection().sendMessage(new JsonParser().parse(message).getAsJsonObject(), "private-games");
                         break;
                     case "socket":
-                        new ProxySocket().sendMessage(message);
+                        ProxySocket.getInstance().sendMessage(message);
                         break;
                 }
                 break;
@@ -46,7 +47,7 @@ public class MessagesUtil {
                 }
                 break;
             case BEDWARSPROXY:
-                new ProxySocket().sendMessage(message);
+                ProxySocket.getInstance().sendMessage(message);
                 break;
         }
     }
@@ -68,6 +69,15 @@ public class MessagesUtil {
         jsonObject.addProperty("players", Arrays.toString(arena.getPlayers().stream().map(player -> player.getUniqueId().toString()).toArray(String[]::new)));
         jsonObject.addProperty("arenaIdentifier", arena.getArenaIdentifier());
         jsonObject.addProperty("defaultGroup", arena.getDefaultGroup());
+        return new JsonParser().parse(jsonObject.toString()).getAsJsonObject().toString().replace("\\", "");
+    }
+
+    public static String formatJoinRequest(String response, UUID requester, UUID requested) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("action", "privateArenaJoinRequest");
+        jsonObject.addProperty("requester", requester.toString());
+        jsonObject.addProperty("requested", requested.toString());
+        jsonObject.addProperty("response", response);
         return new JsonParser().parse(jsonObject.toString()).getAsJsonObject().toString().replace("\\", "");
     }
 }

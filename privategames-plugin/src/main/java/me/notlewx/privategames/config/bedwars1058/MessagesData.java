@@ -27,6 +27,10 @@ public class MessagesData {
                             "&7- &e/pg enable &7- &aEnable private games",
                             "&7- &e/pg disable &7- &aDisable private games",
                             "&7- &e/pg join <player> &7- &aJoin to the private game of a player",
+                            "&7- &e/pg accept &7- &aAccept the last join request",
+                            "&7- &e/pg deny &7- &aDeny the last join request",
+                            "&7- &e/pg accept <player> &7- &aAccept the join request of a player",
+                            "&7- &e/pg deny <player> &7- &aDecline the join request of a player",
                             "&8&m-----------------------------------------------------"
                     ));
                     yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
@@ -58,6 +62,23 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lhas enabled private game modifiers!", "{modifiers}", "&6-----------------------------------------------------"));
                     yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
                     yml.addDefault(PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT, "&6- {modifier}: &e{selected}");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED, Arrays.asList(
+                            "&6&m-----------------------------------------------------",
+                            "&e{player} &7is requesting to join your private game!",
+                            "{buttons}",
+                            "&6&m-----------------------------------------------------"));
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_SENT,
+                            "&6m-----------------------------------------------------\n" +
+                                    "&7You've requested to join to the private game of &e{player}!\n" +
+                                    "&6m-----------------------------------------------------\n");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT, "&a&lAccept");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER, "&aClick to accept!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY, "&c&lDecline");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY_HOVER, "&cClick to decline!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED, "&cYou've declined the request of &e{player}!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED, "&aYou've accepted the request of &e{player}!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER, "&a&l{player} &ahas accepted your request!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED_REQUESTER, "&c&l{player} &chas declined your request!");
                     yml.addDefault(MENU_BACK_ITEM_NAME, "&aGo Back");
                     yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Go back to your bedwars gameplay"));
                     yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aOne hit, one kill");

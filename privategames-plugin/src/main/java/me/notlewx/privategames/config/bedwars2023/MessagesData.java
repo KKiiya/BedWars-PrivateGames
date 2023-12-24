@@ -26,6 +26,10 @@ public class MessagesData {
                             "&7- &e/pg enable &7- &aEnable private games",
                             "&7- &e/pg disable &7- &aDisable private games",
                             "&7- &e/pg join <player> &7- &aJoin to the private game of a player",
+                            "&7- &e/pg accept &7- &aAccept the last join request",
+                            "&7- &e/pg deny &7- &aDeny the last join request",
+                            "&7- &e/pg accept <player> &7- &aAccept the join request of a player",
+                            "&7- &e/pg deny <player> &7- &aDecline the join request of a player",
                             "&8&m-----------------------------------------------------"
                     ));
                     yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
@@ -36,7 +40,6 @@ public class MessagesData {
                             "&7- &e/pg enable admin &7- &aEnable the private games only for you (party too)",
                             "&7- &e/pg disable admin &7- &aDisable the private games only for you (party too)",
                             "&8&m-----------------------------------------------------"
-
                     ));
                     yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate Game Settings");
@@ -58,6 +61,27 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lhas enabled private game modifiers!", "{modifiers}", "&6-----------------------------------------------------"));
                     yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
                     yml.addDefault(PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT, "&6- {modifier}: &e{selected}");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED, Arrays.asList(
+                            "&6&m-----------------------------------------------------",
+                            "&e{player} &7is requesting to join your private game!",
+                            "{buttons}",
+                            "&6&m-----------------------------------------------------"));
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_SENT,
+                            "&6m-----------------------------------------------------\n" +
+                                    "&7You've requested to join to the private game of &e{player}!\n" +
+                                    "&6m-----------------------------------------------------\n");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT, "&a&lAccept");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER, "&aClick to accept!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY, "&c&lDecline");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY_HOVER, "&cClick to decline!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED, "&cYou've declined the request of &e{player}!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED, "&aYou've accepted the request of &e{player}!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER, "&a&l{player} &ahas accepted your request!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED_REQUESTER, "&c&l{player} &chas declined your request!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_EXPIRED, "&cYour request has expired!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER, "&c&l{player} didn't request joining or this request has expired!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_NO_PENDING_REQUESTS, "&cYou don't have any pending requests!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ALREADY_SENT, "&cYou've already sent a request to this player!");
                     yml.addDefault(MENU_BACK_ITEM_NAME, "&aGo Back");
                     yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Go back to your bedwars gameplay"));
                     yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aOne hit, one kill");
@@ -202,6 +226,20 @@ public class MessagesData {
             MAIN_MENU_NAME = PATH + "menu.menu-name",
             MENU_SELECTED_MEANING = PATH + "menu.selected-meaning",
             PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER = PATH + "game.scoreboard-placeholder",
+            PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED = PATH + "game.request-message.request-received",
+            PRIVATE_ARENA_REQUEST_MESSAGE_SENT = PATH + "game.request-message.request-sent",
+            PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT = PATH + "game.request-message.request-buttons.accept.message",
+            PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER = PATH + "game.request-message.request-buttons.accept.hover",
+            PRIVATE_ARENA_REQUEST_MESSAGE_DENY = PATH + "game.request-message.request-buttons.deny.message",
+            PRIVATE_ARENA_REQUEST_MESSAGE_DENY_HOVER = PATH + "game.request-message.request-buttons.deny.hover",
+            PRIVATE_ARENA_REQUEST_DENIED = PATH + "game.request-message.request.denied",
+            PRIVATE_ARENA_REQUEST_ACCEPTED = PATH + "game.request-message.request.accepted",
+            PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER = PATH + "game.request-message.request.accepted-requester",
+            PRIVATE_ARENA_REQUEST_DENIED_REQUESTER = PATH + "game.request-message.request.denied-requester",
+            PRIVATE_ARENA_REQUEST_EXPIRED = PATH + "game.request-message.request.expired",
+            PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER = PATH + "game.request-message.request.expired-receiver",
+            PRIVATE_ARENA_REQUEST_NO_PENDING_REQUESTS = PATH + "game.request-message.request.no-pending-requests",
+            PRIVATE_ARENA_REQUEST_ALREADY_SENT = PATH + "game.request-message.request.already-sent",
             MENU_CLICK_TO_SELECT_MEANING = PATH + "menu.click-to-select-meaning",
             MENU_CLICK_TO_START_MEANING = PATH + "menu.click-to-start-meaning",
             MENU_STARTING_MEANING = PATH + "menu.starting-meaning",

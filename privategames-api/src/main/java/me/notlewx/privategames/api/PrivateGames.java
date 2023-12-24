@@ -4,6 +4,7 @@ import com.tomkeuper.bedwars.api.BedWars;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -84,7 +85,7 @@ public interface PrivateGames {
          * @param player - Player you want to get the arena from
          * @return - Private arena
          */
-        IPrivateArena getPrivateArenaByPlayer(Player player);
+        IPrivateArena getPrivateArenaByPlayer(OfflinePlayer player);
 
         /**
          * Get a private arena via arena world name

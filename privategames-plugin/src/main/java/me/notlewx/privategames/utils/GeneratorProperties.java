@@ -26,6 +26,7 @@ public class GeneratorProperties {
     public Properties getProperties(Object gen) {
         return genProps.get(gen);
     }
+    @SuppressWarnings("cast")
     public Object getGenerator() {
         return this.gen;
     }

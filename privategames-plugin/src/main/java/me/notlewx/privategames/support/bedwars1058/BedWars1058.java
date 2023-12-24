@@ -40,8 +40,8 @@ public class BedWars1058 {
             new MessagesData();
             Utility.info("&aMessages loaded successfully!");
             registerCommands();
-            loadListeners();
             loadDatabase();
+            loadListeners();
         }
     }
 

@@ -24,7 +24,10 @@ public class MessagesData {
                 "&7- &e/pg enable &7- &aEnable private games",
                 "&7- &e/pg disable &7- &aDisable private games",
                 "&7- &e/pg join <player> &7- &aJoin to the private game of a player",
-                "&7- &e/pg leave &7- &aLeave the private game of a player",
+                "&7- &e/pg accept &7- &aAccept the last join request",
+                "&7- &e/pg deny &7- &aDeny the last join request",
+                "&7- &e/pg accept <player> &7- &aAccept the join request of a player",
+                "&7- &e/pg deny <player> &7- &aDecline the join request of a player",
                 "&8&m-----------------------------------------------------"
         ));
         yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
@@ -57,6 +60,27 @@ public class MessagesData {
         yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lhas enabled private game modifiers!", "{modifiers}", "&6-----------------------------------------------------"));
         yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
         yml.addDefault(PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT, "&6- {modifier}: &e{selected}");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED, Arrays.asList(
+                "&6&m-----------------------------------------------------",
+                "&e{player} &7is requesting to join your private game!",
+                "{buttons}",
+                "&6&m-----------------------------------------------------"));
+        yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_SENT,
+                "&6m-----------------------------------------------------\n" +
+                        "&7You've requested to join to the private game of &e{player}!\n" +
+                        "&6m-----------------------------------------------------\n");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT, "&a&lAccept");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER, "&aClick to accept!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY, "&c&lDecline");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY_HOVER, "&cClick to decline!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED, "&cYou've declined the request of &e{player}!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED, "&aYou've accepted the request of &e{player}!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER, "&a&l{player} &ahas accepted your request!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED_REQUESTER, "&c&l{player} &chas declined your request!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_EXPIRED, "&cYour request has expired!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER, "&c&l{player} didn't request joining or this request has expired!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_NO_PENDING_REQUESTS, "&cYou don't have any pending requests!");
+        yml.addDefault(PRIVATE_ARENA_REQUEST_ALREADY_SENT, "&cYou've already sent a request to this player!");
         yml.addDefault(MENU_BACK_ITEM_NAME, "&aGo Back");
         yml.addDefault(MENU_BACK_ITEM_LORE, Arrays.asList("&7Go back to your bedwars gameplay"));
         yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aOne hit, one kill");
@@ -86,7 +110,7 @@ public class MessagesData {
         yml.addDefault(ITEM_START_NAME, "&aStart");
         yml.addDefault(ITEM_START_LORE, Arrays.asList("&7Click here to start the game", "", "&7You can start the game if you are", "&7the owner of the party", "", "&eClick to start!"));
         yml.addDefault(ITEM_GAMEMODE_CHANGER_NAME, "&aGamemode Changer");
-        yml.addDefault(ITEM_GAMEMODE_CHANGER_LORE, Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&eClick to change!"));
+        yml.addDefault(ITEM_GAMEMODE_CHANGER_LORE, Arrays.asList("&7Click here to change the gamemode", "", "&7You can change the gamemode if you are", "&7the owner of the party", "", "&7Current: &a{state}", "&7Default: &e{default}", "", "&cRight Click to set the default Game Mode", "&eLeft Click to change!"));
         yml.addDefault(SUBMENU_SPEED_NAME, "&8Speed");
         yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aNo Speed");
         yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, Arrays.asList("{state}"));
@@ -163,7 +187,7 @@ public class MessagesData {
         yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME, "&aAllow Others to Join");
         yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE, Arrays.asList("&7Allow others to join your game", "", "{state}"));
         yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME, "&aEnable Private Games");
-        yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE, Arrays.asList("&7Enable the private games", "", "{state}"));
+        yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE, Arrays.asList("&7Enable private games", "", "{state}"));
         yml.addDefault(SUBMENU_OPTIONS_BACK_NAME, "&aGo Back");
         yml.addDefault(SUBMENU_OPTIONS_BACK_LORE, Arrays.asList("&7Go Back to the settings menu"));
         yml.addDefault(SUBMENU_GENERATORS_OPTIONS_TITLE, "Arena generators");
