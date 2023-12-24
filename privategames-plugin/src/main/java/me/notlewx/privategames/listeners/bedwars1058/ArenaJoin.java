@@ -87,8 +87,6 @@ public class ArenaJoin implements Listener {
                     if (pa.getPlayers().size() == a.getMaxPlayers()) return;
 
                     api.getBedWars1058API().getArenaUtil().getArenas().remove(a);
-
-                    pa.addPlayer(e.getPlayer(), true);
                 }
             }, 5L);
 
@@ -118,6 +116,8 @@ public class ArenaJoin implements Listener {
                         e.getPlayer().setAllowFlight(false);
                         e.getPlayer().setFlying(false);
                         e.getPlayer().closeInventory();
+                        pa.addPlayer(e.getPlayer(), true);
+                        Utility.debug("Player " + e.getPlayer().getName() + " has joined the private arena " + pa.getArenaIdentifier() + " and has been added to the host's private arena.");
                         break;
                     }
                 }
@@ -136,6 +136,7 @@ public class ArenaJoin implements Listener {
 
                         IPrivateArena pa = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
+                        Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
@@ -152,6 +153,7 @@ public class ArenaJoin implements Listener {
 
                         IPrivateArena pa =  new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
+                        Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
                         Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
@@ -162,6 +164,7 @@ public class ArenaJoin implements Listener {
 
                     IPrivateArena pa = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
+                    Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                     MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
                     Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);

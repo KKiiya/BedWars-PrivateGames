@@ -1,5 +1,6 @@
 package me.notlewx.privategames.arena;
 
+import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.server.ServerType;
 import me.notlewx.privategames.PrivateGames;
@@ -80,6 +81,7 @@ public class PrivateArena implements IPrivateArena {
         }
 
         if (callEvent) {
+            Utility.debug("Calling PrivateGameJoinEvent for player " + p.getName());
             PrivateGameJoinEvent event = new PrivateGameJoinEvent(p, this);
             Bukkit.getPluginManager().callEvent(event);
 
@@ -93,7 +95,10 @@ public class PrivateArena implements IPrivateArena {
     @Override
     public void removePlayer(Player p) {
         Utility.debug("Removing player " + p.getName() + " from arena " + worldName);
-        if (!players.contains(p)) return;
+        if (!players.contains(p)) {
+            Utility.debug("Player is not in arena, task cancelled");
+            return;
+        }
 
         this.players.remove(p);
         privateArenaByPlayer.remove(p);
@@ -124,10 +129,26 @@ public class PrivateArena implements IPrivateArena {
     public boolean isFull() {
         if (support == Support.BEDWARS1058) {
             IArena arena = PrivateGames.getBw1058Api().getArenaUtil().getArenaByIdentifier(worldName);
-            return arena.getPlayers().size() == arena.getMaxPlayers()-1;
+            switch (arena.getStatus()) {
+                case waiting:
+                case starting:
+                    return arena.getPlayers().size() >= arena.getMaxPlayers()-1;
+                case playing:
+                    return arena.getPlayers().size() >= arena.getMaxPlayers();
+                default:
+                    return false;
+            }
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.IArena arena = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(worldName);
-            return arena.getPlayers().size() == arena.getMaxPlayers()-1;
+            switch (arena.getStatus()) {
+                case waiting:
+                case starting:
+                    return arena.getPlayers().size() >= arena.getMaxPlayers()-1;
+                case playing:
+                    return arena.getPlayers().size() >= arena.getMaxPlayers();
+                default:
+                    return false;
+            }
         }
         return false;
     }
