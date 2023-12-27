@@ -6,8 +6,8 @@
 
     <parent>
         <groupId>me.notlewx</groupId>
-        <artifactId>BedWars1058-PrivateGames</artifactId>
-        <version>1.1.1</version>
+        <artifactId>BedWars-PrivateGames</artifactId>
+        <version>1.1.2</version>
     </parent>
     <artifactId>privategames-plugin</artifactId>
     <packaging>jar</packaging>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>me.notlewx</groupId>
             <artifactId>privategames-api</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
