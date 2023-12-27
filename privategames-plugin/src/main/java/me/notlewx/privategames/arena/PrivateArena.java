@@ -3,6 +3,7 @@ package me.notlewx.privategames.arena;
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.server.ServerType;
+import com.tomkeuper.bedwars.proxy.arenamanager.ArenaManager;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.events.PrivateGameJoinEvent;
@@ -129,23 +130,47 @@ public class PrivateArena implements IPrivateArena {
     public boolean isFull() {
         if (support == Support.BEDWARS1058) {
             IArena arena = PrivateGames.getBw1058Api().getArenaUtil().getArenaByIdentifier(worldName);
-            switch (arena.getStatus()) {
-                case waiting:
-                case starting:
+            String status = arena.getStatus().toString();
+            switch (status) {
+                case "waiting":
+                case "starting":
                     return arena.getPlayers().size() >= arena.getMaxPlayers()-1;
-                case playing:
+                case "playing":
                     return arena.getPlayers().size() >= arena.getMaxPlayers();
                 default:
                     return false;
             }
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.IArena arena = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(worldName);
-            switch (arena.getStatus()) {
-                case waiting:
-                case starting:
+            String status = arena.getStatus().toString();
+            switch (status) {
+                case "waiting":
+                case "starting":
                     return arena.getPlayers().size() >= arena.getMaxPlayers()-1;
-                case playing:
+                case "playing":
                     return arena.getPlayers().size() >= arena.getMaxPlayers();
+                default:
+                    return false;
+            }
+        } else if (support == Support.BEDWARSPROXY2023) {
+            com.tomkeuper.bedwars.proxy.api.CachedArena arena = ArenaManager.getArenaByIdentifier(worldName);
+            String status = arena.getStatus().toString();
+            switch (status) {
+                case "WAITING":
+                case "STARTING":
+                case "PLAYING":
+                    return arena.getCurrentPlayers() >= arena.getMaxPlayers();
+                default:
+                    return false;
+            }
+        } else if (support == Support.BEDWARSPROXY) {
+            com.andrei1058.bedwars.proxy.api.CachedArena arena = com.andrei1058.bedwars.proxy.arenamanager.ArenaManager.getArenaByIdentifier(worldName);
+            String status = arena.getStatus().toString();
+            switch (status) {
+                case "WAITING":
+                case "STARTING":
+                case "PLAYING":
+                    return arena.getCurrentPlayers() >= arena.getMaxPlayers();
                 default:
                     return false;
             }

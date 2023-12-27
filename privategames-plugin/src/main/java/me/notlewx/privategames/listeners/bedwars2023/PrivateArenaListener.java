@@ -191,7 +191,7 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerHit(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             IArena arena = api.getBedWars2023API().getArenaUtil().getArenaByPlayer((Player) e.getDamager());
             if (arena == null) {
                 return;
