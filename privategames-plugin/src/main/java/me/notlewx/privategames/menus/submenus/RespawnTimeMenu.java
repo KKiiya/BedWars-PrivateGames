@@ -30,9 +30,13 @@ public class RespawnTimeMenu implements GUIHolder {
     public RespawnTimeMenu(Player p) {
         this.player = p;
         playerData = new PrivatePlayer(player).getPlayerSettings();
-        createInventory();
-        addContents();
-        player.openInventory(inventory);
+        try {
+            createInventory();
+            addContents();
+            player.openInventory(inventory);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while opening the respawn time menu", e);
+        }
     }
 
     private void createInventory() {

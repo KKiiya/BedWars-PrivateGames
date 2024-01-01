@@ -28,9 +28,13 @@ public class GeneratorSettingsMenu implements GUIHolder {
     public GeneratorSettingsMenu(Player p, Object gen) {
         this.p = p;
         this.gen = gen;
-        createInventory();
-        addContents();
-        p.openInventory(inv);
+        try {
+            createInventory();
+            addContents();
+            p.openInventory(inv);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while opening the generator settings menu", e);
+        }
     }
 
     private void createInventory() {

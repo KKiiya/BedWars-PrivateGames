@@ -1,6 +1,8 @@
 me\notlewx\privategames\menus\submenus\SpeedMenu.class
 me\notlewx\privategames\support\bedwars2023\BW2023Addon.class
 me\notlewx\privategames\config\proxy2023\MessagesData.class
+me\notlewx\privategames\listeners\PlayerLeave$1.class
+me\notlewx\privategames\listeners\PartyDisband.class
 me\notlewx\privategames\PrivateGames.class
 me\notlewx\privategames\menus\SettingsMenu$1.class
 me\notlewx\privategames\config\ConfigManager.class
@@ -57,6 +59,7 @@ me\notlewx\privategames\support\bedwars1058\BedWarsProxy.class
 me\notlewx\privategames\arena\PrivateArena.class
 me\notlewx\privategames\config\MainConfig.class
 me\notlewx\privategames\listeners\bedwars1058\ArenaLeave.class
+me\notlewx\privategames\listeners\PlayerJoin$1.class
 me\notlewx\privategames\listeners\bedwars2023\PrivateArenaListener.class
 me\notlewx\privategames\player\PlayerSettings.class
 me\notlewx\privategames\API.class

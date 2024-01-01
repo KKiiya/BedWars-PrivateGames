@@ -35,9 +35,13 @@ public class GamemodeChangerMenu implements GUIHolder {
         this.arena = arena;
         this.modePosition = new HashMap<>();
         this.defaultGroup = api.getPrivateArenaUtil().getPrivateArenaByPlayer(p).getDefaultGroup();
-        createInventory();
-        addContent();
-        p.openInventory(inv);
+        try {
+            createInventory();
+            addContent();
+            p.openInventory(inv);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while opening the gamemode changer menu", e);
+        }
     }
 
     private void createInventory() {

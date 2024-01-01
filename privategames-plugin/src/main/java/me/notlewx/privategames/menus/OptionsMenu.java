@@ -32,9 +32,13 @@ public class OptionsMenu implements GUIHolder {
 
     public OptionsMenu(Player p) {
         this.p = p;
-        createInventory();
-        addContent();
-        p.openInventory(inv);
+        try {
+            createInventory();
+            addContent();
+            p.openInventory(inv);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while opening the settings menu", e);
+        }
     }
 
     private void createInventory() {

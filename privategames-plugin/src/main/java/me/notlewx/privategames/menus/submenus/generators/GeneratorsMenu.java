@@ -28,9 +28,13 @@ public class GeneratorsMenu implements GUIHolder {
         this.p = p;
         generatorPos = new HashMap<>();
         if (!api.getPrivateArenaUtil().isPlaying(p)) return;
-        createInventory();
-        addContents();
-        p.openInventory(inv);
+        try {
+            createInventory();
+            addContents();
+            p.openInventory(inv);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while opening the generators menu", e);
+        }
     }
 
     private void createInventory() {

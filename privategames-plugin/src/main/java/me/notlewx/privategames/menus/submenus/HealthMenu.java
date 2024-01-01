@@ -29,9 +29,13 @@ public class HealthMenu implements GUIHolder {
     public HealthMenu(Player p) {
         this.player = p;
         playerData = new PrivatePlayer(player).getPlayerSettings();
-        createInventory();
-        addContents();
-        player.openInventory(inventory);
+        try {
+            createInventory();
+            addContents();
+            player.openInventory(inventory);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while opening the health menu", e);
+        }
     }
 
     private void createInventory() {

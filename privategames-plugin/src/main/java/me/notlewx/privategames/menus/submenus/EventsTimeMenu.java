@@ -30,9 +30,13 @@ public class EventsTimeMenu implements GUIHolder {
     public EventsTimeMenu(Player p) {
         this.player = p;
         playerData = new PrivatePlayer(player).getPlayerSettings();
-        createInventory();
-        addContents();
-        player.openInventory(inventory);
+        try {
+            createInventory();
+            addContents();
+            player.openInventory(inventory);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while opening the events time menu", e);
+        }
     }
 
     private void createInventory() {

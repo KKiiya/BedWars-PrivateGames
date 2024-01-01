@@ -28,9 +28,13 @@ public class SpeedMenu implements GUIHolder {
     public SpeedMenu(Player p) {
         this.player = p;
         playerData = new PrivatePlayer(player).getPlayerSettings();
-        createInventory();
-        addContents();
-        player.openInventory(inventory);
+        try {
+            createInventory();
+            addContents();
+            player.openInventory(inventory);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while opening the speed menu", e);
+        }
     }
 
     private void createInventory() {

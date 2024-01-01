@@ -37,9 +37,13 @@ public class SettingsMenu implements GUIHolder {
     public SettingsMenu(Player p) {
         this.player = p;
         playerData = new PrivatePlayer(player).getPlayerSettings();
-        createInventory();
-        addContents(inventory);
-        player.openInventory(inventory);
+        try {
+            createInventory();
+            addContents(inventory);
+            player.openInventory(inventory);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error while opening the settings menu", ex);
+        }
     }
 
     private void createInventory() {
@@ -276,10 +280,12 @@ public class SettingsMenu implements GUIHolder {
                 group = "";
             }
 
-            gamemodeChangerMeta.setLore(Utility.getList(player, ITEM_GAMEMODE_CHANGER_LORE).stream().map(s -> s
-                            .replace("{state}", Utility.getMsg(player, "display-group-" + group))
-                            .replace("{default}", Utility.getMsg(player, "display-group-" + api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup())))
-                    .collect(Collectors.toList()));
+            if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + group) != null) {
+                gamemodeChangerMeta.setLore(Utility.getList(player, ITEM_GAMEMODE_CHANGER_LORE).stream().map(s -> s
+                                .replace("{state}", Utility.getMsg(player, "display-group-" + group))
+                                .replace("{default}", Utility.getMsg(player, "display-group-" + api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup())))
+                        .collect(Collectors.toList()));
+            }
         }
         gamemodeChangerMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
