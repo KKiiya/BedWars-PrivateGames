@@ -3,7 +3,6 @@ package me.notlewx.privategames.listeners;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
-import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

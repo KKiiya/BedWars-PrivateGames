@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
-import static me.notlewx.privategames.config.bedwars1058.MessagesData.MENU_SELECTED_MEANING;
 
 public class RespawnTimeMenu implements GUIHolder {
     private Inventory inventory;
@@ -51,38 +50,30 @@ public class RespawnTimeMenu implements GUIHolder {
 
     public void addContents() {
         Material arrowMat = Material.getMaterial(mainConfig.getString(RESPAWN_TIME_BACK_MATERIAL));
-        ItemStack arrow;
-        if (arrowMat == Material.SKULL_ITEM) {
-            arrow = Utility.getSkull(mainConfig.getString(RESPAWN_TIME_BACK_HEAD_URL));
-        } else {
-            arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_BACK_ID));
+        ItemStack arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_BACK_ID));
+        if (arrow.getType().toString().equals("SKULL_ITEM") || arrow.getType().toString().equals("LEGACY_SKULL_ITEM") && arrow.getDurability() == 3) {
+            arrow = Utility.getSkull(arrowMat, mainConfig.getString(RESPAWN_TIME_BACK_HEAD_URL));
         }
         ItemMeta arrowMeta = arrow.getItemMeta();
 
         Material book1Mat = Material.getMaterial(mainConfig.getString(RESPAWN_TIME_LEVEL_I_MATERIAL));
-        ItemStack gapple1;
-        if (book1Mat == Material.SKULL_ITEM) {
-            gapple1 = Utility.getSkull(mainConfig.getString(RESPAWN_TIME_LEVEL_I_HEAD_URL));
-        } else {
-            gapple1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_LEVEL_I_ID));
+        ItemStack gapple1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_LEVEL_I_ID));
+        if (gapple1.getType().toString().equals("SKULL_ITEM") || gapple1.getType().toString().equals("LEGACY_SKULL_ITEM") && gapple1.getDurability() == 3) {
+            gapple1 = Utility.getSkull(book1Mat, mainConfig.getString(RESPAWN_TIME_LEVEL_I_HEAD_URL));
         }
         ItemMeta gapple1Meta = gapple1.getItemMeta();
 
         Material book2Mat = Material.getMaterial(mainConfig.getString(RESPAWN_TIME_LEVEL_II_MATERIAL));
-        ItemStack gapple2;
-        if (book2Mat == Material.SKULL_ITEM) {
-            gapple2 = Utility.getSkull(mainConfig.getString(RESPAWN_TIME_LEVEL_II_HEAD_URL));
-        } else {
-            gapple2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_LEVEL_II_ID));
+        ItemStack gapple2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_LEVEL_II_ID));
+        if (gapple2.getType().toString().equals("SKULL_ITEM") || gapple2.getType().toString().equals("LEGACY_SKULL_ITEM") && gapple2.getDurability() == 3) {
+            gapple2 = Utility.getSkull(book2Mat, mainConfig.getString(RESPAWN_TIME_LEVEL_II_HEAD_URL));
         }
         ItemMeta gapple2Meta = gapple2.getItemMeta();
 
         Material book3Mat = Material.getMaterial(mainConfig.getString(RESPAWN_TIME_LEVEL_III_MATERIAL));
-        ItemStack gapple3;
-        if (book3Mat == Material.SKULL_ITEM) {
-            gapple3 = Utility.getSkull(mainConfig.getString(RESPAWN_TIME_LEVEL_III_HEAD_URL));
-        } else {
-            gapple3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_LEVEL_III_ID));
+        ItemStack gapple3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_LEVEL_III_ID));
+        if (gapple3.getType().toString().equals("SKULL_ITEM") || gapple3.getType().toString().equals("LEGACY_SKULL_ITEM") && gapple3.getDurability() == 3) {
+            gapple3 = Utility.getSkull(book3Mat, mainConfig.getString(RESPAWN_TIME_LEVEL_III_HEAD_URL));
         }
         ItemMeta gapple3Meta = gapple3.getItemMeta();
 

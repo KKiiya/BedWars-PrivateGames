@@ -23,7 +23,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -90,7 +89,7 @@ public class Utility {
         else if (support == Support.BEDWARS1058) return p(player, PrivateGames.getBw1058Api().getPlayerLanguage(player).getList(path));
         else if (support == Support.BEDWARS2023) return p(player, PrivateGames.getBw2023Api().getPlayerLanguage(player).getList(path));
         else if (support == Support.BEDWARSPROXY2023) return p(player, PrivateGames.getBwProxy2023Api().getLanguageUtil().getList(player, path));
-        else return Arrays.asList(c("&cMISSING"));
+        else return List.of(c("&cMISSING"));
     }
 
     public static void giveSpeedLevel(Player player) {
@@ -150,8 +149,8 @@ public class Utility {
             }, 20L);
     }
 
-    public static ItemStack getSkull(String url) {
-        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+    public static ItemStack getSkull(Material mat, String url) {
+        ItemStack skull = new ItemStack(mat, 1, (short) 3);
 
         if (url == null || url.isEmpty())
             return skull;
@@ -178,5 +177,20 @@ public class Utility {
 
         skull.setItemMeta(skullMeta);
         return skull;
+    }
+
+    public static String getServerVersion() {
+        return Bukkit.getServer().getClass().getName().split("\\.")[3];
+    }
+
+    public static String getForCurrentVersion(String v18, String v12, String v13) {
+        switch (getServerVersion()) {
+            case "v1_8_R3":
+                return v18;
+            case "v1_12_R1":
+                return v12;
+            default:
+                return v13;
+        }
     }
 }

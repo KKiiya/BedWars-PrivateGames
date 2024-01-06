@@ -3,6 +3,7 @@ package me.notlewx.privategames.support.bedwars2023;
 import me.notlewx.privategames.support.Support;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+
 import static me.notlewx.privategames.PrivateGames.*;
 
 public class BedWars2023 {

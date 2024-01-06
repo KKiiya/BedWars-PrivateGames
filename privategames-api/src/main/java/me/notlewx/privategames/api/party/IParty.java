@@ -1,6 +1,7 @@
 package me.notlewx.privategames.api.party;
 
 import org.bukkit.entity.Player;
+
 import java.util.List;
 
 public interface IParty {

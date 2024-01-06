@@ -4,7 +4,7 @@ import me.notlewx.privategames.support.Support;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static me.notlewx.privategames.PrivateGames.isBedWarsServer;
 import static me.notlewx.privategames.PrivateGames.support;
@@ -17,7 +17,7 @@ public class MainConfig extends ConfigManager {
 
         yml.addDefault("debug", false);
         if (support == Support.BEDWARS2023 || support == Support.BEDWARS1058) {
-            yml.addDefault("lobby-sockets", Arrays.asList("127.0.0.1:2023"));
+            yml.addDefault("lobby-sockets", List.of("127.0.0.1:2023"));
         } else if (support == Support.BEDWARSPROXY || support == Support.BEDWARSPROXY2023) {
             yml.addDefault("port", 2023);
         }
@@ -29,6 +29,7 @@ public class MainConfig extends ConfigManager {
             yml.addDefault("database.password", "password");
             yml.addDefault("database.port", 3306);
         }
+        yml.addDefault("disable-private-games-on-leave", true);
         yml.addDefault(SPEED, true);
         yml.addDefault(ONE_HIT_ONE_KILL, true);
         yml.addDefault(HEALTH_BUFF, true);

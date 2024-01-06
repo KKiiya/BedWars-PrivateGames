@@ -58,11 +58,9 @@ public class GamemodeChangerMenu implements GUIHolder {
             if (!mode.equals("back-item")) {
                 modePosition.put(position, mode);
 
-                ItemStack modeStack;
-                if (mat == Material.SKULL_ITEM) {
-                    modeStack = Utility.getSkull(headUrl);
-                } else {
-                    modeStack = new ItemStack(mat, 1, data);
+                ItemStack modeStack = new ItemStack(mat, 1, data);
+                if (modeStack.getType().toString().equals("SKULL_ITEM") || modeStack.getType().toString().equals("LEGACY_SKULL_ITEM") && modeStack.getDurability() == 3) {
+                    modeStack = Utility.getSkull(mat, headUrl);
                 }
                 ItemMeta modeMeta = modeStack.getItemMeta();
 
@@ -80,11 +78,9 @@ public class GamemodeChangerMenu implements GUIHolder {
         byte backData = (byte) mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes.back-item").getInt("data");
         int backPosition = mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes.back-item").getInt("position");
         String backHeadUrl = mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes.back-item").getString("head-url");
-        ItemStack backStack;
-        if (backMat == Material.SKULL_ITEM) {
-            backStack = Utility.getSkull(backHeadUrl);
-        } else {
-            backStack = new ItemStack(backMat, 1, backData);
+        ItemStack backStack = new ItemStack(backMat, 1, backData);
+        if (backStack.getType().toString().equals("SKULL_ITEM") || backStack.getType().toString().equals("LEGACY_SKULL_ITEM") && backStack.getDurability() == 3) {
+            backStack = Utility.getSkull(backMat, backHeadUrl);
         }
         ItemMeta backMeta = backStack.getItemMeta();
 
@@ -96,6 +92,7 @@ public class GamemodeChangerMenu implements GUIHolder {
 
         inv.setItem(backPosition, backStack);
     }
+
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GAMEMODE_CHANGER_TITLE))) {

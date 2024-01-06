@@ -1,8 +1,8 @@
 package me.notlewx.privategames.messaging.redis;
 
-import com.tomkeuper.bedwars.proxy.api.ArenaStatus;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.tomkeuper.bedwars.proxy.api.ArenaStatus;
 import com.tomkeuper.bedwars.proxy.api.CachedArena;
 import com.tomkeuper.bedwars.proxy.api.event.RedisMessageEvent;
 import com.tomkeuper.bedwars.proxy.arenamanager.ArenaManager;
@@ -15,6 +15,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;

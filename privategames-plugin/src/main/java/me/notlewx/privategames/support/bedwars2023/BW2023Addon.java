@@ -14,11 +14,11 @@ import me.notlewx.privategames.messaging.redis.ArenasListener;
 import me.notlewx.privategames.messaging.socket.ArenasSocket;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.plugin.Plugin;
+
 import java.io.File;
 import java.io.IOException;
 
 import static me.notlewx.privategames.PrivateGames.*;
-import static me.notlewx.privategames.PrivateGames.database;
 
 public class BW2023Addon extends Addon {
 

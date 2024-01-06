@@ -4,6 +4,7 @@ import me.notlewx.privategames.api.modifiers.ModifierType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

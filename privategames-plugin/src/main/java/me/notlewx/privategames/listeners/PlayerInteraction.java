@@ -7,7 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
+
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
 
 public class PlayerInteraction implements Listener {
 

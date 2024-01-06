@@ -6,6 +6,7 @@ import me.notlewx.privategames.utils.Utility;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.api;

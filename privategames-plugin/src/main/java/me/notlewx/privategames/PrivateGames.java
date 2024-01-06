@@ -5,16 +5,13 @@ import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.api.database.DatabaseType;
-import me.notlewx.privategames.config.MainConfig;
-import me.notlewx.privategames.database.providers.MySQL;
 import me.notlewx.privategames.listeners.*;
+import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.support.bedwars1058.BedWars1058;
 import me.notlewx.privategames.support.bedwars2023.BedWars2023;
 import me.notlewx.privategames.support.bedwars2023.BedWarsProxy2023;
-import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.AdvancedPie;
 import org.bstats.charts.DrilldownPie;
 import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
@@ -24,7 +21,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public final class PrivateGames extends JavaPlugin {
     public static ConfigManager bw1058config;
@@ -42,8 +38,8 @@ public final class PrivateGames extends JavaPlugin {
     private Map<String, Integer> isEnabled(String path) {
         me.notlewx.privategames.config.ConfigManager mainConfig = PrivateGames.mainConfig;
         Map<String, Integer> map = new HashMap<>();
-        map.put("enabled", mainConfig.getBoolean(path) ? 1 : 0);
-        map.put("disabled", mainConfig.getBoolean(path) ? 0 : 1);
+        map.put("Disabled", mainConfig.getBoolean(path) ? 1 : 0);
+        map.put("Enabled", mainConfig.getBoolean(path) ? 0 : 1);
         return map;
     }
 
@@ -59,7 +55,7 @@ public final class PrivateGames extends JavaPlugin {
         loadMainListeners();
         loadSupport();
 
-        metrics.addCustomChart(new DrilldownPie("features_enabled", () -> {
+        metrics.addCustomChart(new DrilldownPie("enabled_features", () -> {
             HashMap<String, Map<String, Integer>> map = new HashMap<>();
             map.put("Speed", isEnabled("enabled-modifiers.speed"));
             map.put("One Hit One Kill", isEnabled("enabled-modifiers.one-hit-one-kill"));

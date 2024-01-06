@@ -4,6 +4,7 @@ import com.andrei1058.bedwars.api.party.Party;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.party.IParty;
 import org.bukkit.entity.Player;
+
 import java.util.List;
 
 public class BedWars1058PARTY implements IParty {

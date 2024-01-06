@@ -1,7 +1,7 @@
 package me.notlewx.privategames.commands.bedwars1058;
 
-import com.andrei1058.bedwars.api.server.ServerType;
 import com.andrei1058.bedwars.api.arena.IArena;
+import com.andrei1058.bedwars.api.server.ServerType;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.events.PrivateGameJoinRequestSendEvent;
 import me.notlewx.privategames.api.party.IParty;
@@ -380,14 +380,14 @@ public class MainCommand implements CommandExecutor {
                                     p.removeRequest(p.getLastJoinRequest());
                                 }
                             } else {
-                                sender.sendMessage(Utility.getMsg((Player) sender, "cmd-not-found").replace("%bw_lang_prefix%", Utility.getMsg((Player) sender, "prefix")));
+                                sender.sendMessage(Utility.getMsg((Player) sender, "cmd-not-found").replace("{prefix}", Utility.getMsg((Player) sender, "prefix")));
                             }
                         } else {
                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                         }
                         break;
                     default:
-                        sender.sendMessage(Utility.getMsg((Player) sender, "cmd-not-found").replace("%bw_lang_prefix%", Utility.getMsg((Player) sender, "prefix")));
+                        sender.sendMessage(Utility.getMsg((Player) sender, "cmd-not-found").replace("{prefix}", Utility.getMsg((Player) sender, "prefix")));
                         break;
                 }
             }

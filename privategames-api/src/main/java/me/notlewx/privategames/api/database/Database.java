@@ -1,7 +1,6 @@
 package me.notlewx.privategames.api.database;
 
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 

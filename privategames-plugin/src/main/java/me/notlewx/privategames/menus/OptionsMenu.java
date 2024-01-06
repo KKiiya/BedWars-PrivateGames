@@ -16,6 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.*;
@@ -24,6 +25,9 @@ import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GA
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_ENABLED_OTHERS;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_NOT_IN_PARTY;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_NOT_OWNER;
+import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_GAME_CANT_IN_GAME;
+import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_GAME_DISABLED;
+import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_GAME_DISABLED_OTHERS;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class OptionsMenu implements GUIHolder {
@@ -46,47 +50,37 @@ public class OptionsMenu implements GUIHolder {
     }
     private void addContent() {
         Material generatorSettingsMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATORS_MATERIAL));
-        ItemStack generatorSettings;
-        if (generatorSettingsMaterial == Material.SKULL_ITEM) {
-            generatorSettings = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATORS_HEAD_URL));
-        } else {
-            generatorSettings = new ItemStack(generatorSettingsMaterial, 1, (short) mainConfig.getInt(OPTIONS_GENERATORS_ID));
+        ItemStack generatorSettings = new ItemStack(generatorSettingsMaterial, 1, (byte) mainConfig.getInt(OPTIONS_GENERATORS_ID));
+        if (generatorSettings.getType().toString().equals("SKULL_ITEM") || generatorSettings.getType().toString().equals("LEGACY_SKULL_ITEM") && generatorSettings.getDurability() == 3) {
+            generatorSettings = Utility.getSkull(generatorSettingsMaterial, mainConfig.getString(OPTIONS_GENERATORS_HEAD_URL));
         }
         ItemMeta generatorSettingsMeta = generatorSettings.getItemMeta();
 
         Material allowJoinMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_ALLOWJOIN_MATERIAL));
-        ItemStack allowJoin;
-        if (allowJoinMaterial == Material.SKULL_ITEM) {
-            allowJoin = Utility.getSkull(mainConfig.getString(OPTIONS_ALLOWJOIN_HEAD_URL));
-        } else {
-            allowJoin = new ItemStack(allowJoinMaterial, 1, (short) mainConfig.getInt(OPTIONS_ALLOWJOIN_ID));
+        ItemStack allowJoin = new ItemStack(allowJoinMaterial, 1, (short) mainConfig.getInt(OPTIONS_ALLOWJOIN_ID));
+        if (allowJoin.getType().toString().equals("SKULL_ITEM") || allowJoin.getType().toString().equals("LEGACY_SKULL_ITEM") && allowJoin.getDurability() == 3) {
+            allowJoin = Utility.getSkull(allowJoinMaterial, mainConfig.getString(OPTIONS_ALLOWJOIN_HEAD_URL));
         }
         ItemMeta allowJoinMeta = allowJoin.getItemMeta();
 
         Material autoStartMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_ENABLE_AUTOSTART_MATERIAL));
-        ItemStack autoStart;
-        if (autoStartMaterial == Material.SKULL_ITEM) {
-            autoStart = Utility.getSkull(mainConfig.getString(OPTIONS_ENABLE_AUTOSTART_HEAD_URL));
-        } else {
-            autoStart = new ItemStack(autoStartMaterial, 1, (short) mainConfig.getInt(OPTIONS_ENABLE_AUTOSTART_ID));
+        ItemStack autoStart = new ItemStack(autoStartMaterial, 1, (short) mainConfig.getInt(OPTIONS_ENABLE_AUTOSTART_ID));
+        if (autoStart.getType().toString().equals("SKULL_ITEM") || autoStart.getType().toString().equals("LEGACY_SKULL_ITEM") && autoStart.getDurability() == 3) {
+            autoStart = Utility.getSkull(autoStartMaterial, mainConfig.getString(OPTIONS_ENABLE_AUTOSTART_HEAD_URL));
         }
         ItemMeta autoStartMeta = autoStart.getItemMeta();
 
         Material privateGamesMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_ENABLE_PRIVATEGAMES_MATERIAL));
-        ItemStack privateGames;
-        if (privateGamesMaterial == Material.SKULL_ITEM) {
-            privateGames = Utility.getSkull(mainConfig.getString(OPTIONS_ENABLE_PRIVATEGAMES_HEAD_URL));
-        } else {
-            privateGames = new ItemStack(privateGamesMaterial, 1, (short) mainConfig.getInt(OPTIONS_ENABLE_PRIVATEGAMES_ID));
+        ItemStack privateGames = new ItemStack(privateGamesMaterial, 1, (short) mainConfig.getInt(OPTIONS_ENABLE_PRIVATEGAMES_ID));
+        if (privateGames.getType().toString().equals("SKULL_ITEM") || privateGames.getType().toString().equals("LEGACY_SKULL_ITEM") && privateGames.getDurability() == 3) {
+            privateGames = Utility.getSkull(privateGamesMaterial, mainConfig.getString(OPTIONS_ENABLE_PRIVATEGAMES_HEAD_URL));
         }
         ItemMeta privateGamesMeta = privateGames.getItemMeta();
 
         Material backMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_BACK_MATERIAL));
-        ItemStack back;
-        if (backMaterial == Material.SKULL_ITEM) {
-            back = Utility.getSkull(mainConfig.getString(OPTIONS_BACK_HEAD_URL));
-        } else {
-            back = new ItemStack(backMaterial, 1, (short) mainConfig.getInt(OPTIONS_BACK_ID));
+        ItemStack back = new ItemStack(backMaterial, 1, (short) mainConfig.getInt(OPTIONS_BACK_ID));
+        if (back.getType().toString().equals("SKULL_ITEM") || back.getType().toString().equals("LEGACY_SKULL_ITEM") && back.getDurability() == 3) {
+            back = Utility.getSkull(backMaterial, mainConfig.getString(OPTIONS_BACK_HEAD_URL));
         }
         ItemMeta backMeta = back.getItemMeta();
 

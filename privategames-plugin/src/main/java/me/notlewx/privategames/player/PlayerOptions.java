@@ -5,6 +5,7 @@ import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.api.player.IPlayerOptions;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+
 import java.util.UUID;
 
 public class PlayerOptions implements IPlayerOptions {

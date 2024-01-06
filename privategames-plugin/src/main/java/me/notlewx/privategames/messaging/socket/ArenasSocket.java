@@ -1,15 +1,9 @@
 package me.notlewx.privategames.messaging.socket;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.messaging.socket.tasks.ProxySocketTask;
-import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
-import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.LinkedList;
-import java.util.UUID;
 
 public class ArenasSocket {
     private Socket clientSocket;

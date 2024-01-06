@@ -22,6 +22,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.*;
@@ -56,139 +57,109 @@ public class SettingsMenu implements GUIHolder {
     }
     private void addContents(Inventory inventory) {
         Material oneHitOneKillMat = Material.getMaterial(mainConfig.getString(ONE_HIT_ONE_KILL_MATERIAL));
-        ItemStack oneHitOneKill;
-        if (oneHitOneKillMat == Material.SKULL_ITEM) {
-            oneHitOneKill = Utility.getSkull(mainConfig.getString(ONE_HIT_ONE_KILL_HEAD_URL));
-        } else {
-            oneHitOneKill = new ItemStack(oneHitOneKillMat, 1, (byte) mainConfig.getInt(ONE_HIT_ONE_KILL_ID));
+        ItemStack oneHitOneKill = new ItemStack(oneHitOneKillMat, 1, (byte) mainConfig.getInt(ONE_HIT_ONE_KILL_ID));
+        if (oneHitOneKill.getType().toString().equals("SKULL_ITEM") || oneHitOneKill.getType().toString().equals("LEGACY_SKULL_ITEM") && oneHitOneKill.getDurability() == 3) {
+            oneHitOneKill = Utility.getSkull(oneHitOneKillMat, mainConfig.getString(ONE_HIT_ONE_KILL_HEAD_URL));
         }
         ItemMeta oneHitOneKillMeta = oneHitOneKill.getItemMeta();
 
         Material healthBuffMat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_MATERIAL));
-        ItemStack healthBuff;
-        if (healthBuffMat == Material.SKULL_ITEM) {
-            healthBuff = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_HEAD_URL));
-        } else {
-            healthBuff = new ItemStack(healthBuffMat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_ID));
+        ItemStack healthBuff = new ItemStack(healthBuffMat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_ID));
+        if (healthBuff.getType().toString().equals("SKULL_ITEM") || healthBuff.getType().toString().equals("LEGACY_SKULL_ITEM") && healthBuff.getDurability() == 3) {
+            healthBuff = Utility.getSkull(healthBuffMat, mainConfig.getString(HEALTH_BUFF_HEAD_URL));
         }
         ItemMeta gappleMeta = healthBuff.getItemMeta();
 
         Material longJumpMat = Material.getMaterial(mainConfig.getString(LONG_JUMP_MATERIAL));
-        ItemStack longJump;
-        if (longJumpMat == Material.SKULL_ITEM) {
-            longJump = Utility.getSkull(mainConfig.getString(LONG_JUMP_HEAD_URL));
-        } else {
-            longJump = new ItemStack(longJumpMat, 1, (byte) mainConfig.getInt(LONG_JUMP_ID));
+        ItemStack longJump = new ItemStack(longJumpMat, 1, (byte) mainConfig.getInt(LONG_JUMP_ID));
+        if (longJump.getType().toString().equals("SKULL_ITEM") || longJump.getType().toString().equals("LEGACY_SKULL_ITEM") && longJump.getDurability() == 3) {
+            longJump = Utility.getSkull(longJumpMat, mainConfig.getString(LONG_JUMP_HEAD_URL));
         }
         ItemMeta longJumpMeta = longJump.getItemMeta();
 
         Material speedMat = Material.getMaterial(mainConfig.getString(SPEED_MATERIAL));
-        ItemStack speed;
-        if (speedMat == Material.SKULL_ITEM) {
-            speed = Utility.getSkull(mainConfig.getString(SPEED_HEAD_URL));
-        } else {
-            speed = new ItemStack(speedMat, 1, (byte) mainConfig.getInt(SPEED_ID));
+        ItemStack speed = new ItemStack(speedMat, 1, (byte) mainConfig.getInt(SPEED_ID));
+        if (speed.getType().toString().equals("SKULL_ITEM") || speed.getType().toString().equals("LEGACY_SKULL_ITEM") && speed.getDurability() == 3) {
+            speed = Utility.getSkull(speedMat, mainConfig.getString(SPEED_HEAD_URL));
         }
         ItemMeta speedMeta = speed.getItemMeta();
 
 
         Material respawnTimeMat = Material.getMaterial(mainConfig.getString(RESPAWN_TIME_MATERIAL));
-        ItemStack respawnTime;
-        if (respawnTimeMat == Material.SKULL_ITEM) {
-            respawnTime = Utility.getSkull(mainConfig.getString(RESPAWN_TIME_HEAD_URL));
-        } else {
-            respawnTime = new ItemStack(respawnTimeMat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_BACK_ID));
+        ItemStack respawnTime = new ItemStack(respawnTimeMat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_ID));
+        if (respawnTime.getType().toString().equals("SKULL_ITEM") || respawnTime.getType().toString().equals("LEGACY_SKULL_ITEM") && respawnTime.getDurability() == 3) {
+            respawnTime = Utility.getSkull(respawnTimeMat, mainConfig.getString(RESPAWN_TIME_HEAD_URL));
         }
         ItemMeta respawnTimeMeta = respawnTime.getItemMeta();
 
         Material eventsTimeMat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_MATERIAL));
-        ItemStack eventsTime;
-        if (eventsTimeMat == Material.SKULL_ITEM) {
-            eventsTime = Utility.getSkull(mainConfig.getString(EVENTS_TIME_HEAD_URL));
-        } else {
-            eventsTime = new ItemStack(eventsTimeMat, 1, (byte) mainConfig.getInt(EVENTS_TIME_ID));
+        ItemStack eventsTime = new ItemStack(eventsTimeMat, 1, (byte) mainConfig.getInt(EVENTS_TIME_ID));
+        if (eventsTime.getType().toString().equals("SKULL_ITEM") || eventsTime.getType().toString().equals("LEGACY_SKULL_ITEM") && eventsTime.getDurability() == 3) {
+            eventsTime = Utility.getSkull(eventsTimeMat, mainConfig.getString(EVENTS_TIME_HEAD_URL));
         }
         ItemMeta eventsTimeMeta = eventsTime.getItemMeta();
 
         Material noEmeraldsMat = Material.getMaterial(mainConfig.getString(NO_EMERALDS_MATERIAL));
-        ItemStack noEmeralds;
-        if (noEmeraldsMat == Material.SKULL_ITEM) {
-            noEmeralds = Utility.getSkull(mainConfig.getString(NO_EMERALDS_HEAD_URL));
-        } else {
-            noEmeralds = new ItemStack(noEmeraldsMat, 1, (byte) mainConfig.getInt(NO_EMERALDS_ID));
+        ItemStack noEmeralds = new ItemStack(noEmeraldsMat, 1, (byte) mainConfig.getInt(NO_EMERALDS_ID));
+        if (noEmeralds.getType().toString().equals("SKULL_ITEM") || noEmeralds.getType().toString().equals("LEGACY_SKULL_ITEM") && noEmeralds.getDurability() == 3) {
+            noEmeralds = Utility.getSkull(noEmeraldsMat, mainConfig.getString(NO_EMERALDS_HEAD_URL));
         }
         ItemMeta noEmeraldsMeta = noEmeralds.getItemMeta();
 
 
         Material noDiamondsMat = Material.getMaterial(mainConfig.getString(NO_DIAMONDS_MATERIAL));
-        ItemStack noDiamonds;
-        if (noDiamondsMat == Material.SKULL_ITEM) {
-            noDiamonds = Utility.getSkull(mainConfig.getString(NO_DIAMONDS_HEAD_URL));
-        } else {
-            noDiamonds =new ItemStack(noDiamondsMat, 1, (byte) mainConfig.getInt(NO_DIAMONDS_ID));
+        ItemStack noDiamonds = new ItemStack(noDiamondsMat, 1, (byte) mainConfig.getInt(NO_DIAMONDS_ID));
+        if (noDiamonds.getType().toString().equals("SKULL_ITEM") || noDiamonds.getType().toString().equals("LEGACY_SKULL_ITEM") && noDiamonds.getDurability() == 3) {
+            noDiamonds = Utility.getSkull(noDiamondsMat, mainConfig.getString(NO_DIAMONDS_HEAD_URL));
         }
         ItemMeta noDiamondsMeta = noDiamonds.getItemMeta();
 
         Material allowMapBreakMat = Material.getMaterial(mainConfig.getString(ALLOW_MAP_BREAK_MATERIAL));
-        ItemStack allowMapBreak;
-        if (allowMapBreakMat == Material.SKULL_ITEM) {
-            allowMapBreak = Utility.getSkull(mainConfig.getString(ALLOW_MAP_BREAK_HEAD_URL));
-        } else {
-            allowMapBreak = new ItemStack(allowMapBreakMat, 1, (byte) mainConfig.getInt(ALLOW_MAP_BREAK_ID));
+        ItemStack allowMapBreak = new ItemStack(allowMapBreakMat, 1, (byte) mainConfig.getInt(ALLOW_MAP_BREAK_ID));
+        if (allowMapBreak.getType().toString().equals("SKULL_ITEM") || allowMapBreak.getType().toString().equals("LEGACY_SKULL_ITEM") && allowMapBreak.getDurability() == 3) {
+            allowMapBreak = Utility.getSkull(allowMapBreakMat, mainConfig.getString(ALLOW_MAP_BREAK_HEAD_URL));
         }
         ItemMeta allowMapBreakMeta = allowMapBreak.getItemMeta();
 
         Material bedInstaBreakMat = Material.getMaterial(mainConfig.getString(BED_INSTA_BREAK_MATERIAL));
-        ItemStack bedInstaBreak;
-        if (bedInstaBreakMat == Material.SKULL_ITEM) {
-            bedInstaBreak = Utility.getSkull(mainConfig.getString(BED_INSTA_BREAK_HEAD_URL));
-        } else {
-            bedInstaBreak = new ItemStack(bedInstaBreakMat, 1, (byte) mainConfig.getInt(BED_INSTA_BREAK_ID));
+        ItemStack bedInstaBreak = new ItemStack(bedInstaBreakMat, 1, (byte) mainConfig.getInt(BED_INSTA_BREAK_ID));
+        if (bedInstaBreak.getType().toString().equals("SKULL_ITEM") || bedInstaBreak.getType().toString().equals("LEGACY_SKULL_ITEM") && bedInstaBreak.getDurability() == 3) {
+            bedInstaBreak = Utility.getSkull(bedInstaBreakMat, mainConfig.getString(BED_INSTA_BREAK_HEAD_URL));
         }
         ItemMeta bedInstaBreakMeta = bedInstaBreak.getItemMeta();
 
         Material maxTeamUpgradesMat = Material.getMaterial(mainConfig.getString(MAX_TEAM_UPGRADES_MATERIAL));
-        ItemStack maxTeamUpgrades;
-        if (maxTeamUpgradesMat == Material.SKULL_ITEM) {
-            maxTeamUpgrades = Utility.getSkull(mainConfig.getString(MAX_TEAM_UPGRADES_HEAD_URL));
-        } else {
-            maxTeamUpgrades = new ItemStack(maxTeamUpgradesMat, 1, (byte) mainConfig.getInt(MAX_TEAM_UPGRADES_ID));
+        ItemStack maxTeamUpgrades = new ItemStack(maxTeamUpgradesMat, 1, (byte) mainConfig.getInt(MAX_TEAM_UPGRADES_ID));
+        if (maxTeamUpgrades.getType().toString().equals("SKULL_ITEM") || maxTeamUpgrades.getType().toString().equals("LEGACY_SKULL_ITEM") && maxTeamUpgrades.getDurability() == 3) {
+            maxTeamUpgrades = Utility.getSkull(maxTeamUpgradesMat, mainConfig.getString(MAX_TEAM_UPGRADES_HEAD_URL));
         }
         ItemMeta maxTeamUpgradesMeta = maxTeamUpgrades.getItemMeta();
 
         Material optionsMat = Material.getMaterial(mainConfig.getString(OPTIONS_MATERIAL));
-        ItemStack options;
-        if (optionsMat == Material.SKULL_ITEM) {
-            options = Utility.getSkull(mainConfig.getString(OPTIONS_HEAD_URL));
-        } else {
-            options = new ItemStack(optionsMat, 1, (byte) mainConfig.getInt(OPTIONS_ID));
+        ItemStack options = new ItemStack(optionsMat, 1, (byte) mainConfig.getInt(OPTIONS_ID));
+        if (options.getType().toString().equals("SKULL_ITEM") || options.getType().toString().equals("LEGACY_SKULL_ITEM") && options.getDurability() == 3) {
+            options = Utility.getSkull(optionsMat, mainConfig.getString(OPTIONS_HEAD_URL));
         }
         ItemMeta optionsMeta = options.getItemMeta();
 
         Material startMat = Material.getMaterial(mainConfig.getString(START_GAME_MATERIAL));
-        ItemStack start;
-        if (startMat == Material.SKULL_ITEM) {
-            start = Utility.getSkull(mainConfig.getString(START_GAME_HEAD_URL));
-        } else {
-            start = new ItemStack(startMat, 1, (byte) mainConfig.getInt(START_GAME_ID));
+        ItemStack start = new ItemStack(startMat, 1, (byte) mainConfig.getInt(START_GAME_ID));
+        if (start.getType().toString().equals("SKULL_ITEM") || start.getType().toString().equals("LEGACY_SKULL_ITEM") && start.getDurability() == 3) {
+            start = Utility.getSkull(startMat, mainConfig.getString(START_GAME_HEAD_URL));
         }
         ItemMeta startMeta = start.getItemMeta();
 
         Material gamemodeChangerMat = Material.getMaterial(mainConfig.getString(GAMEMODE_CHANGER_MATERIAL));
-        ItemStack gamemodeChanger;
-        if (gamemodeChangerMat == Material.SKULL_ITEM) {
-            gamemodeChanger = Utility.getSkull(mainConfig.getString(GAMEMODE_CHANGER_HEAD_URL));
-        } else {
-            gamemodeChanger = new ItemStack(gamemodeChangerMat, 1, (byte) mainConfig.getInt(GAMEMODE_CHANGER_ID));
+        ItemStack gamemodeChanger = new ItemStack(gamemodeChangerMat, 1, (byte) mainConfig.getInt(GAMEMODE_CHANGER_ID));
+        if (gamemodeChanger.getType().toString().equals("SKULL_ITEM") || gamemodeChanger.getType().toString().equals("LEGACY_SKULL_ITEM") && gamemodeChanger.getDurability() == 3) {
+            gamemodeChanger = Utility.getSkull(gamemodeChangerMat, mainConfig.getString(GAMEMODE_CHANGER_HEAD_URL));
         }
         ItemMeta gamemodeChangerMeta = gamemodeChanger.getItemMeta();
 
         Material matBack = Material.getMaterial(mainConfig.getString(BACK_MATERIAL));
-        ItemStack back;
-        if (matBack == Material.SKULL_ITEM) {
-            back = Utility.getSkull(mainConfig.getString(BACK_HEAD_URL));
-        } else {
-            back = new ItemStack(matBack, 1, (byte) mainConfig.getInt(BACK_HEAD_URL));
+        ItemStack back = new ItemStack(matBack, 1, (byte) mainConfig.getInt(BACK_ID));
+        if (back.getType().toString().equals("SKULL_ITEM") || back.getType().toString().equals("LEGACY_SKULL_ITEM") && back.getDurability() == 3) {
+            back = Utility.getSkull(matBack, mainConfig.getString(BACK_HEAD_URL));
         }
         ItemMeta backMeta = back.getItemMeta();
 
@@ -528,6 +499,7 @@ public class SettingsMenu implements GUIHolder {
                             SidebarService.getInstance().giveSidebar(player, api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player), true);
 
                             ISidebar sidebar = SidebarService.getInstance().getSidebar(player);
+                            assert sidebar != null;
                             sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
                                 if (api.getPrivateArenaUtil().isPlaying(player)) {
                                     return Utility.getMsg(player, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);

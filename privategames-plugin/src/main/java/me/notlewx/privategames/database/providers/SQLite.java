@@ -6,6 +6,7 @@ import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
@@ -110,7 +111,8 @@ public class SQLite implements Database {
             String player = null;
             if (rs.next())
                 player = rs.getString("player");
-            if (player != null) return;
+            if (player != null) {
+            }
             else {
                 connection = getConnection();
                 ps = connection.prepareStatement("INSERT INTO " + s + "_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime, autoStart, allowJoin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");

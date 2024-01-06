@@ -106,11 +106,9 @@ public class GeneratorsMenu implements GUIHolder {
         }
 
         Material backMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL));
-        ItemStack back;
-        if (backMaterial == Material.SKULL_ITEM) {
-            back = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
-        } else {
-            back = new ItemStack(backMaterial, 1, (short) mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_ID));
+        ItemStack back = new ItemStack(backMaterial, 1, (short) mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_ID));
+        if (back.getType().toString().equals("SKULL_ITEM") || back.getType().toString().equals("LEGACY_SKULL_ITEM") && back.getDurability() == 3) {
+            back = Utility.getSkull(backMaterial, mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
         }
         ItemMeta backMeta = back.getItemMeta();
 

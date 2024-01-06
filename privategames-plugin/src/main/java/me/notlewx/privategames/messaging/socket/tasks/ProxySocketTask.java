@@ -19,7 +19,6 @@ import java.util.UUID;
 
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.support;
-import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED;
 
 public class ProxySocketTask implements Runnable {
 

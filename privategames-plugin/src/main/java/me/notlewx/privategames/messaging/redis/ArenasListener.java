@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static me.notlewx.privategames.PrivateGames.api;
-import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED;
 
 public class ArenasListener implements Listener {
     @EventHandler

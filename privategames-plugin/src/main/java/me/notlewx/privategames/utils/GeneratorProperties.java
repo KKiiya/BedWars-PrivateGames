@@ -3,6 +3,7 @@ package me.notlewx.privategames.utils;
 import com.andrei1058.bedwars.api.arena.generator.IGenerator;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.support.Support;
+
 import java.util.HashMap;
 
 import static me.notlewx.privategames.PrivateGames.support;

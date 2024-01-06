@@ -51,47 +51,37 @@ public class EventsTimeMenu implements GUIHolder {
 
     public void addContents() {
         Material arrowMat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_BACK_MATERIAL));
-        ItemStack arrow;
-        if (arrowMat == Material.SKULL_ITEM) {
-            arrow = Utility.getSkull(mainConfig.getString(EVENTS_TIME_BACK_HEAD_URL));
-        } else {
-            arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(EVENTS_TIME_BACK_ID));
+        ItemStack arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(EVENTS_TIME_BACK_ID));
+        if (arrow.getType().toString().equals("SKULL_ITEM") || arrow.getType().toString().equals("LEGACY_SKULL_ITEM") && arrow.getDurability() == 3) {
+            arrow = Utility.getSkull(arrowMat, mainConfig.getString(EVENTS_TIME_BACK_HEAD_URL));
         }
         ItemMeta arrowMeta = arrow.getItemMeta();
 
         Material book1Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_I_MATERIAL));
-        ItemStack book1;
-        if (book1Mat == Material.SKULL_ITEM) {
-            book1 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_I_HEAD_URL));
-        } else {
-            book1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_I_ID));
+        ItemStack book1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_I_ID));
+        if (book1.getType().toString().equals("SKULL_ITEM") || book1.getType().toString().equals("LEGACY_SKULL_ITEM") && book1.getDurability() == 3) {
+            book1 = Utility.getSkull(book1Mat, mainConfig.getString(EVENTS_TIME_LEVEL_I_HEAD_URL));
         }
         ItemMeta book1Meta = book1.getItemMeta();
 
         Material book2Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_II_MATERIAL));
-        ItemStack book2;
-        if (book2Mat == Material.SKULL_ITEM) {
-            book2 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_II_HEAD_URL));
-        } else {
-            book2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_II_ID));
+        ItemStack book2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_II_ID));
+        if (book2.getType().toString().equals("SKULL_ITEM") || book2.getType().toString().equals("LEGACY_SKULL_ITEM") && book2.getDurability() == 3) {
+            book2 = Utility.getSkull(book2Mat, mainConfig.getString(EVENTS_TIME_LEVEL_II_HEAD_URL));
         }
         ItemMeta book2Meta = book1.getItemMeta();
 
         Material book3Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_III_MATERIAL));
-        ItemStack book3;
-        if (book3Mat == Material.SKULL_ITEM) {
-            book3 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_III_HEAD_URL));
-        } else {
-            book3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_III_ID));
+        ItemStack book3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_III_ID));
+        if (book3.getType().toString().equals("SKULL_ITEM") || book3.getType().toString().equals("LEGACY_SKULL_ITEM") && book3.getDurability() == 3) {
+            book3 = Utility.getSkull(book3Mat, mainConfig.getString(EVENTS_TIME_LEVEL_III_HEAD_URL));
         }
         ItemMeta book3Meta = book1.getItemMeta();
 
         Material book4Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_IV_MATERIAL));
-        ItemStack book4;
-        if (book4Mat == Material.SKULL_ITEM) {
-            book4 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_IV_HEAD_URL));
-        } else {
-            book4 = new ItemStack(book4Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_IV_ID));
+        ItemStack book4 = new ItemStack(book4Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_IV_ID));
+        if (book4.getType().toString().equals("SKULL_ITEM") || book4.getType().toString().equals("LEGACY_SKULL_ITEM") && book4.getDurability() == 3) {
+            book4 = Utility.getSkull(book4Mat, mainConfig.getString(EVENTS_TIME_LEVEL_IV_HEAD_URL));
         }
         ItemMeta book4Meta = book4.getItemMeta();
 

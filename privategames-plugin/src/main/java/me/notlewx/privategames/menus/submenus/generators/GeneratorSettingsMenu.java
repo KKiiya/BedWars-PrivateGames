@@ -13,11 +13,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.andrei1058.bedwars.BedWars.getForCurrentVersion;
 import static me.notlewx.privategames.PrivateGames.*;
-import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
@@ -42,6 +43,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
     }
 
     private void addContents() {
+        Material skull = Material.getMaterial(getForCurrentVersion("SKULL_ITEM", "SKULL_ITEM", "LEGACY_SKULL_ITEM"));
         ItemStack gene = new ItemStack(Material.AIR);
         String team;
         String location;
@@ -92,50 +94,48 @@ public class GeneratorSettingsMenu implements GUIHolder {
         gene.setItemMeta(geneMeta);
 
 
-        ItemStack reduceAmount = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
+        ItemStack reduceAmount = Utility.getSkull(skull, "http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceAmountMeta = reduceAmount.getItemMeta();
         reduceAmountMeta.setDisplayName(Utility.c("&cReduce Amount"));
         reduceAmountMeta.setLore(Stream.of("", "&7Reduce the amount of minerals dropped", "&7in this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceAmount.setItemMeta(reduceAmountMeta);
 
-        ItemStack increaseAmount = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
+        ItemStack increaseAmount = Utility.getSkull(skull, "http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseAmountMeta = increaseAmount.getItemMeta();
         increaseAmountMeta.setDisplayName(Utility.c("&aIncrease Amount"));
         increaseAmountMeta.setLore(Stream.of("", "&7Increase the amount of minerals dropped", "&7in this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
         increaseAmount.setItemMeta(increaseAmountMeta);
 
 
-        ItemStack reduceDelay = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
+        ItemStack reduceDelay = Utility.getSkull(skull, "http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceDelayMeta = reduceDelay.getItemMeta();
         reduceDelayMeta.setDisplayName(Utility.c("&cReduce Delay"));
         reduceDelayMeta.setLore(Stream.of("", "&7Reduce the delay of", "&7this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceDelay.setItemMeta(reduceDelayMeta);
 
-        ItemStack increaseDelay = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
+        ItemStack increaseDelay = Utility.getSkull(skull, "http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseDelayMeta = increaseDelay.getItemMeta();
         increaseDelayMeta.setDisplayName(Utility.c("&aIncrease Delay"));
         increaseDelayMeta.setLore(Stream.of("", "&7Increase the delay of", "&7this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
         increaseDelay.setItemMeta(increaseDelayMeta);
 
 
-        ItemStack reduceSpawnLimit = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
+        ItemStack reduceSpawnLimit = Utility.getSkull(skull, "http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceSpawnLimitMeta = reduceSpawnLimit.getItemMeta();
         reduceSpawnLimitMeta.setDisplayName(Utility.c("&cReduce Spawn Limit"));
         reduceSpawnLimitMeta.setLore(Stream.of("", "&7Reduce the amount minerals stacked", "&7in this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceSpawnLimit.setItemMeta(reduceSpawnLimitMeta);
 
-        ItemStack increaseSpawnLimit = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
+        ItemStack increaseSpawnLimit = Utility.getSkull(skull, "http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseSpawnLimitMeta = increaseSpawnLimit.getItemMeta();
         increaseSpawnLimitMeta.setDisplayName(Utility.c("&aIncrease Spawn Limit"));
         increaseSpawnLimitMeta.setLore(Stream.of("", "&7Increase the amount minerals stacked", "&7in this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
         increaseSpawnLimit.setItemMeta(increaseSpawnLimitMeta);
 
         Material backMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL));
-        ItemStack back;
-        if (backMaterial == Material.SKULL_ITEM) {
-            back = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
-        } else {
-            back = new ItemStack(backMaterial, 1, (short) mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_ID));
+        ItemStack back = new ItemStack(backMaterial, 1, (byte) mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_ID));
+        if (back.getType().toString().equals("SKULL_ITEM") || back.getType().toString().equals("LEGACY_SKULL_ITEM") && back.getDurability() == 3) {
+            back = Utility.getSkull(backMaterial, mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
         }
         ItemMeta backMeta = back.getItemMeta();
 
@@ -226,7 +226,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
                     properties.setAmount(g.getAmount());
                     break;
                 case 21:
-                    if (g.getDelay() == 1) return;
+                    if (g.getDelay()/4 == 1) return;
                     g.setDelay(g.getDelay()/4 -1);
                     properties.setDelay((int) g.getDelay());
                     break;

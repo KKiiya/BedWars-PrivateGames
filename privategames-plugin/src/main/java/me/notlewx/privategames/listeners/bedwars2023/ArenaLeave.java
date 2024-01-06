@@ -7,6 +7,7 @@ import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.utils.MessagesUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
 import static me.notlewx.privategames.PrivateGames.api;
 
 public class ArenaLeave implements Listener {

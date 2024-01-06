@@ -4,17 +4,17 @@ import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.generator.GeneratorType;
 import com.andrei1058.bedwars.api.arena.generator.IGenerator;
+import com.andrei1058.bedwars.api.arena.team.ITeam;
+import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.api.events.gameplay.GameEndEvent;
 import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
+import com.andrei1058.bedwars.api.events.gameplay.GeneratorUpgradeEvent;
 import com.andrei1058.bedwars.api.events.gameplay.NextEventChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
 import com.andrei1058.bedwars.arena.Arena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
-import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.arena.OreGenerator;
-import com.andrei1058.bedwars.api.events.gameplay.GeneratorUpgradeEvent;
 import com.google.gson.JsonObject;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
@@ -36,9 +36,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 

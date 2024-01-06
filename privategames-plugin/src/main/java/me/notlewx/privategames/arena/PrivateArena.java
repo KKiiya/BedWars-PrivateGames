@@ -1,8 +1,6 @@
 package me.notlewx.privategames.arena;
 
-import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.server.ServerType;
 import com.tomkeuper.bedwars.proxy.arenamanager.ArenaManager;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
@@ -17,6 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class PrivateArena implements IPrivateArena {

@@ -1,7 +1,5 @@
 package me.notlewx.privategames.commands.proxy2023;
 
-import com.tomkeuper.bedwars.proxy.api.CachedArena;
-import com.tomkeuper.bedwars.proxy.arenamanager.ArenaManager;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.events.PrivateGameJoinRequestSendEvent;
@@ -17,9 +15,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;

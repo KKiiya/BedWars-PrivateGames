@@ -2,6 +2,7 @@ package me.notlewx.privategames.config;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
