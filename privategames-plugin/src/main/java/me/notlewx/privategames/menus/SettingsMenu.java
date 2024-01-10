@@ -242,7 +242,16 @@ public class SettingsMenu implements GUIHolder {
 
         gamemodeChangerMeta.setDisplayName(Utility.getMsg(player, ITEM_GAMEMODE_CHANGER_NAME));
         String group;
-        if (api.getPrivateArenaUtil().isPlaying(player)) {
+        boolean isPlaying = false;
+        switch (support) {
+            case BEDWARS2023:
+                isPlaying = PrivateGames.getBw2023Api().getArenaUtil().isPlaying(player);
+                break;
+            case BEDWARS1058:
+                isPlaying = PrivateGames.getBw1058Api().getArenaUtil().isPlaying(player);
+                break;
+        }
+        if (isPlaying) {
             if (support == Support.BEDWARS1058) {
                 group = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player).getGroup();
             } else if (support == Support.BEDWARS2023) {
