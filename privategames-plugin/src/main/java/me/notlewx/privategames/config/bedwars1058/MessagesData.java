@@ -58,9 +58,10 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cYou don't have permission to use this command!");
                     yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cThe private game is already enabled!");
                     yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cThe private game is already disabled!");
+                    yml.addDefault(PRIVATE_GAME_UNABLE_TO_JOIN, "&cUnable to join to this arena! You have private games enabled and this arena isn't empty!");
                     yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cCouldnt join to the private game of this player (THIS MIGHT BE DUE BECAUSE THE PLAYER HAS DISALLOWED OTHER PLAYERS TO JOIN OR BECAUSE ITS NOT PLAYING)!");
                     yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cYou can't do this in game!");
-                    yml.addDefault(PRIVATE_GAME_CANT_JOIN_SELF, "&cYou cant join to your own private game!");
+                    yml.addDefault(PRIVATE_GAME_CANT_JOIN_SELF, "&cYou cant join your own private game!");
                     yml.addDefault(PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER, "&7[P]");
                     yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lhas enabled private game modifiers!", "{modifiers}", "&6-----------------------------------------------------"));
                     yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
@@ -243,6 +244,7 @@ public class MessagesData {
             PRIVATE_GAME_NO_PERMISSION = PATH + "game.no-permission",
             PRIVATE_GAME_ALREADY_ENABLED = PATH + "game.already-enabled",
             PRIVATE_GAME_ALREADY_DISABLED = PATH + "game.already-disabled",
+            PRIVATE_GAME_UNABLE_TO_JOIN = PATH + "game.unable-to-join",
             PRIVATE_GAME_COULDNT_JOIN = PATH + "game.couldnt-join",
             PRIVATE_GAME_CANT_IN_GAME = PATH + "game.cant-in-game",
             HELP_MESSAGE = PATH + "help-message",

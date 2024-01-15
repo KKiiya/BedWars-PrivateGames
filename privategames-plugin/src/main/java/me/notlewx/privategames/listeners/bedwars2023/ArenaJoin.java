@@ -8,6 +8,7 @@ import com.tomkeuper.bedwars.api.events.gameplay.GameStateChangeEvent;
 import com.tomkeuper.bedwars.api.events.player.PlayerJoinArenaEvent;
 import com.tomkeuper.bedwars.shop.ShopCache;
 import com.tomkeuper.bedwars.shop.quickbuy.PlayerQuickBuyCache;
+import com.tomkeuper.bedwars.sidebar.BoardManager;
 import me.neznamy.tab.api.TabAPI;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
@@ -38,8 +39,7 @@ import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.MainConfig.MATERIAL;
 import static me.notlewx.privategames.config.MainConfig.POSITION;
-import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_LORE;
-import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_MENU_ITEM_NAME;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER;
 
 public class ArenaJoin implements Listener {
@@ -99,15 +99,25 @@ public class ArenaJoin implements Listener {
                         e.getPlayer().getActivePotionEffects().forEach(potionEffect -> e.getPlayer().removePotionEffect(potionEffect.getType()));
                         e.getPlayer().setAllowFlight(false);
                         e.getPlayer().setFlying(false);
+                        a.getSpectators().remove(e.getPlayer());
+                        a.getPlayers().add(e.getPlayer());
+                        if (team.getMembers().isEmpty()) {
+                            team.spawnNPCs();
+                        }
                         team.addPlayers(e.getPlayer());
                         spawnBed(team);
                         team.setBedDestroyed(false);
-                        team.spawnNPCs();
                         e.getPlayer().getInventory().clear();
+                        e.getPlayer().getInventory().forEach(itemStack -> {
+                            if (itemStack != null) {
+                                if (itemStack.getType() != Material.AIR) {
+                                    e.getPlayer().getInventory().remove(itemStack);
+                                }
+                            }
+                        });
                         team.respawnMember(e.getPlayer());
 
-                        a.getSpectators().remove(e.getPlayer());
-                        a.getPlayers().add(e.getPlayer());
+
                         new PlayerQuickBuyCache(e.getPlayer());
                         new ShopCache(e.getPlayer().getUniqueId());
                         e.getPlayer().setGameMode(org.bukkit.GameMode.SURVIVAL);
@@ -115,6 +125,7 @@ public class ArenaJoin implements Listener {
                         e.getPlayer().setFlying(false);
                         e.getPlayer().closeInventory();
                         pa.addPlayer(e.getPlayer(), true);
+                        BoardManager.getInstance().giveTabFeatures(e.getPlayer(), e.getArena(), true);
                         Utility.debug("Player " + e.getPlayer().getName() + " has joined the private arena " + pa.getArenaIdentifier() + " and has been added to the host's private arena.");
                         break;
                     }
@@ -125,6 +136,26 @@ public class ArenaJoin implements Listener {
 
         if (a.isSpectator(((Player) pp.getPlayer()))) return;
         if (a.getStatus() == GameState.playing || a.getStatus() == GameState.restarting) return;
+
+        if (party.hasParty()) {
+            if (!party.isOwner()) {
+                Player owner = party.getOwner();
+                IPrivatePlayer ppo = api.getPrivatePlayer(owner);
+                if (ppo.getPlayerSettings().isPrivateGameEnabled()) {
+                    if (!a.getPlayers().isEmpty()) {
+                        ppo.getPlayerSettings().setPrivateGameDisabled(false);
+                        return;
+                    }
+                }
+            }
+        } else {
+            if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
+                if (!a.getPlayers().isEmpty()) {
+                    ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));
+                    return;
+                }
+            }
+        }
 
         if (p.isPrivateGameEnabled()) {
             if (party.hasParty()) {

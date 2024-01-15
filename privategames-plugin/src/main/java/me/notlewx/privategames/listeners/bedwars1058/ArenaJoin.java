@@ -20,6 +20,7 @@ import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import me.zuyte.admin.storage.Cache_BW1058;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.BlockFace;
@@ -102,22 +103,34 @@ public class ArenaJoin implements Listener {
                         e.getPlayer().getActivePotionEffects().forEach(potionEffect -> e.getPlayer().removePotionEffect(potionEffect.getType()));
                         e.getPlayer().setAllowFlight(false);
                         e.getPlayer().setFlying(false);
+                        a.getSpectators().remove(e.getPlayer());
+                        a.getPlayers().add(e.getPlayer());
+                        if (team.getMembers().isEmpty()) {
+                            team.spawnNPCs();
+                        }
                         team.addPlayers(e.getPlayer());
                         spawnBed(team);
                         team.setBedDestroyed(false);
-                        team.spawnNPCs();
                         e.getPlayer().getInventory().clear();
+                        e.getPlayer().getInventory().forEach(itemStack -> {
+                            if (itemStack != null) {
+                                if (itemStack.getType() != Material.AIR) {
+                                    e.getPlayer().getInventory().remove(itemStack);
+                                }
+                            }
+                        });
                         team.respawnMember(e.getPlayer());
 
                         a.getSpectators().remove(e.getPlayer());
                         a.getPlayers().add(e.getPlayer());
                         new PlayerQuickBuyCache(e.getPlayer());
                         new ShopCache(e.getPlayer().getUniqueId());
-                        e.getPlayer().setGameMode(org.bukkit.GameMode.SURVIVAL);
+                        e.getPlayer().setGameMode(GameMode.SURVIVAL);
                         e.getPlayer().setAllowFlight(false);
                         e.getPlayer().setFlying(false);
                         e.getPlayer().closeInventory();
                         pa.addPlayer(e.getPlayer(), true);
+                        SidebarService.getInstance().giveSidebar(e.getPlayer(), e.getArena(), true);
                         Utility.debug("Player " + e.getPlayer().getName() + " has joined the private arena " + pa.getArenaIdentifier() + " and has been added to the host's private arena.");
                         break;
                     }
@@ -128,6 +141,26 @@ public class ArenaJoin implements Listener {
 
         if (a.isSpectator(((Player) pp.getPlayer()))) return;
         if (a.getStatus() == GameState.playing || a.getStatus() == GameState.restarting) return;
+
+        if (party.hasParty()) {
+            if (!party.isOwner()) {
+                Player owner = party.getOwner();
+                IPrivatePlayer ppo = api.getPrivatePlayer(owner);
+                if (ppo.getPlayerSettings().isPrivateGameEnabled()) {
+                    if (!a.getPlayers().isEmpty()) {
+                        ppo.getPlayerSettings().setPrivateGameDisabled(false);
+                        return;
+                    }
+                }
+            }
+        } else {
+            if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
+                if (!a.getPlayers().isEmpty()) {
+                    ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));
+                    return;
+                }
+            }
+        }
 
         if (p.isPrivateGameEnabled()) {
             if (party.hasParty()) {

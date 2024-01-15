@@ -1,5 +1,6 @@
 package me.notlewx.privategames.commands.bedwars2023;
 
+import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.IArena;
 import com.tomkeuper.bedwars.api.server.ServerType;
 import me.notlewx.privategames.PrivateGames;
@@ -287,7 +288,11 @@ public class MainCommand implements CommandExecutor {
                                             if (requester.isOnline()) {
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_ACCEPTED).replace("{player}", ((Player) requester).getDisplayName()));
                                                 ((Player) requester).sendMessage(Utility.getMsg(((Player) requester), PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER).replace("{player}", ((Player) sender).getDisplayName()));
-                                                PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addPlayer(((Player) requester), true);
+                                                if (a.getStatus() == GameState.playing) {
+                                                    PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addSpectator((Player) requester, false, a.getSpectatorLocation());
+                                                } else {
+                                                    PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addPlayer((Player) requester, false);
+                                                }
                                             } else {
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", requester.getName()));
                                             }
@@ -313,7 +318,11 @@ public class MainCommand implements CommandExecutor {
                                         if (Bukkit.getPlayer(p.getLastJoinRequest()) != null) {
                                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_ACCEPTED).replace("{player}", (Bukkit.getPlayer(p.getLastJoinRequest())).getDisplayName()));
                                             Bukkit.getPlayer(p.getLastJoinRequest()).sendMessage(Utility.getMsg(Bukkit.getPlayer(p.getLastJoinRequest()), PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER).replace("{player}", ((Player) sender).getDisplayName()));
-                                            PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addPlayer(Bukkit.getPlayer(p.getLastJoinRequest()), true);
+                                            if (a.getStatus() == GameState.playing) {
+                                                PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addSpectator(Bukkit.getPlayer(p.getLastJoinRequest()), false, a.getSpectatorLocation());
+                                            } else {
+                                                PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addPlayer(Bukkit.getPlayer(p.getLastJoinRequest()), false);
+                                            }
                                         } else {
                                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", Bukkit.getPlayer(p.getLastJoinRequest()).getName()));
                                         }

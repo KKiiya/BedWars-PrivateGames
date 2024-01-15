@@ -6,6 +6,12 @@ import java.util.List;
 
 public interface IParty {
     /**
+     * Get the owner of the party
+     * @return - Player
+     */
+    Player getOwner();
+
+    /**
      * Get the party members
      * @return - List of players
      */

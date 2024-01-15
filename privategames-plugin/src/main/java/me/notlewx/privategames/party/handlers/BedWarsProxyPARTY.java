@@ -17,6 +17,11 @@ public class BedWarsProxyPARTY implements IParty {
     }
 
     @Override
+    public Player getOwner() {
+        return Bukkit.getPlayer(partyUtil.getOwner(player.getUniqueId()));
+    }
+
+    @Override
     public List<Player> getPartyMembers() {
         return partyUtil.getMembers(player.getUniqueId()).stream().map(Bukkit::getPlayer).collect(Collectors.toList());
     }

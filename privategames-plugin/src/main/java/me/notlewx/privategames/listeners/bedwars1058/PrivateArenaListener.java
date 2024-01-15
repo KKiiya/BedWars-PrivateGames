@@ -325,18 +325,6 @@ public class PrivateArenaListener implements Listener {
             p.setMaxHealth(20.0);
             p.setHealth(20.0);
             p.setHealthScale(20.0);
-
-            if (e.getArena().isSpectator(p)) return;
-            IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByPlayer(p).getPrivateArenaHost();
-            if (e.getArena().getPlayers().size() <= 1) {
-                if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {
-                    if (e.getArena().getConfig().getBoolean("allow-map-break")) {
-                        e.getArena().getConfig().set("allow-map-break", false);
-                        e.getArena().getConfig().save();
-                    }
-                }
-                api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).destroyData();
-            }
         }
     }
 

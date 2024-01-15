@@ -13,6 +13,12 @@ public class BedWars1058PARTY implements IParty {
     public BedWars1058PARTY(Player player) {
         this.player = player;
     }
+
+    @Override
+    public Player getOwner() {
+        return partyUtil.getOwner(player);
+    }
+
     @Override
     public List<Player> getPartyMembers() {
         return partyUtil.getMembers(player);

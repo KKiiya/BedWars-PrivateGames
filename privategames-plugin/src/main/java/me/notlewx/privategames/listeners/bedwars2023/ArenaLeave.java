@@ -26,6 +26,12 @@ public class ArenaLeave implements Listener {
             object.addProperty("action", "privateArenaDeletion");
             object.addProperty("arenaIdentifier", arena.getArenaIdentifier());
             MessagesUtil.sendMessage(object.toString());
+
+            if (arena.getPrivateArenaHost().getPlayerSettings().isAllowMapBreakEnabled()) {
+                if (e.getArena().isAllowMapBreak()) {
+                    e.getArena().setAllowMapBreak(false);
+                }
+            }
             arena.destroyData();
 
 

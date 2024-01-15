@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static me.notlewx.privategames.PrivateGames.mainConfig;
+import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_GAME_UNABLE_TO_JOIN;
 
 public class MessagesData {
     public final static String PATH = "addons.private-games.";
@@ -57,6 +58,7 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cYou don't have permission to use this command!");
                     yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cThe private game is already enabled!");
                     yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cThe private game is already disabled!");
+                    yml.addDefault(PRIVATE_GAME_UNABLE_TO_JOIN, "&cUnable to join to this arena! You have private games enabled and this arena isn't empty!");
                     yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cCouldnt join to the private game of this player!");
                     yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cYou cant do this in game!");
                     yml.addDefault(PRIVATE_GAME_CANT_JOIN_SELF, "&cYou cant join to your own private game!");
