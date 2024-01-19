@@ -44,9 +44,11 @@ public class Utility {
         return ChatColor.translateAlternateColorCodes('&', value);
     }
     public static String p(Player p, String value) {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return c(value);
         return c(PlaceholderAPI.setPlaceholders(p, value));
     }
     public static List<String> p(Player p, List<String> value) {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return value.stream().map(Utility::c).collect(Collectors.toList());
         return value.stream().map(s -> c(PlaceholderAPI.setPlaceholders(p, s))).collect(Collectors.toList());
     }
     public static String getMsg(Player player, String path) {
