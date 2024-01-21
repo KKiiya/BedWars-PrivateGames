@@ -61,6 +61,18 @@ public class ArenaJoin implements Listener {
         IParty party = pp.getPlayerParty();
         IArena a = e.getArena();
 
+        if (p.isPrivateGameEnabled()) {
+            if (party.hasParty()) {
+                if (party.isOwner()) {
+                    if (!a.getPlayers().isEmpty()) {
+                        e.getPlayer().sendMessage("Arena Has a player");
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+        }
+
         ItemStack settings = new ItemStack(Material.valueOf(mainConfig.getString(MATERIAL)));
         ItemMeta settingsMeta = settings.getItemMeta();
         settingsMeta.setDisplayName(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_MENU_ITEM_NAME));
