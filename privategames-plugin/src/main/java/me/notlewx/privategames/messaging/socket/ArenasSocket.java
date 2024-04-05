@@ -28,7 +28,7 @@ public class ArenasSocket {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             task = new ProxySocketTask(clientSocket);
-            Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), task);
+            Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getInstance(), task);
             sockets.add(this);
         } catch (IOException ignored) {
             Utility.warn("Couldn't connect to " + ip + ":" + port);

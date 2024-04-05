@@ -26,6 +26,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -54,7 +55,7 @@ public class ArenaJoin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onArenaJoin(PlayerJoinArenaEvent e) {
         IPrivatePlayer pp = PrivateGames.api.getPrivatePlayer(e.getPlayer());
         IPlayerSettings p = pp.getPlayerSettings();
@@ -77,7 +78,7 @@ public class ArenaJoin implements Listener {
         });
 
         if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                 IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
                 IPrivatePlayer ppa = pa.getPrivateArenaHost();
                 if (ppa.getRequests().contains(e.getPlayer().getUniqueId())) {
@@ -88,7 +89,7 @@ public class ArenaJoin implements Listener {
                 }
             }, 5L);
 
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                 IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
                 if (a.isSpectator(e.getPlayer()) && a.getStatus() == GameState.playing && pa.getPlayers().contains(e.getPlayer())) {
                     if (a.getTeams().stream().anyMatch(t -> t.wasMember(e.getPlayer().getUniqueId()))) return;
@@ -116,7 +117,6 @@ public class ArenaJoin implements Listener {
                             }
                         });
                         team.respawnMember(e.getPlayer());
-
 
                         new PlayerQuickBuyCache(e.getPlayer());
                         new ShopCache(e.getPlayer().getUniqueId());
@@ -151,6 +151,7 @@ public class ArenaJoin implements Listener {
         } else {
             if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
                 if (!a.getPlayers().isEmpty()) {
+                    e.setCancelled(true);
                     ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));
                     return;
                 }
@@ -168,7 +169,7 @@ public class ArenaJoin implements Listener {
                         Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                         if (pp.getPlayerOptions().isAutoStart()) {
                             a.changeStatus(GameState.starting);
                             a.getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
@@ -185,7 +186,7 @@ public class ArenaJoin implements Listener {
                         Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                     }
                 } else {
                     List<OfflinePlayer> players = new ArrayList<>();
@@ -196,7 +197,7 @@ public class ArenaJoin implements Listener {
                     Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                     MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
-                    Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
+                    Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
                 }
                 if (pp.getPlayerOptions().isAutoStart()) {
                     a.changeStatus(GameState.starting);

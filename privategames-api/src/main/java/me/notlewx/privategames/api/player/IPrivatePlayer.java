@@ -125,4 +125,11 @@ public interface IPrivatePlayer {
      * @return boolean
      */
     boolean hasPermission();
+
+    /**
+     * Destroy the player object
+     * and remove it from the cache
+     * and save the player's settings and options
+     */
+    void destroy();
 }

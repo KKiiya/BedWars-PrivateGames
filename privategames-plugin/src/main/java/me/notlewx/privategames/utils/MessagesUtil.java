@@ -53,7 +53,7 @@ public class MessagesUtil {
     }
 
     public static void sendMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getInstance(), () -> {
             try {
                 sendMsg(message);
             } catch (IOException e) {

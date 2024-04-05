@@ -2,9 +2,12 @@ package me.notlewx.privategames.listeners.bedwars2023;
 
 import com.tomkeuper.bedwars.BedWars;
 import com.tomkeuper.bedwars.api.arena.GameState;
+import com.tomkeuper.bedwars.api.arena.IArena;
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import com.tomkeuper.bedwars.api.events.player.PlayerKillEvent;
 import com.tomkeuper.bedwars.api.events.player.PlayerLeaveArenaEvent;
+import com.tomkeuper.bedwars.api.events.player.PlayerMoneyGainEvent;
+import com.tomkeuper.bedwars.api.events.player.PlayerXpGainEvent;
 import com.tomkeuper.bedwars.api.stats.IPlayerStats;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -95,5 +98,19 @@ public class StatsListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onMoneyGain(PlayerMoneyGainEvent e) {
+        IArena arena = BedWars.getAPI().getArenaUtil().getArenaByPlayer(e.getPlayer());
+        if (!api.getPrivateArenaUtil().isArenaPrivate(arena.getWorldName())) return;
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onXPGain(PlayerXpGainEvent e) {
+        IArena arena = BedWars.getAPI().getArenaUtil().getArenaByPlayer(e.getPlayer());
+        if (!api.getPrivateArenaUtil().isArenaPrivate(arena.getWorldName())) return;
+        e.setCancelled(true);
     }
 }

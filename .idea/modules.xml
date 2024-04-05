@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BedWars-PrivateGames.iml" filepath="$PROJECT_DIR$/BedWars-PrivateGames.iml" />
       <module fileurl="file://$PROJECT_DIR$/BedWars1058-PrivateGames.iml" filepath="$PROJECT_DIR$/BedWars1058-PrivateGames.iml" />
       <module fileurl="file://$PROJECT_DIR$/privategames-api/privategames-api.iml" filepath="$PROJECT_DIR$/privategames-api/privategames-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/privategames-plugin/privategames-plugin.iml" filepath="$PROJECT_DIR$/privategames-plugin/privategames-plugin.iml" />

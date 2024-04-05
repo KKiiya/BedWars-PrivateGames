@@ -37,4 +37,9 @@ public interface IPlayerOptions {
      */
     void setAutoStart(boolean autoStart);
 
+    /**
+     * Save the player's options to the database
+     */
+    void save();
+
 }

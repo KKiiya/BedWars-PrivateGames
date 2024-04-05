@@ -25,7 +25,7 @@ public class BW2023Addon extends Addon {
     private static Plugin pl;
 
     public BW2023Addon() {
-        pl = PrivateGames.getPlugins();
+        pl = PrivateGames.getInstance();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class BW2023Addon extends Addon {
 
     @Override
     public String getVersion() {
-        return PrivateGames.getPlugins().getDescription().getVersion();
+        return PrivateGames.getInstance().getDescription().getVersion();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BW2023Addon extends Addon {
 
     @Override
     public String getDescription() {
-        return PrivateGames.getPlugins().getDescription().getDescription();
+        return PrivateGames.getInstance().getDescription().getDescription();
     }
 
     @Override
@@ -117,7 +117,7 @@ public class BW2023Addon extends Addon {
 
     private static void registerCommands() {
         Utility.info("&eRegistering commands...");
-        PrivateGames.getPlugins().getCommand("pg").setExecutor(new MainCommand());
+        PrivateGames.getInstance().getCommand("pg").setExecutor(new MainCommand());
         Utility.info("&aCommands registered successfully!");
     }
 }

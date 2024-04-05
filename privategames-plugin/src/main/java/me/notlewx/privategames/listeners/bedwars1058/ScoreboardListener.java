@@ -18,7 +18,7 @@ public class ScoreboardListener implements Listener {
     @EventHandler
     public void onGameStateChange(GameStateChangeEvent e) {
         for (Player p : e.getArena().getPlayers()) {
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                 ISidebar sidebar = SidebarService.getInstance().getSidebar(p);
                 sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
                     if (api.getPrivateArenaUtil().isPlaying(p)) {

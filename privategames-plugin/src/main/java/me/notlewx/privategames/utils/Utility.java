@@ -31,14 +31,14 @@ import static me.notlewx.privategames.PrivateGames.*;
 
 public class Utility {
     public static void info(String infoLog) {
-        PrivateGames.getPlugins().getLogger().info(c(infoLog));
+        Bukkit.getConsoleSender().sendMessage("["+PrivateGames.getInstance().getName() + "] " + c(infoLog));
     }
     public static void warn(String warnLog) {
-        PrivateGames.getPlugins().getLogger().warning(c(warnLog));
+        PrivateGames.getInstance().getLogger().warning(c(warnLog));
     }
     public static void debug(String debugLog) {
         if (!mainConfig.getBoolean("debug")) return;
-        PrivateGames.getPlugins().getLogger().info(c("DEBUG: " + debugLog));
+        PrivateGames.getInstance().getLogger().info(c("DEBUG: " + debugLog));
     }
     public static String c(String value) {
         return ChatColor.translateAlternateColorCodes('&', value);
@@ -102,17 +102,17 @@ public class Utility {
             case 1:
                 break;
             case 2:
-                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, true, false));
                 },20L);
                 break;
             case 3:
-                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true, false));
                 }, 20L);
                 break;
             case 4:
-                Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true, false));
                 }, 20L);
                 break;
@@ -146,7 +146,7 @@ public class Utility {
         if (!api.getPrivateArenaUtil().isPlaying(player)) return;
         IPrivatePlayer owner = api.getPrivatePlayer((Player) api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getPrivateArenaHost().getPlayer());
         if (owner.getPlayerSettings().isLowGravityEnabled())
-            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2));
             }, 20L);
     }
@@ -179,20 +179,5 @@ public class Utility {
 
         skull.setItemMeta(skullMeta);
         return skull;
-    }
-
-    public static String getServerVersion() {
-        return Bukkit.getServer().getClass().getName().split("\\.")[3];
-    }
-
-    public static String getForCurrentVersion(String v18, String v12, String v13) {
-        switch (getServerVersion()) {
-            case "v1_8_R3":
-                return v18;
-            case "v1_12_R1":
-                return v12;
-            default:
-                return v13;
-        }
     }
 }

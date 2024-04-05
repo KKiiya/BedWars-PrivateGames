@@ -37,6 +37,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -436,19 +437,11 @@ public class PrivateArenaListener implements Listener {
                                         });
                                         break;
                                     case "emerald":
-                                        IGenerator g = new OreGenerator(team.getGenerators().get(0).getLocation(), a, GeneratorType.CUSTOM, team);
-                                        g.setOre(new ItemStack(Material.EMERALD));
-                                        g.setDelay(Double.parseDouble(r[1].replace(" ", "").split(",")[1]));
-                                        g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
-                                        g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+                                        IGenerator g = getiGenerator(team, a, Material.EMERALD, r);
                                         team.getGenerators().add(g);
                                         break;
                                     case "diamond":
-                                        IGenerator g2 = new OreGenerator(team.getGenerators().get(0).getLocation(), a, GeneratorType.CUSTOM, team);
-                                        g2.setOre(new ItemStack(Material.DIAMOND));
-                                        g2.setDelay(Double.parseDouble(r[1].replace(" ", "").split(",")[1]));
-                                        g2.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
-                                        g2.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+                                        IGenerator g2 = getiGenerator(team, a, Material.DIAMOND, r);
                                         team.getGenerators().add(g2);
                                         break;
                                 }
@@ -484,5 +477,14 @@ public class PrivateArenaListener implements Listener {
                 }
             }
         }
+    }
+
+    private static @NotNull IGenerator getiGenerator(ITeam team, IArena a, Material emerald, String[] r) {
+        IGenerator g = new OreGenerator(team.getGenerators().get(0).getLocation(), a, GeneratorType.CUSTOM, team);
+        g.setOre(new ItemStack(emerald));
+        g.setDelay(Double.parseDouble(r[1].replace(" ", "").split(",")[1]));
+        g.setAmount(Integer.parseInt(r[1].replace(" ", "").split(",")[2]));
+        g.setSpawnLimit(Integer.parseInt(r[1].replace(" ", "").split(",")[3]));
+        return g;
     }
 }

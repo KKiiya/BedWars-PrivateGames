@@ -30,14 +30,15 @@ import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 import static me.notlewx.privategames.messaging.socket.ProxySocket.compute;
 
 public class ArenaSocketTask implements Runnable {
+
     private final Socket socket;
     private BufferedReader in;
-    private PrintWriter out;
+
     public ArenaSocketTask(Socket socket) {
         this.socket = socket;
 
         try {
-            this.out = new PrintWriter(socket.getOutputStream(), true);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException ignored) {
 

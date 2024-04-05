@@ -21,7 +21,7 @@ public class MessagesData {
         yml = YamlConfiguration.loadConfiguration(file);
         yml.addDefault(HELP_MESSAGE, Arrays.asList(
                 "&8&m-----------------------------------------------------",
-                "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: 1.1.1",
+                "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: 1.1.6",
                 "",
                 "&7- &e/pg gui &7- &aOpen the private games menu",
                 "&7- &e/pg enable &7- &aEnable private games",

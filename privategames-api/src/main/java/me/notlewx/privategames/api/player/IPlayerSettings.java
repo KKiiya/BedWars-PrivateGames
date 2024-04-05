@@ -182,4 +182,9 @@ public interface IPlayerSettings {
      * @throws IndexOutOfBoundsException - Value lower than 0 or higher than 4
      */
     void setSpeedLevel(int value) throws IndexOutOfBoundsException;
+
+    /**
+     * Save the player's settings to the database
+     */
+    void save();
 }

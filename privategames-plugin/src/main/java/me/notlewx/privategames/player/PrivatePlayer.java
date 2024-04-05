@@ -13,20 +13,26 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class PrivatePlayer implements IPrivatePlayer {
-    private final OfflinePlayer player;
+
+    private OfflinePlayer player;
+    private PlayerSettings playerSettings;
+    private PlayerOptions playerOptions;
+
     private static final LinkedHashMap<OfflinePlayer, UUID> lastJoinRequest = new LinkedHashMap<>();
     private static final LinkedHashMap<OfflinePlayer, List<UUID>> requests = new LinkedHashMap<>();
+    private static final HashMap<UUID, IPrivatePlayer> privatePlayers = new HashMap<>();
+
+
     public PrivatePlayer(OfflinePlayer player) {
         this.player = player;
+        this.playerSettings = new PlayerSettings(player);
+        this.playerOptions = new PlayerOptions(player);
         if (!requests.containsKey(player)) requests.put(player, new ArrayList<>());
     }
 
@@ -42,12 +48,12 @@ public class PrivatePlayer implements IPrivatePlayer {
 
     @Override
     public IPlayerSettings getPlayerSettings() {
-        return new PlayerSettings(player);
+        return playerSettings;
     }
 
     @Override
     public IPlayerOptions getPlayerOptions() {
-        return new PlayerOptions(player);
+        return playerOptions;
     }
 
     @Override
@@ -142,5 +148,23 @@ public class PrivatePlayer implements IPrivatePlayer {
     public boolean hasPermission() {
         if (!player.isOnline()) return false;
         return ((Player) player).hasPermission("pg.vip") || ((Player) player).hasPermission("pg.*");
+    }
+
+    @Override
+    public void destroy() {
+        privatePlayers.remove(player.getUniqueId());
+        playerOptions.save();
+        playerSettings.save();
+        playerOptions = null;
+        playerSettings = null;
+        player = null;
+    }
+
+    public static IPrivatePlayer getPrivatePlayer(OfflinePlayer player) {
+        return privatePlayers.computeIfAbsent(player.getUniqueId(), k -> new PrivatePlayer(player));
+    }
+
+    public static IPrivatePlayer getPrivatePlayer(UUID uuid) {
+        return privatePlayers.computeIfAbsent(uuid, k -> new PrivatePlayer(Bukkit.getOfflinePlayer(uuid)));
     }
 }

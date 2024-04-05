@@ -17,13 +17,13 @@ import static me.notlewx.privategames.PrivateGames.isBedWarsServer;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class MySQL implements Database {
-    private static String s;
-    String host;
-    String database;
-    String user;
-    String pass;
-    int port;
-    HikariDataSource db;
+    private String host;
+    private String database;
+    private String user;
+    private String pass;
+    private int port;
+    private HikariDataSource db;
+    private boolean ssl = false;
 
     public MySQL() {
         Utility.info("&eConnecting...");
@@ -35,61 +35,66 @@ public class MySQL implements Database {
     }
 
     public void connect() {
+        String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         if (!isBedWarsServer) {
-            s = "privategames";
             this.host = PrivateGames.mainConfig.getString("database.host");
             this.database = PrivateGames.mainConfig.getString("database.database");
             this.user = PrivateGames.mainConfig.getString("database.username");
             this.pass = PrivateGames.mainConfig.getString("database.password");
             this.port = PrivateGames.mainConfig.getInt("database.port");
+            this.ssl = PrivateGames.mainConfig.getBoolean("database.ssl");
         } else {
             if (support == Support.BEDWARS1058) {
-                s = "bedwars";
                 this.host = PrivateGames.bw1058config.getString("database.host");
                 this.database = PrivateGames.bw1058config.getString("database.database");
                 this.user = PrivateGames.bw1058config.getString("database.user");
                 this.pass = PrivateGames.bw1058config.getString("database.pass");
                 this.port = PrivateGames.bw1058config.getInt("database.port");
+                this.ssl = PrivateGames.bw1058config.getBoolean("database.ssl");
             } else if (support == Support.BEDWARSPROXY) {
-                s = "bedwars";
                 this.host = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.host");
                 this.database = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.database");
                 this.user = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.user");
                 this.pass = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getString("database.pass");
                 this.port = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getInt("database.port");
+                this.ssl = Bukkit.getPluginManager().getPlugin("BedWarsProxy").getConfig().getBoolean("database.ssl");
             } else if (support == Support.BEDWARSPROXY2023) {
-                s = "bedwars";
                 this.host = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.host");
                 this.database = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.database");
                 this.user = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.user");
                 this.pass = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getString("database.pass");
                 this.port = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getInt("database.port");
+                this.ssl = Bukkit.getPluginManager().getPlugin("BWProxy2023").getConfig().getBoolean("database.ssl");
             } else if (support == Support.BEDWARS2023) {
-                s = "bedwars";
                 this.host = PrivateGames.bw2023config.getString("database.host");
                 this.database = PrivateGames.bw2023config.getString("database.database");
                 this.user = PrivateGames.bw2023config.getString("database.user");
                 this.pass = PrivateGames.bw2023config.getString("database.pass");
                 this.port = PrivateGames.bw2023config.getInt("database.port");
+                this.ssl = PrivateGames.bw2023config.getBoolean("database.ssl");
             }
 
             db = new HikariDataSource();
             db.setPoolName("PrivateGames-Pool");
             db.setConnectionTimeout(480000000L);
             db.setMaximumPoolSize(10);
-            db.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+
+            if (version.contains("v1_8")) db.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+            else db.setDataSourceClassName("com.mysql.cj.jdbc.MysqlDataSource");
+
             db.addDataSourceProperty("serverName", this.host);
             db.addDataSourceProperty("databaseName", this.database);
             db.addDataSourceProperty("port", this.port);
             db.addDataSourceProperty("user", this.user);
             db.addDataSourceProperty("password", this.pass);
+            db.addDataSourceProperty("useSSL", this.ssl);
         }
     }
 
     public void createTables() {
         try {
             Connection c = db.getConnection();
-            PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS " + s + "_private_games(player varchar(200), privateGameEnabled varchar(200), oneHitOneKill varchar(200), lowGravity varchar(200), speed int, bedInstaBreak varchar(200), maxTeamUpgrades varchar(200), allowMapBreak varchar(200), noDiamonds varchar(200), noEmeralds varchar(200), respawnEventTime int, healthBuffLevel int, eventsTime int, allowJoin varchar(200), autoStart varchar(200))");
+            PreparedStatement ps = c.prepareStatement("CREATE TABLE IF NOT EXISTS bedwars_private_games(player varchar(200), privateGameEnabled varchar(200), oneHitOneKill varchar(200), lowGravity varchar(200), speed int, bedInstaBreak varchar(200), maxTeamUpgrades varchar(200), allowMapBreak varchar(200), noDiamonds varchar(200), noEmeralds varchar(200), respawnEventTime int, healthBuffLevel int, eventsTime int, allowJoin varchar(200), autoStart varchar(200))");
             ps.executeUpdate();
             ps.close();
             c.close();
@@ -99,10 +104,10 @@ public class MySQL implements Database {
     }
 
     public void createPlayerData(OfflinePlayer player) {
-        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getInstance(), () -> {
             try {
                 Connection c = db.getConnection();
-                PreparedStatement check = c.prepareStatement("SELECT player FROM " + s + "_private_games WHERE player=?");
+                PreparedStatement check = c.prepareStatement("SELECT player FROM bedwars_private_games WHERE player=?");
                 check.setString(1, player.getUniqueId().toString());
                 ResultSet rs = check.executeQuery();
                 if (rs.next()) {
@@ -111,7 +116,7 @@ public class MySQL implements Database {
                     c.close();
                 }
                 else {
-                    String sql = "INSERT INTO " + s + "_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime, allowJoin, autoStart) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String sql = "INSERT INTO bedwars_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime, allowJoin, autoStart) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement ps = c.prepareStatement(sql);
                     ps.setString(1, player.getUniqueId().toString());
                     ps.setString(2, "false");
@@ -141,7 +146,7 @@ public class MySQL implements Database {
     public void setData(OfflinePlayer player, String column, String value) {
         try {
             Connection c = db.getConnection();
-            PreparedStatement ps = c.prepareStatement("UPDATE " + s + "_private_games SET " + column + "=? WHERE player=?");
+            PreparedStatement ps = c.prepareStatement("UPDATE bedwars_private_games SET " + column + "=? WHERE player=?");
             ps.setString(1, value);
             ps.setString(2, player.getUniqueId().toString());
             ps.executeUpdate();
@@ -155,7 +160,7 @@ public class MySQL implements Database {
     public String getData(OfflinePlayer player, String column) {
         try {
             Connection c = db.getConnection();
-            PreparedStatement ps = c.prepareStatement("SELECT " + column + " FROM " + s + "_private_games WHERE player=?");
+            PreparedStatement ps = c.prepareStatement("SELECT " + column + " FROM bedwars_private_games WHERE player=?");
             ps.setString(1, player.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

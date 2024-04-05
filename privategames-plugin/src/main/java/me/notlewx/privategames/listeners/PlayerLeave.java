@@ -36,5 +36,6 @@ public class PlayerLeave implements Listener {
                     break;
             }
         }
+        pp.destroy();
     }
 }

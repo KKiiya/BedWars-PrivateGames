@@ -23,7 +23,7 @@ public class MessagesData {
                 default:
                     yml.addDefault(HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: 1.1.1",
+                            "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: 1.1.6",
                             "",
                             "&7- &e/pg gui &7- &aOpen the private games menu",
                             "&7- &e/pg enable &7- &aEnable private games",
@@ -267,6 +267,7 @@ public class MessagesData {
             PRIVATE_GAME_COULDNT_JOIN = PATH + "game.couldnt-join",
             PRIVATE_GAME_CANT_IN_GAME = PATH + "game.cant-in-game",
             PRIVATE_GAME_CANT_JOIN_SELF = PATH + "game.cant-join-self",
+            PRIVATE_GAME_FEATURES_HELP_INGAME = PATH + "game.features-help-ingame",
             HELP_MESSAGE = PATH + "help-message",
             ADMIN_HELP_MESSAGE = PATH + "admin-help-message",
             NO_SPEED_MEANING = PATH + "meanings.speed.no-speed",

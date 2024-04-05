@@ -24,13 +24,12 @@ public class ProxySocketTask implements Runnable {
 
     private final Socket clientSocket;
     private BufferedReader in;
-    private PrintWriter out;
     private static final boolean compute = true;
 
     public ProxySocketTask(Socket clientSocket) {
         this.clientSocket = clientSocket;
         try {
-            this.out = new PrintWriter(clientSocket.getOutputStream(), true);
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         } catch (IOException ignored) {
 

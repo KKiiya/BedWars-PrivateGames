@@ -27,12 +27,12 @@ public class ProxySocket {
         Utility.warn("Starting socket on port " + port);
         serverSocket = new ServerSocket(port);
 
-        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getInstance(), () -> {
             while (compute) {
                 try {
                     clientSocket = serverSocket.accept();
                     if (clientSocket == null) continue;
-                    Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getPlugins(), new ArenaSocketTask(clientSocket));
+                    Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getInstance(), new ArenaSocketTask(clientSocket));
                     out = new PrintWriter(clientSocket.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     Utility.info("Client connected: " + clientSocket.toString());

@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PrivateGames extends JavaPlugin {
+    private static PrivateGames instance;
     public static ConfigManager bw1058config;
     public static com.tomkeuper.bedwars.api.configuration.ConfigManager bw2023config;
     public static me.notlewx.privategames.config.ConfigManager mainConfig;
@@ -72,6 +73,7 @@ public final class PrivateGames extends JavaPlugin {
             map.put("Options", isEnabled("enabled-modifiers.options"));
             return map;
         }));
+        instance = this;
     }
 
     @Override
@@ -79,8 +81,8 @@ public final class PrivateGames extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public static PrivateGames getPlugins() {
-        return PrivateGames.getPlugin(PrivateGames.class);
+    public static PrivateGames getInstance() {
+        return instance;
     }
     public static BedWars getBw1058Api() {
         return bedWars1058API;

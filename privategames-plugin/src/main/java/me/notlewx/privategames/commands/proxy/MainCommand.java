@@ -7,7 +7,6 @@ import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.menus.SettingsMenu;
-import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
@@ -26,12 +25,14 @@ import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 public class MainCommand implements CommandExecutor {
     private IPlayerSettings playerData;
     private IParty party;
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         command.setAliases(Arrays.asList("privategame", "pgame", "private"));
         if (sender instanceof Player) {
-            playerData = (new PrivatePlayer((Player) sender)).getPlayerSettings();
-            party = (new PrivatePlayer((Player) sender)).getPlayerParty();
+            Player p = (Player) sender;
+            playerData = api.getPrivatePlayer(p).getPlayerSettings();
+            party = api.getPrivatePlayer(p).getPlayerParty();
             if (args.length < 1) {
                 for (String m : Utility.getList((Player) sender, HELP_MESSAGE)) {
                     sender.sendMessage(m);
@@ -249,7 +250,7 @@ public class MainCommand implements CommandExecutor {
 
                                     IPrivatePlayer finalRequested = requested;
                                     finalRequested.addRequest(requester.getUniqueId());
-                                    Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
+                                    Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                                         finalRequested.removeRequest(requester.getUniqueId());
                                         if (!requester.isOnline()) return;
                                         MessagesUtil.sendMessage(MessagesUtil.formatJoinRequest("expired", requester.getUniqueId(), finalRequested.getUniqueId()));

@@ -9,7 +9,6 @@ import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.menus.SettingsMenu;
-import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
@@ -29,12 +28,14 @@ import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 public class MainCommand implements CommandExecutor {
     private IPlayerSettings playerData;
     private IParty party;
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         command.setAliases(Arrays.asList("privategame", "pgame", "private"));
         if (sender instanceof Player) {
-            playerData = (new PrivatePlayer((Player) sender)).getPlayerSettings();
-            party = (new PrivatePlayer((Player) sender)).getPlayerParty();
+            Player p = (Player) sender;
+            playerData = api.getPrivatePlayer(p).getPlayerSettings();
+            party = api.getPrivatePlayer(p).getPlayerParty();
             if (args.length < 1) {
                 for (String m : Utility.getList((Player) sender, HELP_MESSAGE)) {
                     sender.sendMessage(m);
@@ -212,7 +213,7 @@ public class MainCommand implements CommandExecutor {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_CANT_JOIN_SELF));
                                         return false;
                                     }
-                                    IPrivatePlayer p = api.getPrivatePlayer(requested);
+                                    IPrivatePlayer pp = api.getPrivatePlayer(requested);
                                     IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(requested);
 
                                     if (api.getBedWars2023API().getArenaUtil().isPlaying(requester)) {
@@ -225,11 +226,11 @@ public class MainCommand implements CommandExecutor {
                                     } else if (!PrivateGames.api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
                                     } else {
-                                        if (!p.getPlayerOptions().isAllowJoin()) {
+                                        if (!pp.getPlayerOptions().isAllowJoin()) {
                                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN));
                                             return false;
                                         } else {
-                                            if (p.getRequests().contains(requester.getUniqueId())) {
+                                            if (pp.getRequests().contains(requester.getUniqueId())) {
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_ALREADY_SENT).replace("{player}", requested.getDisplayName()));
                                                 return false;
                                             }
@@ -239,10 +240,10 @@ public class MainCommand implements CommandExecutor {
                                             requester.sendMessage(Utility.getMsg(requester, PRIVATE_ARENA_REQUEST_MESSAGE_SENT).replace("{player}", requested.getDisplayName()));
                                             api.getPrivatePlayer(requested).addRequest(requester.getUniqueId());
                                             Utility.sendJoinRequestMessage(requested, requester.getUniqueId());
-                                            Bukkit.getScheduler().runTaskLater(PrivateGames.getPlugins(), () -> {
-                                                if (p.getRequests().contains(requester.getUniqueId())) {
+                                            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
+                                                if (pp.getRequests().contains(requester.getUniqueId())) {
                                                     requester.sendMessage(Utility.getMsg(requester, PRIVATE_ARENA_REQUEST_EXPIRED).replace("{player}", requested.getDisplayName()));
-                                                    p.removeRequest(requester.getUniqueId());
+                                                    pp.removeRequest(requester.getUniqueId());
                                                 }
                                             }, 20 * 60);
                                         }
@@ -266,16 +267,16 @@ public class MainCommand implements CommandExecutor {
                         break;
                     case "accept":
                         if (sender.hasPermission("pg.accept") || sender.isOp()) {
-                            IPrivatePlayer p = api.getPrivatePlayer((Player) sender);
-                            IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer());
+                            IPrivatePlayer pp = api.getPrivatePlayer((Player) sender);
+                            IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(pp.getPlayer().getPlayer());
                             if (args.length == 2) {
-                                if (p.getRequestByName(args[1]) == null) {
+                                if (pp.getRequestByName(args[1]) == null) {
                                     sender.sendMessage(Utility.c(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", args[1])));
                                     return false;
                                 }
 
-                                OfflinePlayer requester = Bukkit.getOfflinePlayer(p.getRequestByName(args[1]));
-                                if (p.getRequests().contains(requester.getUniqueId())) {
+                                OfflinePlayer requester = Bukkit.getOfflinePlayer(pp.getRequestByName(args[1]));
+                                if (pp.getRequests().contains(requester.getUniqueId())) {
                                     if (a == null) {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                                     } else if (!PrivateGames.api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
@@ -289,9 +290,9 @@ public class MainCommand implements CommandExecutor {
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_ACCEPTED).replace("{player}", ((Player) requester).getDisplayName()));
                                                 ((Player) requester).sendMessage(Utility.getMsg(((Player) requester), PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER).replace("{player}", ((Player) sender).getDisplayName()));
                                                 if (a.getStatus() == GameState.playing) {
-                                                    PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addSpectator((Player) requester, false, a.getSpectatorLocation());
+                                                    PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(pp.getPlayer().getPlayer()).addSpectator((Player) requester, false, a.getSpectatorLocation());
                                                 } else {
-                                                    PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addPlayer((Player) requester, false);
+                                                    PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(pp.getPlayer().getPlayer()).addPlayer((Player) requester, false);
                                                 }
                                             } else {
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", requester.getName()));
@@ -307,24 +308,24 @@ public class MainCommand implements CommandExecutor {
                                 } else if (!PrivateGames.api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
                                     sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_CANT_IN_GAME));
                                 } else {
-                                    if (p.getLastJoinRequest() == null) {
+                                    if (pp.getLastJoinRequest() == null) {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_NO_PENDING_REQUESTS));
                                         return false;
                                     }
                                     if (PrivateGames.getBw2023Api().getServerType() == ServerType.BUNGEE) {
-                                        sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_ACCEPTED).replace("{player}", Bukkit.getOfflinePlayer(p.getLastJoinRequest()).getName()));
-                                        MessagesUtil.sendMessage(MessagesUtil.formatJoinRequest("accept", Bukkit.getOfflinePlayer(p.getLastJoinRequest()).getUniqueId(), ((Player) sender).getUniqueId()));
+                                        sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_ACCEPTED).replace("{player}", Bukkit.getOfflinePlayer(pp.getLastJoinRequest()).getName()));
+                                        MessagesUtil.sendMessage(MessagesUtil.formatJoinRequest("accept", Bukkit.getOfflinePlayer(pp.getLastJoinRequest()).getUniqueId(), ((Player) sender).getUniqueId()));
                                     } else if (PrivateGames.getBw2023Api().getServerType() == ServerType.MULTIARENA || PrivateGames.getBw2023Api().getServerType() == ServerType.SHARED) {
-                                        if (Bukkit.getPlayer(p.getLastJoinRequest()) != null) {
-                                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_ACCEPTED).replace("{player}", (Bukkit.getPlayer(p.getLastJoinRequest())).getDisplayName()));
-                                            Bukkit.getPlayer(p.getLastJoinRequest()).sendMessage(Utility.getMsg(Bukkit.getPlayer(p.getLastJoinRequest()), PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER).replace("{player}", ((Player) sender).getDisplayName()));
+                                        if (Bukkit.getPlayer(pp.getLastJoinRequest()) != null) {
+                                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_ACCEPTED).replace("{player}", (Bukkit.getPlayer(pp.getLastJoinRequest())).getDisplayName()));
+                                            Bukkit.getPlayer(pp.getLastJoinRequest()).sendMessage(Utility.getMsg(Bukkit.getPlayer(pp.getLastJoinRequest()), PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER).replace("{player}", ((Player) sender).getDisplayName()));
                                             if (a.getStatus() == GameState.playing) {
-                                                PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addSpectator(Bukkit.getPlayer(p.getLastJoinRequest()), false, a.getSpectatorLocation());
+                                                PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(pp.getPlayer().getPlayer()).addSpectator(Bukkit.getPlayer(pp.getLastJoinRequest()), false, a.getSpectatorLocation());
                                             } else {
-                                                PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer()).addPlayer(Bukkit.getPlayer(p.getLastJoinRequest()), false);
+                                                PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(pp.getPlayer().getPlayer()).addPlayer(Bukkit.getPlayer(pp.getLastJoinRequest()), false);
                                             }
                                         } else {
-                                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", Bukkit.getPlayer(p.getLastJoinRequest()).getName()));
+                                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", Bukkit.getPlayer(pp.getLastJoinRequest()).getName()));
                                         }
                                     }
                                 }
@@ -337,16 +338,16 @@ public class MainCommand implements CommandExecutor {
                         break;
                     case "deny":
                         if (sender.hasPermission("pg.deny") || sender.isOp()) {
-                            IPrivatePlayer p = api.getPrivatePlayer((Player) sender);
-                            IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(p.getPlayer().getPlayer());
+                            IPrivatePlayer pp = api.getPrivatePlayer((Player) sender);
+                            IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByPlayer(pp.getPlayer().getPlayer());
                             if (args.length == 2) {
-                                if (p.getRequestByName(args[1]) == null) {
+                                if (pp.getRequestByName(args[1]) == null) {
                                     sender.sendMessage(Utility.c(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", args[1])));
                                     return false;
                                 }
 
-                                OfflinePlayer requester = Bukkit.getOfflinePlayer(p.getRequestByName(args[1]));
-                                if (p.getRequests().contains(requester.getUniqueId())) {
+                                OfflinePlayer requester = Bukkit.getOfflinePlayer(pp.getRequestByName(args[1]));
+                                if (pp.getRequests().contains(requester.getUniqueId())) {
                                     if (a == null) {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                                     } else if (!PrivateGames.api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
@@ -359,7 +360,7 @@ public class MainCommand implements CommandExecutor {
                                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_DENIED).replace("{player}", ((Player) requester).getDisplayName()));
                                             ((Player) requester).sendMessage(Utility.getMsg(((Player) requester), PRIVATE_ARENA_REQUEST_DENIED_REQUESTER).replace("{player}", ((Player) sender).getDisplayName()));
                                         }
-                                        p.removeRequest(requester.getUniqueId());
+                                        pp.removeRequest(requester.getUniqueId());
                                     }
                                 } else {
                                     sender.sendMessage(Utility.c(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", requester.getName())));
@@ -370,18 +371,18 @@ public class MainCommand implements CommandExecutor {
                                 } else if (!PrivateGames.api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
                                     sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_CANT_IN_GAME));
                                 } else {
-                                    if (p.getLastJoinRequest() == null) {
+                                    if (pp.getLastJoinRequest() == null) {
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_NO_PENDING_REQUESTS));
                                         return false;
                                     }
                                     if (PrivateGames.getBw2023Api().getServerType() == ServerType.BUNGEE) {
-                                        sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_DENIED).replace("{player}", Bukkit.getOfflinePlayer(p.getLastJoinRequest()).getName()));
-                                        MessagesUtil.sendMessage(MessagesUtil.formatJoinRequest("deny", Bukkit.getOfflinePlayer(p.getLastJoinRequest()).getUniqueId(), ((Player) sender).getUniqueId()));
+                                        sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_DENIED).replace("{player}", Bukkit.getOfflinePlayer(pp.getLastJoinRequest()).getName()));
+                                        MessagesUtil.sendMessage(MessagesUtil.formatJoinRequest("deny", Bukkit.getOfflinePlayer(pp.getLastJoinRequest()).getUniqueId(), ((Player) sender).getUniqueId()));
                                     } else if (PrivateGames.getBw2023Api().getServerType() == ServerType.MULTIARENA || PrivateGames.getBw2023Api().getServerType() == ServerType.SHARED) {
-                                        sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_DENIED).replace("{player}", Bukkit.getPlayer(p.getLastJoinRequest()).getDisplayName()));
-                                        Bukkit.getPlayer(p.getLastJoinRequest()).sendMessage(Utility.getMsg(Bukkit.getPlayer(p.getLastJoinRequest()), PRIVATE_ARENA_REQUEST_DENIED_REQUESTER).replace("{player}", ((Player) sender).getDisplayName()));
+                                        sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_DENIED).replace("{player}", Bukkit.getPlayer(pp.getLastJoinRequest()).getDisplayName()));
+                                        Bukkit.getPlayer(pp.getLastJoinRequest()).sendMessage(Utility.getMsg(Bukkit.getPlayer(pp.getLastJoinRequest()), PRIVATE_ARENA_REQUEST_DENIED_REQUESTER).replace("{player}", ((Player) sender).getDisplayName()));
                                     }
-                                    p.removeRequest(p.getLastJoinRequest());
+                                    pp.removeRequest(pp.getLastJoinRequest());
                                 }
                             } else {
                                 sender.sendMessage(Utility.getMsg((Player) sender, "cmd-not-found").replace("%bw_lang_prefix%", Utility.getMsg((Player) sender, "prefix")));

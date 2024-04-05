@@ -22,8 +22,7 @@ public class CommandListener implements Listener {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(Utility.getMsg(e.getPlayer(), "cmd-join-not-found")
                         .replace("{name}", arenaName)
-                        .replace("{prefix}", Utility.getMsg(e.getPlayer(), "prefix")
-                        ));
+                        .replace("{prefix}", Utility.getMsg(e.getPlayer(), "prefix")));
             }
         }
     }

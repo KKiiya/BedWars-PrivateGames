@@ -43,7 +43,7 @@ public class BedWarsProxy {
 
     private void registerCommands() {
         Utility.info("&eRegistering commands...");
-        PrivateGames.getPlugins().getCommand("pg").setExecutor(new MainCommand());
+        PrivateGames.getInstance().getCommand("pg").setExecutor(new MainCommand());
         Utility.info("&aCommands registered successfully!");
     }
 
@@ -67,7 +67,7 @@ public class BedWarsProxy {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        pl.getServer().getPluginManager().registerEvents(new CommandListener(), PrivateGames.getPlugins());
+        pl.getServer().getPluginManager().registerEvents(new CommandListener(), PrivateGames.getInstance());
         Utility.info("&aListeners loaded successfully!");
     }
 }

@@ -14,24 +14,21 @@ import java.sql.*;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class SQLite implements Database {
-    private String s;
-    Connection connection;
+    private Connection connection;
 
     public SQLite() {
         connect();
     }
-    public void connect() {
-        if (support == Support.BEDWARS1058) s = "bedwars";
-        else if (support == Support.BEDWARS2023) s = "bedwars";
 
+    public void connect() {
         Utility.info("&aConnecting to your database...");
         this.connection = getConnection();
         Utility.info("&aConnected successfully to your database!");
 
         Utility.info("&eCreating tables...");
         try {
-            Statement statement = this.connection.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + s + "_private_games (`player` varchar(200) NOT NULL, `privateGameEnabled` boolean(11) NOT NULL,`oneHitOneKill` boolean(11) NOT NULL,`lowGravity` boolean(11) NOT NULL,`speed` boolean(11) NOT NULL,`bedInstaBreak` boolean(11) NOT NULL,`maxTeamUpgrades` boolean(11) NOT NULL,`allowMapBreak` boolean(11) NOT NULL,`noDiamonds` boolean(11) NOT NULL,`noEmeralds` boolean(11) NOT NULL,`respawnEventTime` int(11) NOT NULL,`healthBuffLevel` int(11) NOT NULL, `eventsTime` int(11) NOT NULL, autoStart boolean(11) NOT NULL, allowJoin boolean(11) NOT NULL, PRIMARY KEY (`player`));");
+            Statement statement = getConnection().createStatement();
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS bedwars_private_games (`player` varchar(200) NOT NULL, `privateGameEnabled` boolean(11) NOT NULL,`oneHitOneKill` boolean(11) NOT NULL,`lowGravity` boolean(11) NOT NULL,`speed` boolean(11) NOT NULL,`bedInstaBreak` boolean(11) NOT NULL,`maxTeamUpgrades` boolean(11) NOT NULL,`allowMapBreak` boolean(11) NOT NULL,`noDiamonds` boolean(11) NOT NULL,`noEmeralds` boolean(11) NOT NULL,`respawnEventTime` int(11) NOT NULL,`healthBuffLevel` int(11) NOT NULL, `eventsTime` int(11) NOT NULL, autoStart boolean(11) NOT NULL, allowJoin boolean(11) NOT NULL, PRIMARY KEY (`player`));");
             statement.close();
             Utility.info("&aTables created successfully!");
         } catch (SQLException e) {
@@ -40,12 +37,12 @@ public class SQLite implements Database {
     }
 
     public Connection getConnection() {
-        File dataFolder = null;
+        File dataFolder;
         if (support == Support.BEDWARS1058) {
-             dataFolder = new File(Bukkit.getServicesManager().getRegistration(BedWars.class).getPlugin().getDataFolder() + "/Cache/", s + "_private_games.db");
+             dataFolder = new File(Bukkit.getServicesManager().getRegistration(BedWars.class).getPlugin().getDataFolder() + "/Cache/", "bedwars_private_games.db");
         } else if (support == Support.BEDWARS2023) {
-            dataFolder = new File(Bukkit.getServicesManager().getRegistration(com.tomkeuper.bedwars.api.BedWars.class).getPlugin().getDataFolder() + "/Cache/", s + "_private_games.db");
-        }
+            dataFolder = new File(Bukkit.getServicesManager().getRegistration(com.tomkeuper.bedwars.api.BedWars.class).getPlugin().getDataFolder() + "/Cache/", "bedwars_private_games.db");
+        } else return null;
         if (!dataFolder.exists())
             try {
                 dataFolder.createNewFile();
@@ -68,7 +65,7 @@ public class SQLite implements Database {
         PreparedStatement ps = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + s + "_private_games WHERE player = '" + player.getUniqueId().toString() + "';");
+            ps = conn.prepareStatement("SELECT * FROM bedwars_private_games WHERE player = '" + player.getUniqueId().toString() + "';");
             ResultSet rs = ps.executeQuery();
             if (rs.next())
                 return rs.getString(column);
@@ -90,7 +87,7 @@ public class SQLite implements Database {
     public void setData(OfflinePlayer player, String column, String value) {
         try {
             Connection c = getConnection();
-            PreparedStatement ps = c.prepareStatement("UPDATE " + s + "_private_games SET " + column + "=? WHERE player=?");
+            PreparedStatement ps = c.prepareStatement("UPDATE bedwars_private_games SET " + column + "=? WHERE player=?");
             ps.setString(1, value);
             ps.setString(2, player.getUniqueId().toString());
             ps.executeUpdate();
@@ -106,7 +103,7 @@ public class SQLite implements Database {
         PreparedStatement ps = null;
         try {
             connection = getConnection();
-            ps = connection.prepareStatement("SELECT * FROM " + s + "_private_games WHERE player = '" + p.getUniqueId().toString() + "'");
+            ps = connection.prepareStatement("SELECT * FROM bedwars_private_games WHERE player = '" + p.getUniqueId().toString() + "'");
             ResultSet rs = ps.executeQuery();
             String player = null;
             if (rs.next())
@@ -115,7 +112,7 @@ public class SQLite implements Database {
             }
             else {
                 connection = getConnection();
-                ps = connection.prepareStatement("INSERT INTO " + s + "_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime, autoStart, allowJoin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                ps = connection.prepareStatement("INSERT INTO bedwars_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime, autoStart, allowJoin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 ps.setString(1, p.getUniqueId().toString());
                 ps.setString(2, "false");
                 ps.setString(3, "false");

@@ -21,6 +21,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class API implements PrivateGames {
+    private final IPrivateArenaUtil privateArenaUtil;
+    private final IMenuUtil menuUtil;
+
+    public API() {
+        this.privateArenaUtil = new PrivateArenaUtil();
+        this.menuUtil = new MenuUtil();
+    }
+
     @Override
     public Database getDatabase() {
         return me.notlewx.privategames.PrivateGames.database;
@@ -28,22 +36,22 @@ public class API implements PrivateGames {
 
     @Override
     public IPrivatePlayer getPrivatePlayer(Player player) {
-        return new PrivatePlayer(player);
+        return PrivatePlayer.getPrivatePlayer(player);
     }
 
     @Override
     public IPrivatePlayer getPrivatePlayer(UUID uuid) {
-        return new PrivatePlayer(Bukkit.getOfflinePlayer(uuid));
+        return PrivatePlayer.getPrivatePlayer(uuid);
     }
 
     @Override
     public IPrivateArenaUtil getPrivateArenaUtil() {
-        return new PrivateArenaUtil();
+        return privateArenaUtil;
     }
 
     @Override
     public IMenuUtil getMenuUtil() {
-        return new MenuUtil();
+        return menuUtil;
     }
 
     private static class MenuUtil implements IMenuUtil {

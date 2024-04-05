@@ -44,7 +44,7 @@ public class BedWarsProxy2023 {
 
     private void registerCommands() {
         Utility.info("&eRegistering commands...");
-        PrivateGames.getPlugins().getCommand("pg").setExecutor(new MainCommand());
+        PrivateGames.getInstance().getCommand("pg").setExecutor(new MainCommand());
         Utility.info("&aCommands registered successfully!");
     }
 
