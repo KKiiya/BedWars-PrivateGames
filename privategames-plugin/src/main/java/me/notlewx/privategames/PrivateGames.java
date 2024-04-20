@@ -46,6 +46,7 @@ public final class PrivateGames extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         int pluginId = 19967;
         Metrics metrics = new Metrics(this, pluginId);
         metrics.addCustomChart(new SimplePie("database_provider", () -> databaseType.toString()));
@@ -73,7 +74,6 @@ public final class PrivateGames extends JavaPlugin {
             map.put("Options", isEnabled("enabled-modifiers.options"));
             return map;
         }));
-        instance = this;
     }
 
     @Override
