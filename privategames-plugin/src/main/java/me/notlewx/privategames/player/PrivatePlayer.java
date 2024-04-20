@@ -28,12 +28,15 @@ public class PrivatePlayer implements IPrivatePlayer {
     private static final LinkedHashMap<OfflinePlayer, List<UUID>> requests = new LinkedHashMap<>();
     private static final HashMap<UUID, IPrivatePlayer> privatePlayers = new HashMap<>();
 
-
     public PrivatePlayer(OfflinePlayer player) {
         this.player = player;
         this.playerSettings = new PlayerSettings(player);
         this.playerOptions = new PlayerOptions(player);
         if (!requests.containsKey(player)) requests.put(player, new ArrayList<>());
+    }
+
+    public PrivatePlayer(UUID uuid) {
+        this(Bukkit.getOfflinePlayer(uuid));
     }
 
     @Override
@@ -165,6 +168,6 @@ public class PrivatePlayer implements IPrivatePlayer {
     }
 
     public static IPrivatePlayer getPrivatePlayer(UUID uuid) {
-        return privatePlayers.computeIfAbsent(uuid, k -> new PrivatePlayer(Bukkit.getOfflinePlayer(uuid)));
+        return privatePlayers.computeIfAbsent(uuid, k -> new PrivatePlayer(uuid));
     }
 }

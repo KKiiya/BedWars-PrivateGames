@@ -18,7 +18,6 @@ public class ArenasSocket {
     private PrintWriter out;
     private BufferedReader in;
     private Runnable task;
-    private static final boolean compute = true;
 
     public void startConnection(String ip, int port) throws IOException {
         try {

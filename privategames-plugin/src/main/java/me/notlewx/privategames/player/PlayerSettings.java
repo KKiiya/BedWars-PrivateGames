@@ -14,18 +14,18 @@ import static me.notlewx.privategames.PrivateGames.database;
 
 public class PlayerSettings implements IPlayerSettings {
     private final OfflinePlayer player;
-    boolean privateGameEnabled = false;
-    boolean oneHitOneKill = false;
-    boolean lowGravity = false;
-    boolean bedInstaBreak = false;
-    boolean maxTeamUpgrades = false;
-    boolean allowMapBreak = false;
-    boolean noDiamonds = false;
-    boolean noEmeralds = false;
-    int respawnTime = 0;
-    int healthBuff = 0;
-    int eventsTime = 0;
-    int speed = 0;
+    private boolean privateGameEnabled = false;
+    private boolean oneHitOneKill = false;
+    private boolean lowGravity = false;
+    private boolean bedInstaBreak = false;
+    private boolean maxTeamUpgrades = false;
+    private boolean allowMapBreak = false;
+    private boolean noDiamonds = false;
+    private boolean noEmeralds = false;
+    private int respawnTime = 0;
+    private int healthBuff = 0;
+    private int eventsTime = 0;
+    private int speed = 0;
 
     public PlayerSettings(OfflinePlayer player)  {
         this.player = player;
@@ -42,7 +42,6 @@ public class PlayerSettings implements IPlayerSettings {
             healthBuff = Integer.parseInt(database.getData(player, "healthBuffLevel"));
             eventsTime = Integer.parseInt(database.getData(player, "eventsTime"));
             speed = Integer.parseInt(database.getData(player, "speed"));
-
         });
     }
 

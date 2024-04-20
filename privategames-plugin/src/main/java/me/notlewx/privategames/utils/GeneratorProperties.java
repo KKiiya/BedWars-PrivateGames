@@ -9,9 +9,9 @@ import java.util.HashMap;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class GeneratorProperties {
+    private static final HashMap<IPrivatePlayer, GeneratorProperties> playerGenProps = new HashMap<>();
     private final Object gen;
     public HashMap<Object, Properties> genProps = new HashMap<>();
-    private static final HashMap<IPrivatePlayer, GeneratorProperties> playerGenProps = new HashMap<>();
 
     public GeneratorProperties(Object gen) {
         this.gen = gen;
@@ -27,16 +27,20 @@ public class GeneratorProperties {
     public Properties getProperties(Object gen) {
         return genProps.get(gen);
     }
+
     @SuppressWarnings("cast")
     public Object getGenerator() {
         return this.gen;
     }
+
     public static GeneratorProperties getGeneratorProperties(IPrivatePlayer player) {
         return playerGenProps.get(player);
     }
+
     public static void setGeneratorProperties(IPrivatePlayer player, GeneratorProperties props) {
         playerGenProps.put(player, props);
     }
+
     public static void removeGeneratorProperties(IPrivatePlayer player) {
         playerGenProps.remove(player);
     }
