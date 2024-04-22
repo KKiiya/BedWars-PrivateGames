@@ -33,24 +33,30 @@ public class Utility {
     public static void info(String infoLog) {
         Bukkit.getConsoleSender().sendMessage("["+PrivateGames.getInstance().getName() + "] " + c(infoLog));
     }
+
     public static void warn(String warnLog) {
         PrivateGames.getInstance().getLogger().warning(c(warnLog));
     }
+
     public static void debug(String debugLog) {
         if (!mainConfig.getBoolean("debug")) return;
         PrivateGames.getInstance().getLogger().info(c("DEBUG: " + debugLog));
     }
+
     public static String c(String value) {
         return ChatColor.translateAlternateColorCodes('&', value);
     }
+
     public static String p(Player p, String value) {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return c(value);
         return c(PlaceholderAPI.setPlaceholders(p, value));
     }
+
     public static List<String> p(Player p, List<String> value) {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return value.stream().map(Utility::c).collect(Collectors.toList());
         return value.stream().map(s -> c(PlaceholderAPI.setPlaceholders(p, s))).collect(Collectors.toList());
     }
+
     public static String getMsg(Player player, String path) {
         if (support == Support.BEDWARSPROXY) return p(player, PrivateGames.getBwProxyApi().getLanguageUtil().getMsg(player, path));
         else if (support == Support.BEDWARS1058) return p(player, PrivateGames.getBw1058Api().getPlayerLanguage(player).getString(path));

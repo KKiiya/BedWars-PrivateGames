@@ -38,6 +38,7 @@ public class BedWarsProxy {
             registerCommands();
             loadDatabase();
             loadListeners();
+            PrivateGames.getInstance().loadMainListeners();
         }
     }
 

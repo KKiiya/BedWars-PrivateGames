@@ -61,6 +61,17 @@ public class SQLite implements Database {
     }
 
     public String getData(OfflinePlayer player, String column) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement("SELECT * FROM bedwars_private_games WHERE player = ?")) {
+            ps.setString(1, player.getUniqueId().toString());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getString(column);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+
+        /*
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -82,6 +93,7 @@ public class SQLite implements Database {
             }
         }
         return null;
+            */
     }
 
     public void setData(OfflinePlayer player, String column, String value) {

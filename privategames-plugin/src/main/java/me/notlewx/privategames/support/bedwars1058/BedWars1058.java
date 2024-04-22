@@ -44,6 +44,7 @@ public class BedWars1058 {
             registerCommands();
             loadDatabase();
             loadListeners();
+            PrivateGames.getInstance().loadMainListeners();
         }
     }
 

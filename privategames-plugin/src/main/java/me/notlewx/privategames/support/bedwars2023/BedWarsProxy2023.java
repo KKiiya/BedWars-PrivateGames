@@ -39,6 +39,7 @@ public class BedWarsProxy2023 {
             registerCommands();
             loadDatabase();
             registerListeners();
+            PrivateGames.getInstance().loadMainListeners();
         }
     }
 

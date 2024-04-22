@@ -66,7 +66,7 @@ public class BW2023Addon extends Addon {
         registerCommands();
         loadDatabase();
         loadListeners();
-
+        PrivateGames.getInstance().loadMainListeners();
         Utility.info("&aPrivate Games Addon loaded successfully! Enjoy!");
     }
 

@@ -54,7 +54,6 @@ public final class PrivateGames extends JavaPlugin {
 
         api = new API();
         Bukkit.getServicesManager().register(me.notlewx.privategames.api.PrivateGames.class, api, this, ServicePriority.Highest);
-        loadMainListeners();
         loadSupport();
 
         metrics.addCustomChart(new DrilldownPie("enabled_features", () -> {
@@ -84,18 +83,23 @@ public final class PrivateGames extends JavaPlugin {
     public static PrivateGames getInstance() {
         return instance;
     }
+
     public static BedWars getBw1058Api() {
         return bedWars1058API;
     }
+
     public static com.tomkeuper.bedwars.api.BedWars getBw2023Api() {
         return bedWars2023API;
     }
+
     public static com.andrei1058.bedwars.proxy.api.BedWars getBwProxyApi() {
         return BedWarsProxy.getAPI();
     }
+
     public static com.tomkeuper.bedwars.proxy.api.BedWars getBwProxy2023Api() {
         return com.tomkeuper.bedwars.proxy.BedWarsProxy.getAPI();
     }
+
     private void loadSupport() {
         if (Bukkit.getPluginManager().getPlugin("BedWars1058") != null) {
             isBedWarsServer = true;
@@ -114,7 +118,8 @@ public final class PrivateGames extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
         }
     }
-    private void loadMainListeners() {
+
+    public void loadMainListeners() {
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
