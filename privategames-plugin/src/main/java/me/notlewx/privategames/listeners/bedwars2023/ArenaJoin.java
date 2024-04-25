@@ -33,6 +33,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Bed;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -150,7 +151,7 @@ public class ArenaJoin implements Listener {
             }
         } else {
             if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
-                if (!a.getPlayers().isEmpty()) {
+                if (a.getPlayers().size() > 1) {
                     e.setCancelled(true);
                     ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));
                     return;
@@ -158,53 +159,45 @@ public class ArenaJoin implements Listener {
             }
         }
 
-        if (p.isPrivateGameEnabled()) {
-            if (party.hasParty()) {
-                if (party.isOwner()) {
-                    if (pp.hasPermission()) {
-                        List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
+        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
+            if (p.isPrivateGameEnabled()) {
+                if (party.hasParty()) {
+                    if (party.isOwner()) {
+                        if (pp.hasPermission()) {
+                            List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
 
-                        IPrivateArena pa = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                            IPrivateArena pa = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+
+                            Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
+                            MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
+
+                            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 20L);
+                            if (pp.getPlayerOptions().isAutoStart()) {
+                                a.changeStatus(GameState.starting);
+                                a.getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
+                            }
+                        }
+                    }
+                } else {
+                    boolean admin = pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin");
+
+                    if (admin && a.getPlayers().size() < 2) {
+                        List<OfflinePlayer> players = new ArrayList<>(Collections.singletonList(pp.getPlayer()));
+
+                        IPrivateArena pa =  new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
 
                         Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
-                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
+                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation", pa));
 
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 20L);
                         if (pp.getPlayerOptions().isAutoStart()) {
                             a.changeStatus(GameState.starting);
                             a.getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
                         }
                     }
                 }
-            } else if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
-                if (party.hasParty()) {
-                    if (party.isOwner()) {
-                        List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
-
-                        IPrivateArena pa =  new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
-
-                        Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
-                        MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
-
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
-                    }
-                } else {
-                    List<OfflinePlayer> players = new ArrayList<>();
-                    players.add(pp.getPlayer());
-
-                    IPrivateArena pa = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
-
-                    Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
-                    MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
-
-                    Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 35L);
-                }
-                if (pp.getPlayerOptions().isAutoStart()) {
-                    a.changeStatus(GameState.starting);
-                    a.getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
-                }
             }
-        }
+        }, 10L);
     }
 
     public void spawnBed(ITeam team) {

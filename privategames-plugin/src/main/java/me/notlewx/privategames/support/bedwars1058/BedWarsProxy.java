@@ -6,7 +6,9 @@ import me.notlewx.privategames.commands.proxy.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.proxy.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
+import me.notlewx.privategames.listeners.bedwarsproxy.ArenaJoin;
 import me.notlewx.privategames.listeners.bedwarsproxy.CommandListener;
+import me.notlewx.privategames.listeners.bedwarsproxy.ProxyReceiveListener;
 import me.notlewx.privategames.messaging.socket.ProxySocket;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
@@ -68,6 +70,8 @@ public class BedWarsProxy {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        pl.getServer().getPluginManager().registerEvents(new ArenaJoin(), PrivateGames.getInstance());
+        pl.getServer().getPluginManager().registerEvents(new ProxyReceiveListener(), PrivateGames.getInstance());
         pl.getServer().getPluginManager().registerEvents(new CommandListener(), PrivateGames.getInstance());
         Utility.info("&aListeners loaded successfully!");
     }

@@ -321,9 +321,9 @@ public class PrivateArenaListener implements Listener {
         Player p = e.getPlayer();
 
         if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
-            p.setMaxHealth(20.0);
             p.setHealth(20.0);
             p.setHealthScale(20.0);
+            p.setMaxHealth(20.0);
         }
     }
 

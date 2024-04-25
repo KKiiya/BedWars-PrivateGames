@@ -1,11 +1,11 @@
 package me.notlewx.privategames.arena;
 
 import com.andrei1058.bedwars.api.arena.IArena;
-import com.tomkeuper.bedwars.proxy.arenamanager.ArenaManager;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.events.PrivateGameJoinEvent;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
+import me.notlewx.privategames.listeners.bwproxy2023.ArenaJoin;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
@@ -19,13 +19,13 @@ import java.util.List;
 import static me.notlewx.privategames.PrivateGames.support;
 
 public class PrivateArena implements IPrivateArena {
+    public static final LinkedHashMap<String, IPrivateArena> privateArenaByIdentifier = new LinkedHashMap<>();
+    public static final LinkedHashMap<OfflinePlayer, IPrivateArena> privateArenaByPlayer = new LinkedHashMap<>();
+    public static final LinkedList<IPrivateArena> privateArenas = new LinkedList<>();
     private IPrivatePlayer host;
     private List<OfflinePlayer> players;
     private String worldName;
     private String defaultGroup;
-    public static final LinkedHashMap<String, IPrivateArena> privateArenaByIdentifier = new LinkedHashMap<>();
-    public static final LinkedHashMap<OfflinePlayer, IPrivateArena> privateArenaByPlayer = new LinkedHashMap<>();
-    public static final LinkedList<IPrivateArena> privateArenas = new LinkedList<>();
 
     public PrivateArena(IPrivatePlayer host, List<OfflinePlayer> players, String arenaIdentifier, String defaultGroup) {
         this.host = host;
@@ -64,10 +64,12 @@ public class PrivateArena implements IPrivateArena {
     public String getArenaIdentifier() {
         return worldName;
     }
+
     @Override
     public String getDefaultGroup() {
         return defaultGroup;
     }
+
     @Override
     public void addPlayer(Player p, boolean callEvent) {
         Utility.debug("Adding player " + p.getName() + " to arena " + worldName);
@@ -127,9 +129,25 @@ public class PrivateArena implements IPrivateArena {
 
     @Override
     public boolean isFull() {
+        String status;
+        switch (support) {
+            case BEDWARS1058:
+                status = PrivateGames.getBw1058Api().getArenaUtil().getArenaByIdentifier(worldName).getStatus().toString();
+                break;
+            case BEDWARS2023:
+                status = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(worldName).getStatus().toString();
+                break;
+            case BEDWARSPROXY2023:
+                status = ArenaJoin.getPrivateProxyArenas().stream().filter(a -> a.getRemoteIdentifier().equals(worldName)).findFirst().orElse(null).getStatus().toString();
+                break;
+            case BEDWARSPROXY:
+                status = me.notlewx.privategames.listeners.bedwarsproxy.ArenaJoin.getPrivateProxyArenas().stream().filter(a -> a.getRemoteIdentifier().equals(worldName)).findFirst().orElse(null).getStatus().toString();
+                break;
+            default:
+                return false;
+        }
         if (support == Support.BEDWARS1058) {
             IArena arena = PrivateGames.getBw1058Api().getArenaUtil().getArenaByIdentifier(worldName);
-            String status = arena.getStatus().toString();
             switch (status) {
                 case "waiting":
                 case "starting":
@@ -141,7 +159,6 @@ public class PrivateArena implements IPrivateArena {
             }
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.IArena arena = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(worldName);
-            String status = arena.getStatus().toString();
             switch (status) {
                 case "waiting":
                 case "starting":
@@ -152,8 +169,7 @@ public class PrivateArena implements IPrivateArena {
                     return false;
             }
         } else if (support == Support.BEDWARSPROXY2023) {
-            com.tomkeuper.bedwars.proxy.api.CachedArena arena = ArenaManager.getArenaByIdentifier(worldName);
-            String status = arena.getStatus().toString();
+            com.tomkeuper.bedwars.proxy.api.CachedArena arena = ArenaJoin.getPrivateProxyArenas().stream().filter(a -> a.getRemoteIdentifier().equals(worldName)).findFirst().orElse(null);
             switch (status) {
                 case "WAITING":
                 case "STARTING":
@@ -163,8 +179,7 @@ public class PrivateArena implements IPrivateArena {
                     return false;
             }
         } else if (support == Support.BEDWARSPROXY) {
-            com.andrei1058.bedwars.proxy.api.CachedArena arena = com.andrei1058.bedwars.proxy.arenamanager.ArenaManager.getArenaByIdentifier(worldName);
-            String status = arena.getStatus().toString();
+            com.andrei1058.bedwars.proxy.api.CachedArena arena = me.notlewx.privategames.listeners.bedwarsproxy.ArenaJoin.getPrivateProxyArenas().stream().filter(a -> a.getRemoteIdentifier().equals(worldName)).findFirst().orElse(null);
             switch (status) {
                 case "WAITING":
                 case "STARTING":

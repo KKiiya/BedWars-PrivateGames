@@ -1,6 +1,5 @@
 package me.notlewx.privategames.player;
 
-import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerOptions;
@@ -8,6 +7,7 @@ import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
 import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.party.Party;
+import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -16,23 +16,23 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static me.notlewx.privategames.PrivateGames.support;
-
 public class PrivatePlayer implements IPrivatePlayer {
+
+    private static final LinkedHashMap<OfflinePlayer, UUID> lastJoinRequest = new LinkedHashMap<>();
+    private static final LinkedHashMap<OfflinePlayer, List<UUID>> requests = new LinkedHashMap<>();
+    private static final HashMap<String, IPrivatePlayer> privatePlayers = new HashMap<>();
 
     private OfflinePlayer player;
     private PlayerSettings playerSettings;
     private PlayerOptions playerOptions;
 
-    private static final LinkedHashMap<OfflinePlayer, UUID> lastJoinRequest = new LinkedHashMap<>();
-    private static final LinkedHashMap<OfflinePlayer, List<UUID>> requests = new LinkedHashMap<>();
-    private static final HashMap<UUID, IPrivatePlayer> privatePlayers = new HashMap<>();
-
     public PrivatePlayer(OfflinePlayer player) {
+        Utility.debug("Creating PrivatePlayer for " + player.getName());
         this.player = player;
         this.playerSettings = new PlayerSettings(player);
         this.playerOptions = new PlayerOptions(player);
         if (!requests.containsKey(player)) requests.put(player, new ArrayList<>());
+        Utility.debug("PrivatePlayer for " + player.getName() + " has been created.");
     }
 
     public PrivatePlayer(UUID uuid) {
@@ -131,12 +131,10 @@ public class PrivatePlayer implements IPrivatePlayer {
 
     @Override
     public boolean isPlaying() {
-        if (!player.isOnline()) return false;
-        switch (support) {
-            case BEDWARS1058:
-                return PrivateGames.getBw1058Api().getArenaUtil().isPlaying((Player) player);
-            case BEDWARS2023:
-                return PrivateGames.getBw2023Api().getArenaUtil().isPlaying((Player) player);
+        for (IPrivateArena arena : PrivateArena.privateArenaByPlayer.values()) {
+            if (arena.getPlayers().contains(player)) {
+                return true;
+            }
         }
         return false;
     }
@@ -150,24 +148,27 @@ public class PrivatePlayer implements IPrivatePlayer {
     @Override
     public boolean hasPermission() {
         if (!player.isOnline()) return false;
-        return ((Player) player).hasPermission("pg.vip") || ((Player) player).hasPermission("pg.*");
+        return ((Player) player).hasPermission("pg.vip");
     }
 
     @Override
     public void destroy() {
-        privatePlayers.remove(player.getUniqueId());
-        playerOptions.save();
+        Utility.debug("Destroying PrivatePlayer for " + player.getName());
+        clearRequests();
         playerSettings.save();
+        playerOptions.save();
         playerOptions = null;
         playerSettings = null;
+        privatePlayers.remove(player.getUniqueId().toString());
+        Utility.debug("PrivatePlayer for " + player.getName() + " has been destroyed.");
         player = null;
     }
 
     public static IPrivatePlayer getPrivatePlayer(OfflinePlayer player) {
-        return privatePlayers.computeIfAbsent(player.getUniqueId(), k -> new PrivatePlayer(player));
+        return privatePlayers.computeIfAbsent(player.getUniqueId().toString(), k -> new PrivatePlayer(player));
     }
 
     public static IPrivatePlayer getPrivatePlayer(UUID uuid) {
-        return privatePlayers.computeIfAbsent(uuid, k -> new PrivatePlayer(uuid));
+        return privatePlayers.computeIfAbsent(uuid.toString(), k -> new PrivatePlayer(uuid));
     }
 }

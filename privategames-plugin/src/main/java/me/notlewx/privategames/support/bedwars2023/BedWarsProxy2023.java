@@ -6,7 +6,9 @@ import me.notlewx.privategames.commands.proxy2023.MainCommand;
 import me.notlewx.privategames.config.MainConfig;
 import me.notlewx.privategames.config.proxy2023.MessagesData;
 import me.notlewx.privategames.database.providers.MySQL;
+import me.notlewx.privategames.listeners.bwproxy2023.ArenaJoin;
 import me.notlewx.privategames.listeners.bwproxy2023.CommandListener;
+import me.notlewx.privategames.listeners.bwproxy2023.ProxyReceiveListener;
 import me.notlewx.privategames.messaging.redis.ProxyListener;
 import me.notlewx.privategames.messaging.socket.ProxySocket;
 import me.notlewx.privategames.support.Support;
@@ -64,15 +66,9 @@ public class BedWarsProxy2023 {
 
     private void registerListeners() {
         Utility.info("&eLoading listeners...");
-        if (bwProxyConfig.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("socket")) {
-            try {
-                new ProxySocket().start(mainConfig.getInt("port"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } else if (bwProxyConfig.getString("bungeecord-settings.messaging-protocol").equalsIgnoreCase("redis")) {
-            pl.getServer().getPluginManager().registerEvents(new ProxyListener(), pl);
-        }
+        pl.getServer().getPluginManager().registerEvents(new ProxyListener(), pl);
+        pl.getServer().getPluginManager().registerEvents(new ArenaJoin(), pl);
+        pl.getServer().getPluginManager().registerEvents(new ProxyReceiveListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new CommandListener(), pl);
         Utility.info("&eListeners loaded successfully");
     }

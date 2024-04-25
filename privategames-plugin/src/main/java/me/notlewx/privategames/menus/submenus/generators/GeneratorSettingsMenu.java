@@ -26,6 +26,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
     private final Player p;
     private final Object gen;
     private Inventory inv;
+
     public GeneratorSettingsMenu(Player p, Object gen) {
         this.p = p;
         this.gen = gen;

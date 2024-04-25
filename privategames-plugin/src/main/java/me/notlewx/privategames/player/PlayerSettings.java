@@ -6,6 +6,7 @@ import me.notlewx.privategames.api.events.PrivateGameEnableEvent;
 import me.notlewx.privategames.api.events.PrivateSettingUpdateEvent;
 import me.notlewx.privategames.api.modifiers.ModifierType;
 import me.notlewx.privategames.api.player.IPlayerSettings;
+import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -29,7 +30,9 @@ public class PlayerSettings implements IPlayerSettings {
 
     public PlayerSettings(OfflinePlayer player)  {
         this.player = player;
-        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getInstance(), () -> {
+        Utility.debug("Creating PlayerSettings for " + player.getName());
+        Bukkit.getScheduler().runTask(PrivateGames.getInstance(), () -> {
+            Utility.debug("Loading PlayerSettings for " + player.getName());
             privateGameEnabled = Boolean.parseBoolean(database.getData(player, "privateGameEnabled"));
             oneHitOneKill = Boolean.parseBoolean(database.getData(player, "oneHitOneKill"));
             lowGravity = Boolean.parseBoolean(database.getData(player, "lowGravity"));
@@ -42,7 +45,21 @@ public class PlayerSettings implements IPlayerSettings {
             healthBuff = Integer.parseInt(database.getData(player, "healthBuffLevel"));
             eventsTime = Integer.parseInt(database.getData(player, "eventsTime"));
             speed = Integer.parseInt(database.getData(player, "speed"));
+            Utility.debug("privateGameEnabled: " + privateGameEnabled);
+            Utility.debug("oneHitOneKill: " + oneHitOneKill);
+            Utility.debug("lowGravity: " + lowGravity);
+            Utility.debug("bedInstaBreak: " + bedInstaBreak);
+            Utility.debug("maxTeamUpgrades: " + maxTeamUpgrades);
+            Utility.debug("allowMapBreak: " + allowMapBreak);
+            Utility.debug("noDiamonds: " + noDiamonds);
+            Utility.debug("noEmeralds: " + noEmeralds);
+            Utility.debug("respawnEventTime: " + respawnTime);
+            Utility.debug("healthBuffLevel: " + healthBuff);
+            Utility.debug("eventsTime: " + eventsTime);
+            Utility.debug("speed: " + speed);
+            Utility.debug("PlayerSettings for " + player.getName() + " has been loaded.");
         });
+        Utility.debug("PlayerSettings for " + player.getName() + " has been created.");
     }
 
     @Override
@@ -228,7 +245,8 @@ public class PlayerSettings implements IPlayerSettings {
 
     @Override
     public void save() {
-        Bukkit.getScheduler().runTaskAsynchronously(PrivateGames.getInstance(), () -> {
+        Utility.debug("Saving PlayerSettings for " + player.getName());
+        Bukkit.getScheduler().runTask(PrivateGames.getInstance(), () -> {
             database.setData(player, "privateGameEnabled", String.valueOf(privateGameEnabled));
             database.setData(player, "oneHitOneKill", String.valueOf(oneHitOneKill));
             database.setData(player, "lowGravity", String.valueOf(lowGravity));
@@ -241,6 +259,19 @@ public class PlayerSettings implements IPlayerSettings {
             database.setData(player, "healthBuffLevel", String.valueOf(healthBuff));
             database.setData(player, "eventsTime", String.valueOf(eventsTime));
             database.setData(player, "speed", String.valueOf(speed));
+            Utility.debug("privateGameEnabled: " + privateGameEnabled);
+            Utility.debug("oneHitOneKill: " + oneHitOneKill);
+            Utility.debug("lowGravity: " + lowGravity);
+            Utility.debug("bedInstaBreak: " + bedInstaBreak);
+            Utility.debug("maxTeamUpgrades: " + maxTeamUpgrades);
+            Utility.debug("allowMapBreak: " + allowMapBreak);
+            Utility.debug("noDiamonds: " + noDiamonds);
+            Utility.debug("noEmeralds: " + noEmeralds);
+            Utility.debug("respawnEventTime: " + respawnTime);
+            Utility.debug("healthBuffLevel: " + healthBuff);
+            Utility.debug("eventsTime: " + eventsTime);
+            Utility.debug("speed: " + speed);
+            Utility.debug("PlayerSettings for " + player.getName() + " has been saved.");
         });
     }
 }

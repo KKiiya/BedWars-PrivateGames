@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.stream.Collectors;
 
+import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
@@ -28,7 +29,7 @@ public class SpeedMenu implements GUIHolder {
 
     public SpeedMenu(Player p) {
         this.player = p;
-        playerData = new PrivatePlayer(player).getPlayerSettings();
+        playerData = api.getPrivatePlayer(p).getPlayerSettings();
         try {
             createInventory();
             addContents();

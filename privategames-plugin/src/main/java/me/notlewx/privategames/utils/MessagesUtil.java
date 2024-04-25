@@ -20,26 +20,13 @@ public class MessagesUtil {
     private static void sendMsg(String message) throws IOException {
         switch (support) {
             case BEDWARS2023:
-                if (api.getBedWars2023API().getServerType() == com.tomkeuper.bedwars.api.server.ServerType.BUNGEE) {
-                    switch (bw2023config.getString("bungeecord-settings.messaging-protocol")) {
-                        case "redis":
-                            api.getBedWars2023API().getRedisClient().sendMessage(new JsonParser().parse(message).getAsJsonObject(), "private-games");
-                            break;
-                        case "socket":
-                            new ArenasSocket().sendMessage(message);
-                            break;
-                    }
+                if (getBw2023Api().getServerType() == com.tomkeuper.bedwars.api.server.ServerType.BUNGEE) {
+                    api.getBedWars2023API().getRedisClient().sendMessage(new JsonParser().parse(message).getAsJsonObject(), "private-games");
                 }
+
                 break;
             case BEDWARSPROXY2023:
-                switch (bwProxyConfig.getString("bungeecord-settings.messaging-protocol")) {
-                    case "redis":
-                        BedWarsProxy.getRedisConnection().sendMessage(new JsonParser().parse(message).getAsJsonObject(), "private-games");
-                        break;
-                    case "socket":
-                        ProxySocket.getInstance().sendMessage(message);
-                        break;
-                }
+                BedWarsProxy.getRedisConnection().sendMessage(new JsonParser().parse(message).getAsJsonObject(), "private-games");
                 break;
             case BEDWARS1058:
                 if (getBw1058Api().getServerType() == ServerType.BUNGEE) {

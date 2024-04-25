@@ -24,6 +24,7 @@ public class GeneratorsMenu implements GUIHolder {
     private Inventory inv;
     private final Player p;
     private final HashMap<Integer, Object> generatorPos;
+
     public GeneratorsMenu(Player p) {
         this.p = p;
         generatorPos = new HashMap<>();

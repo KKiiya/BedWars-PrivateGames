@@ -37,7 +37,7 @@ public class SettingsMenu implements GUIHolder {
 
     public SettingsMenu(Player p) {
         this.player = p;
-        playerData = new PrivatePlayer(player).getPlayerSettings();
+        playerData = api.getPrivatePlayer(p).getPlayerSettings();
         try {
             createInventory();
             addContents(inventory);

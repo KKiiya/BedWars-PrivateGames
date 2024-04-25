@@ -4,6 +4,7 @@ C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\PlayerJoin.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\PrivateGames.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars1058\ArenaLeave.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwarsproxy\ArenaJoin.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\menus\GUIHolder.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\player\PlayerOptions.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\utils\MessagesUtil.java
@@ -17,6 +18,7 @@ C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars2023\PrivateArenaListener.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\party\Party.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\utils\Utility.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bwproxy2023\ProxyReceiveListener.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\utils\GeneratorProperties.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars2023\StatsListener.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\PlayerLeave.java
@@ -25,6 +27,7 @@ C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\database\providers\MySQL.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\API.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\menus\submenus\GamemodeChangerMenu.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\events\ProxyMessageReceiveEvent.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\menus\submenus\generators\GeneratorsMenu.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\commands\proxy2023\MainCommand.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\messaging\socket\tasks\ArenaSocketTask.java
@@ -37,6 +40,7 @@ C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\config\proxy2023\MessagesData.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\player\PrivatePlayer.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\support\bedwars1058\BedWarsProxy.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars2023\ArenaReceiveListener.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\PlayerInteraction.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\database\providers\SQLite.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\config\proxy\MessagesData.java
@@ -49,13 +53,17 @@ C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\party\handlers\BedWars1058PARTY.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\config\MainConfig.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars1058\ScoreboardListener.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwarsproxy\ProxyReceiveListener.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\PrivateArenaJoin.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars2023\ArenaLeave.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bwproxy2023\ArenaJoin.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\menus\submenus\EventsTimeMenu.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\support\bedwars2023\BW2023Addon.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\messaging\socket\tasks\ProxySocketTask.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\events\ArenasMessageReceiveEvent.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\config\bedwars1058\MessagesData.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\support\Support.java
+C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars1058\ArenaReceiveListener.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars2023\ArenaJoin.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\commands\bedwars1058\MainCommand.java
 C:\Users\Kiiya\Documents\GitHub\BedWars1058-PrivateGames\privategames-plugin\src\main\java\me\notlewx\privategames\listeners\bedwars2023\CommandListener.java

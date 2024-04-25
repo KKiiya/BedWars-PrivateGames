@@ -79,7 +79,7 @@ public class MySQL implements Database {
             db.setConnectionTimeout(480000000L);
             db.setMaximumPoolSize(10);
 
-            if (version.contains("v1_8")) db.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+            if (version.contains("v1_8") || version.contains("v1_12")) db.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
             else db.setDataSourceClassName("com.mysql.cj.jdbc.MysqlDataSource");
 
             db.addDataSourceProperty("serverName", this.host);

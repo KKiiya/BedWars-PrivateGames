@@ -24,7 +24,6 @@ public class SQLite implements Database {
         Utility.info("&aConnecting to your database...");
         this.connection = getConnection();
         Utility.info("&aConnected successfully to your database!");
-
         Utility.info("&eCreating tables...");
         try {
             Statement statement = getConnection().createStatement();
@@ -50,8 +49,7 @@ public class SQLite implements Database {
                 throw new RuntimeException(e);
             }
         try {
-            if (connection != null && !connection.isClosed())
-                return connection;
+            if (connection != null && !connection.isClosed()) return connection;
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
             return connection;
@@ -61,39 +59,25 @@ public class SQLite implements Database {
     }
 
     public String getData(OfflinePlayer player, String column) {
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement("SELECT * FROM bedwars_private_games WHERE player = ?")) {
-            ps.setString(1, player.getUniqueId().toString());
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return rs.getString(column);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-
-        /*
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("SELECT * FROM bedwars_private_games WHERE player = '" + player.getUniqueId().toString() + "';");
+            ps = conn.prepareStatement("SELECT * FROM bedwars_private_games WHERE player = ?");
+            ps.setString(1, player.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
-            if (rs.next())
-                return rs.getString(column);
+            if (rs.next()) return rs.getString(column);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                if (ps != null)
-                    ps.close();
-                if (conn != null)
-                    conn.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return null;
-            */
     }
 
     public void setData(OfflinePlayer player, String column, String value) {
@@ -118,38 +102,34 @@ public class SQLite implements Database {
             ps = connection.prepareStatement("SELECT * FROM bedwars_private_games WHERE player = '" + p.getUniqueId().toString() + "'");
             ResultSet rs = ps.executeQuery();
             String player = null;
-            if (rs.next())
-                player = rs.getString("player");
-            if (player != null) {
-            }
-            else {
-                connection = getConnection();
-                ps = connection.prepareStatement("INSERT INTO bedwars_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime, autoStart, allowJoin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                ps.setString(1, p.getUniqueId().toString());
-                ps.setString(2, "false");
-                ps.setString(3, "false");
-                ps.setString(4, "false");
-                ps.setInt(5, 0);
-                ps.setString(6, "false");
-                ps.setString(7, "false");
-                ps.setString(8, "false");
-                ps.setString(9, "false");
-                ps.setString(10, "false");
-                ps.setInt(11, 0);
-                ps.setInt(12, 0);
-                ps.setInt(13, 0);
-                ps.setString(14, "true");
-                ps.setString(15, "true");
-                ps.executeUpdate();
-            }
+
+            if (rs.next()) player = rs.getString("player");
+            if (player != null) return;
+
+            connection = getConnection();
+            ps = connection.prepareStatement("INSERT INTO bedwars_private_games(player, privateGameEnabled, oneHitOneKill, lowGravity, speed, bedInstaBreak, maxTeamUpgrades, allowMapBreak, noDiamonds, noEmeralds, respawnEventTime, healthBuffLevel, eventsTime, autoStart, allowJoin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps.setString(1, p.getUniqueId().toString());
+            ps.setString(2, "false");
+            ps.setString(3, "false");
+            ps.setString(4, "false");
+            ps.setInt(5, 0);
+            ps.setString(6, "false");
+            ps.setString(7, "false");
+            ps.setString(8, "false");
+            ps.setString(9, "false");
+            ps.setString(10, "false");
+            ps.setInt(11, 0);
+            ps.setInt(12, 0);
+            ps.setInt(13, 0);
+            ps.setString(14, "true");
+            ps.setString(15, "true");
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                if (ps != null)
-                    ps.close();
-                if (connection != null)
-                    connection.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

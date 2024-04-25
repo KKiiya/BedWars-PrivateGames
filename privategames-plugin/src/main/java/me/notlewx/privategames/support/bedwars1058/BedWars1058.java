@@ -71,10 +71,13 @@ public class BedWars1058 {
         pl.getServer().getPluginManager().registerEvents(new ScoreboardListener(), pl);
         pl.getServer().getPluginManager().registerEvents(new CommandListener(), pl);
         if (api.getBedWars1058API().getServerType() == ServerType.BUNGEE) {
+            pl.getServer().getPluginManager().registerEvents(new ArenaReceiveListener(), pl);
             for (String connection : mainConfig.getList("lobby-sockets")) {
                 String[] split = connection.split(":");
                 try {
-                    new ArenasSocket().startConnection(split[0], Integer.parseInt(split[1]));
+                    String ip = split[0];
+                    int port = Integer.parseInt(split[1]);
+                    new ArenasSocket().startConnection(ip, port);
                 } catch (Exception e) {
                     Utility.info("&cError while connecting to socket: " + e.getMessage());
                 }

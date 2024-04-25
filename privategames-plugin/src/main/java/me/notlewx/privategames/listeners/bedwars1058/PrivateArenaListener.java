@@ -225,46 +225,47 @@ public class PrivateArenaListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerSpawn(GameStateChangeEvent e) {
         if (e.getNewState() != GameState.playing) return;
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
+        IArena a = e.getArena();
+        if (!api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) return;
 
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).getPrivateArenaHost();
-        IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
+        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName()).getPrivateArenaHost();
+        IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
 
         privateArena.getPlayers().forEach(p -> Utility.giveLongJump((Player) p));
         privateArena.getPlayers().forEach(p -> Utility.giveHealthBuff((Player) p));
         privateArena.getPlayers().forEach(p -> Utility.giveSpeedLevel((Player) p));
 
         if (pp.getPlayerSettings().isNoEmeraldsEnabled()) {
-            for (IGenerator gen : e.getArena().getOreGenerators()) {
+            for (IGenerator gen : a.getOreGenerators()) {
                 if (gen.getType() != GeneratorType.EMERALD) continue;
                 gen.destroyData();
             }
-            e.getArena().getOreGenerators().removeIf(g -> g.getType() == GeneratorType.EMERALD);
-            e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_II");
-            e.getArena().getNextEvents().remove("EMERALD_GENERATOR_TIER_III");
+            a.getOreGenerators().removeIf(g -> g.getType() == GeneratorType.EMERALD);
+            a.getNextEvents().remove("EMERALD_GENERATOR_TIER_II");
+            a.getNextEvents().remove("EMERALD_GENERATOR_TIER_III");
         }
 
         if (pp.getPlayerSettings().isNoDiamondsEnabled()) {
-            for (IGenerator gen : e.getArena().getOreGenerators()) {
+            for (IGenerator gen : a.getOreGenerators()) {
                 if (gen.getType() != GeneratorType.DIAMOND) continue;
                 gen.destroyData();
             }
-            e.getArena().getOreGenerators().removeIf(g -> g.getType() == GeneratorType.DIAMOND);
-            e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_II");
-            e.getArena().getNextEvents().remove("DIAMOND_GENERATOR_TIER_III");
+            a.getOreGenerators().removeIf(g -> g.getType() == GeneratorType.DIAMOND);
+            a.getNextEvents().remove("DIAMOND_GENERATOR_TIER_II");
+            a.getNextEvents().remove("DIAMOND_GENERATOR_TIER_III");
         }
 
         if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) {
-            upgradeTeams(e.getArena());
+            upgradeTeams(a);
         }
 
         if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {
-            if (e.getArena().getConfig().getBoolean("allow-map-break")) {
-                e.getArena().getConfig().set("allow-map-break", true);
+            if (a.isAllowMapBreak()) {
+                a.setAllowMapBreak(false);
             }
         } else {
-            if (e.getArena().getConfig().getBoolean("allow-map-break")) {
-                e.getArena().getConfig().set("allow-map-break", false);
+            if (!a.isAllowMapBreak()) {
+                a.setAllowMapBreak(true);
             }
         }
     }
@@ -323,9 +324,9 @@ public class PrivateArenaListener implements Listener {
         Player p = e.getPlayer();
 
         if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
-            p.setMaxHealth(20.0);
             p.setHealth(20.0);
             p.setHealthScale(20.0);
+            p.setMaxHealth(20.0);
         }
     }
 
