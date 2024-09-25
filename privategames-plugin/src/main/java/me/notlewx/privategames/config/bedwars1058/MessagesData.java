@@ -417,6 +417,205 @@ public class MessagesData {
                         }
                     }
                     break;
+                // Brazilian portuguese. Special thanks to zypj.
+                case "pt":
+                    yml.addDefault(HELP_MESSAGE, Arrays.asList(
+                            "&8&m-----------------------------------------------------",
+                            "&6Private Games &7- &eAjuda &7- &8Autor: Kiiya, Versão: 1.1.6",
+                            "",
+                            "&7- &e/pg gui &7- &aAbrir o menu de jogos privados",
+                            "&7- &e/pg enable &7- &aAtivar os jogos privados",
+                            "&7- &e/pg disable &7- &aDesativar os jogos privados",
+                            "&7- &e/pg join &7- &aEntrar nos jogos privados de algum jogador",
+                            "&7- &e/pg accept &7- &aAceitar o último convite recebido",
+                            "&7- &e/pg deny &7- &aNegar o último convite recebido",
+                            "&7- &e/pg accept &7- &aAceitar o convite de um jogador específico",
+                            "&7- &e/pg deny &7- &aNegar o convite de um jogador específico",
+                            "&8&m-----------------------------------------------------"
+                    ));
+                    yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
+                            "&8&m-----------------------------------------------------",
+                            "&6Private Games &7- &eAjuda de Admin &7- &8Autor: Kiiya, Versão: 1.1.6",
+                            "",
+                            "&7- &e/pg reload &7- &aRecarregar mensagens",
+                            "&7- &e/pg enable admin &7- &aAtivar os jogos privados pra você (party também)",
+                            "&7- &e/pg disable admin &7- &aAtivar os jogos privados pra você (party também)",
+                            "&8&m-----------------------------------------------------"
+                    ));
+                    yml.addDefault(MAIN_MENU_NAME, "&8Configurações Jogos Privados");
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPreferências de Jogos Privados");
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Abra esse menu para configurar os", "&7jogos privados com 11 configurações diferentes!"));
+                    yml.addDefault(MENU_SELECTED_MEANING, "&aSelecionado!");
+                    yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eClique para Selecionar!");
+                    yml.addDefault(PRIVATE_GAME_NOT_IN_PARTY, "&cVocê não está em uma party!");
+                    yml.addDefault(PRIVATE_GAME_ENABLED, "&aVocê ativou os jogos privados");
+                    yml.addDefault(PRIVATE_GAME_ENABLED_OTHERS, "&a{player} ativou os jogos privados");
+                    yml.addDefault(PRIVATE_GAME_DISABLED, "&cVocê desativou os jogos privados");
+                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c{player} desativou os jogos privados");
+                    yml.addDefault(PRIVATE_GAME_NOT_OWNER, "&cVocê não é dono de uma party!");
+                    yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cVocê não tem permissão para usar esse comando!");
+                    yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cOs jogos privados já estão ativados!");
+                    yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cOs jogos privados já estão desativados!");
+                    yml.addDefault(PRIVATE_GAME_UNABLE_TO_JOIN, "&cVocê não pode entrar nesta arena! Você está com os Jogos Privados ativados e essa arena não está vazia!");
+                    yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cVocê não pode entrar nos jogos privados desse jogador!");
+                    yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cVocê não pode fazer isso em jogo!");
+                    yml.addDefault(PRIVATE_GAME_CANT_JOIN_SELF, "&cVocê não pode entrar no seu próprio jogos privados!");
+                    yml.addDefault(PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER, "&7[P]");
+                    yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lativou os algumas modificações!", "{modifiers}", "&6-----------------------------------------------------"));
+                    yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
+                    yml.addDefault(PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT, "&6- {modifier}: &e{selected}");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED, Arrays.asList(
+                            "&6&m-----------------------------------------------------",
+                            "&e{player} &7pediu para entrar no seu jogo!",
+                            "{buttons}",
+                            "&6&m-----------------------------------------------------"));
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_SENT,
+                            "&6&m-----------------------------------------------------\n" +
+                                    "&7Você pediu para entrar no jogo privado de &e{player}!\n" +
+                                    "&6&m-----------------------------------------------------\n");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT, "&a&lAceitar");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER, "&aClique para aceitar!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY, "&c&lNegar");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY_HOVER, "&cClique para negar!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED, "&cVocê negou o pedido de &e{player}!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED, "&aVocê aceitou o pedido de &e{player}!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER, "&a&l{player} &aaceitou seu pedido!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED_REQUESTER, "&c&l{player} &cnegou seu pedido!");
+                    yml.addDefault(MENU_BACK_ITEM_NAME, "&aVoltar");
+                    yml.addDefault(MENU_BACK_ITEM_LORE, List.of("&7Volte para sua gameplay"));
+                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aUm golpe, uma morte");
+                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_LORE, Arrays.asList("&7Selecione quais itens devem", "&7matar instantaneamente os inimigos", "", "{state}"));
+                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_NAME, "&aAumento de Vida");
+                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_LORE, Arrays.asList("&7Aumente a vida de todos os jogadores", "", "&aAtualmente Selecionado: &7{selected}"));
+                    yml.addDefault(ITEM_LOW_GRAVITY_NAME, "&aGravidade Baixa");
+                    yml.addDefault(ITEM_LOW_GRAVITY_LORE, Arrays.asList("&7Experimente gravidade baixa... também", "&7conhecido como aumento de pulo", "", "{state}"));
+                    yml.addDefault(ITEM_SPEED_NAME, "&aVelocidade");
+                    yml.addDefault(ITEM_SPEED_LORE, Arrays.asList("&7Tem que ir rápido!", "", "&aAtualmente Selecionado: &7{selected}"));
+                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_NAME, "&aTempo de Respawn");
+                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_LORE, Arrays.asList("&8Específico do Jogo", "", "&7Modifique o tempo de respawn dos jogadores", "", "&aAtualmente selecionado: &7{selected}"));
+                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_NAME, "&aTempo dos Eventos");
+                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_LORE, Arrays.asList("&8Específico do Jogo", "", "&7Modifique o tempo dos eventos.", "", "&aAtualmente selecionado: &7{selected}"));
+                    yml.addDefault(ITEM_NO_EMERALDS_NAME, "&aSem Esmeraldas");
+                    yml.addDefault(ITEM_NO_EMERALDS_LORE, Arrays.asList("&8Específico do Jogo", "", "&7Acabe com essas esmeraldas rápidas", "", "{state}"));
+                    yml.addDefault(ITEM_NO_DIAMONDS_NAME, "&aSem Diamantes");
+                    yml.addDefault(ITEM_NO_DIAMONDS_LORE, Arrays.asList("&8Específico do Jogo", "", "&7Que se dane essas coisas brilhantes", "", "{state}"));
+                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_NAME, "&aDesabilitar Proteção de Blocos");
+                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_LORE, Arrays.asList("&8Específico do Jogo", "", "&7Permitir que os jogadores quebrem qualquer", "&7bloco, exceto blocos ao redor", "&7dos geradores e pontos de spawn.", "", "{state}"));
+                    yml.addDefault(ITEM_BED_INSTA_BREAK_NAME, "&aQuebra Instantânea de Cama");
+                    yml.addDefault(ITEM_BED_INSTA_BREAK_LORE, Arrays.asList("&8Específico do Jogo", "", "&7Camas se quebram com um único soco", "", "{state}"));
+                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_NAME, "&aMelhorias Máximas da Equipe");
+                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8Específico do Jogo", "", "&7Todas as equipes começarão com as", "&7melhorias máximas da equipe", "", "{state}"));
+                    yml.addDefault(ITEM_OPTIONS_NAME, "&aOpções");
+                    yml.addDefault(ITEM_OPTIONS_LORE, Arrays.asList("&7Clique aqui para abrir as opções da arena", "", "&7Neste menu você pode configurar", "&7atributos da arena e suas configurações", "", "&eClique para abrir!"));
+                    yml.addDefault(ITEM_START_NAME, "&aIniciar");
+                    yml.addDefault(ITEM_START_LORE, Arrays.asList("&7Clique aqui para iniciar o jogo", "", "&7Você pode iniciar o jogo se for", "&7o dono da festa", "", "&eClique para iniciar!"));
+                    yml.addDefault(ITEM_GAMEMODE_CHANGER_NAME, "&aAlterador de Modo de Jogo");
+                    yml.addDefault(ITEM_GAMEMODE_CHANGER_LORE, Arrays.asList("&7Clique aqui para alterar o modo de jogo", "", "&7Você pode alterar o modo de jogo se for", "&7o dono da festa", "", "&7Atual: &a{state}", "&7Padrão: &e{default}", "", "&cClique com o botão direito para definir o modo de jogo padrão", "&eClique com o botão esquerdo para mudar!"));
+                    yml.addDefault(SUBMENU_SPEED_NAME, "&8Velocidade");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aSem Velocidade");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_II_NAME, "&aVelocidade I");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_II_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_III_NAME, "&aVelocidade II");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_III_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_NAME, "&aVelocidade III");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_LORE, List.of("{state}"));
+                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_NAME, "&aVoltar");
+                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_LORE, List.of("&7Voltar para o menu de configurações"));
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_NAME, "&8Aumento de Vida");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_NAME, "&aVida Normal");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_NAME, "&aVida Dupla");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_NAME, "&aVida Tripla");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_LORE, List.of("{state}"));
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_NAME, "&aVoltar");
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_LORE, List.of("&7Voltar para o menu de configurações"));
+                    yml.addDefault(SUBMENU_EVENTS_TIME_NAME, "&8Tempo dos Eventos");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_NAME, "&ax0.5 - Mais Lento");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_NAME, "&ax1 - Normal");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_NAME, "&ax2 - Rápido");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_NAME, "&ax4 - Mais Rápido");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_LORE, List.of("{state}"));
+                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_NAME, "&aVoltar");
+                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_LORE, List.of("&7Voltar para o menu de configurações"));
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_NAME, "&8Tempo de Respawn");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_NAME, "&a1 Segundo");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_NAME, "&a5 Segundos");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_NAME, "&a10 Segundos");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_LORE, List.of("{state}"));
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME, "&aVoltar");
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_LORE, List.of("&7Voltar para o menu de configurações"));
+                    yml.addDefault(SUBMENU_OPTIONS_GENERATORS_NAME, "&bGeradores");
+                    yml.addDefault(SUBMENU_OPTIONS_GENERATORS_LORE, Arrays.asList("&7Clique aqui para abrir os geradores da arena", "", "&7Configure os atributos dos geradores aqui", "", "&eClique para abrir!"));
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aHabilitado");
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cDesabilitado");
+                    yml.addDefault(NO_SPEED_MEANING, "&7Sem velocidade");
+                    yml.addDefault(SPEED_I_MEANING, "&7Velocidade I");
+                    yml.addDefault(SPEED_II_MEANING, "&7Velocidade II");
+                    yml.addDefault(SPEED_III_MEANING, "&7Velocidade III");
+                    yml.addDefault(NORMAL_HEALTH_MEANING, "&7Vida Normal");
+                    yml.addDefault(DOUBLE_HEALTH_MEANING, "&7Vida Dupla");
+                    yml.addDefault(TRIPLE_HEALTH_MEANING, "&7Vida Tripla");
+                    yml.addDefault(RESPAWN_EVENT_TIME_I_MEANING, "&71 Segundo");
+                    yml.addDefault(RESPAWN_EVENT_TIME_II_MEANING, "&75 Segundos");
+                    yml.addDefault(RESPAWN_EVENT_TIME_III_MEANING, "&710 Segundos");
+                    yml.addDefault(EVENTS_TIME_SLOWER_MEANING, "&7x0.5 - Devagar");
+                    yml.addDefault(EVENTS_TIME_NORMAL_MEANING, "&7x1 - Normal");
+                    yml.addDefault(EVENTS_TIME_FAST_MEANING, "&7x2 - Rápido");
+                    yml.addDefault(EVENTS_TIME_FASTER_MEANING, "&7x4 - Mais Rápido");
+                    yml.addDefault(ONE_HIT_ONE_KILL_MEANING, "&7Um golpe, uma morte");
+                    yml.addDefault(BED_INSTA_BREAK_MEANING, "&7Quebra Instantânea de Cama");
+                    yml.addDefault(LOW_GRAVITY_MEANING, "&7Gravidade Baixa");
+                    yml.addDefault(MAX_TEAM_UPGRADES_MEANING, "&7Melhorias Máximas da Equipe");
+                    yml.addDefault(ALLOW_MAP_BREAK_MEANING, "&7Permitir Quebra do Mapa");
+                    yml.addDefault(NO_DIAMONDS_MEANING, "&7Sem Diamantes");
+                    yml.addDefault(NO_EMERALDS_MEANING, "&7Sem Esmeraldas");
+                    yml.addDefault(HEALTH_BUFF_MEANING, "&7Aumento de Vida");
+                    yml.addDefault(SPEED_MEANING, "&7Velocidade");
+                    yml.addDefault(EVENTS_TIME_MEANING, "&7Tempo dos Eventos");
+                    yml.addDefault(RESPAWN_EVENT_TIME_MEANING, "&7Tempo de Respawn");
+                    yml.addDefault(SUBMENU_GAMEMODE_CHANGER_TITLE, "&8Alterador de Modo de Jogo");
+                    yml.addDefault(SUBMENU_OPTIONS_TITLE, "Opções");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_NAME, "&aHabilitar Início Automático");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE, Arrays.asList("&7Habilitar o início automático do jogo", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME, "&aPermitir Outros a Entrar");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE, Arrays.asList("&7Permitir que outros entrem no seu jogo", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME, "&aHabilitar Jogos Privados");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE, Arrays.asList("&7Habilitar jogos privados", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_BACK_NAME, "&aVoltar");
+                    yml.addDefault(SUBMENU_OPTIONS_BACK_LORE, List.of("&7Voltar para o menu de configurações"));
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_TITLE, "Geradores da Arena");
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_ITEM_LORE, Arrays.asList("&7Equipe: {team}", "&7Localização: {location}", "&7Quantidade: {amount}", "&7Atraso: {delay}", "§7Limite de Geração: {spawnLimit}"));
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_TITLE, "Opções de Geradores");
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME, "&aVoltar");
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE, List.of("&7Voltar para o menu de opções"));
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_NAME, "&aVoltar");
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_LORE, List.of("&7Voltar para o menu de geradores"));
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aHabilitado");
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cDesabilitado");
+                    yml.addDefault(MENU_CLICK_TO_START_MEANING, "&eClique para iniciar!");
+                    yml.addDefault(MENU_STARTING_MEANING, "&aIniciando...");
+
+                    if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu") != null) {
+                        for (String p : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu").getKeys(false)) {
+                            for (String group : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + p + ".modes").getKeys(false)) {
+                                if (group.equals("back-item")) {
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&aVoltar");
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", List.of("&7Volte para configurações"));
+                                } else {
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&a" + group);
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", Arrays.asList("&7Clique aqui para mudar o modo de jogo", "", "&7Você pode mudar o modo de jogo se", "&7for o dono da party", "", "&eClique aqui para mudar!"));
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
             l.getYml().options().copyDefaults(true);
             l.save();

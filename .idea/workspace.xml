@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="28c61859-df31-45b6-b215-f5d5f51d848b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-api/src/main/java/me/notlewx/privategames/api/arena/IPrivateArena.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-api/src/main/java/me/notlewx/privategames/api/arena/IPrivateArena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/database/providers/MySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/database/providers/MySQL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/ArenaJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/ArenaJoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/PrivateArenaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars1058/PrivateArenaListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/ArenaJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/ArenaJoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/PrivateArenaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/PrivateArenaListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/StatsListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/listeners/bedwars2023/StatsListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/bedwars1058/MessagesData.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/bedwars1058/MessagesData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/bedwars2023/MessagesData.java" beforeDir="false" afterPath="$PROJECT_DIR$/privategames-plugin/src/main/java/me/notlewx/privategames/config/bedwars2023/MessagesData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
