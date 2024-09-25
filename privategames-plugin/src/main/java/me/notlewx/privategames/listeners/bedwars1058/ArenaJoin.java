@@ -59,8 +59,9 @@ public class ArenaJoin implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onArenaJoin(PlayerJoinArenaEvent e) {
-        IPrivatePlayer pp = PrivateGames.api.getPrivatePlayer(e.getPlayer());
-        IPlayerSettings p = pp.getPlayerSettings();
+        Player p = e.getPlayer();
+        IPrivatePlayer pp = PrivateGames.api.getPrivatePlayer(p);
+        IPlayerSettings ps = pp.getPlayerSettings();
         IArena a = e.getArena();
         IParty party = pp.getPlayerParty();
 
@@ -71,10 +72,10 @@ public class ArenaJoin implements Listener {
         settings.setItemMeta(settingsMeta);
 
         Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
-            ISidebar sidebar = SidebarService.getInstance().getSidebar(e.getPlayer());
+            ISidebar sidebar = SidebarService.getInstance().getSidebar(p);
             sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
-                if (api.getPrivateArenaUtil().isPlaying(e.getPlayer())) {
-                    return Utility.getMsg(e.getPlayer(), PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
+                if (api.getPrivateArenaUtil().isPlaying(p)) {
+                    return Utility.getMsg(p, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
                 } else {
                     return "";
                 }
@@ -82,12 +83,12 @@ public class ArenaJoin implements Listener {
             sidebar.getHandle().refreshPlaceholders();
         }, 20L);
 
-        if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
+        if (api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
             Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                 IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
                 IPrivatePlayer ppa = pa.getPrivateArenaHost();
-                if (ppa.getRequests().contains(e.getPlayer().getUniqueId())) {
-                    ppa.removeRequest(e.getPlayer().getUniqueId());
+                if (ppa.getRequests().contains(p.getUniqueId())) {
+                    ppa.removeRequest(p.getUniqueId());
                     if (pa.getPlayers().size() == a.getMaxPlayers()) return;
 
                     api.getBedWars1058API().getArenaUtil().getArenas().remove(a);
@@ -96,42 +97,42 @@ public class ArenaJoin implements Listener {
 
             Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
                 IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
-                if (a.isSpectator(e.getPlayer()) && a.getStatus() == GameState.playing && pa.getPlayers().contains(e.getPlayer())) {
-                    if (a.getTeams().stream().anyMatch(t -> t.wasMember(e.getPlayer().getUniqueId()))) return;
+                if (a.isSpectator(p) && a.getStatus() == GameState.playing && pa.getPlayers().contains(p)) {
+                    if (a.getTeams().stream().anyMatch(t -> t.wasMember(p.getUniqueId()))) return;
 
                     for (ITeam team : a.getTeams()) {
                         if (team.getSize() == a.getMaxInTeam()) continue;
 
-                        e.getPlayer().getActivePotionEffects().forEach(potionEffect -> e.getPlayer().removePotionEffect(potionEffect.getType()));
-                        e.getPlayer().setAllowFlight(false);
-                        e.getPlayer().setFlying(false);
-                        a.getSpectators().remove(e.getPlayer());
-                        a.getPlayers().add(e.getPlayer());
+                        p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
+                        p.setAllowFlight(false);
+                        p.setFlying(false);
+                        a.getSpectators().remove(p);
+                        a.getPlayers().add(p);
                         if (team.getMembers().isEmpty()) {
                             team.spawnNPCs();
                         }
-                        team.addPlayers(e.getPlayer());
+                        team.addPlayers(p);
                         spawnBed(team);
                         team.setBedDestroyed(false);
-                        e.getPlayer().getInventory().clear();
-                        e.getPlayer().getInventory().forEach(itemStack -> {
+                        p.getInventory().clear();
+                        p.getInventory().forEach(itemStack -> {
                             if (itemStack != null) {
                                 if (itemStack.getType() != Material.AIR) {
-                                    e.getPlayer().getInventory().remove(itemStack);
+                                    p.getInventory().remove(itemStack);
                                 }
                             }
                         });
-                        team.respawnMember(e.getPlayer());
+                        team.respawnMember(p);
 
-                        new PlayerQuickBuyCache(e.getPlayer());
-                        new ShopCache(e.getPlayer().getUniqueId());
-                        e.getPlayer().setGameMode(GameMode.SURVIVAL);
-                        e.getPlayer().setAllowFlight(false);
-                        e.getPlayer().setFlying(false);
-                        e.getPlayer().closeInventory();
-                        pa.addPlayer(e.getPlayer(), true);
-                        SidebarService.getInstance().giveSidebar(e.getPlayer(), e.getArena(), true);
-                        Utility.debug("Player " + e.getPlayer().getName() + " has joined the private arena " + pa.getArenaIdentifier() + " and has been added to the host's private arena.");
+                        new PlayerQuickBuyCache(p);
+                        new ShopCache(p.getUniqueId());
+                        p.setGameMode(GameMode.SURVIVAL);
+                        p.setAllowFlight(false);
+                        p.setFlying(false);
+                        p.closeInventory();
+                        pa.addPlayer(p, true);
+                        SidebarService.getInstance().giveSidebar(p, a, true);
+                        Utility.debug("Player " + p.getName() + " has joined the private arena " + pa.getArenaIdentifier() + " and has been added to the host's private arena.");
                         break;
                     }
                 }
@@ -164,13 +165,13 @@ public class ArenaJoin implements Listener {
         }
 
         Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
-            if (p.isPrivateGameEnabled()) {
+            if (ps.isPrivateGameEnabled()) {
                 if (party.hasParty()) {
                     if (party.isOwner()) {
                         if (pp.hasPermission()) {
                             List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
 
-                            IPrivateArena pa = new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                            IPrivateArena pa = new PrivateArena(pp, players, a.getWorldName(), a.getGroup());
 
                             Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                             MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
@@ -189,7 +190,7 @@ public class ArenaJoin implements Listener {
                         Utility.info("Player " + pp.getPlayer().getName() + " is an admin and the arena has less than 2 players.");
                         List<OfflinePlayer> players = new ArrayList<>(Collections.singletonList(pp.getPlayer()));
 
-                        IPrivateArena pa =  new PrivateArena(pp, players, e.getArena().getWorldName(), e.getArena().getGroup());
+                        IPrivateArena pa =  new PrivateArena(pp, players, a.getWorldName(), a.getGroup());
 
                         Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation", pa));

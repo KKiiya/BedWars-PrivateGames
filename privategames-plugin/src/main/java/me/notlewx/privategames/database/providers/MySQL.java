@@ -76,7 +76,6 @@ public class MySQL implements Database {
 
             db = new HikariDataSource();
             db.setPoolName("PrivateGames-Pool");
-            db.setConnectionTimeout(480000000L);
             db.setMaximumPoolSize(10);
 
             if (version.contains("v1_8") || version.contains("v1_12")) db.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");

@@ -49,9 +49,10 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler
     public void onGameStart(GameStateChangeEvent e) {
+        IArena a = e.getArena();
         if (e.getNewState() != GameState.playing) return;
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).getPrivateArenaHost();
+        if (!api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) return;
+        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName()).getPrivateArenaHost();
 
 
         for (Player p : e.getArena().getPlayers()) {
@@ -174,48 +175,53 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onGeneratorUpgrade(GeneratorUpgradeEvent e) {
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getGenerator().getArena().getWorldName())) return;
+        IGenerator gen = e.getGenerator();
+        if (!api.getPrivateArenaUtil().isArenaPrivate(gen.getArena().getWorldName())) return;
 
-        IPrivateArena a = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getGenerator().getArena().getWorldName());
+        IPrivateArena a = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(gen.getArena().getWorldName());
 
         if (a == null) return;
         if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()) == null) return;
-        if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()).getProperties(e.getGenerator()) == null) return;
+        if (GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()).getProperties(gen) == null) return;
 
-        GeneratorProperties.Properties props = GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()).getProperties(e.getGenerator());
-        IGenerator gen = e.getGenerator();
+        GeneratorProperties.Properties props = GeneratorProperties.getGeneratorProperties(a.getPrivateArenaHost()).getProperties(gen);
         gen.setDelay(props.getDelay());
         gen.setAmount(props.getAmount());
         gen.setSpawnLimit(props.getSpawnLimit());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerHit(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            IArena arena = api.getBedWars1058API().getArenaUtil().getArenaByPlayer((Player) e.getDamager());
-            if (arena == null) {
-                return;
-            }
-            IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByPlayer((Player) e.getDamager());
+        Player damager = e.getDamager() instanceof Player ? (Player) e.getDamager() : null;
+        Player victim = e.getEntity() instanceof Player ? (Player) e.getEntity() : null;
+        if (damager == null || victim == null) return;
+        if (api.getBedWars1058API().getArenaUtil().getArenaByPlayer(damager) == null) return;
 
-            if (privateArena == null) return;
-            if (api.getPrivateArenaUtil().isArenaPrivate(arena.getWorldName())) {
-                if (privateArena.getPrivateArenaHost().getPlayerSettings().isOneHitOneKillEnabled()) {
-                    if (arena.getStatus() != GameState.playing) return;
-                    if (arena.isSpectator((Player) e.getDamager())) return;
-                    if (arena.isReSpawning((Player) e.getEntity())) return;
-                    if (arena.isReSpawning((Player) e.getDamager())) return;
-                    if (arena.getTeam((Player) e.getDamager()).getMembers().contains((Player) e.getEntity())) return;
-                    e.setDamage(600.0D);
-                }
-            }
-        }
+        IArena arena = api.getBedWars1058API().getArenaUtil().getArenaByPlayer((Player) e.getDamager());
+        if (arena == null) return;
+
+        IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByPlayer((Player) e.getDamager());
+        if (privateArena == null) return;
+
+        if (!api.getPrivateArenaUtil().isArenaPrivate(arena.getWorldName())) return;
+        if (!privateArena.getPrivateArenaHost().getPlayerSettings().isOneHitOneKillEnabled()) return;
+
+        if (arena.getStatus() != GameState.playing) return;
+        if (arena.isSpectator(damager)) return;
+        if (arena.isReSpawning(victim)) return;
+        if (arena.isReSpawning(damager)) return;
+        if (arena.getTeam(damager).getMembers().contains(victim)) return;
+        e.setDamage(600.0D);
     }
 
     @EventHandler
     public void onPlayerRespawn(PlayerReSpawnEvent e) {
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
-        IPrivatePlayer pp = api.getPrivatePlayer(e.getPlayer());
+        IArena a = e.getArena();
+        if (a == null) return;
+        Player p = e.getPlayer();
+
+        if (!api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) return;
+        IPrivatePlayer pp = api.getPrivatePlayer(p);
 
         Utility.giveLongJump(((Player) pp.getPlayer()));
         Utility.giveHealthBuff(((Player) pp.getPlayer()));
@@ -272,8 +278,8 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onGameEnd(GameEndEvent e) {
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
         IArena a = e.getArena();
+        if (!api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) return;
         IPrivateArena privateArena = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
 
         if (privateArena == null) return;
@@ -288,7 +294,7 @@ public class PrivateArenaListener implements Listener {
 
         JsonObject object = new JsonObject();
         object.addProperty("action", "privateArenaDeletion");
-        object.addProperty("arenaIdentifier", e.getArena().getWorldName());
+        object.addProperty("arenaIdentifier", a.getWorldName());
 
         MessagesUtil.sendMessage(object.toString());
 
@@ -299,22 +305,26 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerKillEvent e) {
-        if (api.getBedWars1058API().getArenaUtil().getArenaByPlayer(e.getVictim()) == null) return;
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
-        if (e.getArena().isSpectator(e.getVictim())) return;
-        IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName());
-        if (e.getCause().isFinalKill()) pa.removePlayer(e.getVictim());
-        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(e.getArena().getWorldName()).getPrivateArenaHost();
-        if (!pa.getPlayers().contains(e.getVictim())) return;
+        IArena a = e.getArena();
+        if (a == null) return;
+        Player victim = e.getVictim();
+
+        if (api.getBedWars1058API().getArenaUtil().getArenaByPlayer(victim) == null) return;
+        if (!api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) return;
+        if (a.isSpectator(victim)) return;
+        IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName());
+        if (e.getCause().isFinalKill()) pa.removePlayer(victim);
+        IPrivatePlayer pp = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(a.getWorldName()).getPrivateArenaHost();
+        if (!pa.getPlayers().contains(victim)) return;
         switch (pp.getPlayerSettings().getRespawnTimeLevel()) {
             case 0:
             case 2:
                 break;
             case 1:
-                e.getArena().getRespawnSessions().put(e.getVictim(), 1);
+                a.getRespawnSessions().put(victim, 1);
                 break;
             case 3:
-                e.getArena().getRespawnSessions().put(e.getVictim(), 10);
+                a.getRespawnSessions().put(victim, 10);
                 break;
         }
     }
@@ -322,8 +332,9 @@ public class PrivateArenaListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onArenaLeave(PlayerLeaveArenaEvent e) {
         Player p = e.getPlayer();
+        IArena a = e.getArena();
 
-        if (api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) {
+        if (api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
             p.setHealth(20.0);
             p.setHealthScale(20.0);
             p.setMaxHealth(20.0);
@@ -332,9 +343,10 @@ public class PrivateArenaListener implements Listener {
 
     @EventHandler
     public void onNextEvent(NextEventChangeEvent e) {
-        if (e.getArena() == null) return;
-        if (!api.getPrivateArenaUtil().isArenaPrivate(e.getArena().getWorldName())) return;
-        modifyEventTime((Arena) e.getArena());
+        IArena a = e.getArena();
+        if (a == null) return;
+        if (!api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) return;
+        modifyEventTime((Arena) a);
     }
 
     @EventHandler

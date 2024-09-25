@@ -222,6 +222,205 @@ public class MessagesData {
                         }
                     }
                     break;
+                // Vietnamese language. Special tanks to rin_25.04
+                case "vi":
+                    yml.addDefault(HELP_MESSAGE, Arrays.asList(
+                            "&8&m-----------------------------------------------------",
+                            "&6Private Games &7- &eHelp &7- &8Tác giả: Kiiya, Phiên bản: 1.1.6",
+                            "",
+                            "&7- &e/pg gui &7- &aMở menu game riêng tư",
+                            "&7- &e/pg enable &7- &aBật chế độ game riêng tư",
+                            "&7- &e/pg disable &7- &aTắt chế độ game riêng tư",
+                            "&7- &e/pg join <người chơi> &7- &aTham gia vào một game riêng tư của người chơi khác",
+                            "&7- &e/pg accept &7- &aChấp nhận yêu cầu tham gia gần nhất",
+                            "&7- &e/pg deny &7- &aTừ chối yêu cầu tham gia gần nhất",
+                            "&7- &e/pg accept <player> &7- &aChấp nhận yêu cầu tham gia của 1 người chơi",
+                            "&7- &e/pg deny <player> &7- &aTừ chối yêu cầu tham gia của 1 người chơi",
+                            "&8&m-----------------------------------------------------"
+                    ));
+                    yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
+                            "&8&m-----------------------------------------------------",
+                            "&6Private Games &7- &eAdmin Help &7- &8Tác giả: Kiiya, Phiên bản: 1.1.6",
+                            "",
+                            "&7- &e/pg reload &7- &aTải lại ngôn ngữ",
+                            "&7- &e/pg enable admin &7- &aBật chế độ game riêng tư chỉ cho bạn (party nữa)",
+                            "&7- &e/pg disable admin &7- &aTắt chế độ game riêng tư của bạn (party nữa)",
+                            "&8&m-----------------------------------------------------"
+                    ));
+                    yml.addDefault(MAIN_MENU_NAME, "&8Cài đặt game riêng tư");
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aCài đặt game riêng tư");
+                    yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Mở menu này để cài đặt trò chơi riêng tư", "với tận 11 tùy chọn!"));
+                    yml.addDefault(MENU_SELECTED_MEANING, "&aĐã chọn!");
+                    yml.addDefault(MENU_CLICK_TO_SELECT_MEANING, "&eNhấn để chọn!");
+                    yml.addDefault(PRIVATE_GAME_NOT_IN_PARTY, "&cBạn đang không ở trong party!");
+                    yml.addDefault(PRIVATE_GAME_ENABLED, "&aBạn đã bật chế độ game riêng tư");
+                    yml.addDefault(PRIVATE_GAME_ENABLED_OTHERS, "&a{player} đã bật chế độ game riêng tư");
+                    yml.addDefault(PRIVATE_GAME_DISABLED, "&cBạn đã tắt chế độ game riêng tư");
+                    yml.addDefault(PRIVATE_GAME_DISABLED_OTHERS, "&c{player} đã tắt chế độ game riêng tư");
+                    yml.addDefault(PRIVATE_GAME_NOT_OWNER, "&cBạn không phải chủ party này!");
+                    yml.addDefault(PRIVATE_GAME_NO_PERMISSION, "&cBạn không có quyền để sử dụng câu lệnh này!");
+                    yml.addDefault(PRIVATE_GAME_ALREADY_ENABLED, "&cTính năng game riêng tư đã được bật rồi!");
+                    yml.addDefault(PRIVATE_GAME_ALREADY_DISABLED, "&cTính năng game riêng tư đã bị tắt rồi!");
+                    yml.addDefault(PRIVATE_GAME_COULDNT_JOIN, "&cKhông thể vào game riêng tư của người chơi này!");
+                    yml.addDefault(PRIVATE_GAME_CANT_IN_GAME, "&cBạn không thể làm điều này trong game!");
+                    yml.addDefault(PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER, "&7[P]");
+                    yml.addDefault(PRIVATE_GAME_ENABLED_MODIFIERS, Arrays.asList("&6-----------------------------------------------------", "{player} &a&lđã bật chức năng tùy chỉnh của game riêng tư!", "{modifiers}", "&6-----------------------------------------------------"));
+                    yml.addDefault(PRIVATE_GAME_MODIFIERS_FORMAT, "&6- {modifier}");
+                    yml.addDefault(PRIVATE_GAME_MODIFIERS_WITH_OPTION_FORMAT, "&6- {modifier}: &e{selected}");
+                    yml.addDefault(PRIVATE_GAME_UNABLE_TO_JOIN, "&cKhông thế vào phòng này. Bạn đã bật chế độ game riêng tư và phòng này không trống!");
+                    yml.addDefault(PRIVATE_GAME_CANT_JOIN_SELF, "&cBạn không thể tự vào phòng riêng tư của mình!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_RECEIVED, Arrays.asList(
+                            "&6&m-----------------------------------------------------",
+                            "&e{player} &7đang yêu cầu tham gia game riêng tư của bạn!",
+                            "{buttons}",
+                            "&6&m-----------------------------------------------------"));
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_SENT,
+                            "&6&m-----------------------------------------------------\n" +
+                                    "&7Bạn đã yêu cầu tham gia vào game riêng tư của &e{player}!\n" +
+                                    "&6&m-----------------------------------------------------\n");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT, "&a&lChấp nhận");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_ACCEPT_HOVER, "&aNhấp để chấp nhận!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY, "&c&lTừ chối");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_MESSAGE_DENY_HOVER, "&cNhấp để từ chối!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED, "&cBạn đã từ chối yêu cầu từ &e{player}!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED, "&aBạn đã chấp nhận yêu cầu của &e{player}!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER, "&a&l{player} &ađã chấp nhận yêu cầu tham gia của bạn!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED_REQUESTER, "&c&l{player} &cđã từ chối yêu cầu tham gia của bạn!");
+                    yml.addDefault(MENU_BACK_ITEM_NAME, "&aQuay lại");
+                    yml.addDefault(MENU_BACK_ITEM_LORE, List.of("&7Quay lại gameplay bedwars của bạn"));
+                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aMột đấm, một mạng");
+                    yml.addDefault(ITEM_ONE_HIT_ONE_KILL_LORE, Arrays.asList("&7Chọn vật phẩm nào nên", "&7giết kẻ địch ngay lập tức", "", "{state}"));
+                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_NAME, "&aNâng máu");
+                    yml.addDefault(ITEM_HEALTH_BUFF_LEVEL_LORE, Arrays.asList("&7Nâng máu của tất cả người chơi", "", "&aĐang chọn: &7{selected}"));
+                    yml.addDefault(ITEM_LOW_GRAVITY_NAME, "&aTrọng lực thấp");
+                    yml.addDefault(ITEM_LOW_GRAVITY_LORE, Arrays.asList("&7Trải nghiệm trọng lực thấp... hay", "&7còn gọi là nhảy cao", "", "{state}"));
+                    yml.addDefault(ITEM_SPEED_NAME, "&aChạy nhanh");
+                    yml.addDefault(ITEM_SPEED_LORE, Arrays.asList("&7Phải chạy thật nhanh!", "", "&aĐang chọn: &7{selected}"));
+                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_NAME, "&aThời gian hồi sinh");
+                    yml.addDefault(ITEM_RESPAWN_EVENT_TIME_LORE, Arrays.asList("&8Chỉ trong game", "", "&7Điều chỉnh thời gian hồi sinh.", "", "&aĐang chọn: &7{selected}"));
+                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_NAME, "&aThời gian sự kiện");
+                    yml.addDefault(ITEM_EVENTS_TIME_LEVEL_LORE, Arrays.asList("&8Chỉ trong game", "", "&7Điều chỉnh thời gian các sự kiện.", "", "&aĐang chon: &7{selected}"));
+                    yml.addDefault(ITEM_NO_EMERALDS_NAME, "&aKhông ngọc lục bảo");
+                    yml.addDefault(ITEM_NO_EMERALDS_LORE, Arrays.asList("&8Chỉ trong game", "", "&7Loại bỏ những viên ngọc lục bảo  ", "", "{state}"));
+                    yml.addDefault(ITEM_NO_DIAMONDS_NAME, "&aKhông kim cương");
+                    yml.addDefault(ITEM_NO_DIAMONDS_LORE, Arrays.asList("&8Chỉ trong game", "", "&7Tạm biệt những viên kim cương", "", "{state}"));
+                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_NAME, "&aTắt bảo vệ block");
+                    yml.addDefault(ITEM_ALLOW_MAP_BREAK_LORE, Arrays.asList("&8Chỉ trong game", "", "&7Cho phép người chơi phá mọi", "&7khối, ngoại trừ các khối gần", "&7các lò khoáng sản và nơi hồi sinh.", "", "{state}"));
+                    yml.addDefault(ITEM_BED_INSTA_BREAK_NAME, "&aPhá giường nhanh");
+                    yml.addDefault(ITEM_BED_INSTA_BREAK_LORE, Arrays.asList("&8Chỉ trong game", "", "&7Đập giường chỉ với một phát", "", "{state}"));
+                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_NAME, "&aĐầy đỏ nâng cấp đội");
+                    yml.addDefault(ITEM_MAX_TEAM_UPGRADES_LORE, Arrays.asList("&8Chỉ trong game", "", "&7Các đội sẽ bắt đầu với đầy đủ", "&7nâng cấp đội", "", "{state}"));
+                    yml.addDefault(ITEM_OPTIONS_NAME, "&aTùy chọn");
+                    yml.addDefault(ITEM_OPTIONS_LORE, Arrays.asList("&7Nhấn để mở tùy chọn trận đấu", "", "&7Ở menu này bạn có thể tùy chỉnh", "&7thuộc tính của trận đấu và cài đặt của bạn", "", "&eNhấn để mở!"));
+                    yml.addDefault(ITEM_START_NAME, "&aBắt đầu");
+                    yml.addDefault(ITEM_START_LORE, Arrays.asList("&7Nhấn để bắt đầu trận đấu", "", "&7Bạn có thể bắt đầu trò chơi nếu bạn", "&7là chủ party này", "", "&eNhấn để bắt đầu!"));
+                    yml.addDefault(ITEM_GAMEMODE_CHANGER_NAME, "&aĐổi chế độ chơi");
+                    yml.addDefault(ITEM_GAMEMODE_CHANGER_LORE, Arrays.asList("&7Nhấn để đổi chế độ chơi của bạn.", "", "&7Bạn có thể đổi chế độ chơi của bạn nếu", "&7là chủ party", "", "&7Hiện tại: &a{state}", "&7Mặc định: &e{default}", "", "&cChuột phải để dùng chế độ mặc định", "&eChuột trái để đổi!"));
+                    yml.addDefault(SUBMENU_SPEED_NAME, "&8Chạy nhanh");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_I_NAME, "&aKhông chạy nhanh");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_I_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_II_NAME, "&aChạy nhanh I");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_II_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_III_NAME, "&aChạy nhanh II");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_III_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_NAME, "&aChạy nhanh III");
+                    yml.addDefault(ITEM_SUBMENU_SPEED_IV_LORE, List.of("{state}"));
+                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_NAME, "&aQuay lại");
+                    yml.addDefault(SUBMENU_SPEED_BACK_ITEM_LORE, List.of("&7Quay lại menu cài đặt"));
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_NAME, "&8Nâng máu");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_NAME, "&aMáu bình thường");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_I_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_NAME, "&aGấp đôi máu");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_II_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_NAME, "&aGấp ba máu");
+                    yml.addDefault(ITEM_SUBMENU_HEALTH_BUFF_III_LORE, List.of("{state}"));
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_NAME, "&aQuay lại");
+                    yml.addDefault(SUBMENU_HEALTH_BUFF_BACK_ITEM_LORE, List.of("&7Quay lại menu cài đặt"));
+                    yml.addDefault(SUBMENU_EVENTS_TIME_NAME, "&8Thời gian sự kiện");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_NAME, "&ax0.5 - Chậm");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_I_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_NAME, "&ax1 - Bình thường");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_II_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_NAME, "&ax2 - Nhanh");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_III_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_NAME, "&ax4 - Nhanh hơn");
+                    yml.addDefault(ITEM_SUBMENU_EVENTS_TIME_IV_LORE, List.of("{state}"));
+                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_NAME, "&aQuay lại");
+                    yml.addDefault(SUBMENU_EVENTS_TIME_BACK_ITEM_LORE, List.of("&7Quay lại menu cài đặt"));
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_NAME, "&8Thời gian hồi sinh");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_NAME, "&a1 giây");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_I_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_NAME, "&a5 giây");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_II_LORE, List.of("{state}"));
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_NAME, "&a10 giây");
+                    yml.addDefault(ITEM_SUBMENU_RESPAWN_TIME_III_LORE, List.of("{state}"));
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_NAME, "&aQuay lại");
+                    yml.addDefault(SUBMENU_RESPAWN_TIME_BACK_ITEM_LORE, List.of("&7Quay lại menu cài đặt"));
+                    yml.addDefault(SUBMENU_OPTIONS_GENERATORS_NAME, "&bLò khoáng sản");
+                    yml.addDefault(SUBMENU_OPTIONS_GENERATORS_LORE, Arrays.asList("&7Nhấn để mở lò khoáng sản của trận đấu", "", "&7Cài đặt thuộc tính của lò khoáng sản.", "", "&eNhấn để mở!"));
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aĐã bật");
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cĐã tắt");
+                    yml.addDefault(NO_SPEED_MEANING, "&7Không chạy nhanh");
+                    yml.addDefault(SPEED_I_MEANING, "&7Chạy nhanh I");
+                    yml.addDefault(SPEED_II_MEANING, "&7Chạy nhanh II");
+                    yml.addDefault(SPEED_III_MEANING, "&7Chạy nhanh III");
+                    yml.addDefault(NORMAL_HEALTH_MEANING, "&7Máu bình thường");
+                    yml.addDefault(DOUBLE_HEALTH_MEANING, "&7Gấp đôi máu");
+                    yml.addDefault(TRIPLE_HEALTH_MEANING, "&7Gấp ba máu");
+                    yml.addDefault(RESPAWN_EVENT_TIME_I_MEANING, "&71 giây");
+                    yml.addDefault(RESPAWN_EVENT_TIME_II_MEANING, "&75 giây");
+                    yml.addDefault(RESPAWN_EVENT_TIME_III_MEANING, "&710 giây");
+                    yml.addDefault(EVENTS_TIME_SLOWER_MEANING, "&7x0.5 - Chậm");
+                    yml.addDefault(EVENTS_TIME_NORMAL_MEANING, "&7x1 - Bình thường");
+                    yml.addDefault(EVENTS_TIME_FAST_MEANING, "&7x2 - Nhanh");
+                    yml.addDefault(EVENTS_TIME_FASTER_MEANING, "&7x4 - Nhanh hơn");
+                    yml.addDefault(ONE_HIT_ONE_KILL_MEANING, "&7Một phát một mạng");
+                    yml.addDefault(BED_INSTA_BREAK_MEANING, "&7Phá giường nhanh");
+                    yml.addDefault(LOW_GRAVITY_MEANING, "&7Trọng lực thấp");
+                    yml.addDefault(MAX_TEAM_UPGRADES_MEANING, "&7Đầy đủ nâng cấp đội");
+                    yml.addDefault(ALLOW_MAP_BREAK_MEANING, "&7Cho phép phá map");
+                    yml.addDefault(NO_DIAMONDS_MEANING, "&7Không kim cương");
+                    yml.addDefault(NO_EMERALDS_MEANING, "&7Không ngọc lục bảo");
+                    yml.addDefault(HEALTH_BUFF_MEANING, "&7Nâng máu");
+                    yml.addDefault(SPEED_MEANING, "&7Chạy nhanh");
+                    yml.addDefault(EVENTS_TIME_MEANING, "&7Thời gian sự kiện");
+                    yml.addDefault(RESPAWN_EVENT_TIME_MEANING, "&7Thời gian hồi sinh");
+                    yml.addDefault(SUBMENU_GAMEMODE_CHANGER_TITLE, "&8Đổi chế độ game");
+                    yml.addDefault(SUBMENU_OPTIONS_TITLE, "Tùy chọn");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_NAME, "&aBật tự động bắt đầu");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE, Arrays.asList("&7Bật tự động bắt đầu trận đấu", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME, "&aCho phép người khác tham gia");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE, Arrays.asList("&7Cho phép người khác tham gia game của bạn", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME, "&aBật game riêng tư");
+                    yml.addDefault(SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE, Arrays.asList("&7Bật game riêng tư", "", "{state}"));
+                    yml.addDefault(SUBMENU_OPTIONS_BACK_NAME, "&aQuay lại");
+                    yml.addDefault(SUBMENU_OPTIONS_BACK_LORE, List.of("&7Quay lại menu cài đặt"));
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_TITLE, "Lò khoáng sản của trận đấu");
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_ITEM_LORE, Arrays.asList("&7Đội: {team}", "&7Vị trí: {location}", "&7Số lượng: {amount}", "&7Độ trễ: {delay}",  "§7Giới hạn sản xuất: {spawnLimit}"));
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_TITLE, "Tùy chọn lò khoáng sản");
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME, "&aQuay lại");
+                    yml.addDefault(SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_LORE, List.of("&7Quay lại menu tùy chỉnh"));
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_NAME, "&aQuay lại");
+                    yml.addDefault(SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_LORE, List.of("&7Quay lại menu của lò khoáng sản"));
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_ENABLED, "&aĐã bật");
+                    yml.addDefault(SUBMENU_OPTIONS_MEANING_DISABLED, "&cĐã tắt");
+                    yml.addDefault(MENU_CLICK_TO_START_MEANING, "&eNhấn để bắt đầu!");
+                    yml.addDefault(MENU_STARTING_MEANING, "&aĐang bắt đầu...");
+
+                    if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu") != null) {
+                        for (String p : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu").getKeys(false)) {
+                            for (String group : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + p + ".modes").getKeys(false)) {
+                                if (group.equals("back-item")) {
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&aQuay lại");
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", List.of("&7Quay lại menu cài đặt"));
+                                } else {
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".name", "&a" + group);
+                                    yml.addDefault("addons.private-games.gamemode-changer-menu." + p + ".modes." + group + ".lore", Arrays.asList("&7Nhấn để đổi chế độ chơi", "", "&7Bạn có thể đổi chế độ chơi của bạn nếu", "&7bạn là chủ party", "", "&eNhấn để đổi!"));
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
             l.getYml().options().copyDefaults(true);
             l.save();

@@ -103,6 +103,7 @@ public class StatsListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMoneyGain(PlayerMoneyGainEvent e) {
         IArena arena = BedWars.getAPI().getArenaUtil().getArenaByPlayer(e.getPlayer());
+        if (arena == null) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(arena.getWorldName())) return;
         e.setCancelled(true);
     }
@@ -110,6 +111,7 @@ public class StatsListener implements Listener {
     @EventHandler
     public void onXPGain(PlayerXpGainEvent e) {
         IArena arena = BedWars.getAPI().getArenaUtil().getArenaByPlayer(e.getPlayer());
+        if (arena == null) return;
         if (!api.getPrivateArenaUtil().isArenaPrivate(arena.getWorldName())) return;
         e.setCancelled(true);
     }
