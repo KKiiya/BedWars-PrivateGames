@@ -1,6 +1,5 @@
 package me.notlewx.privategames.menus;
 
-import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerOptions;
 import me.notlewx.privategames.api.player.IPlayerSettings;
@@ -9,6 +8,7 @@ import me.notlewx.privategames.menus.submenus.generators.GeneratorsMenu;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -31,23 +31,24 @@ import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_GA
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class OptionsMenu implements GUIHolder {
+    private final Player player;
     private Inventory inv;
-    private final Player p;
 
-    public OptionsMenu(Player p) {
-        this.p = p;
+    public OptionsMenu(Player player) {
+        this.player = player;
         try {
             createInventory();
             addContent();
-            p.openInventory(inv);
+            player.openInventory(inv);
         } catch (Exception e) {
             throw new RuntimeException("Error while opening the settings menu", e);
         }
     }
 
     private void createInventory() {
-        inv = Bukkit.createInventory(this, mainConfig.getInt(OPTIONS_MENU_ROWS) * 9, Utility.getMsg(p, SUBMENU_OPTIONS_TITLE));
+        inv = Bukkit.createInventory(this, mainConfig.getInt(OPTIONS_MENU_ROWS) * 9, Utility.getMsg(player, SUBMENU_OPTIONS_TITLE));
     }
+
     private void addContent() {
         Material generatorSettingsMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATORS_MATERIAL));
         ItemStack generatorSettings = new ItemStack(generatorSettingsMaterial, 1, (byte) mainConfig.getInt(OPTIONS_GENERATORS_ID));
@@ -85,27 +86,27 @@ public class OptionsMenu implements GUIHolder {
         ItemMeta backMeta = back.getItemMeta();
 
 
-        IPlayerOptions po = api.getPrivatePlayer(p).getPlayerOptions();
-        IPlayerSettings ps = api.getPrivatePlayer(p).getPlayerSettings();
+        IPlayerOptions po = api.getPrivatePlayer(player).getPlayerOptions();
+        IPlayerSettings ps = api.getPrivatePlayer(player).getPlayerSettings();
 
-        generatorSettingsMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_GENERATORS_NAME));
-        generatorSettingsMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_GENERATORS_LORE));
+        generatorSettingsMeta.setDisplayName(Utility.getMsg(player, SUBMENU_OPTIONS_GENERATORS_NAME));
+        generatorSettingsMeta.setLore(Utility.getList(player, SUBMENU_OPTIONS_GENERATORS_LORE));
         generatorSettingsMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
-        allowJoinMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME));
-        allowJoinMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE).stream().map(s -> s.replace("{state}", po.isAllowJoin() ? Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
+        allowJoinMeta.setDisplayName(Utility.getMsg(player, SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_NAME));
+        allowJoinMeta.setLore(Utility.getList(player, SUBMENU_OPTIONS_ENABLE_ALLOWJOIN_LORE).stream().map(s -> s.replace("{state}", po.isAllowJoin() ? Utility.getMsg(player, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(player, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
         allowJoinMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
-        autoStartMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_ENABLE_AUTOSTART_NAME));
-        autoStartMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE).stream().map(s -> s.replace("{state}", po.isAutoStart() ? Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
+        autoStartMeta.setDisplayName(Utility.getMsg(player, SUBMENU_OPTIONS_ENABLE_AUTOSTART_NAME));
+        autoStartMeta.setLore(Utility.getList(player, SUBMENU_OPTIONS_ENABLE_AUTOSTART_LORE).stream().map(s -> s.replace("{state}", po.isAutoStart() ? Utility.getMsg(player, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(player, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
         autoStartMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
-        privateGamesMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME));
-        privateGamesMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE).stream().map(s -> s.replace("{state}", ps.isPrivateGameEnabled() ? Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(p, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
+        privateGamesMeta.setDisplayName(Utility.getMsg(player, SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_NAME));
+        privateGamesMeta.setLore(Utility.getList(player, SUBMENU_OPTIONS_ENABLE_PRIVATEGAMES_LORE).stream().map(s -> s.replace("{state}", ps.isPrivateGameEnabled() ? Utility.getMsg(player, SUBMENU_OPTIONS_MEANING_ENABLED) : Utility.getMsg(player, SUBMENU_OPTIONS_MEANING_DISABLED))).collect(Collectors.toList()));
         privateGamesMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
-        backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_OPTIONS_BACK_NAME));
-        backMeta.setLore(Utility.getList(p, SUBMENU_OPTIONS_BACK_LORE));
+        backMeta.setDisplayName(Utility.getMsg(player, SUBMENU_OPTIONS_BACK_NAME));
+        backMeta.setLore(Utility.getList(player, SUBMENU_OPTIONS_BACK_LORE));
         backMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
 
         generatorSettings.setItemMeta(generatorSettingsMeta);
@@ -120,110 +121,47 @@ public class OptionsMenu implements GUIHolder {
         if (po.isAutoStart()) autoStart.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
         else autoStart.removeEnchantment(Enchantment.DURABILITY);
 
-        if (mainConfig.getBoolean(OPTIONS_GENERATORS)) if (api.getPrivateArenaUtil().isPlaying(p)) inv.setItem(mainConfig.getInt(OPTIONS_GENERATORS_POSITION), generatorSettings);
+        if (mainConfig.getBoolean(OPTIONS_GENERATORS)) if (api.getPrivateArenaUtil().isPlaying(player)) inv.setItem(mainConfig.getInt(OPTIONS_GENERATORS_POSITION), generatorSettings);
         if (mainConfig.getBoolean(OPTIONS_ALLOW_JOIN)) inv.setItem(mainConfig.getInt(OPTIONS_ALLOWJOIN_POSITION), allowJoin);
         if (mainConfig.getBoolean(OPTIONS_ENABLE_AUTOSTART)) inv.setItem(mainConfig.getInt(OPTIONS_ENABLE_AUTOSTART_POSITION), autoStart);
         if (mainConfig.getBoolean(OPTIONS_ENABLE_PRIVATEGAMES)) inv.setItem(mainConfig.getInt(OPTIONS_ENABLE_PRIVATEGAMES_POSITION), privateGames);
         inv.setItem(mainConfig.getInt(OPTIONS_BACK_POSITION), back);
     }
+
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_OPTIONS_TITLE))) {
+        if (e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_OPTIONS_TITLE))) {
             if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_POSITION)) {
-                new GeneratorsMenu(p);
+                new GeneratorsMenu(player);
             } else if (e.getSlot() == mainConfig.getInt(OPTIONS_ALLOWJOIN_POSITION)) {
-                IPrivatePlayer pp = api.getPrivatePlayer(p);
+                IPrivatePlayer pp = api.getPrivatePlayer(player);
                 IPlayerOptions po = pp.getPlayerOptions();
                 po.setAllowJoin(!po.isAllowJoin());
-                new OptionsMenu(p);
+                new OptionsMenu(player);
             } else if (e.getSlot() == mainConfig.getInt(OPTIONS_ENABLE_AUTOSTART_POSITION)) {
-                IPrivatePlayer pp = api.getPrivatePlayer(p);
+                IPrivatePlayer pp = api.getPrivatePlayer(player);
                 IPlayerOptions po = pp.getPlayerOptions();
                 po.setAutoStart(!po.isAutoStart());
-                new OptionsMenu(p);
+                new OptionsMenu(player);
             } else if (e.getSlot() == mainConfig.getInt(OPTIONS_BACK_POSITION)) {
-                new SettingsMenu(p);
+                new SettingsMenu(player);
             } else if (e.getSlot() == mainConfig.getInt(OPTIONS_ENABLE_PRIVATEGAMES_POSITION)) {
-                IPrivatePlayer pp = api.getPrivatePlayer(p);
+                IPrivatePlayer pp = api.getPrivatePlayer(player);
                 IPlayerSettings ps = pp.getPlayerSettings();
                 IParty party = pp.getPlayerParty();
                 switch (support) {
                     case BEDWARS1058:
-                        if (PrivateGames.getBw1058Api().getArenaUtil().isPlaying(p)) {
-                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_CANT_IN_GAME));
-                        } else {
-                            if (!ps.isPrivateGameEnabled()) {
-                                if (p.hasPermission("pg.admin")) {
-                                    ps.setPrivateGameEnabled();
-                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
-                                    if (party.hasParty() && party.isOwner()) {
-                                        for (Player player : party.getPartyMembers()) {
-                                            if (player != p) {
-                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    if (party.hasParty()) {
-                                        if (party.isOwner()) {
-                                            ps.setPrivateGameEnabled();
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
-                                            for (Player player : party.getPartyMembers()) {
-                                                if (player != p) {
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
-                                                }
-                                            }
-                                        } else {
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
-                                        }
-                                    } else {
-                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_IN_PARTY));
-                                    }
-                                }
-                            } else {
-                                if (p.hasPermission("pg.admin")) {
-                                    ps.setPrivateGameDisabled(false);
-                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
-                                    if (party.hasParty() && party.isOwner()) {
-                                        for (Player player : party.getPartyMembers()) {
-                                            if (player != p) {
-                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    if (party.hasParty()) {
-                                        if (party.isOwner()) {
-                                            ps.setPrivateGameDisabled(false);
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
-                                            for (Player player : party.getPartyMembers()) {
-                                                if (player != p) {
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
-                                                }
-                                            }
-                                        } else {
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
-                                        }
-                                    } else {
-                                        ps.setPrivateGameDisabled(false);
-                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
-                                    }
-                                }
-                            }
-                        }
-                        break;
                     case BEDWARS2023:
-                        if (PrivateGames.getBw2023Api().getArenaUtil().isPlaying(p)) {
-                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_CANT_IN_GAME));
-                        } else {
+                        if (pp.isPlaying()) player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_CANT_IN_GAME));
+                        else {
                             if (!ps.isPrivateGameEnabled()) {
-                                if (p.hasPermission("pg.admin")) {
+                                if (player.hasPermission("pg.admin")) {
                                     ps.setPrivateGameEnabled();
-                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
+                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED));
                                     if (party.hasParty() && party.isOwner()) {
-                                        for (Player player : party.getPartyMembers()) {
-                                            if (player != p) {
-                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                        for (OfflinePlayer player : party.getPartyMembers()) {
+                                            if (player != this.player) {
+                                                ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", this.player.getDisplayName()));
                                             }
                                         }
                                     }
@@ -231,27 +169,27 @@ public class OptionsMenu implements GUIHolder {
                                     if (party.hasParty()) {
                                         if (party.isOwner()) {
                                             ps.setPrivateGameEnabled();
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
-                                            for (Player player : party.getPartyMembers()) {
-                                                if (player != p) {
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED));
+                                            for (OfflinePlayer player : party.getPartyMembers()) {
+                                                if (player != this.player) {
+                                                    ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", this.player.getDisplayName()));
                                                 }
                                             }
                                         } else {
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_NOT_OWNER));
                                         }
                                     } else {
-                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_IN_PARTY));
+                                        player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_NOT_IN_PARTY));
                                     }
                                 }
                             } else {
-                                if (p.hasPermission("pg.admin")) {
+                                if (player.hasPermission("pg.admin")) {
                                     ps.setPrivateGameDisabled(false);
-                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED));
                                     if (party.hasParty() && party.isOwner()) {
-                                        for (Player player : party.getPartyMembers()) {
-                                            if (player != p) {
-                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                        for (OfflinePlayer player : party.getPartyMembers()) {
+                                            if (player != this.player) {
+                                                ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", this.player.getDisplayName()));
                                             }
                                         }
                                     }
@@ -259,18 +197,17 @@ public class OptionsMenu implements GUIHolder {
                                     if (party.hasParty()) {
                                         if (party.isOwner()) {
                                             ps.setPrivateGameDisabled(false);
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
-                                            for (Player player : party.getPartyMembers()) {
-                                                if (player != p) {
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED));
+                                            for (OfflinePlayer player : party.getPartyMembers()) {
+                                                if (player != this.player && player.isOnline()) {
+                                                    ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", this.player.getDisplayName()));
                                                 }
                                             }
-                                        } else {
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
-                                        }
+                                        } else player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_NOT_OWNER));
+
                                     } else {
                                         ps.setPrivateGameDisabled(false);
-                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                        player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED));
                                     }
                                 }
                             }
@@ -279,13 +216,13 @@ public class OptionsMenu implements GUIHolder {
                     case BEDWARSPROXY:
                     case BEDWARSPROXY2023:
                             if (!ps.isPrivateGameEnabled()) {
-                                if (p.hasPermission("pg.admin")) {
+                                if (player.hasPermission("pg.admin")) {
                                     ps.setPrivateGameEnabled();
-                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
+                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED));
                                     if (party.hasParty() && party.isOwner()) {
-                                        for (Player player : party.getPartyMembers()) {
-                                            if (player != p) {
-                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                        for (OfflinePlayer player : party.getPartyMembers()) {
+                                            if (player != this.player) {
+                                                ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", this.player.getDisplayName()));
                                             }
                                         }
                                     }
@@ -293,27 +230,27 @@ public class OptionsMenu implements GUIHolder {
                                     if (party.hasParty()) {
                                         if (party.isOwner()) {
                                             ps.setPrivateGameEnabled();
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_ENABLED));
-                                            for (Player player : party.getPartyMembers()) {
-                                                if (player != p) {
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED));
+                                            for (OfflinePlayer player : party.getPartyMembers()) {
+                                                if (player != this.player) {
+                                                    ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", this.player.getDisplayName()));
                                                 }
                                             }
                                         } else {
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_NOT_OWNER));
                                         }
                                     } else {
-                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_IN_PARTY));
+                                        player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_NOT_IN_PARTY));
                                     }
                                 }
                             } else {
-                                if (p.hasPermission("pg.admin")) {
+                                if (player.hasPermission("pg.admin")) {
                                     ps.setPrivateGameDisabled(false);
-                                    p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED));
                                     if (party.hasParty() && party.isOwner()) {
-                                        for (Player player : party.getPartyMembers()) {
-                                            if (player != p) {
-                                                player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                        for (OfflinePlayer player : party.getPartyMembers()) {
+                                            if (player != this.player) {
+                                                ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", this.player.getDisplayName()));
                                             }
                                         }
                                     }
@@ -321,26 +258,25 @@ public class OptionsMenu implements GUIHolder {
                                     if (party.hasParty()) {
                                         if (party.isOwner()) {
                                             ps.setPrivateGameDisabled(false);
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
-                                            for (Player player : party.getPartyMembers()) {
-                                                if (player != p) {
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", p.getDisplayName()));
+                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED));
+                                            for (OfflinePlayer player : party.getPartyMembers()) {
+                                                if (player != this.player) {
+                                                    ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", this.player.getDisplayName()));
                                                 }
                                             }
                                         } else {
-                                            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_NOT_OWNER));
+                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_NOT_OWNER));
                                         }
                                     } else {
                                         ps.setPrivateGameDisabled(false);
-                                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
+                                        player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED));
                                     }
                                 }
                             }
                         break;
                 }
-                new OptionsMenu(p);
+                new OptionsMenu(player);
             }
-
         }
     }
 

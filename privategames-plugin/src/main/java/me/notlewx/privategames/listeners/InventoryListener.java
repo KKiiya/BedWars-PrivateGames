@@ -23,7 +23,12 @@ public class InventoryListener implements Listener {
 
         if (e.getClickedInventory() != null && e.getInventory().getHolder() != null && e.getInventory().getHolder() instanceof GUIHolder && e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null) {
             e.setCancelled(true);
-            ((GUIHolder) e.getInventory().getHolder()).onInventoryClick(e);
+            GUIHolder holder = ((GUIHolder) e.getInventory().getHolder());
+            try {
+                holder.onInventoryClick(e);
+            } catch (Exception ex) {
+                throw new RuntimeException("Something happened while trying to click on an inventory! (" + holder.getClass().getSimpleName() + ") ", ex);
+            }
         }
     }
 }

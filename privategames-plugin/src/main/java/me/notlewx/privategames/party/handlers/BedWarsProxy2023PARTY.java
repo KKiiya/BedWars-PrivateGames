@@ -4,6 +4,7 @@ import com.tomkeuper.bedwars.proxy.BedWarsProxy;
 import com.tomkeuper.bedwars.proxy.api.party.Party;
 import me.notlewx.privategames.api.party.IParty;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -11,8 +12,9 @@ import java.util.stream.Collectors;
 
 public class BedWarsProxy2023PARTY implements IParty {
     private final Party partyUtil = BedWarsProxy.getParty();
-    private final Player player;
-    public BedWarsProxy2023PARTY(Player player) {
+    private final OfflinePlayer player;
+
+    public BedWarsProxy2023PARTY(OfflinePlayer player) {
         this.player = player;
     }
 
@@ -22,7 +24,7 @@ public class BedWarsProxy2023PARTY implements IParty {
     }
 
     @Override
-    public List<Player> getPartyMembers() {
+    public List<OfflinePlayer> getPartyMembers() {
         return partyUtil.getMembers(player.getUniqueId()).stream().map(Bukkit::getPlayer).collect(Collectors.toList());
     }
 
@@ -32,7 +34,7 @@ public class BedWarsProxy2023PARTY implements IParty {
     }
 
     @Override
-    public boolean hasMember(Player checking) {
+    public boolean hasMember(OfflinePlayer checking) {
         return partyUtil.isMember(player.getUniqueId(), checking.getUniqueId());
     }
 

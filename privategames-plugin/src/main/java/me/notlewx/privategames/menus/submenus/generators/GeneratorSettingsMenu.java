@@ -163,7 +163,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (!e.getInventory().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATOR_OPTIONS_TITLE))) return;
+        if (!e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATOR_OPTIONS_TITLE))) return;
         GeneratorProperties.Properties properties;
         IPrivatePlayer pp = api.getPrivatePlayer(p);
         if (support == Support.BEDWARS1058) {

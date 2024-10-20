@@ -119,7 +119,7 @@ public class PrivatePlayer implements IPrivatePlayer {
     @Nullable
     public IParty getPlayerParty() {
         if (!player.isOnline()) return null;
-        return Party.getPartyPlayer((Player) player);
+        return Party.getPartyPlayer(player.getUniqueId());
     }
 
     @Override

@@ -128,7 +128,7 @@ public class GeneratorsMenu implements GUIHolder {
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getInventory().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_TITLE))) {
+        if (e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_TITLE))) {
             if (generatorPos.get(e.getSlot()) != null) {
                 new GeneratorSettingsMenu(p, generatorPos.get(e.getSlot()));
             } else {

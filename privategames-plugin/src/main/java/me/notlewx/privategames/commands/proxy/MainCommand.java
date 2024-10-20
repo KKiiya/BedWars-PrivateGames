@@ -10,6 +10,7 @@ import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -49,9 +50,9 @@ public class MainCommand implements CommandExecutor {
                                         if (party.isOwner()) {
                                             playerData.setPrivateGameEnabled();
                                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_ENABLED));
-                                            for (Player player : party.getPartyMembers()) {
-                                                if (player != sender) {
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                            for (OfflinePlayer player : party.getPartyMembers()) {
+                                                if (player != sender && player.isOnline()) {
+                                                    ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                 }
                                             }
                                         } else {
@@ -76,9 +77,9 @@ public class MainCommand implements CommandExecutor {
                                                 if (party.isOwner()) {
                                                     playerData.setPrivateGameEnabled();
                                                     sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_ENABLED));
-                                                    for (Player player : party.getPartyMembers()) {
-                                                        if (player != sender) {
-                                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                    for (OfflinePlayer player : party.getPartyMembers()) {
+                                                        if (player != sender && player.isOnline()) {
+                                                            ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                         }
                                                     }
                                                 } else {
@@ -107,9 +108,9 @@ public class MainCommand implements CommandExecutor {
                                             if (party.isOwner()) {
                                                 playerData.setPrivateGameDisabled(false);
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
-                                                for (Player player : party.getPartyMembers()) {
+                                                for (OfflinePlayer player : party.getPartyMembers()) {
                                                     if (player != sender) {
-                                                        player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                        ((Player) player).sendMessage(Utility.getMsg(((Player) player), PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                     }
                                                 }
                                             } else {
@@ -143,9 +144,9 @@ public class MainCommand implements CommandExecutor {
                                                 if (party.isOwner()) {
                                                     playerData.setPrivateGameDisabled(false);
                                                     sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
-                                                    for (Player player : party.getPartyMembers()) {
-                                                        if (player != sender) {
-                                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                    for (OfflinePlayer player : party.getPartyMembers()) {
+                                                        if (player != sender && player.isOnline()) {
+                                                            ((Player) player).sendMessage(Utility.getMsg((Player) player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                         }
                                                     }
                                                 } else {

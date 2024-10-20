@@ -26,16 +26,14 @@ import static me.notlewx.privategames.PrivateGames.mainConfig;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class MainCommand implements CommandExecutor {
-    private IPlayerSettings playerData;
-    private IParty party;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         command.setAliases(Arrays.asList("privategame", "pgame", "private"));
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            playerData = api.getPrivatePlayer(p).getPlayerSettings();
-            party = api.getPrivatePlayer(p).getPlayerParty();
+            IPlayerSettings playerData = api.getPrivatePlayer(p).getPlayerSettings();
+            IParty party = api.getPrivatePlayer(p).getPlayerParty();
             if (args.length < 1) {
                 for (String m : Utility.getList((Player) sender, HELP_MESSAGE)) {
                     sender.sendMessage(m);
@@ -50,9 +48,9 @@ public class MainCommand implements CommandExecutor {
                                         if (party.isOwner()) {
                                             playerData.setPrivateGameEnabled();
                                             sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_ENABLED));
-                                            for (Player player : party.getPartyMembers()) {
+                                            for (OfflinePlayer player : party.getPartyMembers()) {
                                                 if (player != sender) {
-                                                    player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                    ((Player) player).sendMessage(Utility.getMsg(((Player) player), PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                 }
                                             }
                                         } else {
@@ -77,9 +75,9 @@ public class MainCommand implements CommandExecutor {
                                                 if (party.isOwner()) {
                                                     playerData.setPrivateGameEnabled();
                                                     sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_ENABLED));
-                                                    for (Player player : party.getPartyMembers()) {
+                                                    for (OfflinePlayer player : party.getPartyMembers()) {
                                                         if (player != sender) {
-                                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                            ((Player) player).sendMessage(Utility.getMsg(((Player) player), PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                         }
                                                     }
                                                 } else {
@@ -108,9 +106,9 @@ public class MainCommand implements CommandExecutor {
                                             if (party.isOwner()) {
                                                 playerData.setPrivateGameDisabled(false);
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
-                                                for (Player player : party.getPartyMembers()) {
+                                                for (OfflinePlayer player : party.getPartyMembers()) {
                                                     if (player != sender) {
-                                                        player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                        ((Player) player).sendMessage(Utility.getMsg(((Player) player), PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                     }
                                                 }
                                             } else {
@@ -144,9 +142,9 @@ public class MainCommand implements CommandExecutor {
                                                 if (party.isOwner()) {
                                                     playerData.setPrivateGameDisabled(false);
                                                     sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
-                                                    for (Player player : party.getPartyMembers()) {
+                                                    for (OfflinePlayer player : party.getPartyMembers()) {
                                                         if (player != sender) {
-                                                            player.sendMessage(Utility.getMsg(player, PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
+                                                            ((Player) player).sendMessage(Utility.getMsg(((Player) player), PRIVATE_GAME_DISABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                         }
                                                     }
                                                 } else {

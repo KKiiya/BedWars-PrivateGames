@@ -145,7 +145,7 @@ public class ArenaJoin implements Listener {
 
         if (party.hasParty()) {
             if (!party.isOwner()) {
-                Player owner = party.getOwner();
+                Player owner = (Player) party.getOwner();
                 IPrivatePlayer ppo = api.getPrivatePlayer(owner);
                 if (ppo.getPlayerSettings().isPrivateGameEnabled()) {
                     if (!a.getPlayers().isEmpty()) {

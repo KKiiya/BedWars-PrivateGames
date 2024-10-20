@@ -1,5 +1,6 @@
 package me.notlewx.privategames.api.party;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -9,13 +10,13 @@ public interface IParty {
      * Get the owner of the party
      * @return - Player
      */
-    Player getOwner();
+    OfflinePlayer getOwner();
 
     /**
      * Get the party members
      * @return - List of players
      */
-    List<Player> getPartyMembers();
+    List<OfflinePlayer> getPartyMembers();
 
     /**
      * Check if the player is the owner
@@ -30,7 +31,7 @@ public interface IParty {
      * @param checking - player that will be checked
      * @return - Boolean
      */
-    boolean hasMember(Player checking);
+    boolean hasMember(OfflinePlayer checking);
 
     /**
      * Check if the player has a party
