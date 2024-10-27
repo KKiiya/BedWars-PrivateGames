@@ -32,6 +32,8 @@ public class PlayerJoin implements Listener {
         p.setMaxHealth(20.0);
         p.setHealthScale(20.0);
 
+        p.getActivePotionEffects().clear();
+
         switch (support) {
             case BEDWARS1058:
                 if (api.getBedWars1058API().getServerType() == ServerType.BUNGEE) {

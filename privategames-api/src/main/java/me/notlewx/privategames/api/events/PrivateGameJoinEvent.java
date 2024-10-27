@@ -2,11 +2,12 @@ package me.notlewx.privategames.api.events;
 
 import me.notlewx.privategames.api.arena.IPrivateArena;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class PrivateGameJoinEvent extends Event {
+public class PrivateGameJoinEvent extends Event implements Cancellable {
 
     public static final HandlerList HANDLERS = new HandlerList();
 

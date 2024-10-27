@@ -52,17 +52,21 @@ public class ArenaJoin implements Listener {
     public void onGameStateChange(GameStateChangeEvent e) {
         if (e.getNewState() == GameState.starting) {
             for (ITeam team : e.getArena().getTeams()) {
-                bedDirection.put(team, ((Bed) team.getBed().getBlock().getState().getData()).getFacing());
+                try {
+                    bedDirection.put(team, ((Bed) team.getBed().getBlock().getState().getData()).getFacing());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onArenaJoin(PlayerJoinArenaEvent e) {
+        IArena a = e.getArena();
         Player p = e.getPlayer();
         IPrivatePlayer pp = PrivateGames.api.getPrivatePlayer(p);
         IPlayerSettings ps = pp.getPlayerSettings();
-        IArena a = e.getArena();
         IParty party = pp.getPlayerParty();
 
         ItemStack settings = new ItemStack(Material.valueOf(mainConfig.getString(MATERIAL)));
@@ -74,11 +78,8 @@ public class ArenaJoin implements Listener {
         Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
             ISidebar sidebar = SidebarService.getInstance().getSidebar(p);
             sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
-                if (api.getPrivateArenaUtil().isPlaying(p)) {
-                    return Utility.getMsg(p, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
-                } else {
-                    return "";
-                }
+                if (api.getPrivateArenaUtil().isPlaying(p)) return Utility.getMsg(p, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
+                else return "";
             }));
             sidebar.getHandle().refreshPlaceholders();
         }, 20L);
@@ -90,6 +91,7 @@ public class ArenaJoin implements Listener {
                 if (ppa.getRequests().contains(p.getUniqueId())) {
                     ppa.removeRequest(p.getUniqueId());
                     if (pa.getPlayers().size() == a.getMaxPlayers()) return;
+                    pa.addPlayer(p, true);
 
                     api.getBedWars1058API().getArenaUtil().getArenas().remove(a);
                 }
@@ -103,17 +105,10 @@ public class ArenaJoin implements Listener {
                     for (ITeam team : a.getTeams()) {
                         if (team.getSize() == a.getMaxInTeam()) continue;
 
-                        p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
+                        p.getActivePotionEffects().forEach(potionEffect -> e.getPlayer().removePotionEffect(potionEffect.getType()));
                         p.setAllowFlight(false);
                         p.setFlying(false);
                         a.getSpectators().remove(p);
-                        a.getPlayers().add(p);
-                        if (team.getMembers().isEmpty()) {
-                            team.spawnNPCs();
-                        }
-                        team.addPlayers(p);
-                        spawnBed(team);
-                        team.setBedDestroyed(false);
                         p.getInventory().clear();
                         p.getInventory().forEach(itemStack -> {
                             if (itemStack != null) {
@@ -122,6 +117,11 @@ public class ArenaJoin implements Listener {
                                 }
                             }
                         });
+                        a.getPlayers().add(p);
+                        team.addPlayers(p);
+                        team.spawnNPCs();
+                        spawnBed(team);
+                        team.setBedDestroyed(false);
                         team.respawnMember(p);
 
                         new PlayerQuickBuyCache(p);
@@ -130,7 +130,6 @@ public class ArenaJoin implements Listener {
                         p.setAllowFlight(false);
                         p.setFlying(false);
                         p.closeInventory();
-                        pa.addPlayer(p, true);
                         SidebarService.getInstance().giveSidebar(p, a, true);
                         Utility.debug("Player " + p.getName() + " has joined the private arena " + pa.getArenaIdentifier() + " and has been added to the host's private arena.");
                         break;
@@ -155,7 +154,7 @@ public class ArenaJoin implements Listener {
                 }
             }
         } else {
-            if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
+            if ((pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) && pp.getPlayerSettings().isPrivateGameEnabled()) {
                 if (a.getPlayers().size() > 1) {
                     e.setCancelled(true);
                     ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));

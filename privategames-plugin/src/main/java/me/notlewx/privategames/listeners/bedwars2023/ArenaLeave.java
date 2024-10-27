@@ -46,5 +46,6 @@ public class ArenaLeave implements Listener {
         player.setHealth(20);
         player.setHealthScale(20);
         player.setMaxHealth(20);
+        player.getActivePotionEffects().clear();
     }
 }

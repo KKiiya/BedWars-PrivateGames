@@ -51,7 +51,11 @@ public class ArenaJoin implements Listener {
     public void onGameStateChange(GameStateChangeEvent e) {
         if (e.getNewState() == GameState.starting) {
             for (ITeam team : e.getArena().getTeams()) {
-                bedDirection.put(team, ((Bed) team.getBed().getBlock().getState().getData()).getFacing());
+                try {
+                    bedDirection.put(team, ((Bed) team.getBed().getBlock().getState().getData()).getFacing());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
@@ -85,6 +89,7 @@ public class ArenaJoin implements Listener {
                 IPrivatePlayer ppa = pa.getPrivateArenaHost();
                 if (ppa.getRequests().contains(p.getUniqueId())) {
                     ppa.removeRequest(p.getUniqueId());
+                    pa.addPlayer(p, true);
                     if (pa.getPlayers().size() == a.getMaxPlayers()) return;
 
                     api.getBedWars2023API().getArenaUtil().getArenas().remove(a);
@@ -103,11 +108,6 @@ public class ArenaJoin implements Listener {
                         p.setAllowFlight(false);
                         p.setFlying(false);
                         a.getSpectators().remove(p);
-                        a.getPlayers().add(p);
-                        if (team.getMembers().isEmpty()) team.spawnNPCs();
-                        team.addPlayers(p);
-                        spawnBed(team);
-                        team.setBedDestroyed(false);
                         p.getInventory().clear();
                         p.getInventory().forEach(itemStack -> {
                             if (itemStack != null) {
@@ -116,6 +116,11 @@ public class ArenaJoin implements Listener {
                                 }
                             }
                         });
+                        a.getPlayers().add(p);
+                        if (!team.isShopSpawned()) team.spawnNPCs();
+                        team.addPlayers(p);
+                        spawnBed(team);
+                        team.setBedDestroyed(false);
                         team.respawnMember(p);
 
                         new PlayerQuickBuyCache(p);
@@ -124,7 +129,6 @@ public class ArenaJoin implements Listener {
                         p.setAllowFlight(false);
                         p.setFlying(false);
                         p.closeInventory();
-                        pa.addPlayer(p, true);
                         BoardManager.getInstance().giveTabFeatures(p, a, true);
                         Utility.debug("Player " + p.getName() + " has joined the private arena " + pa.getArenaIdentifier() + " and has been added to the host's private arena.");
                         break;
@@ -149,7 +153,7 @@ public class ArenaJoin implements Listener {
                 }
             }
         } else {
-            if (pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) {
+            if ((pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) && pp.getPlayerSettings().isPrivateGameEnabled()) {
                 if (a.getPlayers().size() > 1) {
                     e.setCancelled(true);
                     ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));

@@ -1,11 +1,12 @@
 package me.notlewx.privategames.api.events;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class PrivateGameEnableEvent extends Event {
+public class PrivateGameEnableEvent extends Event implements Cancellable {
 
     public static final HandlerList HANDLERS = new HandlerList();
 

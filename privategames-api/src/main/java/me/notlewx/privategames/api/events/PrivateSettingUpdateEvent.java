@@ -2,6 +2,7 @@ package me.notlewx.privategames.api.events;
 
 import me.notlewx.privategames.api.modifiers.ModifierType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class PrivateSettingUpdateEvent extends Event {
+public class PrivateSettingUpdateEvent extends Event implements Cancellable {
     public static final HandlerList HANDLERS = new HandlerList();
 
     private final Player player;

@@ -83,7 +83,7 @@ public class PrivateArenaListener implements Listener {
                             break;
                     }
                     if (pp.getPlayerSettings().isLowGravityEnabled()) {
-                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, ONE_HIT_ONE_KILL_MEANING)));
+                        finalMessage.add(Utility.getMsg(p, PRIVATE_GAME_MODIFIERS_FORMAT).replace("{modifier}", Utility.getMsg(p, LOW_GRAVITY_MEANING)));
                     }
                     switch (pp.getPlayerSettings().getSpeedLevel()) {
                         case 0:

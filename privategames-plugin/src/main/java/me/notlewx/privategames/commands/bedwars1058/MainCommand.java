@@ -267,7 +267,7 @@ public class MainCommand implements CommandExecutor {
                     case "accept":
                         if (sender.hasPermission("pg.accept") || sender.isOp()) {
                             IPrivatePlayer pp = api.getPrivatePlayer((Player) sender);
-                            IArena a = PrivateGames.getBw1058Api().getArenaUtil().getArenaByPlayer(pp.getPlayer().getPlayer());
+                            IArena a = PrivateGames.getBw1058Api().getArenaUtil().getArenaByPlayer((Player) pp.getPlayer());
                             if (args.length == 2) {
                                 if (pp.getRequestByName(args[1]) == null) {
                                     sender.sendMessage(Utility.c(Utility.getMsg((Player) sender, PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER).replace("{player}", args[1])));

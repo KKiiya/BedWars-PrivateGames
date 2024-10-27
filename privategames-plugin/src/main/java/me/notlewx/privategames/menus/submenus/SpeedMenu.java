@@ -3,7 +3,6 @@ package me.notlewx.privategames.menus.submenus;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.menus.SettingsMenu;
-import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

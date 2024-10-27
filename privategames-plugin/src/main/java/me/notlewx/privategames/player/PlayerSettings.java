@@ -144,7 +144,7 @@ public class PlayerSettings implements IPlayerSettings {
 
     @Override
     public int getSpeedLevel() {
-        return Integer.parseInt(database.getData(player, "speed"));
+        return speed;
     }
 
     @Override
