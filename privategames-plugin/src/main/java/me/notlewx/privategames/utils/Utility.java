@@ -186,4 +186,16 @@ public class Utility {
         skull.setItemMeta(skullMeta);
         return skull;
     }
+
+    public static String getForCurrentVersion(String v18, String v12, String v13) {
+        String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
+        switch (version) {
+            case "v1_8_R3":
+                return v18;
+            case "v1_12_R1":
+                return v12;
+            default:
+                return v13;
+        }
+    }
 }

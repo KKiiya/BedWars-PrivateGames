@@ -44,7 +44,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
     }
 
     private void addContents() {
-        Material skull = Material.getMaterial(getForCurrentVersion("SKULL_ITEM", "SKULL_ITEM", "LEGACY_SKULL_ITEM"));
+        Material skull = Material.getMaterial(Utility.getForCurrentVersion("SKULL_ITEM", "SKULL_ITEM", "LEGACY_SKULL_ITEM"));
         ItemStack gene = new ItemStack(Material.AIR);
         String team;
         String location;
@@ -53,11 +53,8 @@ public class GeneratorSettingsMenu implements GUIHolder {
         String spawnLimit;
         if (support == Support.BEDWARS1058) {
             IGenerator g = (IGenerator) gen;
-            if (g.getBwt() == null) {
-                team = "No team";
-            } else {
-                team = g.getBwt().getName();
-            }
+            if (g.getBwt() == null) team = "No team";
+            else team = g.getBwt().getName();
             location = "X: " + g.getLocation().getX() + " Y: " + g.getLocation().getY() + " Z: " + g.getLocation().getZ() + " Pitch: " + g.getLocation().getPitch() + " Yaw: " + g.getLocation().getYaw();
             amount = String.valueOf(g.getAmount());
             delay = String.valueOf(g.getDelay());
@@ -65,11 +62,9 @@ public class GeneratorSettingsMenu implements GUIHolder {
             gene = g.getOre();
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.generator.IGenerator g = (com.tomkeuper.bedwars.api.arena.generator.IGenerator) gen;
-            if (g.getBedWarsTeam() == null) {
-                team = "No team";
-            } else {
-                team = g.getBedWarsTeam().getName();
-            }
+            if (g.getBedWarsTeam() == null) team = "No team";
+            else team = g.getBedWarsTeam().getName();
+
             location = "X: " + g.getLocation().getX() + " Y: " + g.getLocation().getY() + " Z: " + g.getLocation().getZ() + " Pitch: " + g.getLocation().getPitch() + " Yaw: " + g.getLocation().getYaw();
             amount = String.valueOf(g.getAmount());
             delay = String.valueOf(g.getDelay()/4);
