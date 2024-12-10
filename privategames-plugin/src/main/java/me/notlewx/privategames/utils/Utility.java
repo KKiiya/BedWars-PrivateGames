@@ -157,8 +157,8 @@ public class Utility {
             }, 20L);
     }
 
-    public static ItemStack getSkull(Material mat, String url) {
-        ItemStack skull = new ItemStack(mat, 1, (short) 3);
+    public static ItemStack getSkull(String url) {
+        ItemStack skull = new ItemStack(PrivateGames.getVersionSupport().getSkullMaterial(), 1, (short) 3);
 
         if (url == null || url.isEmpty())
             return skull;

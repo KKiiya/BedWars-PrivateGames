@@ -7,6 +7,7 @@ import com.andrei1058.bedwars.sidebar.SidebarService;
 import com.tomkeuper.bedwars.api.arena.IArena;
 import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPlayerSettings;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.config.bedwars1058.MessagesData;
 import me.notlewx.privategames.menus.submenus.*;
 import me.notlewx.privategames.support.Support;
@@ -30,12 +31,15 @@ import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_AR
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class SettingsMenu implements GUIHolder {
-    private Inventory inventory;
-    private final Player player;
+
     private final IPlayerSettings playerData;
+    private final VersionSupport vs;
+    private final Player player;
+    private Inventory inventory;
 
     public SettingsMenu(Player p) {
         this.player = p;
+        this.vs = PrivateGames.getVersionSupport();
         playerData = api.getPrivatePlayer(p).getPlayerSettings();
         try {
             createInventory();
@@ -57,109 +61,80 @@ public class SettingsMenu implements GUIHolder {
     private void addContents(Inventory inventory) {
         Material oneHitOneKillMat = Material.getMaterial(mainConfig.getString(ONE_HIT_ONE_KILL_MATERIAL));
         ItemStack oneHitOneKill = new ItemStack(oneHitOneKillMat, 1, (byte) mainConfig.getInt(ONE_HIT_ONE_KILL_ID));
-        if ((oneHitOneKill.getType().toString().equals("SKULL_ITEM") || oneHitOneKill.getType().toString().equals("LEGACY_SKULL_ITEM")) && oneHitOneKill.getDurability() == 3) {
-            oneHitOneKill = Utility.getSkull(oneHitOneKillMat, mainConfig.getString(ONE_HIT_ONE_KILL_HEAD_URL));
-        }
+        if (vs.isPlayerHead(oneHitOneKill)) oneHitOneKill = Utility.getSkull(mainConfig.getString(ONE_HIT_ONE_KILL_HEAD_URL));
+
         ItemMeta oneHitOneKillMeta = oneHitOneKill.getItemMeta();
 
         Material healthBuffMat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_MATERIAL));
         ItemStack healthBuff = new ItemStack(healthBuffMat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_ID));
-        if ((healthBuff.getType().toString().equals("SKULL_ITEM") || healthBuff.getType().toString().equals("LEGACY_SKULL_ITEM")) && healthBuff.getDurability() == 3) {
-            healthBuff = Utility.getSkull(healthBuffMat, mainConfig.getString(HEALTH_BUFF_HEAD_URL));
-        }
+        if (vs.isPlayerHead(healthBuff)) healthBuff = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_HEAD_URL));
         ItemMeta gappleMeta = healthBuff.getItemMeta();
 
         Material longJumpMat = Material.getMaterial(mainConfig.getString(LONG_JUMP_MATERIAL));
         ItemStack longJump = new ItemStack(longJumpMat, 1, (byte) mainConfig.getInt(LONG_JUMP_ID));
-        if ((longJump.getType().toString().equals("SKULL_ITEM") || longJump.getType().toString().equals("LEGACY_SKULL_ITEM")) && longJump.getDurability() == 3) {
-            longJump = Utility.getSkull(longJumpMat, mainConfig.getString(LONG_JUMP_HEAD_URL));
-        }
+        if (vs.isPlayerHead(longJump)) longJump = Utility.getSkull(mainConfig.getString(LONG_JUMP_HEAD_URL));
         ItemMeta longJumpMeta = longJump.getItemMeta();
 
         Material speedMat = Material.getMaterial(mainConfig.getString(SPEED_MATERIAL));
         ItemStack speed = new ItemStack(speedMat, 1, (byte) mainConfig.getInt(SPEED_ID));
-        if ((speed.getType().toString().equals("SKULL_ITEM") || speed.getType().toString().equals("LEGACY_SKULL_ITEM")) && speed.getDurability() == 3) {
-            speed = Utility.getSkull(speedMat, mainConfig.getString(SPEED_HEAD_URL));
-        }
+        if (vs.isPlayerHead(speed)) speed = Utility.getSkull(mainConfig.getString(SPEED_HEAD_URL));
         ItemMeta speedMeta = speed.getItemMeta();
 
 
         Material respawnTimeMat = Material.getMaterial(mainConfig.getString(RESPAWN_TIME_MATERIAL));
         ItemStack respawnTime = new ItemStack(respawnTimeMat, 1, (byte) mainConfig.getInt(RESPAWN_TIME_ID));
-        if ((respawnTime.getType().toString().equals("SKULL_ITEM") || respawnTime.getType().toString().equals("LEGACY_SKULL_ITEM")) && respawnTime.getDurability() == 3) {
-            respawnTime = Utility.getSkull(respawnTimeMat, mainConfig.getString(RESPAWN_TIME_HEAD_URL));
-        }
+        if (vs.isPlayerHead(respawnTime)) respawnTime = Utility.getSkull(mainConfig.getString(RESPAWN_TIME_HEAD_URL));
         ItemMeta respawnTimeMeta = respawnTime.getItemMeta();
 
         Material eventsTimeMat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_MATERIAL));
         ItemStack eventsTime = new ItemStack(eventsTimeMat, 1, (byte) mainConfig.getInt(EVENTS_TIME_ID));
-        if ((eventsTime.getType().toString().equals("SKULL_ITEM") || eventsTime.getType().toString().equals("LEGACY_SKULL_ITEM")) && eventsTime.getDurability() == 3) {
-            eventsTime = Utility.getSkull(eventsTimeMat, mainConfig.getString(EVENTS_TIME_HEAD_URL));
-        }
+        if (vs.isPlayerHead(eventsTime)) eventsTime = Utility.getSkull(mainConfig.getString(EVENTS_TIME_HEAD_URL));
         ItemMeta eventsTimeMeta = eventsTime.getItemMeta();
 
         Material noEmeraldsMat = Material.getMaterial(mainConfig.getString(NO_EMERALDS_MATERIAL));
         ItemStack noEmeralds = new ItemStack(noEmeraldsMat, 1, (byte) mainConfig.getInt(NO_EMERALDS_ID));
-        if ((noEmeralds.getType().toString().equals("SKULL_ITEM") || noEmeralds.getType().toString().equals("LEGACY_SKULL_ITEM")) && noEmeralds.getDurability() == 3) {
-            noEmeralds = Utility.getSkull(noEmeraldsMat, mainConfig.getString(NO_EMERALDS_HEAD_URL));
-        }
+        if (vs.isPlayerHead(noEmeralds)) noEmeralds = Utility.getSkull(mainConfig.getString(NO_EMERALDS_HEAD_URL));
         ItemMeta noEmeraldsMeta = noEmeralds.getItemMeta();
 
 
         Material noDiamondsMat = Material.getMaterial(mainConfig.getString(NO_DIAMONDS_MATERIAL));
         ItemStack noDiamonds = new ItemStack(noDiamondsMat, 1, (byte) mainConfig.getInt(NO_DIAMONDS_ID));
-        if ((noDiamonds.getType().toString().equals("SKULL_ITEM") || noDiamonds.getType().toString().equals("LEGACY_SKULL_ITEM")) && noDiamonds.getDurability() == 3) {
-            noDiamonds = Utility.getSkull(noDiamondsMat, mainConfig.getString(NO_DIAMONDS_HEAD_URL));
-        }
+        if (vs.isPlayerHead(noDiamonds)) noDiamonds = Utility.getSkull(mainConfig.getString(NO_DIAMONDS_HEAD_URL));
         ItemMeta noDiamondsMeta = noDiamonds.getItemMeta();
 
         Material allowMapBreakMat = Material.getMaterial(mainConfig.getString(ALLOW_MAP_BREAK_MATERIAL));
         ItemStack allowMapBreak = new ItemStack(allowMapBreakMat, 1, (byte) mainConfig.getInt(ALLOW_MAP_BREAK_ID));
-        if ((allowMapBreak.getType().toString().equals("SKULL_ITEM") || allowMapBreak.getType().toString().equals("LEGACY_SKULL_ITEM")) && allowMapBreak.getDurability() == 3) {
-            allowMapBreak = Utility.getSkull(allowMapBreakMat, mainConfig.getString(ALLOW_MAP_BREAK_HEAD_URL));
-        }
+        if (vs.isPlayerHead(allowMapBreak)) allowMapBreak = Utility.getSkull(mainConfig.getString(ALLOW_MAP_BREAK_HEAD_URL));
         ItemMeta allowMapBreakMeta = allowMapBreak.getItemMeta();
 
         Material bedInstaBreakMat = Material.getMaterial(mainConfig.getString(BED_INSTA_BREAK_MATERIAL));
         ItemStack bedInstaBreak = new ItemStack(bedInstaBreakMat, 1, (byte) mainConfig.getInt(BED_INSTA_BREAK_ID));
-        if ((bedInstaBreak.getType().toString().equals("SKULL_ITEM") || bedInstaBreak.getType().toString().equals("LEGACY_SKULL_ITEM")) && bedInstaBreak.getDurability() == 3) {
-            bedInstaBreak = Utility.getSkull(bedInstaBreakMat, mainConfig.getString(BED_INSTA_BREAK_HEAD_URL));
-        }
+        if (vs.isPlayerHead(bedInstaBreak)) bedInstaBreak = Utility.getSkull(mainConfig.getString(BED_INSTA_BREAK_HEAD_URL));
         ItemMeta bedInstaBreakMeta = bedInstaBreak.getItemMeta();
 
         Material maxTeamUpgradesMat = Material.getMaterial(mainConfig.getString(MAX_TEAM_UPGRADES_MATERIAL));
         ItemStack maxTeamUpgrades = new ItemStack(maxTeamUpgradesMat, 1, (byte) mainConfig.getInt(MAX_TEAM_UPGRADES_ID));
-        if ((maxTeamUpgrades.getType().toString().equals("SKULL_ITEM") || maxTeamUpgrades.getType().toString().equals("LEGACY_SKULL_ITEM")) && maxTeamUpgrades.getDurability() == 3) {
-            maxTeamUpgrades = Utility.getSkull(maxTeamUpgradesMat, mainConfig.getString(MAX_TEAM_UPGRADES_HEAD_URL));
-        }
+        if (vs.isPlayerHead(maxTeamUpgrades)) maxTeamUpgrades = Utility.getSkull(mainConfig.getString(MAX_TEAM_UPGRADES_HEAD_URL));
         ItemMeta maxTeamUpgradesMeta = maxTeamUpgrades.getItemMeta();
 
         Material optionsMat = Material.getMaterial(mainConfig.getString(OPTIONS_MATERIAL));
         ItemStack options = new ItemStack(optionsMat, 1, (byte) mainConfig.getInt(OPTIONS_ID));
-        if ((options.getType().toString().equals("SKULL_ITEM") || options.getType().toString().equals("LEGACY_SKULL_ITEM")) && options.getDurability() == 3) {
-            options = Utility.getSkull(optionsMat, mainConfig.getString(OPTIONS_HEAD_URL));
-        }
+        if (vs.isPlayerHead(options)) options = Utility.getSkull(mainConfig.getString(OPTIONS_HEAD_URL));
         ItemMeta optionsMeta = options.getItemMeta();
 
         Material startMat = Material.getMaterial(mainConfig.getString(START_GAME_MATERIAL));
         ItemStack start = new ItemStack(startMat, 1, (byte) mainConfig.getInt(START_GAME_ID));
-        if ((start.getType().toString().equals("SKULL_ITEM") || start.getType().toString().equals("LEGACY_SKULL_ITEM")) && start.getDurability() == 3) {
-            start = Utility.getSkull(startMat, mainConfig.getString(START_GAME_HEAD_URL));
-        }
+        if (vs.isPlayerHead(start)) start = Utility.getSkull(mainConfig.getString(START_GAME_HEAD_URL));
         ItemMeta startMeta = start.getItemMeta();
 
         Material gamemodeChangerMat = Material.getMaterial(mainConfig.getString(GAMEMODE_CHANGER_MATERIAL));
         ItemStack gamemodeChanger = new ItemStack(gamemodeChangerMat, 1, (byte) mainConfig.getInt(GAMEMODE_CHANGER_ID));
-        if ((gamemodeChanger.getType().toString().equals("SKULL_ITEM") || gamemodeChanger.getType().toString().equals("LEGACY_SKULL_ITEM")) && gamemodeChanger.getDurability() == 3) {
-            gamemodeChanger = Utility.getSkull(gamemodeChangerMat, mainConfig.getString(GAMEMODE_CHANGER_HEAD_URL));
-        }
+        if (vs.isPlayerHead(gamemodeChanger)) gamemodeChanger = Utility.getSkull(mainConfig.getString(GAMEMODE_CHANGER_HEAD_URL));
         ItemMeta gamemodeChangerMeta = gamemodeChanger.getItemMeta();
 
         Material matBack = Material.getMaterial(mainConfig.getString(BACK_MATERIAL));
         ItemStack back = new ItemStack(matBack, 1, (byte) mainConfig.getInt(BACK_ID));
-        if ((back.getType().toString().equals("SKULL_ITEM") || back.getType().toString().equals("LEGACY_SKULL_ITEM")) && back.getDurability() == 3) {
-            back = Utility.getSkull(matBack, mainConfig.getString(BACK_HEAD_URL));
-        }
+        if (vs.isPlayerHead(back)) back = Utility.getSkull(mainConfig.getString(BACK_HEAD_URL));
         ItemMeta backMeta = back.getItemMeta();
 
 
@@ -399,72 +374,80 @@ public class SettingsMenu implements GUIHolder {
         if (playerData.isMaxTeamUpgradesEnabled()) maxTeamUpgrades.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
         else maxTeamUpgrades.removeEnchantment(Enchantment.DURABILITY);
 
-        if (mainConfig.getBoolean(ONE_HIT_ONE_KILL)) inventory.setItem(mainConfig.getInt(ONE_HIT_ONE_KILL_POSITION), oneHitOneKill);
-        if (mainConfig.getBoolean(HEALTH_BUFF)) inventory.setItem(mainConfig.getInt(HEALTH_BUFF_POSITION), healthBuff);
-        if (mainConfig.getBoolean(LONG_JUMP)) inventory.setItem(mainConfig.getInt(LONG_JUMP_POSITION), longJump);
-        if (mainConfig.getBoolean(SPEED)) inventory.setItem(mainConfig.getInt(SPEED_POSITION), speed);
+        if (mainConfig.getBoolean(ONE_HIT_ONE_KILL)) inventory.setItem(mainConfig.getInt(ONE_HIT_ONE_KILL_POSITION), vs.setItemTag(oneHitOneKill, "pg", "oneHitOneKill"));
+        if (mainConfig.getBoolean(HEALTH_BUFF)) inventory.setItem(mainConfig.getInt(HEALTH_BUFF_POSITION), vs.setItemTag(healthBuff, "pg", "health"));
+        if (mainConfig.getBoolean(LONG_JUMP)) inventory.setItem(mainConfig.getInt(LONG_JUMP_POSITION), vs.setItemTag(longJump, "pg", "lowGravity"));
+        if (mainConfig.getBoolean(SPEED)) inventory.setItem(mainConfig.getInt(SPEED_POSITION), vs.setItemTag(speed, "pg", "speed"));
 
-        if (mainConfig.getBoolean(RESPAWN_TIME)) inventory.setItem(mainConfig.getInt(RESPAWN_TIME_POSITION), respawnTime);
-        if (mainConfig.getBoolean(EVENTS_TIME)) inventory.setItem(mainConfig.getInt(EVENTS_TIME_POSITION), eventsTime);
-        if (mainConfig.getBoolean(NO_EMERALDS)) inventory.setItem(mainConfig.getInt(NO_EMERALDS_POSITION), noEmeralds);
+        if (mainConfig.getBoolean(RESPAWN_TIME)) inventory.setItem(mainConfig.getInt(RESPAWN_TIME_POSITION), vs.setItemTag(respawnTime, "pg", "respawnTime"));
+        if (mainConfig.getBoolean(EVENTS_TIME)) inventory.setItem(mainConfig.getInt(EVENTS_TIME_POSITION), vs.setItemTag(eventsTime, "pg", "eventsTime"));
+        if (mainConfig.getBoolean(NO_EMERALDS)) inventory.setItem(mainConfig.getInt(NO_EMERALDS_POSITION), vs.setItemTag(noEmeralds, "pg", "noEmeralds"));
 
-        if (mainConfig.getBoolean(NO_DIAMONDS)) inventory.setItem(mainConfig.getInt(NO_DIAMONDS_POSITION), noDiamonds);
-        if (mainConfig.getBoolean(ALLOW_MAP_BREAK)) inventory.setItem(mainConfig.getInt(ALLOW_MAP_BREAK_POSITION), allowMapBreak);
-        if (mainConfig.getBoolean(BED_INSTA_BREAK)) inventory.setItem(mainConfig.getInt(BED_INSTA_BREAK_POSITION), bedInstaBreak);
-        if (mainConfig.getBoolean(MAX_TEAM_UPGRADES)) inventory.setItem(mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION), maxTeamUpgrades);
+        if (mainConfig.getBoolean(NO_DIAMONDS)) inventory.setItem(mainConfig.getInt(NO_DIAMONDS_POSITION), vs.setItemTag(noDiamonds, "pg", "noDiamonds"));
+        if (mainConfig.getBoolean(ALLOW_MAP_BREAK)) inventory.setItem(mainConfig.getInt(ALLOW_MAP_BREAK_POSITION), vs.setItemTag(allowMapBreak, "pg", "allowMapBreak"));
+        if (mainConfig.getBoolean(BED_INSTA_BREAK)) inventory.setItem(mainConfig.getInt(BED_INSTA_BREAK_POSITION), vs.setItemTag(bedInstaBreak, "pg", "bedInstaBreak"));
+        if (mainConfig.getBoolean(MAX_TEAM_UPGRADES)) inventory.setItem(mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION), vs.setItemTag(maxTeamUpgrades, "pg", "maxTeamUpgrades"));
 
-        if (mainConfig.getBoolean(OPTIONS_ENABLE)) inventory.setItem(mainConfig.getInt(OPTIONS_POSITION), options);
+        if (mainConfig.getBoolean(OPTIONS_ENABLE)) inventory.setItem(mainConfig.getInt(OPTIONS_POSITION), vs.setItemTag(options, "pg", "options"));
         if (mainConfig.getBoolean(START_GAME)) {
-            if (api.getPrivateArenaUtil().isPlaying(player)) inventory.setItem(mainConfig.getInt(START_GAME_POSITION), start);
+            if (api.getPrivateArenaUtil().isPlaying(player)) inventory.setItem(mainConfig.getInt(START_GAME_POSITION), vs.setItemTag(start, "pg", "start"));
         }
 
         if (mainConfig.getBoolean(GAMEMODE_CHANGER)) {
             if (api.getPrivateArenaUtil().isPlaying(player)) {
                 if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup()) != null) {
-                    inventory.setItem(mainConfig.getInt(GAMEMODE_CHANGER_POSITION), gamemodeChanger);
+                    inventory.setItem(mainConfig.getInt(GAMEMODE_CHANGER_POSITION), vs.setItemTag(gamemodeChanger, "pg", "gamemodeChanger"));
                 }
             }
         }
 
-        if (mainConfig.getBoolean(BACK_ENABLE)) inventory.setItem(mainConfig.getInt(BACK_POSITION), back);
+        if (mainConfig.getBoolean(BACK_ENABLE)) inventory.setItem(mainConfig.getInt(BACK_POSITION), vs.setItemTag(back, "pg", "back"));
     }
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
+        ItemStack item = e.getCurrentItem();
+        if (item == null) return;
+        if (item.getType() == Material.AIR) return;
+        String tag = vs.getItemTag(item, "pg");
+        if (tag == null) {
+            e.setCancelled(true);
+            return;
+        }
         if (!e.getView().getTitle().equals(Utility.getMsg(player, MAIN_MENU_NAME))) return;
 
-        if (e.getSlot() == mainConfig.getInt(ONE_HIT_ONE_KILL_POSITION)) {
+        if (tag.equalsIgnoreCase("oneHitOneKill")) {
             playerData.setOneHitOneKillEnabled(!playerData.isOneHitOneKillEnabled());
             new SettingsMenu(player);
         }
-        else if (e.getSlot() == mainConfig.getInt(LONG_JUMP_POSITION)) {
+        else if (tag.equalsIgnoreCase("lowGravity")) {
             playerData.setLowGravityEnabled(!playerData.isLowGravityEnabled());
             new SettingsMenu(player);
         }
-        else if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_POSITION)) new HealthMenu(player);
-        else if (e.getSlot() == mainConfig.getInt(SPEED_POSITION)) new SpeedMenu(player);
-        else if (e.getSlot() == mainConfig.getInt(RESPAWN_TIME_POSITION)) new RespawnTimeMenu(player);
-        else if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_POSITION)) new EventsTimeMenu(player);
-        else if (e.getSlot() == mainConfig.getInt(NO_EMERALDS_POSITION)) {
+        else if (tag.equalsIgnoreCase("health")) new HealthMenu(player);
+        else if (tag.equalsIgnoreCase("speed")) new SpeedMenu(player);
+        else if (tag.equalsIgnoreCase("respawnTime")) new RespawnTimeMenu(player);
+        else if (tag.equalsIgnoreCase("eventsTime")) new EventsTimeMenu(player);
+        else if (tag.equalsIgnoreCase("noEmeralds")) {
             playerData.setNoEmeraldsEnabled(!playerData.isNoEmeraldsEnabled());
             new SettingsMenu(player);
         }
-        else if (e.getSlot() == mainConfig.getInt(NO_DIAMONDS_POSITION)) {
+        else if (tag.equalsIgnoreCase("noDiamonds")) {
             playerData.setNoDiamondsEnabled(!playerData.isNoDiamondsEnabled());
             new SettingsMenu(player);
         }
-        else if (e.getSlot() == mainConfig.getInt(ALLOW_MAP_BREAK_POSITION)) {
+        else if (tag.equalsIgnoreCase("allowMapBreak")) {
             playerData.setAllowMapBreakEnabled(!playerData.isAllowMapBreakEnabled());
             new SettingsMenu(player);
         }
-        else if (e.getSlot() == mainConfig.getInt(BED_INSTA_BREAK_POSITION)) {
+        else if (tag.equalsIgnoreCase("bedInstaBreak")) {
             playerData.setBedInstaBreakEnabled(!playerData.isBedInstaBreakEnabled());
             new SettingsMenu(player);
         }
-        else if (e.getSlot() == mainConfig.getInt(MAX_TEAM_UPGRADES_POSITION)) {
+        else if (tag.equalsIgnoreCase("maxTeamUpgrades")) {
             playerData.setMaxTeamUpgradesEnabled(!playerData.isMaxTeamUpgradesEnabled());
             new SettingsMenu(player);
-        } else if (e.getSlot() == mainConfig.getInt(OPTIONS_POSITION)) new OptionsMenu(player);
-        else if (e.getSlot() == mainConfig.getInt(START_GAME_POSITION)) {
+        } else if (tag.equalsIgnoreCase("options")) new OptionsMenu(player);
+        else if (tag.equalsIgnoreCase("start")) {
             switch (support) {
                 case BEDWARS2023:
                     IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getArenaIdentifier());
@@ -482,13 +465,7 @@ public class SettingsMenu implements GUIHolder {
                     break;
             }
             new SettingsMenu(player);
-        } else if (e.getSlot() == mainConfig.getInt(BACK_POSITION)) {
-            if (mainConfig.getString(BACK_COMMAND).equalsIgnoreCase("close")) player.closeInventory();
-            else {
-                if (!api.getPrivateArenaUtil().isPlaying(player)) player.performCommand(mainConfig.getString(BACK_COMMAND));
-                else player.closeInventory();
-            }
-        } else if (e.getSlot() == mainConfig.getInt(GAMEMODE_CHANGER_POSITION)) {
+        } else if (tag.equalsIgnoreCase("gamemodeChanger")) {
             switch (support) {
                 case BEDWARS1058:
                     if (e.getClick() == ClickType.RIGHT) {
@@ -501,9 +478,7 @@ public class SettingsMenu implements GUIHolder {
                         sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
                             if (api.getPrivateArenaUtil().isPlaying(player)) {
                                 return Utility.getMsg(player, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
-                            } else {
-                                return "";
-                            }
+                            } else return "";
                         }));
                         sidebar.getHandle().refreshPlaceholders();
                         new SettingsMenu(player);
@@ -517,6 +492,12 @@ public class SettingsMenu implements GUIHolder {
                     } else new GamemodeChangerMenu(player, api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player));
                     break;
             }
-        }
+        } else if (tag.equalsIgnoreCase("back")) {
+            if (mainConfig.getString(BACK_COMMAND).equalsIgnoreCase("close")) player.closeInventory();
+            else {
+                if (!api.getPrivateArenaUtil().isPlaying(player)) player.performCommand(mainConfig.getString(BACK_COMMAND));
+                else player.closeInventory();
+            }
+        } else e.setCancelled(true);
     }
 }

@@ -1,6 +1,8 @@
 package me.notlewx.privategames.menus.submenus.generators;
 
 import com.andrei1058.bedwars.api.arena.IArena;
+import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.menus.OptionsMenu;
 import me.notlewx.privategames.support.Support;
@@ -12,8 +14,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.*;
@@ -21,13 +21,14 @@ import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class GeneratorsMenu implements GUIHolder {
-    private Inventory inv;
+
+    private final VersionSupport vs;
     private final Player p;
-    private final HashMap<Integer, Object> generatorPos;
+    private Inventory inv;
 
     public GeneratorsMenu(Player p) {
         this.p = p;
-        generatorPos = new HashMap<>();
+        this.vs = PrivateGames.getVersionSupport();
         if (!api.getPrivateArenaUtil().isPlaying(p)) return;
         try {
             createInventory();
@@ -70,8 +71,7 @@ public class GeneratorsMenu implements GUIHolder {
                                 .replace("{spawnLimit}", spawnLimit))
                         .collect(Collectors.toList()));
                 mat.setItemMeta(matMeta);
-                generatorPos.put(i, a.getOreGenerators().get(i));
-                inv.setItem(i, mat);
+                inv.setItem(i, vs.setItemTag(mat, "pg", "generator-"+i));
             }
         } else if (support == Support.BEDWARS2023) {
             com.tomkeuper.bedwars.api.arena.IArena a = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(p);
@@ -101,16 +101,13 @@ public class GeneratorsMenu implements GUIHolder {
                                 .replace("{spawnLimit}", spawnLimit))
                         .collect(Collectors.toList()));
                 mat.setItemMeta(matMeta);
-                generatorPos.put(i, a.getOreGenerators().get(i));
-                inv.setItem(i, mat);
+                inv.setItem(i, vs.setItemTag(mat, "pg", "generator-"+i));
             }
         }
 
         Material backMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL));
         ItemStack back = new ItemStack(backMaterial, 1, (short) mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_ID));
-        if (back.getType().toString().equals("SKULL_ITEM") || back.getType().toString().equals("LEGACY_SKULL_ITEM") && back.getDurability() == 3) {
-            back = Utility.getSkull(backMaterial, mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
-        }
+        if (vs.isPlayerHead(back)) back = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
         ItemMeta backMeta = back.getItemMeta();
 
         backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_BACK_ITEM_NAME));
@@ -118,7 +115,7 @@ public class GeneratorsMenu implements GUIHolder {
 
         back.setItemMeta(backMeta);
 
-        inv.setItem(mainConfig.getInt(OPTIONS_GENERATORS_BACK_POSITION), back);
+        inv.setItem(mainConfig.getInt(OPTIONS_GENERATORS_BACK_POSITION), vs.setItemTag(back, "pg", "back"));
     }
 
     @Override
@@ -128,14 +125,23 @@ public class GeneratorsMenu implements GUIHolder {
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_TITLE))) {
-            if (generatorPos.get(e.getSlot()) != null) {
-                new GeneratorSettingsMenu(p, generatorPos.get(e.getSlot()));
-            } else {
-                if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATORS_BACK_POSITION)) {
-                    new OptionsMenu(p);
-                }
+        ItemStack item = e.getCurrentItem();
+        if (item == null || item.getType() == Material.AIR) return;
+        String tag = vs.getItemTag(item, "pg");
+        if (tag == null) return;
+        int generator = Integer.parseInt(tag.split("-")[1]);
+
+        e.setCancelled(true);
+        if (!e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_TITLE))) return;
+
+        if (tag.startsWith("generator-")) {
+            if (support == Support.BEDWARS1058) {
+                IArena a = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(p);
+                new GeneratorSettingsMenu(p, a.getOreGenerators().get(generator));
+            } else if (support == Support.BEDWARS2023) {
+                com.tomkeuper.bedwars.api.arena.IArena a = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(p);
+                new GeneratorSettingsMenu(p, a.getOreGenerators().get(generator));
             }
-        }
+        } else if (tag.equals("back")) new OptionsMenu(p);
     }
 }

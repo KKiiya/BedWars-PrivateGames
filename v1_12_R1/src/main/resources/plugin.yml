@@ -1,0 +1,4 @@
+name: v1_12_R1
+version: '${project.version}'
+main: me.kiiya.v1_12_r1.v1_12_R1
+api-version: '1.13'

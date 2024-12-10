@@ -3,6 +3,7 @@ version: '${project.version}'
 main: me.notlewx.privategames.PrivateGames
 description: Private Games for bedwars like a well known server (with custom features)!
 soft-dependencies: [ PlaceholderAPI, BedWars1058, BedWars2023, BedWarsProxy, BWProxy2023 ]
+api-version: '1.13'
 commands:
   pg:
     description: Main command of the plugin

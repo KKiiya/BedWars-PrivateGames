@@ -46,5 +46,10 @@
       <option name="name" value="krypton" />
       <option name="url" value="https://repo.kryptonmc.org/releases" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Jitpack" />
+      <option name="name" value="Jitpack" />
+      <option name="url" value="https://jitpack.io" />
+    </remote-repository>
   </component>
 </project>

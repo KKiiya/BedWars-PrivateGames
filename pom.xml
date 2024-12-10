@@ -13,6 +13,17 @@
     <modules>
         <module>privategames-plugin</module>
         <module>privategames-api</module>
+        <module>v1_8_R3</module>
+        <module>v1_12_R1</module>
+        <module>v1_16_R3</module>
+        <module>v1_17_R1</module>
+        <module>v1_18_R2</module>
+        <module>v1_19_R3</module>
+        <module>v1_20_R1</module>
+        <module>v1_20_R2</module>
+        <module>v1_20_R3</module>
+        <module>v1_20_R4</module>
+        <module>v1_21_R1</module>
     </modules>
 
     <properties>
@@ -33,41 +44,6 @@
             <artifactId>spigot</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.andrei1058.bedwars</groupId>
-            <artifactId>BedWars1058</artifactId>
-            <version>23.12.2</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/bedwars-plugin-23.12.2.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.andrei1058.bedwars</groupId>
-            <artifactId>BedWarsProxy</artifactId>
-            <version>1.2.4</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/proxy-plugin-1.2.4.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.tompkeuper</groupId>
-            <artifactId>BedWars2023</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/BedWars-1.0-SNAPSHOT.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.tomkeuper</groupId>
-            <artifactId>BWProxy2023</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/proxy-plugin-1.0-SNAPSHOT.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>me.zuyte</groupId>
-            <artifactId>AdminAddon</artifactId>
-            <version>1.2.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/bedwars-adminaddon-1.2.1.jar</systemPath>
         </dependency>
     </dependencies>
 

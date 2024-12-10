@@ -15,6 +15,7 @@ import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.arena.PrivateArena;
 import me.notlewx.privategames.utils.MessagesUtil;
 import me.notlewx.privategames.utils.Utility;
@@ -45,7 +46,14 @@ import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER;
 
 public class ArenaJoin implements Listener {
+
     public static HashMap<ITeam, BlockFace> bedDirection = new HashMap<>();
+
+    private final VersionSupport vs;
+
+    public ArenaJoin() {
+        this.vs = PrivateGames.getVersionSupport();
+    }
 
     @EventHandler
     public void onGameStateChange(GameStateChangeEvent e) {
@@ -78,9 +86,7 @@ public class ArenaJoin implements Listener {
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%bw_private%", placeholderRefresh, tp -> {
             if (api.getPrivateArenaUtil().isPlaying((Player) tp.getPlayer())) {
                 return Utility.getMsg((Player) tp.getPlayer(), PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
-            } else {
-                return "";
-            }
+            } else return "";
         });
 
         if (api.getPrivateArenaUtil().isArenaPrivate(a.getWorldName())) {
@@ -174,7 +180,7 @@ public class ArenaJoin implements Listener {
                             Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                             MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
 
-                            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 20L);
+                            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), vs.setItemTag(settings, "pg", "lobby-menu")), 20L);
                             if (pp.getPlayerOptions().isAutoStart()) {
                                 a.changeStatus(GameState.starting);
                                 a.getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));
@@ -192,7 +198,7 @@ public class ArenaJoin implements Listener {
                         Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation", pa));
 
-                        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), settings), 20L);
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> ((Player) pp.getPlayer()).getInventory().setItem(mainConfig.getInt(POSITION), vs.setItemTag(settings, "pg", "lobby-menu")), 20L);
                         if (pp.getPlayerOptions().isAutoStart()) {
                             a.changeStatus(GameState.starting);
                             a.getStartingTask().setCountdown(PrivateGames.bw2023config.getInt("countdowns.game-start-regular"));

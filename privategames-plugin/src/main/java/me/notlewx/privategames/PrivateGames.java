@@ -5,11 +5,13 @@ import com.andrei1058.bedwars.api.configuration.ConfigManager;
 import com.andrei1058.bedwars.proxy.BedWarsProxy;
 import me.notlewx.privategames.api.database.Database;
 import me.notlewx.privategames.api.database.DatabaseType;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.listeners.*;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.support.bedwars1058.BedWars1058;
 import me.notlewx.privategames.support.bedwars2023.BedWars2023;
 import me.notlewx.privategames.support.bedwars2023.BedWarsProxy2023;
+import me.notlewx.privategames.support.version.*;
 import me.notlewx.privategames.utils.Utility;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
@@ -23,7 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PrivateGames extends JavaPlugin {
+
     private static PrivateGames instance;
+    public static VersionSupport versionSupport;
     public static ConfigManager bw1058config;
     public static com.tomkeuper.bedwars.api.configuration.ConfigManager bw2023config;
     public static me.notlewx.privategames.config.ConfigManager mainConfig;
@@ -55,6 +59,7 @@ public final class PrivateGames extends JavaPlugin {
         api = new API();
         Bukkit.getServicesManager().register(me.notlewx.privategames.api.PrivateGames.class, api, this, ServicePriority.Highest);
         loadSupport();
+        loadVersionSupport();
 
         metrics.addCustomChart(new DrilldownPie("enabled_features", () -> {
             HashMap<String, Map<String, Integer>> map = new HashMap<>();
@@ -119,11 +124,54 @@ public final class PrivateGames extends JavaPlugin {
         }
     }
 
+    private void loadVersionSupport() {
+        String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+        switch (version) {
+            case "v1_8_R3":
+                versionSupport = new v1_8_R3();
+                break;
+            case "v1_12_R1":
+                versionSupport = new v1_12_R1();
+                break;
+            case "v1_16_R3":
+                versionSupport = new v1_16_R3();
+                break;
+            case "v1_17_R1":
+                versionSupport = new v1_17_R1();
+                break;
+            case "v1_18_R2":
+                versionSupport = new v1_18_R2();
+                break;
+            case "v1_19_R3":
+                versionSupport = new v1_19_R3();
+                break;
+            case "v1_20_R1":
+                versionSupport = new v1_20_R1();
+                break;
+            case "v1_20_R2":
+                versionSupport = new v1_20_R2();
+                break;
+            case "v1_20_R3":
+                versionSupport = new v1_20_R3();
+                break;
+            case "v1_20_R4":
+                versionSupport = new v1_20_R4();
+                break;
+            case "v1_21_R1":
+                versionSupport = new v1_21_R1();
+                break;
+        }
+    }
+
     public void loadMainListeners() {
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteraction(), this);
         getServer().getPluginManager().registerEvents(new PartyDisband(), this);
+    }
+
+    public static VersionSupport getVersionSupport() {
+        return versionSupport;
     }
 }

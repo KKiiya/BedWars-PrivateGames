@@ -1,6 +1,8 @@
 package me.notlewx.privategames.menus.submenus;
 
+import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPlayerSettings;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.utils.Utility;
@@ -13,7 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.api;
@@ -22,12 +23,15 @@ import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class SpeedMenu implements GUIHolder {
-    private Inventory inventory;
-    private final Player player;
+
     private final IPlayerSettings playerData;
+    private final VersionSupport vs;
+    private final Player player;
+    private Inventory inventory;
 
     public SpeedMenu(Player p) {
         this.player = p;
+        this.vs = PrivateGames.getVersionSupport();
         playerData = api.getPrivatePlayer(p).getPlayerSettings();
         try {
             createInventory();
@@ -51,37 +55,27 @@ public class SpeedMenu implements GUIHolder {
     public void addContents() {
         Material arrowMat = Material.getMaterial(mainConfig.getString(SPEED_BACK_MATERIAL));
         ItemStack arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(SPEED_BACK_ID));
-        if (arrow.getType().toString().equals("SKULL_ITEM") || arrow.getType().toString().equals("LEGACY_SKULL_ITEM") && arrow.getDurability() == 3) {
-            arrow = Utility.getSkull(arrowMat, mainConfig.getString(SPEED_BACK_HEAD_URL));
-        }
+        if (vs.isPlayerHead(arrow)) arrow = Utility.getSkull(mainConfig.getString(SPEED_BACK_HEAD_URL));
         ItemMeta arrowMeta = arrow.getItemMeta();
 
         Material book1Mat = Material.getMaterial(mainConfig.getString(SPEED_LEVEL_I_MATERIAL));
         ItemStack book1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(SPEED_LEVEL_I_ID));
-        if (book1.getType().toString().equals("SKULL_ITEM") || book1.getType().toString().equals("LEGACY_SKULL_ITEM") && book1.getDurability() == 3) {
-            book1 = Utility.getSkull(book1Mat, mainConfig.getString(SPEED_LEVEL_I_HEAD_URL));
-        }
+        if (vs.isPlayerHead(book1)) book1 = Utility.getSkull(mainConfig.getString(SPEED_LEVEL_I_HEAD_URL));
         ItemMeta book1Meta = book1.getItemMeta();
 
         Material book2Mat = Material.getMaterial(mainConfig.getString(SPEED_LEVEL_II_MATERIAL));
         ItemStack book2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(SPEED_LEVEL_II_ID));
-        if (book2.getType().toString().equals("SKULL_ITEM") || book2.getType().toString().equals("LEGACY_SKULL_ITEM") && book2.getDurability() == 3) {
-            book2 = Utility.getSkull(book2Mat, mainConfig.getString(SPEED_LEVEL_II_HEAD_URL));
-        }
+        if (vs.isPlayerHead(book2)) book2 = Utility.getSkull(mainConfig.getString(SPEED_LEVEL_II_HEAD_URL));
         ItemMeta book2Meta = book1.getItemMeta();
 
         Material book3Mat = Material.getMaterial(mainConfig.getString(SPEED_LEVEL_III_MATERIAL));
         ItemStack book3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(SPEED_LEVEL_III_ID));
-        if (book3.getType().toString().equals("SKULL_ITEM") || book3.getType().toString().equals("LEGACY_SKULL_ITEM") && book3.getDurability() == 3) {
-            book3 = Utility.getSkull(book3Mat, mainConfig.getString(SPEED_LEVEL_III_HEAD_URL));
-        }
+        if (vs.isPlayerHead(book3)) book3 = Utility.getSkull(mainConfig.getString(SPEED_LEVEL_III_HEAD_URL));
         ItemMeta book3Meta = book1.getItemMeta();
 
         Material book4Mat = Material.getMaterial(mainConfig.getString(SPEED_LEVEL_IV_MATERIAL));
         ItemStack book4 = new ItemStack(book4Mat, 1, (byte) mainConfig.getInt(SPEED_LEVEL_IV_ID));
-        if (book4.getType().toString().equals("SKULL_ITEM") || book4.getType().toString().equals("LEGACY_SKULL_ITEM") && book4.getDurability() == 3) {
-            book4 = Utility.getSkull(book4Mat, mainConfig.getString(SPEED_LEVEL_IV_HEAD_URL));
-        }
+        if (vs.isPlayerHead(book4)) book4 = Utility.getSkull(mainConfig.getString(SPEED_LEVEL_IV_HEAD_URL));
         ItemMeta book4Meta = book4.getItemMeta();
 
 
@@ -137,31 +131,26 @@ public class SpeedMenu implements GUIHolder {
                 break;
         }
 
-        inventory.setItem(mainConfig.getInt(SPEED_LEVEL_I_POSITION), book1);
-        inventory.setItem(mainConfig.getInt(SPEED_LEVEL_II_POSITION), book2);
-        inventory.setItem(mainConfig.getInt(SPEED_LEVEL_III_POSITION), book3);
-        inventory.setItem(mainConfig.getInt(SPEED_LEVEL_IV_POSITION), book4);
-        inventory.setItem(mainConfig.getInt(SPEED_BACK_POSITION), arrow);
+        inventory.setItem(mainConfig.getInt(SPEED_LEVEL_I_POSITION), vs.setItemTag(book1, "pg", "speed-1"));
+        inventory.setItem(mainConfig.getInt(SPEED_LEVEL_II_POSITION), vs.setItemTag(book2, "pg", "speed-2"));
+        inventory.setItem(mainConfig.getInt(SPEED_LEVEL_III_POSITION), vs.setItemTag(book3, "pg", "speed-3"));
+        inventory.setItem(mainConfig.getInt(SPEED_LEVEL_IV_POSITION), vs.setItemTag(book4, "pg", "speed-4"));
+        inventory.setItem(mainConfig.getInt(SPEED_BACK_POSITION), vs.setItemTag(arrow, "pg", "back"));
     }
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_SPEED_NAME))) {
-            if (e.getSlot() == mainConfig.getInt(SPEED_LEVEL_I_POSITION)) {
-                playerData.setSpeedLevel(1);
-                new SpeedMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(SPEED_LEVEL_II_POSITION)) {
-                playerData.setSpeedLevel(2);
-                new SpeedMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(SPEED_LEVEL_III_POSITION)) {
-                playerData.setSpeedLevel(3);
-                new SpeedMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(SPEED_LEVEL_IV_POSITION)) {
-                playerData.setSpeedLevel(4);
-                new SpeedMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(SPEED_BACK_POSITION)) {
-                new SettingsMenu(player);
-            }
-        }
+        ItemStack item = e.getCurrentItem();
+        if (item == null || item.getType() == Material.AIR) return;
+        String tag = vs.getItemTag(item, "pg");
+        if (tag == null) return;
+
+        e.setCancelled(true);
+        if (!e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_SPEED_NAME))) return;
+
+        if (tag.startsWith("speed-")) {
+            playerData.setSpeedLevel(Integer.parseInt(tag.split("-")[1]));
+            new SpeedMenu(player);
+        } else if (tag.equals("back")) new SettingsMenu(player);
     }
 }

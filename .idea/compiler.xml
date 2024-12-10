@@ -6,8 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="privategames-api" />
         <module name="privategames-plugin" />
+        <module name="v1_21_R1" />
+        <module name="v1_20_R1" />
+        <module name="v1_20_R2" />
+        <module name="v1_20_R3" />
+        <module name="v1_20_R4" />
+        <module name="v1_17_R1" />
+        <module name="v1_18_R2" />
+        <module name="v1_19_R3" />
+        <module name="v1_16_R3" />
+        <module name="privategames-api" />
+        <module name="v1_12_R1" />
+        <module name="v1_8_R3" />
       </profile>
     </annotationProcessing>
   </component>

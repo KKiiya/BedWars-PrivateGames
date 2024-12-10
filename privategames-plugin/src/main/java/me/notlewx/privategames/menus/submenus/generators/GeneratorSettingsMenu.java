@@ -1,7 +1,9 @@
 package me.notlewx.privategames.menus.submenus.generators;
 
 import com.andrei1058.bedwars.api.arena.generator.IGenerator;
+import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPrivatePlayer;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.support.Support;
 import me.notlewx.privategames.utils.GeneratorProperties;
@@ -17,19 +19,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.andrei1058.bedwars.BedWars.getForCurrentVersion;
 import static me.notlewx.privategames.PrivateGames.*;
 import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class GeneratorSettingsMenu implements GUIHolder {
-    private final Player p;
+
+    private final VersionSupport vs;
     private final Object gen;
+    private final Player p;
     private Inventory inv;
 
     public GeneratorSettingsMenu(Player p, Object gen) {
         this.p = p;
         this.gen = gen;
+        this.vs = PrivateGames.getVersionSupport();
         try {
             createInventory();
             addContents();
@@ -44,7 +48,6 @@ public class GeneratorSettingsMenu implements GUIHolder {
     }
 
     private void addContents() {
-        Material skull = Material.getMaterial(Utility.getForCurrentVersion("SKULL_ITEM", "SKULL_ITEM", "LEGACY_SKULL_ITEM"));
         ItemStack gene = new ItemStack(Material.AIR);
         String team;
         String location;
@@ -90,39 +93,39 @@ public class GeneratorSettingsMenu implements GUIHolder {
         gene.setItemMeta(geneMeta);
 
 
-        ItemStack reduceAmount = Utility.getSkull(skull, "http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
+        ItemStack reduceAmount = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceAmountMeta = reduceAmount.getItemMeta();
         reduceAmountMeta.setDisplayName(Utility.c("&cReduce Amount"));
         reduceAmountMeta.setLore(Stream.of("", "&7Reduce the amount of minerals dropped", "&7in this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceAmount.setItemMeta(reduceAmountMeta);
 
-        ItemStack increaseAmount = Utility.getSkull(skull, "http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
+        ItemStack increaseAmount = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseAmountMeta = increaseAmount.getItemMeta();
         increaseAmountMeta.setDisplayName(Utility.c("&aIncrease Amount"));
         increaseAmountMeta.setLore(Stream.of("", "&7Increase the amount of minerals dropped", "&7in this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
         increaseAmount.setItemMeta(increaseAmountMeta);
 
 
-        ItemStack reduceDelay = Utility.getSkull(skull, "http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
+        ItemStack reduceDelay = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceDelayMeta = reduceDelay.getItemMeta();
         reduceDelayMeta.setDisplayName(Utility.c("&cReduce Delay"));
         reduceDelayMeta.setLore(Stream.of("", "&7Reduce the delay of", "&7this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceDelay.setItemMeta(reduceDelayMeta);
 
-        ItemStack increaseDelay = Utility.getSkull(skull, "http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
+        ItemStack increaseDelay = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseDelayMeta = increaseDelay.getItemMeta();
         increaseDelayMeta.setDisplayName(Utility.c("&aIncrease Delay"));
         increaseDelayMeta.setLore(Stream.of("", "&7Increase the delay of", "&7this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
         increaseDelay.setItemMeta(increaseDelayMeta);
 
 
-        ItemStack reduceSpawnLimit = Utility.getSkull(skull, "http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
+        ItemStack reduceSpawnLimit = Utility.getSkull("http://textures.minecraft.net/texture/c3e4b533e4ba2dff7c0fa90f67e8bef36428b6cb06c45262631b0b25db85b");
         ItemMeta reduceSpawnLimitMeta = reduceSpawnLimit.getItemMeta();
         reduceSpawnLimitMeta.setDisplayName(Utility.c("&cReduce Spawn Limit"));
         reduceSpawnLimitMeta.setLore(Stream.of("", "&7Reduce the amount minerals stacked", "&7in this generator", "", "&eClick to decrease!").map(Utility::c).collect(Collectors.toList()));
         reduceSpawnLimit.setItemMeta(reduceSpawnLimitMeta);
 
-        ItemStack increaseSpawnLimit = Utility.getSkull(skull, "http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
+        ItemStack increaseSpawnLimit = Utility.getSkull("http://textures.minecraft.net/texture/60b55f74681c68283a1c1ce51f1c83b52e2971c91ee34efcb598df3990a7e7");
         ItemMeta increaseSpawnLimitMeta = increaseSpawnLimit.getItemMeta();
         increaseSpawnLimitMeta.setDisplayName(Utility.c("&aIncrease Spawn Limit"));
         increaseSpawnLimitMeta.setLore(Stream.of("", "&7Increase the amount minerals stacked", "&7in this generator", "", "&eClick to increase!").map(Utility::c).collect(Collectors.toList()));
@@ -130,9 +133,7 @@ public class GeneratorSettingsMenu implements GUIHolder {
 
         Material backMaterial = Material.getMaterial(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_MATERIAL));
         ItemStack back = new ItemStack(backMaterial, 1, (byte) mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_ID));
-        if (back.getType().toString().equals("SKULL_ITEM") || back.getType().toString().equals("LEGACY_SKULL_ITEM") && back.getDurability() == 3) {
-            back = Utility.getSkull(backMaterial, mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
-        }
+        if (vs.isPlayerHead(back)) back = Utility.getSkull(mainConfig.getString(OPTIONS_GENERATOR_OPTIONS_BACK_HEAD_URL));
         ItemMeta backMeta = back.getItemMeta();
 
         backMeta.setDisplayName(Utility.getMsg(p, SUBMENU_GENERATOR_OPTIONS_BACK_ITEM_NAME));
@@ -140,25 +141,30 @@ public class GeneratorSettingsMenu implements GUIHolder {
         back.setItemMeta(backMeta);
 
 
+        inv.setItem(13, vs.setItemTag(gene, "pg", "generator"));
 
+        inv.setItem(12, vs.setItemTag(reduceAmount, "pg", "reduceAmount"));
+        inv.setItem(14, vs.setItemTag(increaseAmount, "pg", "increaseAmount"));
 
-        inv.setItem(13, gene);
-
-        inv.setItem(12, reduceAmount);
-        inv.setItem(14, increaseAmount);
-
-        inv.setItem(21, reduceDelay);
-        inv.setItem(23, increaseDelay);
+        inv.setItem(21, vs.setItemTag(reduceDelay, "pg", "reduceDelay"));
+        inv.setItem(23, vs.setItemTag(increaseDelay, "pg", "increaseDelay"));
 
         inv.setItem(30, reduceSpawnLimit);
         inv.setItem(32, increaseSpawnLimit);
 
-        inv.setItem(mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION), back);
+        inv.setItem(mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION), vs.setItemTag(back, "pg", "back"));
     }
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
+        ItemStack item = e.getCurrentItem();
+        if (item == null || item.getType() == Material.AIR) return;
+        String tag = vs.getItemTag(item, "pg");
+        if (tag == null) return;
+
+        e.setCancelled(true);
         if (!e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATOR_OPTIONS_TITLE))) return;
+
         GeneratorProperties.Properties properties;
         IPrivatePlayer pp = api.getPrivatePlayer(p);
         if (support == Support.BEDWARS1058) {
@@ -167,38 +173,31 @@ public class GeneratorSettingsMenu implements GUIHolder {
                 GeneratorProperties.setGeneratorProperties(pp, new GeneratorProperties(g));
             }
             properties = GeneratorProperties.getGeneratorProperties(pp).getProperties(g);
-            if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION)) {
+            if (tag.equals("back")) {
                 new GeneratorsMenu(p);
                 return;
-            }
-            switch (e.getSlot()) {
-                case 12:
-                    if (g.getAmount() == 1) return;
-                    g.setAmount(g.getAmount() - 1);
-                    properties.setAmount(g.getAmount());
-                    break;
-                case 14:
-                    g.setAmount(g.getAmount() + 1);
-                    properties.setAmount(g.getAmount());
-                    break;
-                case 21:
-                    if (g.getDelay() == 1) return;
-                    g.setDelay(g.getDelay() - 1);
-                    properties.setDelay(g.getDelay());
-                    break;
-                case 23:
-                    g.setDelay(g.getDelay() + 1);
-                    properties.setDelay(g.getDelay());
-                    break;
-                case 30:
-                    if (g.getSpawnLimit() == 1) return;
-                    g.setSpawnLimit(g.getSpawnLimit() - 1);
-                    properties.setSpawnLimit(g.getSpawnLimit());
-                    break;
-                case 32:
-                    g.setSpawnLimit(g.getSpawnLimit() + 1);
-                    properties.setSpawnLimit(g.getSpawnLimit());
-                    break;
+            } else if (tag.equals("generator")) return;
+            else if (tag.equals("reduceAmount")) {
+                if (g.getAmount() == 1) return;
+                g.setAmount(g.getAmount() - 1);
+                properties.setAmount(g.getAmount());
+            } else if (tag.equals("increaseAmount")) {
+                g.setAmount(g.getAmount() + 1);
+                properties.setAmount(g.getAmount());
+            } else if (tag.equals("reduceDelay")) {
+                if (g.getDelay() == 1) return;
+                g.setDelay(g.getDelay() - 1);
+                properties.setDelay(g.getDelay());
+            } else if (tag.equals("increaseDelay")) {
+                g.setDelay(g.getDelay() + 1);
+                properties.setDelay(g.getDelay());
+            } else if (tag.equals("reduceSpawnLimit")) {
+                if (g.getSpawnLimit() == 1) return;
+                g.setSpawnLimit(g.getSpawnLimit() - 1);
+                properties.setSpawnLimit(g.getSpawnLimit());
+            } else if (tag.equals("increaseSpawnLimit")) {
+                g.setSpawnLimit(g.getSpawnLimit() + 1);
+                properties.setSpawnLimit(g.getSpawnLimit());
             }
             new GeneratorSettingsMenu(p, gen);
         } else if (support == Support.BEDWARS2023) {
@@ -207,38 +206,31 @@ public class GeneratorSettingsMenu implements GUIHolder {
                 GeneratorProperties.setGeneratorProperties(pp, new GeneratorProperties(g));
             }
             properties = GeneratorProperties.getGeneratorProperties(pp).getProperties(g);
-            if (e.getSlot() == mainConfig.getInt(OPTIONS_GENERATOR_OPTIONS_BACK_POSITION)) {
+            if (tag.equals("back")) {
                 new GeneratorsMenu(p);
                 return;
-            }
-            switch (e.getSlot()) {
-                case 12:
-                    if (g.getAmount() == 1) return;
-                    g.setAmount(g.getAmount() - 1);
-                    properties.setAmount(g.getAmount());
-                    break;
-                case 14:
-                    g.setAmount(g.getAmount() + 1);
-                    properties.setAmount(g.getAmount());
-                    break;
-                case 21:
-                    if (g.getDelay()/4 == 1) return;
-                    g.setDelay(g.getDelay()/4 -1);
-                    properties.setDelay((int) g.getDelay());
-                    break;
-                case 23:
-                    g.setDelay(g.getDelay()/4 + 1);
-                    properties.setDelay((int) g.getDelay());
-                    break;
-                case 30:
-                    if (g.getSpawnLimit() == 1) return;
-                    g.setSpawnLimit(g.getSpawnLimit() - 1);
-                    properties.setSpawnLimit(g.getSpawnLimit());
-                    break;
-                case 32:
-                    g.setSpawnLimit(g.getSpawnLimit() + 1);
-                    properties.setSpawnLimit(g.getSpawnLimit());
-                    break;
+            } else if (tag.equals("generator")) return;
+            else if (tag.equals("reduceAmount")) {
+                if (g.getAmount() == 1) return;
+                g.setAmount(g.getAmount() - 1);
+                properties.setAmount(g.getAmount());
+            } else if (tag.equals("increaseAmount")) {
+                g.setAmount(g.getAmount() + 1);
+                properties.setAmount(g.getAmount());
+            } else if (tag.equals("reduceDelay")) {
+                if (g.getDelay()/4 == 1) return;
+                g.setDelay(g.getDelay()/4 -1);
+                properties.setDelay((int) g.getDelay());
+            } else if (tag.equals("increaseDelay")) {
+                g.setDelay(g.getDelay()/4 + 1);
+                properties.setDelay((int) g.getDelay());
+            } else if (tag.equals("reduceSpawnLimit")) {
+                if (g.getSpawnLimit() == 1) return;
+                g.setSpawnLimit(g.getSpawnLimit() - 1);
+                properties.setSpawnLimit(g.getSpawnLimit());
+            } else if (tag.equals("increaseSpawnLimit")) {
+                g.setSpawnLimit(g.getSpawnLimit() + 1);
+                properties.setSpawnLimit(g.getSpawnLimit());
             }
             new GeneratorSettingsMenu(p, gen);
         }

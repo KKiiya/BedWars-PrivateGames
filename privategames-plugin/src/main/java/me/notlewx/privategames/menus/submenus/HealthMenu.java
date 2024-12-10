@@ -1,9 +1,10 @@
 package me.notlewx.privategames.menus.submenus;
 
+import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPlayerSettings;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.menus.SettingsMenu;
-import me.notlewx.privategames.player.PrivatePlayer;
 import me.notlewx.privategames.utils.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,7 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.api;
@@ -23,12 +23,16 @@ import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class HealthMenu implements GUIHolder {
-    private Inventory inventory;
-    private final Player player;
+
+    private final VersionSupport vs;
     private final IPlayerSettings playerData;
+    private final Player player;
+    private Inventory inventory;
+
 
     public HealthMenu(Player p) {
         this.player = p;
+        this.vs = PrivateGames.getVersionSupport();
         playerData = api.getPrivatePlayer(p).getPlayerSettings();
         try {
             createInventory();
@@ -52,30 +56,22 @@ public class HealthMenu implements GUIHolder {
     public void addContents() {
         Material arrowMat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_BACK_MATERIAL));
         ItemStack arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_BACK_ID));
-        if (arrow.getType().toString().equals("SKULL_ITEM") || arrow.getType().toString().equals("LEGACY_SKULL_ITEM") && arrow.getDurability() == 3) {
-            arrow = Utility.getSkull(arrowMat, mainConfig.getString(HEALTH_BUFF_BACK_HEAD_URL));
-        }
+        if (vs.isPlayerHead(arrow)) arrow = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_BACK_HEAD_URL));
         ItemMeta arrowMeta = arrow.getItemMeta();
 
         Material book1Mat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_I_MATERIAL));
         ItemStack gapple1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_LEVEL_I_ID));
-        if (gapple1.getType().toString().equals("SKULL_ITEM") || gapple1.getType().toString().equals("LEGACY_SKULL_ITEM") && gapple1.getDurability() == 3) {
-            gapple1 = Utility.getSkull(book1Mat, mainConfig.getString(HEALTH_BUFF_LEVEL_I_HEAD_URL));
-        }
+        if (vs.isPlayerHead(gapple1)) gapple1 = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_LEVEL_I_HEAD_URL));
         ItemMeta gapple1Meta = gapple1.getItemMeta();
 
         Material book2Mat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_II_MATERIAL));
         ItemStack gapple2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_LEVEL_II_ID));
-        if (gapple2.getType().toString().equals("SKULL_ITEM") || gapple2.getType().toString().equals("LEGACY_SKULL_ITEM") && gapple2.getDurability() == 3) {
-            gapple2 = Utility.getSkull(book2Mat, mainConfig.getString(HEALTH_BUFF_LEVEL_II_HEAD_URL));
-        }
+        if (vs.isPlayerHead(gapple2)) gapple2 = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_LEVEL_II_HEAD_URL));
         ItemMeta gapple2Meta = gapple2.getItemMeta();
 
         Material book3Mat = Material.getMaterial(mainConfig.getString(HEALTH_BUFF_LEVEL_III_MATERIAL));
         ItemStack gapple3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(HEALTH_BUFF_LEVEL_III_ID));
-        if (gapple3.getType().toString().equals("SKULL_ITEM") || gapple3.getType().toString().equals("LEGACY_SKULL_ITEM") && gapple3.getDurability() == 3) {
-            gapple3 = Utility.getSkull(book3Mat, mainConfig.getString(HEALTH_BUFF_LEVEL_III_HEAD_URL));
-        }
+        if (vs.isPlayerHead(gapple3)) gapple3 = Utility.getSkull(mainConfig.getString(HEALTH_BUFF_LEVEL_III_HEAD_URL));
         ItemMeta gapple3Meta = gapple3.getItemMeta();
 
 
@@ -120,27 +116,26 @@ public class HealthMenu implements GUIHolder {
                 break;
         }
 
-        inventory.setItem(mainConfig.getInt(HEALTH_BUFF_LEVEL_I_POSITION), gapple1);
-        inventory.setItem(mainConfig.getInt(HEALTH_BUFF_LEVEL_II_POSITION), gapple2);
-        inventory.setItem(mainConfig.getInt(HEALTH_BUFF_LEVEL_III_POSITION), gapple3);
-        inventory.setItem(mainConfig.getInt(HEALTH_BUFF_BACK_POSITION), arrow);
+        inventory.setItem(mainConfig.getInt(HEALTH_BUFF_LEVEL_I_POSITION), vs.setItemTag(gapple1, "pg", "health-1"));
+        inventory.setItem(mainConfig.getInt(HEALTH_BUFF_LEVEL_II_POSITION), vs.setItemTag(gapple2, "pg", "health-2"));
+        inventory.setItem(mainConfig.getInt(HEALTH_BUFF_LEVEL_III_POSITION), vs.setItemTag(gapple3, "pg", "health-3"));
+        inventory.setItem(mainConfig.getInt(HEALTH_BUFF_BACK_POSITION), vs.setItemTag(arrow, "pg", "back"));
     }
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_HEALTH_BUFF_NAME))) {
-            if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_LEVEL_I_POSITION)) {
-                playerData.setHealthBuffLevel(1);
-                new HealthMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_LEVEL_II_POSITION)) {
-                playerData.setHealthBuffLevel(2);
-                new HealthMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_LEVEL_III_POSITION)) {
-                playerData.setHealthBuffLevel(3);
-                new HealthMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(HEALTH_BUFF_BACK_POSITION)) {
-                new SettingsMenu(player);
-            }
-        }
+        ItemStack item = e.getCurrentItem();
+        if (item == null || item.getType() == Material.AIR) return;
+        String tag = vs.getItemTag(item, "pg");
+        if (tag == null) return;
+
+        e.setCancelled(true);
+        if (!e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_HEALTH_BUFF_NAME))) return;
+
+        if (tag.startsWith("health-")) {
+            int level = Integer.parseInt(tag.split("-")[1]);
+            playerData.setHealthBuffLevel(level);
+            new HealthMenu(player);
+        } else if (tag.equalsIgnoreCase("back")) new SettingsMenu(player);
     }
 }

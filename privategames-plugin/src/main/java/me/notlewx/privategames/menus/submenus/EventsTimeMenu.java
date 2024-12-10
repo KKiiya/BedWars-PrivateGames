@@ -1,6 +1,8 @@
 package me.notlewx.privategames.menus.submenus;
 
+import me.notlewx.privategames.PrivateGames;
 import me.notlewx.privategames.api.player.IPlayerSettings;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.config.bedwars1058.MessagesData;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.menus.SettingsMenu;
@@ -24,12 +26,16 @@ import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class EventsTimeMenu implements GUIHolder {
-    private Inventory inventory;
-    private final Player player;
+
     private final IPlayerSettings playerData;
+    private final VersionSupport vs;
+    private final Player player;
+    private Inventory inventory;
+
 
     public EventsTimeMenu(Player p) {
         this.player = p;
+        this.vs = PrivateGames.getVersionSupport();
         playerData = api.getPrivatePlayer(p).getPlayerSettings();
         try {
             createInventory();
@@ -53,37 +59,27 @@ public class EventsTimeMenu implements GUIHolder {
     public void addContents() {
         Material arrowMat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_BACK_MATERIAL));
         ItemStack arrow = new ItemStack(arrowMat, 1, (byte) mainConfig.getInt(EVENTS_TIME_BACK_ID));
-        if (arrow.getType().toString().equals("SKULL_ITEM") || arrow.getType().toString().equals("LEGACY_SKULL_ITEM") && arrow.getDurability() == 3) {
-            arrow = Utility.getSkull(arrowMat, mainConfig.getString(EVENTS_TIME_BACK_HEAD_URL));
-        }
+        if (vs.isPlayerHead(arrow)) arrow = Utility.getSkull(mainConfig.getString(EVENTS_TIME_BACK_HEAD_URL));
         ItemMeta arrowMeta = arrow.getItemMeta();
 
         Material book1Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_I_MATERIAL));
         ItemStack book1 = new ItemStack(book1Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_I_ID));
-        if (book1.getType().toString().equals("SKULL_ITEM") || book1.getType().toString().equals("LEGACY_SKULL_ITEM") && book1.getDurability() == 3) {
-            book1 = Utility.getSkull(book1Mat, mainConfig.getString(EVENTS_TIME_LEVEL_I_HEAD_URL));
-        }
+        if (vs.isPlayerHead(book1)) book1 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_I_HEAD_URL));
         ItemMeta book1Meta = book1.getItemMeta();
 
         Material book2Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_II_MATERIAL));
         ItemStack book2 = new ItemStack(book2Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_II_ID));
-        if (book2.getType().toString().equals("SKULL_ITEM") || book2.getType().toString().equals("LEGACY_SKULL_ITEM") && book2.getDurability() == 3) {
-            book2 = Utility.getSkull(book2Mat, mainConfig.getString(EVENTS_TIME_LEVEL_II_HEAD_URL));
-        }
+        if (vs.isPlayerHead(book2)) book2 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_II_HEAD_URL));
         ItemMeta book2Meta = book1.getItemMeta();
 
         Material book3Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_III_MATERIAL));
         ItemStack book3 = new ItemStack(book3Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_III_ID));
-        if (book3.getType().toString().equals("SKULL_ITEM") || book3.getType().toString().equals("LEGACY_SKULL_ITEM") && book3.getDurability() == 3) {
-            book3 = Utility.getSkull(book3Mat, mainConfig.getString(EVENTS_TIME_LEVEL_III_HEAD_URL));
-        }
+        if (vs.isPlayerHead(book3)) book3 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_III_HEAD_URL));
         ItemMeta book3Meta = book1.getItemMeta();
 
         Material book4Mat = Material.getMaterial(mainConfig.getString(EVENTS_TIME_LEVEL_IV_MATERIAL));
         ItemStack book4 = new ItemStack(book4Mat, 1, (byte) mainConfig.getInt(EVENTS_TIME_LEVEL_IV_ID));
-        if (book4.getType().toString().equals("SKULL_ITEM") || book4.getType().toString().equals("LEGACY_SKULL_ITEM") && book4.getDurability() == 3) {
-            book4 = Utility.getSkull(book4Mat, mainConfig.getString(EVENTS_TIME_LEVEL_IV_HEAD_URL));
-        }
+        if (vs.isPlayerHead(book4)) book4 = Utility.getSkull(mainConfig.getString(EVENTS_TIME_LEVEL_IV_HEAD_URL));
         ItemMeta book4Meta = book4.getItemMeta();
 
 
@@ -138,31 +134,27 @@ public class EventsTimeMenu implements GUIHolder {
                 break;
         }
 
-        inventory.setItem(mainConfig.getInt(EVENTS_TIME_LEVEL_I_POSITION), book1);
-        inventory.setItem(mainConfig.getInt(EVENTS_TIME_LEVEL_II_POSITION), book2);
-        inventory.setItem(mainConfig.getInt(EVENTS_TIME_LEVEL_III_POSITION), book3);
-        inventory.setItem(mainConfig.getInt(EVENTS_TIME_LEVEL_IV_POSITION), book4);
-        inventory.setItem(mainConfig.getInt(EVENTS_TIME_BACK_POSITION), arrow);
+        inventory.setItem(mainConfig.getInt(EVENTS_TIME_LEVEL_I_POSITION), vs.setItemTag(book1, "pg", "events-1"));
+        inventory.setItem(mainConfig.getInt(EVENTS_TIME_LEVEL_II_POSITION), vs.setItemTag(book2, "pg", "events-2"));
+        inventory.setItem(mainConfig.getInt(EVENTS_TIME_LEVEL_III_POSITION), vs.setItemTag(book3, "pg", "events-3"));
+        inventory.setItem(mainConfig.getInt(EVENTS_TIME_LEVEL_IV_POSITION), vs.setItemTag(book4, "pg", "events-4"));
+        inventory.setItem(mainConfig.getInt(EVENTS_TIME_BACK_POSITION), vs.setItemTag(arrow, "pg", "back"));
     }
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_EVENTS_TIME_NAME))) {
-            if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_LEVEL_I_POSITION)) {
-                playerData.setEventsTimeLevel(1);
-                new EventsTimeMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_LEVEL_II_POSITION)) {
-                playerData.setEventsTimeLevel(2);
-                new EventsTimeMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_LEVEL_III_POSITION)) {
-                playerData.setEventsTimeLevel(3);
-                new EventsTimeMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_LEVEL_IV_POSITION)) {
-                playerData.setEventsTimeLevel(4);
-                new EventsTimeMenu(player);
-            } else if (e.getSlot() == mainConfig.getInt(EVENTS_TIME_BACK_POSITION)) {
-                new SettingsMenu(player);
-            }
-        }
+        ItemStack item = e.getCurrentItem();
+        if (item == null || item.getType() == Material.AIR) return;
+        String tag = vs.getItemTag(item, "pg");
+        if (tag == null) return;
+
+        e.setCancelled(true);
+        if (!e.getView().getTitle().equals(Utility.getMsg(player, SUBMENU_EVENTS_TIME_NAME))) return;
+
+        if (tag.startsWith("events-")) {
+            int level = Integer.parseInt(tag.split("-")[1]);
+            playerData.setEventsTimeLevel(level);
+            new EventsTimeMenu(player);
+        } else if (tag.equals("back")) new SettingsMenu(player);
     }
 }

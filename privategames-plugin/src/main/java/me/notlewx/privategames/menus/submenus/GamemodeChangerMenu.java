@@ -4,6 +4,8 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.sidebar.ISidebar;
 import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
 import com.andrei1058.bedwars.sidebar.SidebarService;
+import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.menus.GUIHolder;
 import me.notlewx.privategames.menus.SettingsMenu;
 import me.notlewx.privategames.utils.Utility;
@@ -16,24 +18,22 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-
 import static me.notlewx.privategames.PrivateGames.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.SUBMENU_GAMEMODE_CHANGER_TITLE;
 
 public class GamemodeChangerMenu implements GUIHolder {
 
-    private Inventory inv;
-    private final Player p;
-    private final Object arena;
-    private final HashMap<Integer, String> modePosition;
     private final String defaultGroup;
+    private final VersionSupport vs;
+    private final Object arena;
+    private final Player p;
+    private Inventory inv;
 
     public GamemodeChangerMenu(Player p, Object arena) {
         this.p = p;
         this.arena = arena;
-        this.modePosition = new HashMap<>();
+        this.vs = PrivateGames.getVersionSupport();
         this.defaultGroup = api.getPrivateArenaUtil().getPrivateArenaByPlayer(p).getDefaultGroup();
         try {
             createInventory();
@@ -56,12 +56,8 @@ public class GamemodeChangerMenu implements GUIHolder {
             int position = mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes." + mode).getInt("position");
             String headUrl = mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes." + mode).getString("head-url");
             if (!mode.equals("back-item")) {
-                modePosition.put(position, mode);
-
                 ItemStack modeStack = new ItemStack(mat, 1, data);
-                if (modeStack.getType().toString().equals("SKULL_ITEM") || modeStack.getType().toString().equals("LEGACY_SKULL_ITEM") && modeStack.getDurability() == 3) {
-                    modeStack = Utility.getSkull(mat, headUrl);
-                }
+                if (vs.isPlayerHead(modeStack)) modeStack = Utility.getSkull(headUrl);
                 ItemMeta modeMeta = modeStack.getItemMeta();
 
                 modeMeta.setDisplayName(Utility.getMsg(p, "addons.private-games.gamemode-changer-menu." + defaultGroup + ".modes." + mode + ".name"));
@@ -70,7 +66,7 @@ public class GamemodeChangerMenu implements GUIHolder {
 
                 modeStack.setItemMeta(modeMeta);
 
-                inv.setItem(position, modeStack);
+                inv.setItem(position, vs.setItemTag(modeStack, "pg", "gamemode-"+mode));
             }
         }
 
@@ -79,9 +75,7 @@ public class GamemodeChangerMenu implements GUIHolder {
         int backPosition = mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes.back-item").getInt("position");
         String backHeadUrl = mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes.back-item").getString("head-url");
         ItemStack backStack = new ItemStack(backMat, 1, backData);
-        if (backStack.getType().toString().equals("SKULL_ITEM") || backStack.getType().toString().equals("LEGACY_SKULL_ITEM") && backStack.getDurability() == 3) {
-            backStack = Utility.getSkull(backMat, backHeadUrl);
-        }
+        if (vs.isPlayerHead(backStack)) backStack = Utility.getSkull(backHeadUrl);
         ItemMeta backMeta = backStack.getItemMeta();
 
         backMeta.setDisplayName(Utility.getMsg(p, "addons.private-games.gamemode-changer-menu." + defaultGroup + ".modes.back-item.name"));
@@ -90,46 +84,44 @@ public class GamemodeChangerMenu implements GUIHolder {
 
         backStack.setItemMeta(backMeta);
 
-        inv.setItem(backPosition, backStack);
+        inv.setItem(backPosition, vs.setItemTag(backStack, "pg", "back"));
     }
 
     @Override
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GAMEMODE_CHANGER_TITLE))) {
-            switch (support) {
-                case BEDWARS1058:
-                    IArena a = (IArena) arena;
-                    if (modePosition.get(e.getSlot()) != null) {
-                        a.setGroup(modePosition.get(e.getSlot()));
-                        SidebarService.getInstance().remove(p);
-                        SidebarService.getInstance().giveSidebar(p, a, true);
+        ItemStack item = e.getCurrentItem();
+        if (item == null || item.getType() == Material.AIR) return;
+        String tag = vs.getItemTag(item, "pg");
+        if (tag == null) return;
+        String mode = tag.split("-")[1];
 
-                        ISidebar sidebar = SidebarService.getInstance().getSidebar(p);
-                        sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
-                            if (api.getPrivateArenaUtil().isPlaying(p)) {
-                                return Utility.getMsg(p, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
-                            } else {
-                                return "";
-                            }
-                        }));
-                        sidebar.getHandle().refreshPlaceholders();
-                    } else {
-                        if (e.getSlot() == mainConfig.getInt("gamemode-changer-menu." + defaultGroup + ".modes.back-item.position")) {
-                            new SettingsMenu(p);
+        e.setCancelled(true);
+        if (!e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GAMEMODE_CHANGER_TITLE))) return;
+
+        switch (support) {
+            case BEDWARS1058:
+                IArena a = (IArena) arena;
+                if (mode != null) {
+                    a.setGroup(mode);
+                    SidebarService.getInstance().remove(p);
+                    SidebarService.getInstance().giveSidebar(p, a, true);
+
+                    ISidebar sidebar = SidebarService.getInstance().getSidebar(p);
+                    sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
+                        if (api.getPrivateArenaUtil().isPlaying(p)) {
+                            return Utility.getMsg(p, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
+                        } else {
+                            return "";
                         }
-                    }
-                    break;
-                case BEDWARS2023:
-                    com.tomkeuper.bedwars.api.arena.IArena a2 = (com.tomkeuper.bedwars.api.arena.IArena) arena;
-                    if (modePosition.get(e.getSlot()) != null) {
-                        a2.setGroup(modePosition.get(e.getSlot()));
-                    } else {
-                        if (e.getSlot() == mainConfig.getInt("gamemode-changer-menu." + defaultGroup + ".modes.back-item.position")) {
-                            new SettingsMenu(p);
-                        }
-                    }
-                    break;
-            }
+                    }));
+                    sidebar.getHandle().refreshPlaceholders();
+                } else if (tag.equals("back")) new SettingsMenu(p);
+                break;
+            case BEDWARS2023:
+                com.tomkeuper.bedwars.api.arena.IArena a2 = (com.tomkeuper.bedwars.api.arena.IArena) arena;
+                if (mode != null) a2.setGroup(mode);
+                else if (tag.equals("back")) new SettingsMenu(p);
+                break;
         }
     }
 

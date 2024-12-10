@@ -1,0 +1,4 @@
+name: v1_16_R3
+version: '${project.version}'
+main: me.kiiya.hotbarmanager.support.version.v1_16_R3
+api-version: '1.13'
