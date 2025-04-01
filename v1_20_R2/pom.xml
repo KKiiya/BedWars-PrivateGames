@@ -7,7 +7,7 @@
     <parent>
         <groupId>me.notlewx</groupId>
         <artifactId>BedWars-PrivateGames</artifactId>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
     </parent>
     <artifactId>v1_20_R2</artifactId>
     <packaging>jar</packaging>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>me.notlewx</groupId>
             <artifactId>privategames-api</artifactId>
-            <version>1.2.0</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
