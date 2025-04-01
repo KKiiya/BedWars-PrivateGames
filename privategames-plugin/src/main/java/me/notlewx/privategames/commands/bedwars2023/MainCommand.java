@@ -202,7 +202,7 @@ public class MainCommand implements CommandExecutor {
                     case "join":
                         if (sender.hasPermission("pg.join") || sender.isOp()) {
                             if (args.length < 2) {
-                                sender.sendMessage(Utility.c("&cNot enough args"));
+                                sender.sendMessage(Utility.getMsg(p, NOT_ENOUGH_ARGS));
                             } else {
                                 if (Bukkit.getPlayer(args[1]) != null) {
                                     Player requested = Bukkit.getPlayer(args[1]);
@@ -247,7 +247,7 @@ public class MainCommand implements CommandExecutor {
                                         }
                                     }
                                 } else {
-                                    sender.sendMessage(Utility.c("&cCouldn't find this player"));
+                                    sender.sendMessage(Utility.getMsg(p, COULDNT_FIND_PLAYER));
                                 }
                             }
                         } else {

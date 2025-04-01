@@ -205,7 +205,7 @@ public class MainCommand implements CommandExecutor {
                     case "join":
                         if (sender.hasPermission("pg.join") || sender.isOp()) {
                             if (args.length < 2) {
-                                sender.sendMessage(Utility.c("&cNot enough args"));
+                                sender.sendMessage(Utility.getMsg(p, NOT_ENOUGH_ARGS));
                             } else {
                                 if (Bukkit.getPlayer(args[1]) != null) {
                                     sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_COULDNT_JOIN).replace("{player}", Bukkit.getPlayer(args[1]).getName()));

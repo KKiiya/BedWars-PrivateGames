@@ -1,5 +1,6 @@
 package me.notlewx.privategames.config.proxy;
 
+import me.notlewx.privategames.PrivateGames;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -11,17 +12,20 @@ import java.util.List;
 import static me.notlewx.privategames.config.bedwars2023.MessagesData.*;
 
 public class MessagesData {
-    YamlConfiguration yml;
-    File file;
+
+    private YamlConfiguration yml;
+    private File file;
+
     public MessagesData() {
         setupMessages();
     }
+
     public void setupMessages() {
         file = new File(Bukkit.getPluginManager().getPlugin("BedWarsProxy").getDataFolder().getPath() + "/Languages/", "messages_en.yml");
         yml = YamlConfiguration.loadConfiguration(file);
         yml.addDefault(HELP_MESSAGE, Arrays.asList(
                 "&8&m-----------------------------------------------------",
-                "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: 1.1.6",
+                "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: " + PrivateGames.getInstance().getDescription().getVersion(),
                 "",
                 "&7- &e/pg gui &7- &aOpen the private games menu",
                 "&7- &e/pg enable &7- &aEnable private games",
@@ -35,7 +39,7 @@ public class MessagesData {
         ));
         yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
                 "&8&m-----------------------------------------------------",
-                "&6Private Games &7- &eAdmin Help &7- &8Author: Kiiya, Version: 1.1.1",
+                "&6Private Games &7- &eAdmin Help &7- &8Author: Kiiya, Version: " + PrivateGames.getInstance().getDescription().getVersion(),
                 "",
                 "&7- &e/pg reload &7- &aReload the messages",
                 "&7- &e/pg enable admin &7- &aEnable the private games only for you (party too)",

@@ -1,6 +1,7 @@
 package me.notlewx.privategames.config.bedwars1058;
 
 import com.andrei1058.bedwars.api.language.Language;
+import me.notlewx.privategames.PrivateGames;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class MessagesData {
                 case "vi":
                     yml.addDefault(HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6Private Games &7- &eHelp &7- &8Tác giả: Kiiya, Phiên bản: 1.1.6",
+                            "&6Private Games &7- &eHelp &7- &8Tác giả: Kiiya, Phiên bản: " + PrivateGames.getInstance().getDescription().getVersion(),
                             "",
                             "&7- &e/pg gui &7- &aMở menu game riêng tư",
                             "&7- &e/pg enable &7- &aBật chế độ game riêng tư",
@@ -38,13 +39,15 @@ public class MessagesData {
                     ));
                     yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6Private Games &7- &eAdmin Help &7- &8Tác giả: Kiiya, Phiên bản: 1.1.6",
+                            "&6Private Games &7- &eAdmin Help &7- &8Tác giả: Kiiya, Phiên bản: " + PrivateGames.getInstance().getDescription().getVersion(),
                             "",
                             "&7- &e/pg reload &7- &aTải lại ngôn ngữ",
                             "&7- &e/pg enable admin &7- &aBật chế độ game riêng tư chỉ cho bạn (party nữa)",
                             "&7- &e/pg disable admin &7- &aTắt chế độ game riêng tư của bạn (party nữa)",
                             "&8&m-----------------------------------------------------"
                     ));
+                    yml.addDefault(NOT_ENOUGH_ARGS, "&cKhông đủ tham số!");
+                    yml.addDefault(COULDNT_FIND_PLAYER, "&cKhông thể tìm thấy người chơi!");
                     yml.addDefault(MAIN_MENU_NAME, "&8Cài đặt game riêng tư");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aCài đặt game riêng tư");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Mở menu này để cài đặt trò chơi riêng tư", "với tận 11 tùy chọn!"));
@@ -223,7 +226,7 @@ public class MessagesData {
                 case "pt":
                     yml.addDefault(HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6Private Games &7- &eAjuda &7- &8Autor: Kiiya, Versão: 1.1.6",
+                            "&6Private Games &7- &eAjuda &7- &8Autor: Kiiya, Versão: " + PrivateGames.getInstance().getDescription().getVersion(),
                             "",
                             "&7- &e/pg gui &7- &aAbrir o menu de jogos privados",
                             "&7- &e/pg enable &7- &aAtivar os jogos privados",
@@ -237,13 +240,15 @@ public class MessagesData {
                     ));
                     yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6Private Games &7- &eAjuda de Admin &7- &8Autor: Kiiya, Versão: 1.1.6",
+                            "&6Private Games &7- &eAjuda de Admin &7- &8Autor: Kiiya, Versão: " + PrivateGames.getInstance().getDescription().getVersion(),
                             "",
                             "&7- &e/pg reload &7- &aRecarregar mensagens",
                             "&7- &e/pg enable admin &7- &aAtivar os jogos privados pra você (party também)",
                             "&7- &e/pg disable admin &7- &aAtivar os jogos privados pra você (party também)",
                             "&8&m-----------------------------------------------------"
                     ));
+                    yml.addDefault(NOT_ENOUGH_ARGS, "&cArgumentos insuficientes!");
+                    yml.addDefault(COULDNT_FIND_PLAYER, "&cNão foi possível encontrar o jogador!");
                     yml.addDefault(MAIN_MENU_NAME, "&8Configurações Jogos Privados");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPreferências de Jogos Privados");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Abra esse menu para configurar os", "&7jogos privados com 11 configurações diferentes!"));
@@ -422,7 +427,7 @@ public class MessagesData {
                 case "it":
                     yml.addDefault(HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6PrivateGames &7- &eHelp &7- &8Autore: Kiiya, Versione: 1.1.6",
+                            "&6PrivateGames &7- &eHelp &7- &8Autore: Kiiya, Versione: " + PrivateGames.getInstance().getDescription().getVersion(),
                             "",
                             "&7- &e/pg gui &7- &aApri il menu dei privategames",
                             "&7- &e/pg enable &7- &aAbilita i privategames",
@@ -436,13 +441,15 @@ public class MessagesData {
                     ));
                     yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6Private Games &7- &eAiuto per Admin &7- &8Autore: Kiiya, Versione: 1.1.1",
+                            "&6Private Games &7- &eAiuto per Admin &7- &8Autore: Kiiya, Versione: " + PrivateGames.getInstance().getDescription().getVersion(),
                             "",
                             "&7- &e/pg reload &7- &aRicarica i messaggi",
                             "&7- &e/pg enable admin &7- &aAbilita i privategames solo per te (e il tuo party)",
                             "&7- &e/pg disable admin &7- &aDisabilita i privategames solo per te (e il tuo party)",
                             "&8&m-----------------------------------------------------"
                     ));
+                    yml.addDefault(NOT_ENOUGH_ARGS, "&cArgomenti insufficienti!");
+                    yml.addDefault(COULDNT_FIND_PLAYER, "&cImpossibile trovare il giocatore!");
                     yml.addDefault(MAIN_MENU_NAME, "&8Impostazioni PrivateGames");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aImpostazioni PrivateGames");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Apri questo menu per configurare il tuo privategame", "&7con più di 11 differenti opzioni!"));
@@ -620,7 +627,7 @@ public class MessagesData {
                 default:
                     yml.addDefault(HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: 1.1.6",
+                            "&6Private Games &7- &eHelp &7- &8Author: Kiiya, Version: " + PrivateGames.getInstance().getDescription().getVersion(),
                             "",
                             "&7- &e/pg gui &7- &aOpen the private games menu",
                             "&7- &e/pg enable &7- &aEnable private games",
@@ -634,13 +641,15 @@ public class MessagesData {
                     ));
                     yml.addDefault(ADMIN_HELP_MESSAGE, Arrays.asList(
                             "&8&m-----------------------------------------------------",
-                            "&6Private Games &7- &eAdmin Help &7- &8Author: Kiiya, Version: 1.1.1",
+                            "&6Private Games &7- &eAdmin Help &7- &8Author: Kiiya, Version: " + PrivateGames.getInstance().getDescription().getVersion(),
                             "",
                             "&7- &e/pg reload &7- &aReload the messages",
                             "&7- &e/pg enable admin &7- &aEnable the private games only for you (party too)",
                             "&7- &e/pg disable admin &7- &aDisable the private games only for you (party too)",
                             "&8&m-----------------------------------------------------"
                     ));
+                    yml.addDefault(NOT_ENOUGH_ARGS, "&cNot enough args!");
+                    yml.addDefault(COULDNT_FIND_PLAYER, "&cCouldn't find this player");
                     yml.addDefault(MAIN_MENU_NAME, "&8Private game settings");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_NAME, "&aPrivate Game Settings");
                     yml.addDefault(PRIVATE_GAME_MENU_ITEM_LORE, Arrays.asList("&7Open this menu to configure your private game", "&7with up to 11 different options!"));
@@ -845,6 +854,8 @@ public class MessagesData {
             PRIVATE_GAME_COULDNT_JOIN = PATH + "game.couldnt-join",
             PRIVATE_GAME_CANT_IN_GAME = PATH + "game.cant-in-game",
             HELP_MESSAGE = PATH + "help-message",
+            NOT_ENOUGH_ARGS = PATH + "not-enough-args",
+            COULDNT_FIND_PLAYER = PATH + "couldnt-find-player",
             NO_SPEED_MEANING = PATH + "meanings.speed.no-speed",
             SPEED_MEANING = PATH + "meanings.speed.normal",
             SPEED_I_MEANING = PATH + "meanings.speed.speed1",
