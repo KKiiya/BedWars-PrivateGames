@@ -129,12 +129,10 @@ public class GeneratorsMenu implements GUIHolder {
         if (item == null || item.getType() == Material.AIR) return;
         String tag = vs.getItemTag(item, "pg");
         if (tag == null) return;
-        int generator = Integer.parseInt(tag.split("-")[1]);
+        String[] splitTag = tag.split("-");
 
-        e.setCancelled(true);
-        if (!e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GENERATORS_OPTIONS_TITLE))) return;
-
-        if (tag.startsWith("generator-")) {
+        if (splitTag[0].equalsIgnoreCase("generator")) {
+            int generator = Integer.parseInt(splitTag[1]);
             if (support == Support.BEDWARS1058) {
                 IArena a = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(p);
                 new GeneratorSettingsMenu(p, a.getOreGenerators().get(generator));
@@ -142,6 +140,6 @@ public class GeneratorsMenu implements GUIHolder {
                 com.tomkeuper.bedwars.api.arena.IArena a = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(p);
                 new GeneratorSettingsMenu(p, a.getOreGenerators().get(generator));
             }
-        } else if (tag.equals("back")) new OptionsMenu(p);
+        } else if (tag.equalsIgnoreCase("back")) new OptionsMenu(p);
     }
 }
