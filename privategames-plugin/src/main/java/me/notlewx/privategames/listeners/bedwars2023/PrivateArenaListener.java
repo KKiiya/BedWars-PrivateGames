@@ -3,6 +3,7 @@ package me.notlewx.privategames.listeners.bedwars2023;
 import com.google.gson.JsonObject;
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.arena.NextEvent;
 import com.tomkeuper.bedwars.api.arena.generator.GeneratorType;
 import com.tomkeuper.bedwars.api.arena.generator.IGenerator;
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
@@ -262,15 +263,11 @@ public class PrivateArenaListener implements Listener {
             a.getNextEvents().remove("DIAMOND_GENERATOR_TIER_III");
         }
 
-        if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) {
-            upgradeTeams(a);
-        }
+        if (pp.getPlayerSettings().isMaxTeamUpgradesEnabled()) upgradeTeams(a);
 
-        if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {
-            if (a.isAllowMapBreak()) a.setAllowMapBreak(true);
-        } else {
+        if (pp.getPlayerSettings().isAllowMapBreakEnabled()) if (a.isAllowMapBreak()) a.setAllowMapBreak(true);
+        else {
             if (a.isAllowMapBreak()) a.setAllowMapBreak(false);
-
         }
     }
 

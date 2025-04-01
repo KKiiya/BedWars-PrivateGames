@@ -265,13 +265,10 @@ public class PrivateArenaListener implements Listener {
             upgradeTeams(a);
         }
 
-        if (pp.getPlayerSettings().isAllowMapBreakEnabled()) {
-            if (a.isAllowMapBreak()) {
-                a.setAllowMapBreak(false);
-            }
-        } else {
+        if (pp.getPlayerSettings().isAllowMapBreakEnabled()) if (a.isAllowMapBreak()) a.setAllowMapBreak(true);
+        else {
             if (!a.isAllowMapBreak()) {
-                a.setAllowMapBreak(true);
+                a.setAllowMapBreak(false);
             }
         }
     }
@@ -287,11 +284,9 @@ public class PrivateArenaListener implements Listener {
         privateArena.getPlayers().forEach(p -> ((Player) p).setHealth(20.0));
         privateArena.getPlayers().forEach(p -> ((Player) p).setHealthScale(20.0));
 
-        if (a.getConfig().getBoolean("allow-map-break")) {
-            a.getConfig().set("allow-map-break", false);
-        }
-        privateArena.destroyData();
+        if (a.isAllowMapBreak()) a.setAllowMapBreak(false);
 
+        privateArena.destroyData();
         JsonObject object = new JsonObject();
         object.addProperty("action", "privateArenaDeletion");
         object.addProperty("arenaIdentifier", a.getWorldName());
