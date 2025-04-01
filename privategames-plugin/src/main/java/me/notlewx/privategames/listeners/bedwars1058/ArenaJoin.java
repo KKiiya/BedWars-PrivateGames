@@ -41,8 +41,7 @@ import java.util.List;
 
 import static me.notlewx.privategames.PrivateGames.api;
 import static me.notlewx.privategames.PrivateGames.mainConfig;
-import static me.notlewx.privategames.config.MainConfig.MATERIAL;
-import static me.notlewx.privategames.config.MainConfig.POSITION;
+import static me.notlewx.privategames.config.MainConfig.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.*;
 
 public class ArenaJoin implements Listener {
@@ -81,6 +80,8 @@ public class ArenaJoin implements Listener {
         settingsMeta.setDisplayName(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_MENU_ITEM_NAME));
         settingsMeta.setLore(Utility.getList(((Player) pp.getPlayer()), PRIVATE_GAME_MENU_ITEM_LORE));
         settings.setItemMeta(settingsMeta);
+
+        if (mainConfig.getList(BLACKLISTED_GROUPS).contains(a.getGroup())) return;
 
         Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
             ISidebar sidebar = SidebarService.getInstance().getSidebar(p);
@@ -153,15 +154,26 @@ public class ArenaJoin implements Listener {
             if (!party.isOwner()) {
                 Player owner = (Player) party.getOwner();
                 IPrivatePlayer ppo = api.getPrivatePlayer(owner);
-                if (ppo.getPlayerSettings().isPrivateGameEnabled()) {
-                    if (!a.getPlayers().isEmpty()) {
+                if (ppo.getPlayerSettings().isPrivateGameEnabled() && mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) {
+                    if (a.getPlayers().size() > 1) {
+                        e.setCancelled(true);
                         ppo.getPlayerSettings().setPrivateGameDisabled(false);
+                        return;
+                    }
+                }
+            } else {
+                if (pp.getPlayerSettings().isPrivateGameEnabled() && mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) {
+                    List<OfflinePlayer> players = new ArrayList<>(a.getPlayers());
+                    players.removeAll(party.getPartyMembers());
+                    if (!players.isEmpty()) {
+                        e.setCancelled(true);
+                        ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));
                         return;
                     }
                 }
             }
         } else {
-            if ((pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) && pp.getPlayerSettings().isPrivateGameEnabled()) {
+            if ((pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) && pp.getPlayerSettings().isPrivateGameEnabled() && mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) {
                 if (a.getPlayers().size() > 1) {
                     e.setCancelled(true);
                     ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));

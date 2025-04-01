@@ -4,6 +4,7 @@ import me.notlewx.privategames.support.Support;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static me.notlewx.privategames.PrivateGames.isBedWarsServer;
@@ -16,11 +17,8 @@ public class MainConfig extends ConfigManager {
         yml.options().header("PrivateGames Addon by Kiiya#9207");
 
         yml.addDefault("debug", false);
-        if (support == Support.BEDWARS2023 || support == Support.BEDWARS1058) {
-            yml.addDefault("lobby-sockets", List.of("127.0.0.1:2023"));
-        } else if (support == Support.BEDWARSPROXY || support == Support.BEDWARSPROXY2023) {
-            yml.addDefault("port", 2023);
-        }
+        if (support == Support.BEDWARS1058) yml.addDefault("lobby-sockets", List.of("127.0.0.1:2023"));
+        else if (support == Support.BEDWARSPROXY) yml.addDefault("port", 2023);
 
         if (!isBedWarsServer) {
             yml.addDefault("database.host", "localhost");
@@ -29,6 +27,7 @@ public class MainConfig extends ConfigManager {
             yml.addDefault("database.password", "password");
             yml.addDefault("database.port", 3306);
         }
+
         yml.addDefault("disable-private-games-on-leave", true);
         yml.addDefault(SPEED, true);
         yml.addDefault(ONE_HIT_ONE_KILL, true);
@@ -43,6 +42,8 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(NO_EMERALDS, true);
         yml.addDefault(GAMEMODE_CHANGER, true);
         yml.addDefault(START_GAME, true);
+        yml.addDefault(ALLOW_JOIN_WITH_PG_ENABLED, true);
+        yml.addDefault(BLACKLISTED_GROUPS, Arrays.asList("example-group", "example-group-2"));
         yml.addDefault(OPTIONS_ENABLE, true);
         yml.addDefault(OPTIONS_ALLOW_JOIN, true);
         yml.addDefault(OPTIONS_GENERATORS, true);
@@ -237,13 +238,14 @@ public class MainConfig extends ConfigManager {
            NO_DIAMONDS = "enable-modifiers.no-diamonds",
            NO_EMERALDS = "enable-modifiers.no-emeralds",
            GAMEMODE_CHANGER = "enable-modifiers.gamemode-changer",
+           ALLOW_JOIN_WITH_PG_ENABLED = "enable-modifiers.allow-join-with-private-games-enabled",
+           BLACKLISTED_GROUPS = "enable-modifiers.blacklisted-groups",
            OPTIONS_ENABLE = "enable-modifiers.options",
            OPTIONS_ENABLE_AUTOSTART = "enable-modifiers.options-expansion.enable-auto-start",
            OPTIONS_ALLOW_JOIN = "enable-modifiers.options-expansion.allow-join",
            OPTIONS_ENABLE_PRIVATEGAMES = "enable-modifiers.options-expansion.enable-privategames",
            OPTIONS_GENERATORS = "enable-modifiers.options-expansion.generator-options",
            START_GAME = "enable-modifiers.start-game",
-
 
            SETTINGS_ROWS = "menus.settings.rows",
 
