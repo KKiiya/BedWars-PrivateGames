@@ -58,8 +58,8 @@ public final class PrivateGames extends JavaPlugin {
 
         api = new API();
         Bukkit.getServicesManager().register(me.notlewx.privategames.api.PrivateGames.class, api, this, ServicePriority.Highest);
-        loadSupport();
         loadVersionSupport();
+        loadSupport();
 
         metrics.addCustomChart(new DrilldownPie("enabled_features", () -> {
             HashMap<String, Map<String, Integer>> map = new HashMap<>();
