@@ -154,29 +154,45 @@ public class ArenaJoin implements Listener {
             if (!party.isOwner()) {
                 Player owner = (Player) party.getOwner();
                 IPrivatePlayer ppo = api.getPrivatePlayer(owner);
-                if (ppo.getPlayerSettings().isPrivateGameEnabled() && mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) {
+                if (ppo.getPlayerSettings().isPrivateGameEnabled()) {
                     if (a.getPlayers().size() > 1) {
-                        e.setCancelled(true);
-                        ppo.getPlayerSettings().setPrivateGameDisabled(false);
-                        return;
+                        if (mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) return;
+                        List<OfflinePlayer> players = new ArrayList<>(a.getPlayers());
+                        players.removeAll(party.getPartyMembers());
+                        if (!players.isEmpty()) {
+                            e.setCancelled(true);
+                            ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));
+                            Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
+                                a.removePlayer(p, true);
+                            }, 10L);
+                            return;
+                        }
                     }
                 }
             } else {
-                if (pp.getPlayerSettings().isPrivateGameEnabled() && mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) {
+                if (pp.getPlayerSettings().isPrivateGameEnabled()) {
+                    if (mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) return;
                     List<OfflinePlayer> players = new ArrayList<>(a.getPlayers());
                     players.removeAll(party.getPartyMembers());
                     if (!players.isEmpty()) {
                         e.setCancelled(true);
                         ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));
+                        Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
+                            a.removePlayer(p, true);
+                        }, 10L);
                         return;
                     }
                 }
             }
         } else {
-            if ((pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) && pp.getPlayerSettings().isPrivateGameEnabled() && mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) {
+            if ((pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin")) && pp.getPlayerSettings().isPrivateGameEnabled()) {
                 if (a.getPlayers().size() > 1) {
+                    if (mainConfig.getBoolean(ALLOW_JOIN_WITH_PG_ENABLED)) return;
                     e.setCancelled(true);
                     ((Player) pp.getPlayer()).sendMessage(Utility.getMsg(((Player) pp.getPlayer()), PRIVATE_GAME_UNABLE_TO_JOIN));
+                    Bukkit.getScheduler().runTaskLater(PrivateGames.getInstance(), () -> {
+                        a.removePlayer(p, true);
+                    }, 10L);
                     return;
                 }
             }
@@ -189,7 +205,7 @@ public class ArenaJoin implements Listener {
                         if (pp.hasPermission()) {
                             List<OfflinePlayer> players = new ArrayList<>(party.getPartyMembers());
 
-                            IPrivateArena pa = new PrivateArena(pp, players, a.getWorldName(), a.getGroup());
+                            IPrivateArena pa = new PrivateArena(pp, players, a.getWorldName(), a.getGroup(), a.getMaxInTeam());
 
                             Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                             MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation",pa));
@@ -205,10 +221,10 @@ public class ArenaJoin implements Listener {
                     boolean admin = pp.getPlayer().isOp() || ((Player) pp.getPlayer()).hasPermission("pg.admin");
 
                     if (admin && a.getPlayers().size() < 2) {
-                        Utility.info("Player " + pp.getPlayer().getName() + " is an admin and the arena has less than 2 players.");
+                        Utility.debug("Player " + pp.getPlayer().getName() + " is an admin and the arena has less than 2 players.");
                         List<OfflinePlayer> players = new ArrayList<>(Collections.singletonList(pp.getPlayer()));
 
-                        IPrivateArena pa =  new PrivateArena(pp, players, a.getWorldName(), a.getGroup());
+                        IPrivateArena pa =  new PrivateArena(pp, players, a.getWorldName(), a.getGroup(), a.getMaxInTeam());
 
                         Utility.debug("Private Arena created (" + pa.getArenaIdentifier() + ") by " + pp.getPlayer().getName() + " with " + pa.getPlayers().size() + " players.");
                         MessagesUtil.sendMessage(MessagesUtil.formatPrivateArena("privateArenaCreation", pa));

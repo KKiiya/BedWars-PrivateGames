@@ -56,6 +56,7 @@ public class MessagesUtil {
         jsonObject.addProperty("players", Arrays.toString(arena.getPlayers().stream().map(player -> player.getUniqueId().toString()).toArray(String[]::new)));
         jsonObject.addProperty("arenaIdentifier", arena.getArenaIdentifier());
         jsonObject.addProperty("defaultGroup", arena.getDefaultGroup());
+        jsonObject.addProperty("defaultMaxInTeam", arena.getDefaultMaxInTeam());
         return new JsonParser().parse(jsonObject.toString()).getAsJsonObject().toString().replace("\\", "");
     }
 

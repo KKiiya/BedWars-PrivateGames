@@ -3,7 +3,6 @@ package me.notlewx.privategames.listeners.bedwars2023;
 import com.google.gson.JsonObject;
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.IArena;
-import com.tomkeuper.bedwars.api.arena.NextEvent;
 import com.tomkeuper.bedwars.api.arena.generator.GeneratorType;
 import com.tomkeuper.bedwars.api.arena.generator.IGenerator;
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
@@ -40,6 +39,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -282,6 +282,16 @@ public class PrivateArenaListener implements Listener {
         privateArena.getPlayers().forEach(p -> ((Player) p).setHealthScale(20.0));
 
         if (a.isAllowMapBreak()) a.setAllowMapBreak(false);
+        if (!a.getGroup().equalsIgnoreCase(privateArena.getDefaultGroup())) a.setGroup(privateArena.getDefaultGroup());
+        if (a.getMaxInTeam() != privateArena.getDefaultMaxInTeam()) {
+            try {
+                Field maxInTeamField = a.getClass().getDeclaredField("maxInTeam");
+                maxInTeamField.setAccessible(true);
+                maxInTeamField.set(a, privateArena.getDefaultMaxInTeam());
+            } catch (Exception ex) {
+                throw new RuntimeException("Error while setting maxInTeam", ex);
+            }
+        }
 
         privateArena.destroyData();
         JsonObject object = new JsonObject();

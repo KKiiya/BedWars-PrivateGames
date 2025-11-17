@@ -689,6 +689,10 @@ public class MessagesData {
                     yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED, "&aYou've accepted the request of &e{player}!");
                     yml.addDefault(PRIVATE_ARENA_REQUEST_ACCEPTED_REQUESTER, "&a&l{player} &ahas accepted your request!");
                     yml.addDefault(PRIVATE_ARENA_REQUEST_DENIED_REQUESTER, "&c&l{player} &chas declined your request!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_EXPIRED, "&cYour request has expired!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_EXPIRED_RECEIVER, "&c&l{player} didn't request joining or this request has expired!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_NO_PENDING_REQUESTS, "&cYou don't have any pending requests!");
+                    yml.addDefault(PRIVATE_ARENA_REQUEST_ALREADY_SENT, "&cYou've already sent a request to this player!");
                     yml.addDefault(MENU_BACK_ITEM_NAME, "&aGo Back");
                     yml.addDefault(MENU_BACK_ITEM_LORE, List.of("&7Go back to your bedwars gameplay"));
                     yml.addDefault(ITEM_ONE_HIT_ONE_KILL_NAME, "&aOne hit, one kill");

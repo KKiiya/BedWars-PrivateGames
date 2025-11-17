@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.lang.reflect.Field;
+
 import static me.notlewx.privategames.PrivateGames.api;
 
 public class ArenaLeave implements Listener {
@@ -35,8 +37,16 @@ public class ArenaLeave implements Listener {
             MessagesUtil.sendMessage(object.toString());
 
             if (parena.getPrivateArenaHost().getPlayerSettings().isAllowMapBreakEnabled()) {
-                if (arena.isAllowMapBreak()) {
-                    arena.setAllowMapBreak(false);
+                if (arena.isAllowMapBreak()) arena.setAllowMapBreak(false);
+            }
+            if (!arena.getGroup().equalsIgnoreCase(parena.getDefaultGroup())) arena.setGroup(parena.getDefaultGroup());
+            if (arena.getMaxInTeam() != parena.getDefaultMaxInTeam()) {
+                try {
+                    Field maxInTeamField = arena.getClass().getDeclaredField("maxInTeam");
+                    maxInTeamField.setAccessible(true);
+                    maxInTeamField.set(arena, parena.getDefaultMaxInTeam());
+                } catch (Exception ex) {
+                    throw new RuntimeException("Error while setting maxInTeam", ex);
                 }
             }
             parena.destroyData();

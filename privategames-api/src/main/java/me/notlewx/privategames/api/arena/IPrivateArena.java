@@ -36,6 +36,13 @@ public interface IPrivateArena {
     String getDefaultGroup();
 
     /**
+     * Get the arena's max players
+     *
+     * @return The arena's max players
+     */
+    int getDefaultMaxInTeam();
+
+    /**
      * Stop the game completely
      */
     void stopGame();

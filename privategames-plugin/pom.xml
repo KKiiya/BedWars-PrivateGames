@@ -7,7 +7,7 @@
     <parent>
         <groupId>me.notlewx</groupId>
         <artifactId>BedWars-PrivateGames</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
     </parent>
     <artifactId>privategames-plugin</artifactId>
     <packaging>jar</packaging>
@@ -59,9 +59,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>me.neznamy</groupId>
-            <artifactId>tab-api</artifactId>
-            <version>4.0.2</version>
+            <groupId>com.github.NEZNAMY</groupId>
+            <artifactId>TAB-API</artifactId>
+            <version>5.3.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -156,7 +156,7 @@
         </dependency>
         <dependency>
             <groupId>me.notlewx</groupId>
-            <artifactId>v1_21_R1</artifactId>
+            <artifactId>RTag_Global</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -3,6 +3,7 @@ package me.notlewx.privategames.commands.bedwars1058;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.server.ServerType;
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.events.PrivateGameJoinRequestSendEvent;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
@@ -54,18 +55,10 @@ public class MainCommand implements CommandExecutor {
                                                     ((Player) player).sendMessage(Utility.getMsg(((Player) player), PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                 }
                                             }
-                                        } else {
-                                            sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_OWNER));
-                                        }
-                                    } else {
-                                        sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_IN_PARTY));
-                                    }
-                                } else {
-                                    sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_ENABLED));
-                                }
-                            } else {
-                                sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
-                            }
+                                        } else sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_OWNER));
+                                    } else sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_IN_PARTY));
+                                } else sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_ENABLED));
+                            } else sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                         }
                         if (args.length == 2) {
                             switch (args[1].toLowerCase()) {
@@ -81,19 +74,13 @@ public class MainCommand implements CommandExecutor {
                                                             ((Player) player).sendMessage(Utility.getMsg(((Player) player), PRIVATE_GAME_ENABLED_OTHERS).replace("{player}", ((Player) sender).getDisplayName()));
                                                         }
                                                     }
-                                                } else {
-                                                    sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_OWNER));
-                                                }
+                                                } else sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_OWNER));
                                             } else {
                                                 playerData.setPrivateGameEnabled();
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_ENABLED));
                                             }
-                                        } else {
-                                            sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_ENABLED));
-                                        }
-                                    } else {
-                                        sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
-                                    }
+                                        } else sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_ENABLED));
+                                    } else sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                             }
                         }
                     break;
@@ -116,23 +103,15 @@ public class MainCommand implements CommandExecutor {
                                                 playerData.setPrivateGameDisabled(false);
                                                 sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
                                             }
-                                        } else {
-                                            sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_IN_PARTY));
-                                        }
-                                    } else {
-                                        sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
-                                    }
+                                        } else sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_NOT_IN_PARTY));
+                                    } else sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
                                 } else {
                                     if (playerData.isPrivateGameEnabled()) {
                                         playerData.setPrivateGameDisabled(false);
                                         sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_DISABLED));
-                                    } else {
-                                        sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
-                                    }
+                                    } else sender.sendMessage(Utility.getMsg(((Player) sender), PRIVATE_GAME_ALREADY_DISABLED));
                                 }
-                            } else {
-                                sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
-                            }
+                            } else sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
                         }
                         if (args.length == 2) {
                             if (sender.hasPermission("pg.admin") || sender.isOp()){
@@ -247,6 +226,34 @@ public class MainCommand implements CommandExecutor {
                                             }, 20 * 60);
                                         }
                                     }
+                                } else {
+                                    sender.sendMessage(Utility.getMsg(p, COULDNT_FIND_PLAYER));
+                                }
+                            }
+                        } else {
+                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
+                        }
+                        break;
+                    case "kick":
+                        if (sender.hasPermission("pg.kick") || sender.hasPermission("pg.*") || sender.isOp()) {
+                            if (args.length < 1) {
+                                sender.sendMessage(Utility.getMsg((Player) sender, NOT_ENOUGH_ARGS));
+                            } else {
+                                if (Bukkit.getPlayer(args[1]) != null) {
+                                    IPrivateArena pa = api.getPrivatePlayer(p).getArena();
+                                    if (pa == null) {
+                                        sender.sendMessage(Utility.getMsg((Player) sender, "cmd-not-found"));
+                                        return false;
+                                    }
+                                    IArena a = PrivateGames.getBw1058Api().getArenaUtil().getArenaByIdentifier(pa.getArenaIdentifier());
+                                    Player toKick = Bukkit.getPlayer(args[1]);
+                                    IPrivatePlayer pp = api.getPrivatePlayer(toKick);
+                                    if (toKick == null || !pa.getPlayers().contains(pp.getPlayer())) {
+                                        sender.sendMessage(Utility.getMsg(p, COULDNT_FIND_PLAYER));
+                                        return false;
+                                    }
+                                    a.abandonGame(toKick);
+                                    pa.removePlayer(toKick);
                                 } else {
                                     sender.sendMessage(Utility.getMsg(p, COULDNT_FIND_PLAYER));
                                 }

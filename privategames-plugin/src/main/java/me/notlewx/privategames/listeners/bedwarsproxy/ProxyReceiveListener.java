@@ -36,7 +36,7 @@ public class ProxyReceiveListener implements Listener {
                 IPrivatePlayer host = api.getPrivatePlayer(UUID.fromString(json.get("host").getAsString()));
                 String[] players = json.get("players").getAsString().replace("[", "").replace("]", "").replace(" ", "").split(",");
                 List<UUID> playersList = Arrays.stream(players).map(UUID::fromString).collect(Collectors.toList());
-                new PrivateArena(host, playersList.stream().map(Bukkit::getOfflinePlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString());
+                new PrivateArena(host, playersList.stream().map(Bukkit::getOfflinePlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString(), json.get("defaultMaxInTeam").getAsInt());
                 break;
             case "privateArenaUpdate":
                 Utility.debug("Arena update from remote server (identifier: " + json.get("arenaIdentifier").getAsString() + ")");
@@ -49,7 +49,7 @@ public class ProxyReceiveListener implements Listener {
                 for (OfflinePlayer pd : privateArena1.getPlayers()) {
                     PrivateArena.privateArenaByPlayer.remove(pd);
                 }
-                new PrivateArena(privateArena1.getPrivateArenaHost(), playersList1.stream().map(Bukkit::getOfflinePlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString());
+                new PrivateArena(privateArena1.getPrivateArenaHost(), playersList1.stream().map(Bukkit::getOfflinePlayer).collect(Collectors.toList()), json.get("arenaIdentifier").getAsString(), json.get("defaultGroup").getAsString(), json.get("defaultMaxInTeam").getAsInt());
                 break;
             case "privateArenaDeletion":
                 Utility.debug("Arena deletion from remote server (identifier: " + json.get("arenaIdentifier").getAsString() + ")");

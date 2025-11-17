@@ -2,6 +2,7 @@ package me.notlewx.privategames.menus.submenus;
 
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.sidebar.ISidebar;
+import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
 import com.andrei1058.bedwars.sidebar.SidebarService;
 import me.notlewx.privategames.PrivateGames;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import java.lang.reflect.Field;
 
 import static me.notlewx.privategames.PrivateGames.*;
 import static me.notlewx.privategames.config.bedwars1058.MessagesData.PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER;
@@ -51,6 +53,11 @@ public class GamemodeChangerMenu implements GUIHolder {
     private void addContent() {
         for (String path : mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes").getKeys(true)) {
             String mode = path.split("\\.")[0];
+            int maxInTeam;
+            if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes." + mode).contains("max-in-team")) {
+                maxInTeam = mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes." + mode).getInt("max-in-team");
+            } else maxInTeam = 0;
+
             Material mat = Material.getMaterial(mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes." + mode).getString("material"));
             byte data = (byte) mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes." + mode).getInt("data");
             int position = mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + defaultGroup + ".modes." + mode).getInt("position");
@@ -66,7 +73,7 @@ public class GamemodeChangerMenu implements GUIHolder {
 
                 modeStack.setItemMeta(modeMeta);
 
-                inv.setItem(position, vs.setItemTag(modeStack, "pg", "gamemode-"+mode));
+                inv.setItem(position, vs.setItemTag(modeStack, "pg", "gamemode-"+mode+"-"+maxInTeam));
             }
         }
 
@@ -84,7 +91,7 @@ public class GamemodeChangerMenu implements GUIHolder {
 
         backStack.setItemMeta(backMeta);
 
-        inv.setItem(backPosition, vs.setItemTag(backStack, "pg", "back"));
+        inv.setItem(backPosition, vs.setItemTag(backStack, "pg", "back-back"));
     }
 
     @Override
@@ -93,7 +100,7 @@ public class GamemodeChangerMenu implements GUIHolder {
         if (item == null || item.getType() == Material.AIR) return;
         String tag = vs.getItemTag(item, "pg");
         if (tag == null) return;
-        String mode = tag.split("-")[1];
+        String[] mode = tag.split("-");
 
         e.setCancelled(true);
         if (!e.getView().getTitle().equals(Utility.getMsg(p, SUBMENU_GAMEMODE_CHANGER_TITLE))) return;
@@ -101,8 +108,21 @@ public class GamemodeChangerMenu implements GUIHolder {
         switch (support) {
             case BEDWARS1058:
                 IArena a = (IArena) arena;
-                if (mode != null) {
-                    a.setGroup(mode);
+                Arena aC = (Arena) a;
+                if (!mode[1].equalsIgnoreCase("back")) {
+                    int maxInTeam = Integer.parseInt(mode[2]);
+                    a.setGroup(mode[1]);
+                    if (maxInTeam > 0) {
+                        Field maxInTeamField;
+                        try {
+                            maxInTeamField = aC.getClass().getDeclaredField("maxInTeam");
+                            maxInTeamField.setAccessible(true);
+                            maxInTeamField.set(aC, maxInTeam);
+                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
                     SidebarService.getInstance().remove(p);
                     SidebarService.getInstance().giveSidebar(p, a, true);
 
@@ -110,17 +130,29 @@ public class GamemodeChangerMenu implements GUIHolder {
                     sidebar.getHandle().addPlaceholder(new PlaceholderProvider("{private}", () -> {
                         if (api.getPrivateArenaUtil().isPlaying(p)) {
                             return Utility.getMsg(p, PRIVATE_ARENA_SCOREBOARD_PLACEHOLDER);
-                        } else {
-                            return "";
-                        }
+                        } else return "";
                     }));
                     sidebar.getHandle().refreshPlaceholders();
-                } else if (tag.equals("back")) new SettingsMenu(p);
+                } else if (mode[0].equals("back")) new SettingsMenu(p);
                 break;
             case BEDWARS2023:
                 com.tomkeuper.bedwars.api.arena.IArena a2 = (com.tomkeuper.bedwars.api.arena.IArena) arena;
-                if (mode != null) a2.setGroup(mode);
-                else if (tag.equals("back")) new SettingsMenu(p);
+                com.tomkeuper.bedwars.arena.Arena a2C = (com.tomkeuper.bedwars.arena.Arena) a2;
+                if (!mode[1].equalsIgnoreCase("back")) {
+                    int maxInTeam = Integer.parseInt(mode[2]);
+                    a2.setGroup(mode[1]);
+                    if (maxInTeam > 0) {
+                        Field maxInTeamField;
+                        try {
+                            maxInTeamField = a2C.getClass().getDeclaredField("maxInTeam");
+                            maxInTeamField.setAccessible(true);
+                            maxInTeamField.set(a2C, maxInTeam);
+                        } catch (NoSuchFieldException | IllegalAccessException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+                else if (mode[0].equals("back")) new SettingsMenu(p);
                 break;
         }
     }

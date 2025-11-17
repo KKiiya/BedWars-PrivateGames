@@ -25,14 +25,11 @@ public class PartyDisband implements Listener {
         String[] args = e.getMessage().split(" ");
 
         if (args.length > 0 && args[0].equalsIgnoreCase("/party") && args.length > 1 && args[1].equalsIgnoreCase("disband")) {
-            if (playerData.isPrivateGameEnabled()) {
-                if (party.hasParty()) {
-                    if (party.isOwner()) {
-                        playerData.setPrivateGameDisabled(false);
-                        p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
-                    }
-                }
-            }
+            if (!playerData.isPrivateGameEnabled()) return;
+            if (!party.hasParty()) return;
+            if (!party.isOwner()) return;
+            playerData.setPrivateGameDisabled(false);
+            p.sendMessage(Utility.getMsg(p, PRIVATE_GAME_DISABLED));
         }
     }
 

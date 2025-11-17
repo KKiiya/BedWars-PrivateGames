@@ -26,12 +26,14 @@ public class PrivateArena implements IPrivateArena {
     private List<OfflinePlayer> players;
     private String worldName;
     private String defaultGroup;
+    private int defaultMaxInTeam;
 
-    public PrivateArena(IPrivatePlayer host, List<OfflinePlayer> players, String arenaIdentifier, String defaultGroup) {
+    public PrivateArena(IPrivatePlayer host, List<OfflinePlayer> players, String arenaIdentifier, String defaultGroup, int defaultMaxInTeam) {
         this.host = host;
         this.players = players;
         this.worldName = arenaIdentifier;
         this.defaultGroup = defaultGroup;
+        this.defaultMaxInTeam = defaultMaxInTeam;
 
         privateArenaByIdentifier.put(arenaIdentifier, this);
         privateArenaByPlayer.put(host.getPlayer(), this);
@@ -68,6 +70,11 @@ public class PrivateArena implements IPrivateArena {
     @Override
     public String getDefaultGroup() {
         return defaultGroup;
+    }
+
+    @Override
+    public int getDefaultMaxInTeam() {
+        return defaultMaxInTeam;
     }
 
     @Override
@@ -202,6 +209,7 @@ public class PrivateArena implements IPrivateArena {
         privateArenas.remove(this);
 
         defaultGroup = null;
+        defaultMaxInTeam = 0;
         host = null;
         players = null;
         worldName = null;

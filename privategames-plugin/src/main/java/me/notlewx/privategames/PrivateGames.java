@@ -58,7 +58,11 @@ public final class PrivateGames extends JavaPlugin {
 
         api = new API();
         Bukkit.getServicesManager().register(me.notlewx.privategames.api.PrivateGames.class, api, this, ServicePriority.Highest);
-        loadVersionSupport();
+        if (!loadVersionSupport()) {
+            Bukkit.getLogger().severe("[" + getDescription().getName() + "] This server version is not supported! Disabling...");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
         loadSupport();
 
         metrics.addCustomChart(new DrilldownPie("enabled_features", () -> {
@@ -124,43 +128,45 @@ public final class PrivateGames extends JavaPlugin {
         }
     }
 
-    private void loadVersionSupport() {
-        String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    private boolean loadVersionSupport() {
+        String version = Bukkit.getBukkitVersion().split("-")[0];
         switch (version) {
-            case "v1_8_R3":
+            case "1.8.8":
                 versionSupport = new v1_8_R3();
                 break;
-            case "v1_12_R1":
+            case "1.12.2":
                 versionSupport = new v1_12_R1();
                 break;
-            case "v1_16_R3":
+            case "1.16.5":
                 versionSupport = new v1_16_R3();
                 break;
-            case "v1_17_R1":
+            case "1.17.1":
                 versionSupport = new v1_17_R1();
                 break;
-            case "v1_18_R2":
+            case "1.18.2":
                 versionSupport = new v1_18_R2();
                 break;
-            case "v1_19_R3":
+            case "1.19.3":
                 versionSupport = new v1_19_R3();
                 break;
-            case "v1_20_R1":
+            case "1.20.1":
                 versionSupport = new v1_20_R1();
                 break;
-            case "v1_20_R2":
+            case "1.20.2":
                 versionSupport = new v1_20_R2();
                 break;
-            case "v1_20_R3":
+            case "1.20.3":
                 versionSupport = new v1_20_R3();
                 break;
-            case "v1_20_R4":
+            case "1.20.4":
                 versionSupport = new v1_20_R4();
                 break;
-            case "v1_21_R1":
-                versionSupport = new v1_21_R1();
+            default:
+                versionSupport = new GRtag();
+                Bukkit.getLogger().severe("[" + getDescription().getName() + "] No specific version support found for " + version + ", falling back to RTag.");
                 break;
         }
+        return versionSupport != null;
     }
 
     public void loadMainListeners() {

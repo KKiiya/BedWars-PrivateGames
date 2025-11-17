@@ -6,6 +6,7 @@ import com.andrei1058.bedwars.libs.sidebar.PlaceholderProvider;
 import com.andrei1058.bedwars.sidebar.SidebarService;
 import com.tomkeuper.bedwars.api.arena.IArena;
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.player.IPlayerSettings;
 import me.notlewx.privategames.api.support.VersionSupport;
 import me.notlewx.privategames.config.bedwars1058.MessagesData;
@@ -23,6 +24,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.lang.reflect.Field;
 import java.util.stream.Collectors;
 
 import static me.notlewx.privategames.PrivateGames.*;
@@ -215,7 +217,6 @@ public class SettingsMenu implements GUIHolder {
         optionsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
 
         gamemodeChangerMeta.setDisplayName(Utility.getMsg(player, ITEM_GAMEMODE_CHANGER_NAME));
-        String group;
         boolean isPlaying = false;
         switch (support) {
             case BEDWARS2023:
@@ -226,19 +227,33 @@ public class SettingsMenu implements GUIHolder {
                 break;
         }
         if (isPlaying) {
+            String group;
+            IPrivateArena pa;
+            boolean supported = true;
             if (support == Support.BEDWARS1058) {
-                group = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player).getGroup();
-            } else if (support == Support.BEDWARS2023) {
-                group = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player).getGroup();
+                com.andrei1058.bedwars.api.arena.IArena arena = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player);
+                pa = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(arena.getWorldName());
+                group = arena.getGroup();
             } else {
                 group = "";
+                if (support == Support.BEDWARS2023) {
+                    IArena arena = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player);
+                    pa  = api.getPrivateArenaUtil().getPrivateArenaByIdentifier(arena.getWorldName());
+                    group = arena.getGroup();
+                } else {
+                    pa = null;
+                    supported = false;
+                }
             }
 
-            if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + group) != null) {
-                gamemodeChangerMeta.setLore(Utility.getList(player, ITEM_GAMEMODE_CHANGER_LORE).stream().map(s -> s
-                                .replace("{state}", Utility.getMsg(player, "display-group-" + group))
-                                .replace("{default}", Utility.getMsg(player, "display-group-" + api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup())))
-                        .collect(Collectors.toList()));
+            if (supported) {
+                if (mainConfig.getYml().getConfigurationSection("gamemode-changer-menu." + pa.getDefaultGroup()) != null) {
+                    String finalGroup = group;
+                    gamemodeChangerMeta.setLore(Utility.getList(player, ITEM_GAMEMODE_CHANGER_LORE).stream().map(s -> s
+                            .replace("{state}", Utility.getMsg(player, "display-group-" + finalGroup))
+                            .replace("{default}", Utility.getMsg(player, "display-group-" + pa.getDefaultGroup())))
+                     .collect(Collectors.toList()));
+                }
             }
         }
         gamemodeChangerMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
@@ -454,6 +469,8 @@ public class SettingsMenu implements GUIHolder {
                     if (a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.playing && a.getStatus() != com.tomkeuper.bedwars.api.arena.GameState.starting) {
                         a.changeStatus(com.tomkeuper.bedwars.api.arena.GameState.starting);
                         a.getStartingTask().setCountdown(bw2023config.getInt("countdowns.game-start-regular"));
+                    } else if (a.getStatus() == com.tomkeuper.bedwars.api.arena.GameState.starting) {
+                        a.changeStatus(com.tomkeuper.bedwars.api.arena.GameState.waiting);
                     }
                     break;
                 case BEDWARS1058:
@@ -461,6 +478,8 @@ public class SettingsMenu implements GUIHolder {
                     if (a1.getStatus() != GameState.playing && a1.getStatus() != GameState.starting) {
                         a1.changeStatus(GameState.starting);
                         a1.getStartingTask().setCountdown(bw1058config.getInt("countdowns.game-start-regular"));
+                    } else if (a1.getStatus() == GameState.starting) {
+                        a1.changeStatus(GameState.waiting);
                     }
                     break;
             }
@@ -469,7 +488,16 @@ public class SettingsMenu implements GUIHolder {
             switch (support) {
                 case BEDWARS1058:
                     if (e.getClick() == ClickType.RIGHT) {
-                        api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player).setGroup(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup());
+                        com.andrei1058.bedwars.api.arena.IArena a1 = api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player);
+                        IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByPlayer(player);
+                        a1.setGroup(pa.getDefaultGroup());
+                        try {
+                            Field maxInTeamField = a1.getClass().getDeclaredField("maxInTeam");
+                            maxInTeamField.setAccessible(true);
+                            maxInTeamField.set(a1, pa.getDefaultMaxInTeam());
+                        } catch (Exception ex) {
+                            throw new RuntimeException("Error while setting maxInTeam", ex);
+                        }
                         SidebarService.getInstance().remove(player);
                         SidebarService.getInstance().giveSidebar(player, api.getBedWars1058API().getArenaUtil().getArenaByPlayer(player), true);
 
@@ -487,7 +515,15 @@ public class SettingsMenu implements GUIHolder {
                 case BEDWARS2023:
                     if (e.getClick() == ClickType.RIGHT) {
                         IArena a2 = api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player);
-                        a2.setGroup(api.getPrivateArenaUtil().getPrivateArenaByPlayer(player).getDefaultGroup());
+                        IPrivateArena pa = api.getPrivateArenaUtil().getPrivateArenaByPlayer(player);
+                        a2.setGroup(pa.getDefaultGroup());
+                        try {
+                            Field maxInTeamField = a2.getClass().getDeclaredField("maxInTeam");
+                            maxInTeamField.setAccessible(true);
+                            maxInTeamField.set(a2, pa.getDefaultMaxInTeam());
+                        } catch (Exception ex) {
+                            throw new RuntimeException("Error while setting maxInTeam", ex);
+                        }
                         new SettingsMenu(player);
                     } else new GamemodeChangerMenu(player, api.getBedWars2023API().getArenaUtil().getArenaByPlayer(player));
                     break;

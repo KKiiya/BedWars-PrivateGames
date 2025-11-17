@@ -4,6 +4,7 @@ import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.IArena;
 import com.tomkeuper.bedwars.api.server.ServerType;
 import me.notlewx.privategames.PrivateGames;
+import me.notlewx.privategames.api.arena.IPrivateArena;
 import me.notlewx.privategames.api.events.PrivateGameJoinRequestSendEvent;
 import me.notlewx.privategames.api.party.IParty;
 import me.notlewx.privategames.api.player.IPlayerSettings;
@@ -246,6 +247,34 @@ public class MainCommand implements CommandExecutor {
                                             }, 20 * 60);
                                         }
                                     }
+                                } else {
+                                    sender.sendMessage(Utility.getMsg(p, COULDNT_FIND_PLAYER));
+                                }
+                            }
+                        } else {
+                            sender.sendMessage(Utility.getMsg((Player) sender, PRIVATE_GAME_NO_PERMISSION));
+                        }
+                        break;
+                    case "kick":
+                        if (sender.hasPermission("pg.kick") || sender.hasPermission("pg.*") || sender.isOp()) {
+                            if (args.length < 1) {
+                                sender.sendMessage(Utility.getMsg((Player) sender, NOT_ENOUGH_ARGS));
+                            } else {
+                                if (Bukkit.getPlayer(args[1]) != null) {
+                                    IPrivateArena pa = api.getPrivatePlayer(p).getArena();
+                                    if (pa == null) {
+                                        sender.sendMessage(Utility.getMsg((Player) sender, "cmd-not-found"));
+                                        return false;
+                                    }
+                                    IArena a = PrivateGames.getBw2023Api().getArenaUtil().getArenaByIdentifier(pa.getArenaIdentifier());
+                                    Player toKick = Bukkit.getPlayer(args[1]);
+                                    IPrivatePlayer pp = api.getPrivatePlayer(toKick);
+                                    if (toKick == null || !pa.getPlayers().contains(pp.getPlayer())) {
+                                        sender.sendMessage(Utility.getMsg(p, COULDNT_FIND_PLAYER));
+                                        return false;
+                                    }
+                                    a.abandonGame(toKick);
+                                    pa.removePlayer(toKick);
                                 } else {
                                     sender.sendMessage(Utility.getMsg(p, COULDNT_FIND_PLAYER));
                                 }
